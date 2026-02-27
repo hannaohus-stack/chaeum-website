@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | CHAEUM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --obsidian: #1A1A1A;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #333333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--obsidian);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(26, 26, 26, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.7;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 140px 40px 80px 40px;
+        }
+
+        .page-header {
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            opacity: 0.6;
+        }
+
+        .page-heading {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+
+        /* ===== CASE CARD ===== */
+        .case {
+            margin-bottom: 100px;
+            padding-bottom: 100px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .case:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .case-header {
+            margin-bottom: 60px;
+        }
+
+        .case-tag {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            opacity: 0.6;
+        }
+
+        .case-title {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .case-metric {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--white);
+        }
+
+        /* ===== 5 STAGES ===== */
+        .stages {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .stage {
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .stage:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stage-number {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--gray);
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        .stage-title {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .stage-content {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .stage-content ul {
+            margin-top: 16px;
+            margin-left: 20px;
+        }
+
+        .stage-content li {
+            list-style: disc;
+            margin-bottom: 8px;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 80px 0;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: 60px 40px;
+            margin-top: 80px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .cta-section h2 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--obsidian);
+            padding: 14px 32px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.8;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .page-heading {
+                font-size: 32px;
+            }
+
+            .case-title {
+                font-size: 24px;
+            }
+
+            nav {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-wrapper">
+            <a href="/index.html" class="logo">CHAEUM</a>
+            <nav>
+                <a href="/index.html">Services</a>
+                <a href="/portfolio.html">Portfolio</a>
+                <a href="/about.html">About</a>
+                <a href="https://cal.com/chaeum" target="_blank">Consult</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <div class="page-header">
+            <div class="page-title">Portfolio</div>
+            <h1 class="page-heading">우리가 함께 한<br>브랜드들의 성장</h1>
+        </div>
+
+        <!-- CASE 1 -->
+        <div class="case">
+            <div class="case-header">
+                <div class="case-tag">식음료 / 프리미엄</div>
+                <h2 class="case-title">Deokhwa Myeongran</h2>
+                <div class="case-metric">매출 +360%</div>
+            </div>
+
+            <div class="stages">
+                <div class="stage">
+                    <div class="stage-number">01. 문제</div>
+                    <div class="stage-title">포지셔닝 혼란</div>
+                    <div class="stage-content">
+                        프리미엄 제품이지만 시장 포지셔닝이 불명확했습니다. 가격대는 높은데, 왜 그 가격인지를 고객이 이해하지 못하고 있었습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">02. 인사이트</div>
+                    <div class="stage-title">고객 가치의 불일치</div>
+                    <div class="stage-content">
+                        깊은 조사 결과, 고객들은 '프리미엄'이 아닌 '정직성'을 원하고 있었습니다. 장인정신, 원료의 품질, 투명한 가격 결정 과정에 가치를 두고 있었습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">03. 컨셉</div>
+                    <div class="stage-title">포지셔닝 재정의</div>
+                    <div class="stage-content">
+                        '프리미엄'에서 '정직한 명품'으로 포지셔닝을 전환했습니다. 모든 커뮤니케이션을 이 관점에서 재설계하고, 가격 책정의 투명성을 강조했습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">04. 실행</div>
+                    <div class="stage-title">브랜드 재설계</div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>웹사이트 재편성 (정직성 강조)</li>
+                            <li>가격 정책 설명 추가</li>
+                            <li>SNS 콘텐츠 톤앤매너 변경</li>
+                            <li>고객 소통 채널 개선</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">05. 증명</div>
+                    <div class="stage-title">성과</div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>월 평균 매출: 360% 증가</li>
+                            <li>평균 구매가: 35% 상승</li>
+                            <li>고객 만족도: 4.5 → 4.9 (5점 기준)</li>
+                            <li>재구매율: 55% → 78%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE 2 -->
+        <div class="case">
+            <div class="case-header">
+                <div class="case-tag">라이프스타일 / 리테일</div>
+                <h2 class="case-title">Therethehouse</h2>
+                <div class="case-metric">3개월 내 예약 포화</div>
+            </div>
+
+            <div class="stages">
+                <div class="stage">
+                    <div class="stage-number">01. 문제</div>
+                    <div class="stage-title">수요와 공급의 불균형</div>
+                    <div class="stage-content">
+                        좋은 제품과 경험이 있었지만, 브랜드 인지도가 낮았습니다. SNS 팔로우는 많지만, 실제 예약은 채워지지 않는 상태였습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">02. 인사이트</div>
+                    <div class="stage-title">경험의 가치 미전달</div>
+                    <div class="stage-content">
+                        고객 경험 자체는 훌륭했지만, 그 경험이 왜 특별한지를 설명하는 브랜드 스토리가 부족했습니다. 팔로우는 많았지만 '신뢰'가 부족했습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">03. 컨셉</div>
+                    <div class="stage-title">브랜드 경험 설계</div>
+                    <div class="stage-content">
+                        고객 경험의 각 터치포인트에서 브랜드 가치를 명확히 전달하도록 재설계했습니다. '예약'이 아닌 '의식적인 선택'이 되도록 포지셔닝을 변경했습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">04. 실행</div>
+                    <div class="stage-title">경험 흐름도 재정의</div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>사전 커뮤니케이션 강화</li>
+                            <li>방문 전 기대감 형성</li>
+                            <li>현장 경험 세밀화</li>
+                            <li>사후 연결 강화</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">05. 증명</div>
+                    <div class="stage-title">성과</div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>3개월 내 예약 대기: 100명 이상</li>
+                            <li>SNS 팔로우 → 예약 전환율: 2% → 8%</li>
+                            <li>고객 만족도: 4.6 → 4.9 (5점 기준)</li>
+                            <li>입소문으로 인한 예약: 40% 이상</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE 3 -->
+        <div class="case">
+            <div class="case-header">
+                <div class="case-tag">뷰티 / 온라인</div>
+                <h2 class="case-title">Premium Beauty Brand</h2>
+                <div class="case-metric">매출 +230%</div>
+            </div>
+
+            <div class="stages">
+                <div class="stage">
+                    <div class="stage-number">01. 문제</div>
+                    <div class="stage-title">마케팅 효율 저하</div>
+                    <div class="stage-content">
+                        마케팅 비용은 많이 쓰고 있었지만, ROI가 낮았습니다. 타겟 고객이 명확하지 않아서 과도한 광고비가 낭비되고 있었습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">02. 인사이트</div>
+                    <div class="stage-title">고객 세그먼트 미분화</div>
+                    <div class="stage-content">
+                        깊은 분석 결과, 3가지 명확한 고객 세그먼트가 있었습니다. 하지만 모두에게 같은 메시지로 광고하고 있어서 효율이 낮았습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">03. 컨셉</div>
+                    <div class="stage-title">고객 세그먼트별 전략</div>
+                    <div class="stage-content">
+                        3가지 고객 세그먼트 각각에 맞는 포지셔닝과 메시지를 개발했습니다. 동일한 예산으로 더 높은 정확도의 캠페인을 구성했습니다.
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">04. 실행</div>
+                    <div class="stage-title">캠페인 재설계</div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>세그먼트별 메시지 개발</li>
+                            <li>채널별 톤앤매너 최적화</li>
+                            <li>광고 크리에이티브 재작성</li>
+                            <li>성과 측정 프레임 구축</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="stage">
+                    <div class="stage-number">05. 증명</div>
+                    <div class="stage-title">성과</div>
+                    <div class="stage-content">
+                        <ul>
+                            <li>동일 광고비로 매출 230% 증가</li>
+                            <li>고객 획득 비용(CAC): 40% 감소</li>
+                            <li>광고 ROI: 2.1 → 6.8배</li>
+                            <li>고객 LTV: 3배 이상 증가</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- CTA SECTION -->
+        <div class="cta-section">
+            <h2>당신의 브랜드도<br>성장할 수 있습니다</h2>
+            <p>20분 무료 진단으로 시작하세요</p>
+            <button class="btn-primary" onclick="window.location.href='https://cal.com/chaeum'">상담 예약하기</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="/">Home</a>
+            <a href="/services.html">Services</a>
+            <a href="https://cal.com/chaeum" target="_blank">Schedule</a>
+        </div>
+    </footer>
+</body>
+</html>

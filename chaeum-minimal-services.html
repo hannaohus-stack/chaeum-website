@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | CHAEUM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --obsidian: #1A1A1A;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #333333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--obsidian);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(26, 26, 26, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.7;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        nav a.active {
+            opacity: 1;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 140px 40px 80px 40px;
+        }
+
+        .page-header {
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            opacity: 0.6;
+        }
+
+        .page-heading {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+
+        .page-description {
+            font-size: 14px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== ACCORDION ===== */
+        .accordion {
+            margin-top: 60px;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px 0;
+        }
+
+        .accordion-item:first-child {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            color: var(--gray);
+        }
+
+        .accordion-title {
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .accordion-toggle {
+            font-size: 20px;
+            color: var(--gray);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            display: none;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        .accordion-content p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .accordion-content ul {
+            font-size: 13px;
+            color: var(--gray);
+            margin: 20px 0 20px 20px;
+            line-height: 2;
+        }
+
+        .accordion-content ul li {
+            list-style: disc;
+        }
+
+        .accordion-content .cta-link {
+            display: inline-block;
+            margin-top: 24px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 1px solid var(--white);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-content .cta-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== INFO BOX ===== */
+        .info-box {
+            margin-top: 80px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .info-box h3 {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .info-item {
+            padding-right: 20px;
+        }
+
+        .info-item-title {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .info-item-desc {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 80px 0;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: 60px 40px;
+            margin-top: 80px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .cta-section h2 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--obsidian);
+            padding: 14px 32px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.8;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .page-heading {
+                font-size: 32px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 20px;
+            }
+
+            .accordion-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .accordion-toggle {
+                margin-top: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-wrapper">
+            <a href="/index.html" class="logo">CHAEUM</a>
+            <nav>
+                <a href="/index.html">Services</a>
+                <a href="/portfolio.html">Portfolio</a>
+                <a href="/about.html">About</a>
+                <a href="https://cal.com/chaeum" target="_blank">Consult</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <div class="page-header">
+            <div class="page-title">Services</div>
+            <h1 class="page-heading">당신의 상황에 맞는<br>서비스를 선택하세요</h1>
+            <p class="page-description">포지셔닝부터 마케팅까지. 우리는 설계합니다. 당신이 실행합니다.</p>
+        </div>
+
+        <!-- ACCORDION -->
+        <div class="accordion">
+            <!-- Item 1 -->
+            <div class="accordion-item active">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">포지셔닝 진단</div>
+                    <div class="accordion-toggle">∨</div>
+                </div>
+                <div class="accordion-content">
+                    <p>당신의 현재 포지셔닝을 분석하고, 시장에서의 위치를 명확히 합니다. 이것은 진단입니다. 처방이 아닙니다.</p>
+                    <p><strong>다음을 얻게 됩니다:</strong></p>
+                    <ul>
+                        <li>현재 포지셔닝의 강점과 약점 분석</li>
+                        <li>경쟁 시장에서의 위치 평가</li>
+                        <li>개선을 위한 초기 방향 제시</li>
+                        <li>상세한 진단 리포트</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 12px; color: var(--gray);">구체적인 진단 방법과 개선 방향은 상담 세션에서 직접 설명합니다.</p>
+                    <a href="https://cal.com/chaeum" target="_blank" class="cta-link">진단 예약하기</a>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">브랜드 경험 설계</div>
+                    <div class="accordion-toggle">∨</div>
+                </div>
+                <div class="accordion-content">
+                    <p>포지셔닝과 고객 경험이 완벽하게 일치하는 브랜드를 만듭니다. 4주 집중 프로젝트입니다.</p>
+                    <p><strong>프로세스:</strong></p>
+                    <ul>
+                        <li>1주: 포지셔닝 재정의</li>
+                        <li>2주: 3가지 컨셉 개발</li>
+                        <li>3주: 비주얼 & 톤앤매너 설계</li>
+                        <li>4주: 고객 경험 흐름도 완성</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 12px; color: var(--gray);">실제 디자인과 개발은 당신의 파트입니다. 우리는 완벽한 설계 가이드를 제공합니다.</p>
+                    <a href="https://cal.com/chaeum" target="_blank" class="cta-link">프로젝트 시작하기</a>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">마케팅 전략</div>
+                    <div class="accordion-toggle">∨</div>
+                </div>
+                <div class="accordion-content">
+                    <p>좋은 제품이 있지만 시장에서 제대로 이해받지 못하는 브랜드를 위합니다. 포지셔닝을 명확히 하고 실행 프레임을 만듭니다.</p>
+                    <p><strong>6주 프로젝트 결과물:</strong></p>
+                    <ul>
+                        <li>명확한 포지셔닝 스테이트먼트</li>
+                        <li>타겟 고객 세그먼트 정의</li>
+                        <li>채널별 메시지 프레임</li>
+                        <li>6개월 마케팅 로드맵</li>
+                        <li>성과 측정 프레임</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 12px; color: var(--gray);">로드맵의 실행은 당신이 담당합니다. 우리는 방향만 명확히 합니다.</p>
+                    <a href="https://cal.com/chaeum" target="_blank" class="cta-link">전략 상담하기</a>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title">종합 브랜드 변환</div>
+                    <div class="accordion-toggle">∨</div>
+                </div>
+                <div class="accordion-content">
+                    <p>포지셔닝, 아이덴티티, 경험, 마케팅이 모두 통합되는 완전한 브랜드 혁신입니다. 16주 집중 프로젝트 + 1년 성과 검토.</p>
+                    <p><strong>포함 사항:</strong></p>
+                    <ul>
+                        <li>완전한 포지셔닝 전략 개발</li>
+                        <li>브랜드 아이덴티티 시스템</li>
+                        <li>고객 경험(BX) 완전 설계</li>
+                        <li>마케팅 실행 계획 및 로드맵</li>
+                        <li>분기별 성과 검토 (1년간, 총 4회)</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 12px; color: var(--gray);">이것은 브랜드 전체를 재설계하는 프로젝트입니다. 가장 포괄적이고 성과 지향적입니다.</p>
+                    <a href="https://cal.com/chaeum" target="_blank" class="cta-link">종합 상담 신청하기</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFO BOX -->
+        <div class="info-box">
+            <h3>모든 서비스에 포함되는 것</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-item-title">전략 우선</div>
+                    <div class="info-item-desc">모든 결정은 전략에서 출발합니다. 감정이나 트렌드가 아닙니다.</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-title">명확한 산출물</div>
+                    <div class="info-item-desc">추상적 조언이 아닌 실행 가능한 프레임과 가이드를 제공합니다.</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-title">당신이 주인공</div>
+                    <div class="info-item-desc">우리는 설계합니다. 실행은 당신이 합니다. 책임은 명확합니다.</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-title">구체적 결과</div>
+                    <div class="info-item-desc">추상적 목표가 아닌 측정 가능한 KPI로 성과를 정의합니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- CTA SECTION -->
+        <div class="cta-section">
+            <h2>어떤 서비스가<br>당신에게 맞나요?</h2>
+            <p>20분 무료 진단으로 함께 결정하세요</p>
+            <button class="btn-primary" onclick="window.location.href='https://cal.com/chaeum'">진단 상담 예약</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="/">Home</a>
+            <a href="/portfolio.html">Portfolio</a>
+            <a href="https://cal.com/chaeum" target="_blank">Schedule</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all items
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
