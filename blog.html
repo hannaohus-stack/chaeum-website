@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | CHAEUM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #4B4545;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #666666;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(75, 69, 69, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 1;
+        }
+
+        .btn-consult {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 28px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 400;
+        }
+
+        .btn-consult:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 140px 40px 80px 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .page-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            opacity: 0.7;
+        }
+
+        .page-heading {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+
+        .page-description {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 60px 0;
+        }
+
+        /* ===== BLOG CONTAINER ===== */
+        .blog-container {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .blog-iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            background-color: var(--white);
+        }
+
+        .blog-fallback {
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .blog-fallback h2 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .blog-fallback p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .blog-link {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 32px;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .blog-link:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== INFO BOX ===== */
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 32px;
+            border-radius: 2px;
+            margin-top: 60px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .page-heading {
+                font-size: 32px;
+            }
+
+            .blog-iframe {
+                height: 600px;
+            }
+
+            header {
+                padding: 20px 24px;
+            }
+
+            .header-wrapper {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .container {
+                padding: 120px 24px 60px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Portfolio</a>
+                <a href="./index.html#blog">Blog</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <div class="page-header">
+            <div class="page-title">Insights</div>
+            <h1 class="page-heading">전략 인사이트</h1>
+            <p class="page-description">포지셔닝부터 마케팅까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- BLOG EMBED SECTION -->
+        <div class="blog-container" id="blogContainer">
+            <div class="blog-fallback">
+                <h2>블로그를 불러오는 중입니다</h2>
+                <p>외부 블로그 URL이 연동되어 여기에 표시됩니다.<br>아래 버튼을 클릭하여 바로 이동할 수 있습니다.</p>
+                <a href="#" class="blog-link" id="blogDirectLink" target="_blank">블로그 보러가기</a>
+            </div>
+        </div>
+
+        <!-- INFO BOX -->
+        <div class="info-box">
+            <h3>📝 블로그 URL 설정 가이드</h3>
+            <p>
+                이 페이지에 블로그를 임베드하려면, 아래 JavaScript를 수정하거나 <strong>개발자에게 외부 블로그 URL</strong>을 제공하세요.<br><br>
+                <strong>예시 URL:</strong> https://blog.chaeum.com, https://medium.com/@chaeum, https://brunch.co.kr/@chaeum<br><br>
+                또는 이 페이지를 블로그로 연동하지 않고 <strong>"블로그 보러가기" 버튼으로 외부 블로그로 바로 이동</strong>하도록 설정할 수도 있습니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="./index.html">Home</a>
+            <a href="./services.html">Services</a>
+            <a href="./portfolio.html">Portfolio</a>
+            <a href="./about.html">About</a>
+        </div>
+    </footer>
+
+    <script>
+        // ===== 블로그 URL 설정 =====
+        // 아래의 BLOG_URL을 당신의 실제 블로그 URL로 변경하세요
+        const BLOG_URL = ''; // 예시: 'https://blog.example.com'
+
+        // 블로그 임베드 설정
+        const blogContainer = document.getElementById('blogContainer');
+        const blogDirectLink = document.getElementById('blogDirectLink');
+
+        if (BLOG_URL) {
+            // BLOG_URL이 설정되어 있으면 iframe으로 임베드
+            // 주의: CORS 문제가 발생할 수 있습니다. 그 경우 개발자에게 문의하세요.
+            
+            // Notion, Medium, Brunch 등 특정 플랫폼의 경우 직접 임베드가 어려울 수 있습니다.
+            // 이 경우 아래처럼 링크만 제공하는 방식이 권장됩니다.
+
+            blogContainer.innerHTML = `
+                <div style="padding: 60px 40px; text-align: center;">
+                    <h2 style="font-size: 24px; font-weight: 300; margin-bottom: 16px;">채움의 블로그</h2>
+                    <p style="font-size: 14px; color: var(--gray); margin-bottom: 24px; line-height: 1.8;">
+                        포지셔닝, 마케팅, 브랜드 전략에 대한 인사이트를 정기적으로 공유하고 있습니다.
+                    </p>
+                    <a href="${BLOG_URL}" target="_blank" style="display: inline-block; background-color: var(--white); color: var(--bg); padding: 12px 32px; text-decoration: none; border-radius: 2px; font-size: 12px; letter-spacing: 1px; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">블로그 방문하기</a>
+                </div>
+            `;
+            
+            blogDirectLink.href = BLOG_URL;
+        } else {
+            // BLOG_URL이 설정되지 않았으면 가이드 표시
+            blogDirectLink.style.pointerEvents = 'none';
+            blogDirectLink.style.opacity = '0.5';
+            blogDirectLink.textContent = 'URL 미설정';
+        }
+
+        // 선택적: Medium, Brunch 등 특정 플랫폼에서의 설정 예시
+        console.log('Blog Page 로드됨');
+        console.log('BLOG_URL을 설정하려면 위 스크립트에서 const BLOG_URL = "" 부분을 수정하세요.');
+    </script>
+</body>
+</html>

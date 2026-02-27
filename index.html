@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAEUM | 당신의 브랜드를 위한 외주 전략실</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #4B4545;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #666666;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(75, 69, 69, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 1;
+        }
+
+        .btn-consult {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 28px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 400;
+        }
+
+        .btn-consult:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero .tagline {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 48px;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 16px 40px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 16px 40px;
+            border: 1px solid var(--white);
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 80px 0;
+        }
+
+        /* ===== SECTION ===== */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 60px;
+            opacity: 0.7;
+        }
+
+        /* ===== CASES ===== */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .case-card {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .case-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .case-tag {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: var(--gray);
+            margin-bottom: 12px;
+            opacity: 0.7;
+        }
+
+        .case-title {
+            font-size: 22px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .case-metric {
+            font-size: 36px;
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 24px;
+        }
+
+        .case-description {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.9;
+            margin-bottom: 24px;
+        }
+
+        .case-link {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid var(--white);
+            padding-bottom: 4px;
+            transition: opacity 0.3s ease;
+            display: inline-block;
+        }
+
+        .case-link:hover {
+            opacity: 0.7;
+        }
+
+        .case-link::after {
+            content: ' →';
+            margin-left: 8px;
+        }
+
+        .view-all-section {
+            text-align: center;
+            padding: 40px;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+        }
+
+        .view-all-section p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+
+        .btn-view-all {
+            background: transparent;
+            color: var(--white);
+            padding: 12px 28px;
+            border: 1px solid var(--white);
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-view-all:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== BLOG SECTION ===== */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .blog-card {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .blog-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .blog-date {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+            opacity: 0.7;
+        }
+
+        .blog-title {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .blog-link {
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .blog-link:hover {
+            color: var(--white);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            margin-top: 80px;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 15px;
+            color: var(--gray);
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            header {
+                padding: 20px 24px;
+            }
+
+            .header-wrapper {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .section {
+                padding: 60px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Portfolio</a>
+                <a href="./index.html#blog">Blog</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>당신의 브랜드를 위한<br>'외주 전략실'을 가동하세요</h1>
+        <p class="tagline">설계만 하고 멈춘 전략은 비용일 뿐입니다.<br>채움은 성장의 로드맵을 그리고, 완주까지 직접 달립니다.</p>
+        <div class="hero-cta">
+            <button class="btn-primary" onclick="window.location.href='./diagnosis-talk.html'">AI 고민 상담 (무료)</button>
+            <button class="btn-secondary" onclick="document.getElementById('cases').scrollIntoView()">성공 사례 보기</button>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CASES -->
+    <section class="section" id="cases">
+        <div class="section-title">성공 사례</div>
+
+        <div class="cases-grid">
+            <div class="case-card">
+                <div class="case-tag">식음료 / 프리미엄 포지셔닝</div>
+                <h3 class="case-title">Deokhwa Myeongran</h3>
+                <div class="case-metric">+360%</div>
+                <p class="case-description">프리미엄 제품이지만 시장에서 가벼워 보이던 브랜드. 포지셔닝 재정의와 가격 구조 혁신으로 매출 3배 이상 증가했습니다.</p>
+                <a href="./case-deokhwa.html" class="case-link">자세히 보기</a>
+            </div>
+
+            <div class="case-card">
+                <div class="case-tag">라이프스타일 / 경험 설계</div>
+                <h3 class="case-title">Therethehouse</h3>
+                <div class="case-metric">3개월 내<br>예약 포화</div>
+                <p class="case-description">좋은 경험이 있었지만 브랜드 신뢰도가 부족했던 곳. 고객 경험 설계를 통해 3개월 만에 예약이 가득 찼습니다.</p>
+                <a href="./case-therethehouse.html" class="case-link">자세히 보기</a>
+            </div>
+        </div>
+
+        <div class="view-all-section">
+            <p>더 많은 성공 사례를 확인하세요</p>
+            <a href="./portfolio.html" class="btn-view-all">모든 사례 보기</a>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- BLOG -->
+    <section class="section" id="blog">
+        <div class="section-title">인사이트</div>
+
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-date">2026. 02. 25</div>
+                <h3 class="blog-title">왜 좋은 제품이 팔리지 않을까</h3>
+                <p class="blog-excerpt">포지셔닝이 없으면, 아무리 좋은 제품도 시장에서 소음이 됩니다.</p>
+                <a href="#" class="blog-link">더 읽기 →</a>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-date">2026. 02. 20</div>
+                <h3 class="blog-title">고단가 브랜드의 전략</h3>
+                <p class="blog-excerpt">가격이 높을수록 고객이 보고 싶어하는 것은 결과가 아니라 논리입니다.</p>
+                <a href="#" class="blog-link">더 읽기 →</a>
+            </div>
+
+            <div class="blog-card">
+                <div class="blog-date">2026. 02. 15</div>
+                <h3 class="blog-title">포지셔닝이란 무엇인가</h3>
+                <p class="blog-excerpt">포지셔닝은 고객의 마음에 당신의 브랜드를 어떻게 자리 잡히는가입니다.</p>
+                <a href="#" class="blog-link">더 읽기 →</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px;">
+            <p style="font-size: 12px; color: var(--gray); margin-bottom: 20px;">더 많은 인사이트를 보려면</p>
+            <a href="https://blog.example.com" target="_blank" class="btn-view-all">전체 블로그 보기</a>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <h2>브랜드 성장의<br>다음 단계를 함께 만드세요</h2>
+        <p>좋은 제품인데 시장에서 제대로 인식받지 못하는 상황이라면,<br>AI 고민 상담으로 당신의 상황을 정확히 진단해보세요.</p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn-primary" onclick="window.location.href='./diagnosis-talk.html'">AI 고민 상담 시작</button>
+            <button class="btn-secondary" onclick="window.location.href='https://cal.com/chaeum'">빠른 상담예약</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="./about.html">About</a>
+            <a href="./portfolio.html">Portfolio</a>
+            <a href="./index.html#blog">Blog</a>
+            <a href="https://cal.com/chaeum" target="_blank">Schedule</a>
+        </div>
+    </footer>
+</body>
+</html>

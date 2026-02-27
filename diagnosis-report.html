@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 진단 리포트 | CHAEUM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #4B4545;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #666666;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(75, 69, 69, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 1;
+        }
+
+        .btn-consult {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 28px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 400;
+        }
+
+        .btn-consult:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 140px 40px 80px 40px;
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .report-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            opacity: 0.7;
+        }
+
+        .report-heading {
+            font-size: 36px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .report-subtitle {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .report-meta {
+            font-size: 12px;
+            color: var(--gray);
+            opacity: 0.7;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 60px 0;
+        }
+
+        /* ===== REPORT CONTENT ===== */
+        .report-content {
+            margin-bottom: 80px;
+        }
+
+        .report-section {
+            margin-bottom: 48px;
+        }
+
+        .report-section h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--white);
+            letter-spacing: 0.5px;
+        }
+
+        .report-section p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 2;
+            margin-bottom: 12px;
+        }
+
+        .report-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ===== SOLUTION BOX ===== */
+        .solution-box {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 4px solid rgba(255, 255, 255, 0.4);
+            padding: 32px;
+            border-radius: 2px;
+            margin: 40px 0;
+        }
+
+        .solution-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .solution-text {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* ===== PRICING TABLE ===== */
+        .pricing-table {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 40px 0;
+        }
+
+        .pricing-table-header {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.2fr;
+            gap: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-table-header div {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--white);
+        }
+
+        .pricing-table-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.2fr;
+            gap: 20px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            align-items: center;
+        }
+
+        .pricing-table-row:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-item-name {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--white);
+        }
+
+        .pricing-item-desc {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+
+        .pricing-cost {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--white);
+            text-align: right;
+        }
+
+        .pricing-badge {
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 2px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* ===== ALERT BOX ===== */
+        .alert-box {
+            background-color: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-left: 4px solid rgba(255, 165, 0, 0.5);
+            padding: 24px;
+            border-radius: 2px;
+            margin: 60px 0;
+        }
+
+        .alert-box h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFA500;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .alert-box p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        /* ===== DISCLAIMER ===== */
+        .disclaimer-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 24px;
+            border-radius: 2px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .disclaimer-box p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .disclaimer-box strong {
+            color: var(--white);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 48px;
+            border-radius: 2px;
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 15px;
+            color: var(--gray);
+            margin-bottom: 32px;
+            line-height: 1.9;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 16px 40px;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 16px 40px;
+            border: 1px solid var(--white);
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== BACK LINK ===== */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 60px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid var(--white);
+            padding-bottom: 4px;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-link:hover {
+            opacity: 0.7;
+        }
+
+        .back-link::before {
+            content: '← ';
+            margin-right: 8px;
+        }
+
+        /* ===== ERROR ===== */
+        .error-box {
+            padding: 40px;
+            background-color: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 2px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .error-box h2 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 16px;
+            color: #FF9999;
+        }
+
+        .error-box p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .error-box a {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 32px;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .error-box a:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            header, footer, .back-link, .cta-section {
+                display: none;
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .report-heading {
+                font-size: 28px;
+            }
+
+            .cta-section {
+                padding: 32px;
+            }
+
+            .cta-section h2 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            .pricing-table-header, .pricing-table-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .pricing-cost {
+                text-align: left;
+            }
+
+            header {
+                padding: 20px 24px;
+            }
+
+            .header-wrapper {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .container {
+                padding: 120px 24px 60px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Portfolio</a>
+                <a href="./index.html#blog">Blog</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <a href="./diagnosis-talk.html" class="back-link">다시 분석하기</a>
+
+        <!-- REPORT HEADER -->
+        <div class="report-header">
+            <div class="report-title">CHAEUM AI 전략실 분석 결과</div>
+            <h1 class="report-heading" id="reportHeading">분석 결과</h1>
+            <p class="report-subtitle" id="reportSubtitle"></p>
+            <p class="report-meta" id="reportTime"></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- STAGE 1: 분석 리포트 -->
+        <div class="report-content" id="reportContent"></div>
+
+        <!-- STAGE 2: 최적의 솔루션 추천 -->
+        <div id="solutionBox" style="display: none;">
+            <div class="solution-box">
+                <div class="solution-title">2단계: 최적의 솔루션 조합 추천</div>
+                <div class="solution-text" id="solutionText"></div>
+            </div>
+        </div>
+
+        <!-- STAGE 3: 가치 중심의 가격 제안 -->
+        <div id="pricingSection" style="display: none;">
+            <div style="margin: 60px 0;">
+                <h2 style="font-size: 20px; font-weight: 300; margin-bottom: 24px;">3단계: 기회비용 대비 투자 효율</h2>
+                <div class="solution-box">
+                    <div class="solution-title">마케팅 팀 자체 채용 vs. 채움의 외주 전략실</div>
+                    <div class="solution-text" id="anchoringText"></div>
+                </div>
+            </div>
+
+            <!-- PRICING TABLE -->
+            <div style="margin: 60px 0;">
+                <h2 style="font-size: 20px; font-weight: 300; margin-bottom: 24px;">예상 투자 비용</h2>
+                <div class="pricing-table">
+                    <div class="pricing-table-header">
+                        <div>추천 항목</div>
+                        <div>상세 내용</div>
+                        <div style="text-align: right;">예상 투자</div>
+                    </div>
+                    <div class="pricing-table-row">
+                        <div>
+                            <div class="pricing-item-name">전략 설계 (The Blueprint)</div>
+                            <div class="pricing-item-desc">타겟 페르소나 재정의 + 랜딩페이지 기획 + 메시지 정렬</div>
+                        </div>
+                        <div><span class="pricing-badge">일회성</span></div>
+                        <div class="pricing-cost">₩5,000,000</div>
+                    </div>
+                    <div class="pricing-table-row">
+                        <div>
+                            <div class="pricing-item-name">실행 관리 (The Running)</div>
+                            <div class="pricing-item-desc">콘텐츠 제작 + 광고 최적화 + 월간 리포트 + 주 1회 밀착 관리</div>
+                        </div>
+                        <div><span class="pricing-badge">월간</span></div>
+                        <div class="pricing-cost">월 ₩3,000,000</div>
+                    </div>
+                </div>
+
+                <div class="disclaimer-box">
+                    <p>위 제안은 <strong>AI 분석 결과에 따른 표준 견적</strong>입니다.<br>20분 상담을 통해 귀사 상황에 맞춘 <strong>최종 플랜과 할인 혜택</strong>을 확인해 보세요.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 4: 희소성 및 마감 임박 강조 -->
+        <div id="urgencyBox" style="display: none;">
+            <div class="alert-box">
+                <h3>⏰ 지금이 최적의 타이밍입니다</h3>
+                <p>채움은 <strong>최상의 실행 퀄리티를 위해 현재 1개의 브랜드만 추가로 관리 가능</strong>합니다. 이 진단 리포트를 기반으로 구체적인 실행 계획을 논의하고 싶다면, 아래 상담을 선점하세요.</p>
+            </div>
+        </div>
+
+        <div class="divider" id="divider2" style="display: none;"></div>
+
+        <!-- ERROR MESSAGE (hidden by default) -->
+        <div id="errorBox" style="display: none;" class="error-box">
+            <h2>데이터를 불러올 수 없습니다</h2>
+            <p>세션이 만료되었거나 데이터가 손실되었습니다.<br>다시 진단을 시작해주세요.</p>
+            <a href="./diagnosis-talk.html">진단 다시 시작하기</a>
+        </div>
+
+        <!-- CTA SECTION -->
+        <div id="ctaSection" style="display: none;" class="cta-section">
+            <h2>다음 단계:<br>20분 무료 상담</h2>
+            <p id="ctaText"></p>
+            <div class="button-group">
+                <button class="btn-primary" onclick="scheduleConsultation()">20분 무료 상담 예약하기</button>
+                <button class="btn-secondary" onclick="downloadReport()">리포트 다운로드</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="./index.html">Home</a>
+            <a href="./portfolio.html">Portfolio</a>
+            <a href="./index.html#blog">Blog</a>
+            <a href="https://cal.com/chaeum" target="_blank">Schedule</a>
+        </div>
+    </footer>
+
+    <script>
+        console.log('Report page loaded');
+        
+        // sessionStorage에서 데이터 가져오기
+        const diagnosisDataStr = sessionStorage.getItem('diagnosisData');
+        console.log('Retrieved from sessionStorage:', diagnosisDataStr);
+
+        if (!diagnosisDataStr) {
+            console.error('No diagnosis data found in sessionStorage');
+            showError();
+        } else {
+            try {
+                const diagnosisData = JSON.parse(diagnosisDataStr);
+                console.log('Parsed data:', diagnosisData);
+                displayReport(diagnosisData);
+            } catch (error) {
+                console.error('Error parsing data:', error);
+                showError();
+            }
+        }
+
+        function displayReport(data) {
+            console.log('Displaying report with data:', data);
+            
+            const { name, brandName, consultation, diagnosis, timestamp } = data;
+
+            if (!diagnosis) {
+                console.error('No diagnosis content found');
+                showError();
+                return;
+            }
+
+            // STAGE 1: 헤더 업데이트
+            document.getElementById('reportHeading').textContent = `${brandName}의 전략 진단`;
+            document.getElementById('reportSubtitle').textContent = `안녕하세요, ${name}님. 적어주신 고민을 바탕으로 분석한 ${brandName}의 전략 리포트입니다.`;
+            
+            const date = new Date(timestamp).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('reportTime').textContent = `생성 시간: ${date}`;
+
+            // 진단 내용을 섹션으로 분할
+            const reportContent = document.getElementById('reportContent');
+            reportContent.innerHTML = '';
+
+            const sections = diagnosis.split(/\*\*([^*]+)\*\*/);
+
+            for (let i = 1; i < sections.length; i += 2) {
+                const title = sections[i] ? sections[i].trim() : '';
+                const content = sections[i + 1] ? sections[i + 1].trim() : '';
+
+                if (title && content) {
+                    const div = document.createElement('div');
+                    div.className = 'report-section';
+
+                    const cleanTitle = title.replace(/^\d+\.\s*/, '');
+                    const paragraphs = content.split('\n\n').filter(p => p.trim());
+                    
+                    let html = `<h2>${cleanTitle}</h2>`;
+                    paragraphs.forEach(para => {
+                        html += `<p>${para.trim()}</p>`;
+                    });
+
+                    div.innerHTML = html;
+                    reportContent.appendChild(div);
+                    console.log('Added section:', cleanTitle);
+                }
+            }
+
+            // STAGE 2: 솔루션 추천
+            const solutionText = generateSolutionRecommendation(name, brandName);
+            document.getElementById('solutionText').innerHTML = solutionText;
+            document.getElementById('solutionBox').style.display = 'block';
+
+            // STAGE 3: 가격 제안 (Price Anchoring)
+            const anchoringText = generatePriceAnchoring();
+            document.getElementById('anchoringText').innerHTML = anchoringText;
+            document.getElementById('pricingSection').style.display = 'block';
+
+            // STAGE 4: 긴박감
+            document.getElementById('urgencyBox').style.display = 'block';
+
+            // CTA
+            document.getElementById('ctaText').textContent = `상담에서는 이 분석 결과를 바탕으로 ${brandName}의 구체적인 실행 계획을 함께 만들겠습니다. 예약 가능한 시간을 선택해주세요.`;
+            document.getElementById('divider2').style.display = 'block';
+            document.getElementById('ctaSection').style.display = 'block';
+        }
+
+        function generateSolutionRecommendation(name, brandName) {
+            return `${name}님께는 채움의 <strong>[전략 설계 The Blueprint]</strong>와 <strong>[실행 관리 The Running]</strong> 플로우를 추천합니다. 정교한 페르소나 설계와 주 1회 밀착 실행 관리가 결합될 때 가장 빠른 성과가 예상됩니다.`;
+        }
+
+        function generatePriceAnchoring() {
+            return `전문 마케팅 팀을 직접 채용할 경우 발생하는 <strong>리스크와 비용(연간 약 6,000만 원 이상)</strong> 대신, 검증된 전문가 그룹을 효율적으로 활용하세요. 채움과 함께라면 초기 구성 비용 없이 성과 중심의 실행이 가능합니다.`;
+        }
+
+        function scheduleConsultation() {
+            window.location.href = 'https://cal.com/chaeum';
+        }
+
+        function downloadReport() {
+            window.print();
+        }
+
+        function showError() {
+            document.getElementById('errorBox').style.display = 'block';
+            document.getElementById('reportContent').style.display = 'none';
+            document.getElementById('solutionBox').style.display = 'none';
+            document.getElementById('pricingSection').style.display = 'none';
+            document.getElementById('urgencyBox').style.display = 'none';
+            document.getElementById('divider2').style.display = 'none';
+            document.getElementById('ctaSection').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

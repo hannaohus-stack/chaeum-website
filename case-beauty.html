@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Beauty Brand | CHAEUM Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #4B4545;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #666666;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(75, 69, 69, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 1;
+        }
+
+        .btn-consult {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 28px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 400;
+        }
+
+        .btn-consult:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 140px 40px 80px 40px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 60px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid var(--white);
+            padding-bottom: 4px;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-link:hover {
+            opacity: 0.7;
+        }
+
+        .back-link::before {
+            content: '← ';
+            margin-right: 8px;
+        }
+
+        .case-header {
+            margin-bottom: 60px;
+        }
+
+        .case-tag {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+
+        .case-title {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+
+        .case-metric {
+            font-size: 36px;
+            font-weight: 300;
+            color: var(--white);
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 60px 0;
+        }
+
+        /* ===== SECTION ===== */
+        .case-section {
+            margin-bottom: 60px;
+        }
+
+        .case-section h2 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .case-section p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 2;
+            margin-bottom: 12px;
+        }
+
+        .case-section strong {
+            color: var(--white);
+        }
+
+        /* ===== METRICS GRID ===== */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .metric-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 24px;
+            border-radius: 2px;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 32px;
+            font-weight: 300;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--gray);
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding: 40px 0 40px 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -45px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--white);
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .timeline-description {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* ===== CTA ===== */
+        .cta-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 48px;
+            border-radius: 2px;
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .cta-box h2 {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 14px 40px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .case-title {
+                font-size: 32px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            header {
+                padding: 20px 24px;
+            }
+
+            .header-wrapper {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .container {
+                padding: 120px 24px 60px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Portfolio</a>
+                <a href="./index.html#blog">Blog</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <a href="./portfolio.html" class="back-link">포트폴리오로 돌아가기</a>
+
+        <div class="case-header">
+            <div class="case-tag">뷰티 / 프리미엄 포지셔닝</div>
+            <h1 class="case-title">Premium Beauty Brand</h1>
+            <div class="case-metric">+150% 매출 성장</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 1. 문제 정의 -->
+        <div class="case-section">
+            <h2>1. 문제 정의</h2>
+            <p><strong>상황:</strong> 성숙한 뷰티 시장 속에서 중소 뷰티 브랜드는 대기업 제품들 사이에서 주목받지 못했습니다. 제품의 성분과 효능은 우수했지만, "또 다른 뷰티 제품"으로만 인식되고 있었습니다.</p>
+            <p><strong>문제:</strong> 경쟁 과포화 시장에서의 차별화 부재. 높은 가격에 대한 정당성을 고객이 이해하지 못했습니다.</p>
+        </div>
+
+        <!-- 성과 지표 -->
+        <div class="metrics-grid">
+            <div class="metric-box">
+                <div class="metric-number">+150%</div>
+                <div class="metric-label">매출 성장</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-number">+120%</div>
+                <div class="metric-label">가격 프리미엄</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-number">73%</div>
+                <div class="metric-label">재구매율</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-number">4.7/5</div>
+                <div class="metric-label">고객 평점</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 2. 전략 -->
+        <div class="case-section">
+            <h2>2. 전략</h2>
+            <p><strong>포지셔닝 전환:</strong> "좋은 뷰티 제품" → "과학기반의 럭셔리 스킨케어"</p>
+            <p>우리는 "과학"과 "자연"의 결합이라는 차별화 포인트를 강조했습니다. 단순 효능 주장이 아니라, 제품 개발 철학과 성분 과학을 설명하는 방식으로 포지셔닝을 전환했습니다.</p>
+            
+            <p style="margin-top: 24px;"><strong>교육적 마케팅:</strong></p>
+            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
+                <li>• 성분 과학 설명 (복잡한 것을 쉽게)</li>
+                <li>• 피부 타입별 맞춤 가이드</li>
+                <li>• 고객 후기 (before & after 시각화)</li>
+            </ul>
+
+            <p style="margin-top: 24px;"><strong>프리미엄 경험 설계:</strong></p>
+            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
+                <li>• 패키징과 언박싱 경험 고급화</li>
+                <li>• 고객 커뮤니티 (VIP 멤버십)</li>
+                <li>• 개인화된 피부 진단 서비스</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 3. 실행 -->
+        <div class="case-section">
+            <h2>3. 실행</h2>
+            <p>10주 동안 다음 4가지를 집중적으로 진행했습니다:</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-title">Week 1-2: 브랜드 아이덴티티</div>
+                <div class="timeline-description">패키징, 로고, 색상, 톤앤매너를 프리미엄 이미지로 재설계. "과학적 럭셔리"를 시각화.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Week 3-4: 웹사이트 리뉴얼</div>
+                <div class="timeline-description">성분 과학, 개발 스토리, 고객 후기를 효과적으로 전달하는 웹사이트 구축.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Week 5-7: 콘텐츠 마케팅</div>
+                <div class="timeline-description">YouTube, Blog, Instagram에서 성분 교육, 스킨케어 가이드 등의 고품질 콘텐츠 배포.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Week 8-10: 커뮤니티 구축</div>
+                <div class="timeline-description">VIP 멤버십, 피부 진단 서비스 오픈. 고객 충성도 프로그램 시작.</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 4. 결과 -->
+        <div class="case-section">
+            <h2>4. 결과</h2>
+            <p><strong>정량적 성과:</strong></p>
+            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9; margin-bottom: 24px;">
+                <li>• 매출 150% 성장 (6개월 기준)</li>
+                <li>• 평균 구매액 120% 증가 (더 비싼 제품 선택)</li>
+                <li>• 재구매율 73%로 상승</li>
+                <li>• 평균 주문 가치 2배 이상</li>
+            </ul>
+
+            <p><strong>정성적 변화:</strong></p>
+            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
+                <li>• "과학기반의 럭셔리 스킨케어"로 명확히 인식</li>
+                <li>• 고객들의 성분과 효능에 대한 이해도 증가</li>
+                <li>• SNS 팔로워 수 250% 증가</li>
+                <li>• 고객 커뮤니티 활발한 상호작용</li>
+                <li>• 가격 인상 후에도 판매량 유지</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h2>좋은 제품인데 가격대가 이해받지 못한다면?</h2>
+            <p>당신의 제품의 진정한 가치를 고객이 알 수 있도록 설계된 전략이 필요합니다.<br>채움의 AI 고민 상담으로 진단해보세요.</p>
+            <button class="btn-primary" onclick="window.location.href='./diagnosis-talk.html'">무료 AI 진단 시작</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="./index.html">Home</a>
+            <a href="./portfolio.html">Portfolio</a>
+            <a href="./services.html">Services</a>
+            <a href="./about.html">About</a>
+        </div>
+    </footer>
+</body>
+</html>

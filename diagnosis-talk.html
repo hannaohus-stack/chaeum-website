@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 고민 상담 | CHAEUM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #4B4545;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #666666;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(75, 69, 69, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 1;
+        }
+
+        .btn-consult {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 28px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 400;
+        }
+
+        .btn-consult:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 140px 40px 80px 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            opacity: 0.7;
+        }
+
+        .page-heading {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+
+        .page-description {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 60px 0;
+        }
+
+        /* ===== FORM SECTION ===== */
+        .form-section {
+            margin-bottom: 60px;
+        }
+
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-label .required {
+            color: #FF6B6B;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            background-color: rgba(255, 255, 255, 0.02);
+            color: var(--white);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            letter-spacing: -0.3px;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--gray);
+            opacity: 0.6;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 280px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 8px;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        .form-hint strong {
+            color: var(--white);
+            opacity: 0.8;
+        }
+
+        /* ===== CONSULTATION BOX ===== */
+        .consultation-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 4px solid rgba(255, 255, 255, 0.3);
+            padding: 32px;
+            border-radius: 2px;
+            margin: 40px 0;
+        }
+
+        .consultation-box h3 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .consultation-box p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.9;
+        }
+
+        /* ===== BUTTON ===== */
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 16px 32px;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: transparent;
+            color: var(--white);
+            padding: 16px 32px;
+            border: 1px solid var(--white);
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== LOADING ===== */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 80px 40px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* ===== ERROR MESSAGE ===== */
+        .error-message {
+            display: none;
+            padding: 16px;
+            background-color: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 2px;
+            color: #FF9999;
+            font-size: 13px;
+            margin-bottom: 24px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .page-heading {
+                font-size: 32px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            header {
+                padding: 20px 24px;
+            }
+
+            .header-wrapper {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .container {
+                padding: 120px 24px 60px 24px;
+            }
+
+            .form-textarea {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Portfolio</a>
+                <a href="./index.html#blog">Blog</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <div class="page-header">
+            <div class="page-title">AI 고민 상담</div>
+            <h1 class="page-heading">브랜드의 진짜 고민<br>지금 들려주세요</h1>
+            <p class="page-description">설문지 대신 상담처럼. 당신의 브랜드가 처한 상황을 자유롭게 적어주세요. 채움의 AI 전략실이 분석하여 맞춤형 리포트를 보내드립니다.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- FORM -->
+        <form id="consultationForm" class="form-section">
+            <div id="errorMessage" class="error-message"></div>
+
+            <h2 style="font-size: 20px; font-weight: 300; margin-bottom: 32px;">기본 정보</h2>
+
+            <div class="form-group">
+                <label class="form-label">이름 <span class="required">*</span></label>
+                <input type="text" id="name" class="form-input" placeholder="예: 김지은" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">회사명 / 브랜드명 <span class="required">*</span></label>
+                <input type="text" id="brandName" class="form-input" placeholder="예: Deokhwa Myeongran" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">월 평균 매출 규모 <span class="required">*</span></label>
+                <select id="revenueScale" class="form-select" required>
+                    <option value="">선택해주세요</option>
+                    <option value="under_10m">1,000만원 이하</option>
+                    <option value="10m_50m">1,000만 ~ 5,000만원</option>
+                    <option value="50m_100m">5,000만 ~ 1억원</option>
+                    <option value="over_100m">1억원 이상</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">이메일 주소 <span class="required">*</span></label>
+                <input type="email" id="email" class="form-input" placeholder="예: founder@example.com" required>
+                <div class="form-hint">분석 결과와 상담 정보를 받을 이메일입니다</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2 style="font-size: 20px; font-weight: 300; margin-bottom: 32px; margin-top: 60px;">당신의 고민</h2>
+
+            <div class="consultation-box">
+                <h3>💡 좋은 고민 작성 팁</h3>
+                <p><strong>이렇게 작성하면 분석이 더 정확해집니다:</strong></p>
+                <p style="margin-top: 12px;">• "현재 매출은 나쁘지 않지만 성장이 멈춰 있습니다"</p>
+                <p>• "어떤 채널에 집중해야 할지 모르겠습니다"</p>
+                <p>• "고객들이 가격대를 이해하지 못하는 것 같습니다"</p>
+                <p>• "경쟁사와 어떻게 차별화할지 고민됩니다"</p>
+            </div>
+
+            <div class="form-group" style="margin-top: 40px;">
+                <label class="form-label">당신의 브랜드 상황을 자유롭게 적어주세요 <span class="required">*</span></label>
+                <textarea 
+                    id="consultation" 
+                    class="form-textarea" 
+                    placeholder="어디서부터 손대야 할지 모르는 마케팅 고민부터, 실행 인력이 없어 멈춰버린 프로젝트까지... 브랜드의 상황을 자유롭게 적어주세요. 채움의 AI 전략실이 분석하여 맞춤형 리포트를 보내드립니다."
+                    required
+                    minlength="50"
+                ></textarea>
+                <div class="form-hint">최소 50자 이상 작성해주세요. 구체적일수록 더 정확한 분석이 가능합니다.</div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-primary" id="submitBtn">AI 분석하기</button>
+                <button type="reset" class="btn-secondary">초기화</button>
+            </div>
+        </form>
+
+        <!-- LOADING -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">채움의 AI 전략실이 분석 중입니다...</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="./index.html">Home</a>
+            <a href="./portfolio.html">Portfolio</a>
+            <a href="./index.html#blog">Blog</a>
+            <a href="https://cal.com/chaeum" target="_blank">Schedule</a>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('consultationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const brandName = document.getElementById('brandName').value.trim();
+            const revenueScale = document.getElementById('revenueScale').value;
+            const email = document.getElementById('email').value.trim();
+            const consultation = document.getElementById('consultation').value.trim();
+
+            if (!name || !brandName || !revenueScale || !email || !consultation || consultation.length < 50) {
+                showError('모든 필드를 정확히 입력해주세요. 고민은 최소 50자 이상이어야 합니다.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            form.style.display = 'none';
+            loading.classList.add('active');
+            errorMessage.classList.remove('active');
+
+            try {
+                const diagnosis = await generateDiagnosis({
+                    name,
+                    brandName,
+                    revenueScale,
+                    consultation
+                });
+
+                const resultData = {
+                    name,
+                    brandName,
+                    revenueScale,
+                    email,
+                    consultation,
+                    diagnosis,
+                    timestamp: new Date().toISOString()
+                };
+
+                sessionStorage.setItem('diagnosisData', JSON.stringify(resultData));
+                console.log('Data saved:', resultData);
+
+                setTimeout(() => {
+                    window.location.href = './diagnosis-report.html';
+                }, 500);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
+                submitBtn.disabled = false;
+                form.style.display = 'block';
+                loading.classList.remove('active');
+            }
+        });
+
+        async function generateDiagnosis(userData) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const diagnosis = `**1. 핵심 문제 진단:**
+당신이 적어주신 상황을 보면 "${userData.brandName}"은(는) 현재 제품이나 서비스의 품질은 우수하지만 시장에서 '제대로 인식받지 못하는' 상태로 보입니다. 이는 포지셔닝의 부재이거나, 메시지 전달이 명확하지 않다는 의미입니다.
+
+**2. 전략적 병목 구간:**
+현재 가장 큰 문제는 정체된 성장입니다. 이는 전략의 부재나 실행 동력의 고갈에서 비롯되었을 가능성이 높습니다. 새로운 채널을 시도하거나 기존 방식을 개선할 '전략적 방향'이 필요한 시점입니다.
+
+**3. 채움이 제안하는 방향:**
+현재 ${userData.brandName}의 상황을 고려할 때, 전체 브랜딩을 새로 구축하기보다 **[타겟 재설정 + 메시지 정렬 + 고효율 채널 집중]** 조합으로 즉시 효과를 볼 수 있을 것으로 판단됩니다. 3-4개월 내 의미 있는 성장을 기대할 수 있습니다.
+
+**4. 20분 무료 상담 가이드:**
+상담 시 **"현재 타겟 고객이 누구인지, 그들이 당신의 브랜드를 어떻게 인식하고 있는지"**에 대해 집중적으로 논의하겠습니다. 이것이 명확해지면 나머지 전략은 자연스럽게 따라옵니다. 지금 바로 20분 상담을 예약하시면, 구체적인 실행 계획까지 함께 만들 수 있습니다.`;
+
+                    resolve(diagnosis);
+                }, 2000);
+            });
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.classList.add('active');
+        }
+    </script>
+</body>
+</html>
