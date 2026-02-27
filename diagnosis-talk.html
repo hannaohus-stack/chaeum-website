@@ -15,7 +15,6 @@
             --bg: #4B4545;
             --white: #FFFFFF;
             --gray: #888888;
-            --light-gray: #666666;
         }
 
         html {
@@ -62,10 +61,6 @@
             transition: opacity 0.3s ease;
         }
 
-        .logo:hover {
-            opacity: 1;
-        }
-
         .nav-menu {
             display: flex;
             gap: 40px;
@@ -82,10 +77,6 @@
             transition: opacity 0.3s ease;
         }
 
-        .nav-menu a:hover {
-            opacity: 1;
-        }
-
         .btn-consult {
             background-color: var(--white);
             color: var(--bg);
@@ -96,26 +87,21 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 2px;
-            font-weight: 400;
-        }
-
-        .btn-consult:hover {
-            opacity: 0.9;
         }
 
         /* ===== CONTAINER ===== */
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
             padding: 140px 40px 80px 40px;
         }
 
-        .page-header {
+        .form-header {
             text-align: center;
             margin-bottom: 60px;
         }
 
-        .page-title {
+        .form-title {
             font-size: 13px;
             letter-spacing: 2px;
             color: var(--gray);
@@ -123,18 +109,17 @@
             opacity: 0.7;
         }
 
-        .page-heading {
-            font-size: 48px;
+        .form-heading {
+            font-size: 36px;
             font-weight: 300;
             line-height: 1.3;
             margin-bottom: 24px;
         }
 
-        .page-description {
-            font-size: 16px;
+        .form-description {
+            font-size: 14px;
             color: var(--gray);
             line-height: 1.8;
-            margin-bottom: 40px;
         }
 
         /* ===== DIVIDER ===== */
@@ -144,200 +129,120 @@
             margin: 60px 0;
         }
 
-        /* ===== FORM SECTION ===== */
-        .form-section {
-            margin-bottom: 60px;
-        }
-
+        /* ===== FORM ===== */
         .form-group {
             margin-bottom: 32px;
         }
 
         .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: var(--white);
             margin-bottom: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .form-label .required {
-            color: #FF6B6B;
-            margin-left: 4px;
+            display: block;
+            font-weight: 500;
         }
 
         .form-input,
-        .form-select,
         .form-textarea {
             width: 100%;
-            padding: 16px;
+            padding: 14px 16px;
+            background-color: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 2px;
-            background-color: rgba(255, 255, 255, 0.02);
             color: var(--white);
             font-size: 14px;
             font-family: inherit;
             transition: all 0.3s ease;
-            letter-spacing: -0.3px;
         }
 
         .form-input:focus,
-        .form-select:focus,
         .form-textarea:focus {
             outline: none;
             border-color: rgba(255, 255, 255, 0.3);
-            background-color: rgba(255, 255, 255, 0.04);
-        }
-
-        .form-input::placeholder,
-        .form-textarea::placeholder {
-            color: var(--gray);
-            opacity: 0.6;
+            background-color: rgba(255, 255, 255, 0.12);
         }
 
         .form-textarea {
             resize: vertical;
-            min-height: 280px;
+            min-height: 120px;
+            font-family: inherit;
         }
 
         .form-hint {
             font-size: 12px;
             color: var(--gray);
             margin-top: 8px;
-            opacity: 0.7;
             line-height: 1.6;
         }
 
-        .form-hint strong {
-            color: var(--white);
-            opacity: 0.8;
-        }
-
-        /* ===== CONSULTATION BOX ===== */
-        .consultation-box {
+        /* ===== TIP BOX ===== */
+        .tip-box {
             background-color: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-left: 4px solid rgba(255, 255, 255, 0.3);
-            padding: 32px;
+            padding: 20px;
             border-radius: 2px;
             margin: 40px 0;
         }
 
-        .consultation-box h3 {
-            font-size: 16px;
-            font-weight: 400;
-            margin-bottom: 16px;
+        .tip-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            color: var(--white);
         }
 
-        .consultation-box p {
-            font-size: 14px;
+        .tip-text {
+            font-size: 13px;
             color: var(--gray);
-            line-height: 1.9;
+            line-height: 1.8;
         }
 
         /* ===== BUTTON ===== */
-        .button-group {
-            display: flex;
-            gap: 16px;
-            margin-top: 48px;
-        }
-
-        .btn-primary {
-            flex: 1;
+        .btn-submit {
+            width: 100%;
             background-color: var(--white);
             color: var(--bg);
-            padding: 16px 32px;
+            padding: 16px;
             border: none;
             font-size: 14px;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.3s ease;
             border-radius: 2px;
             font-weight: 500;
+            transition: all 0.3s ease;
         }
 
-        .btn-primary:hover:not(:disabled) {
+        .btn-submit:hover:not(:disabled) {
             opacity: 0.9;
         }
 
-        .btn-primary:disabled {
+        .btn-submit:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .btn-secondary {
-            flex: 1;
-            background: transparent;
-            color: var(--white);
-            padding: 16px 32px;
-            border: 1px solid var(--white);
-            font-size: 14px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* ===== LOADING ===== */
-        .loading {
+        .loading-spinner {
             display: none;
             text-align: center;
-            padding: 80px 40px;
-        }
-
-        .loading.active {
-            display: block;
+            padding: 20px;
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            border-top-color: var(--white);
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--white);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 24px;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        /* ===== ERROR MESSAGE ===== */
-        .error-message {
-            display: none;
-            padding: 16px;
-            background-color: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.3);
-            border-radius: 2px;
-            color: #FF9999;
-            font-size: 13px;
-            margin-bottom: 24px;
-            animation: slideDown 0.3s ease;
-        }
-
-        .error-message.active {
-            display: block;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* ===== FOOTER ===== */
@@ -346,12 +251,6 @@
             padding: 60px 40px;
             text-align: center;
             margin-top: 80px;
-        }
-
-        footer p {
-            font-size: 11px;
-            color: var(--gray);
-            margin-bottom: 12px;
         }
 
         footer a {
@@ -367,21 +266,12 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .page-heading {
-                font-size: 32px;
-            }
-
-            .button-group {
-                flex-direction: column;
+            .form-heading {
+                font-size: 28px;
             }
 
             header {
                 padding: 20px 24px;
-            }
-
-            .header-wrapper {
-                flex-direction: column;
-                gap: 16px;
             }
 
             .nav-menu {
@@ -392,10 +282,6 @@
 
             .container {
                 padding: 120px 24px 60px 24px;
-            }
-
-            .form-textarea {
-                min-height: 200px;
             }
         }
     </style>
@@ -410,110 +296,109 @@
                 <a href="./portfolio.html">Portfolio</a>
                 <a href="./index.html#blog">Blog</a>
                 <a href="./about.html">About</a>
-                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
+                <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
             </div>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
     <div class="container">
-        <div class="page-header">
-            <div class="page-title">AI 고민 상담</div>
-            <h1 class="page-heading">브랜드의 진짜 고민<br>지금 들려주세요</h1>
-            <p class="page-description">설문지 대신 상담처럼. 당신의 브랜드가 처한 상황을 자유롭게 적어주세요. 채움의 AI 전략실이 분석하여 맞춤형 리포트를 보내드립니다.</p>
+        <div class="form-header">
+            <div class="form-title">AI 고민 상담</div>
+            <h1 class="form-heading">당신의 브랜드 고민을<br>20초 안에 진단해드립니다</h1>
+            <p class="form-description">현재 느끼고 있는 브랜드의 병목 구간을 솔직하게 적어주세요.</p>
         </div>
 
         <div class="divider"></div>
 
         <!-- FORM -->
-        <form id="consultationForm" class="form-section">
-            <div id="errorMessage" class="error-message"></div>
-
-            <h2 style="font-size: 20px; font-weight: 300; margin-bottom: 32px;">기본 정보</h2>
-
+        <form id="diagnosisForm">
+            <!-- 이름 -->
             <div class="form-group">
-                <label class="form-label">이름 <span class="required">*</span></label>
-                <input type="text" id="name" class="form-input" placeholder="예: 김지은" required>
+                <label class="form-label">이름 *</label>
+                <input type="text" class="form-input" id="name" placeholder="홍길동" required>
             </div>
 
+            <!-- 브랜드명 -->
             <div class="form-group">
-                <label class="form-label">회사명 / 브랜드명 <span class="required">*</span></label>
-                <input type="text" id="brandName" class="form-input" placeholder="예: Deokhwa Myeongran" required>
+                <label class="form-label">브랜드명 *</label>
+                <input type="text" class="form-input" id="brandName" placeholder="브랜드 또는 회사명" required>
             </div>
 
+            <!-- 현재 월 매출 -->
             <div class="form-group">
-                <label class="form-label">월 평균 매출 규모 <span class="required">*</span></label>
-                <select id="revenueScale" class="form-select" required>
+                <label class="form-label">현재 월 매출 규모</label>
+                <select class="form-input" id="revenueScale">
                     <option value="">선택해주세요</option>
-                    <option value="under_10m">1,000만원 이하</option>
-                    <option value="10m_50m">1,000만 ~ 5,000만원</option>
-                    <option value="50m_100m">5,000만 ~ 1억원</option>
-                    <option value="over_100m">1억원 이상</option>
+                    <option value="1M-5M">월 100만원 ~ 500만원</option>
+                    <option value="5M-20M">월 500만원 ~ 2,000만원</option>
+                    <option value="20M-50M">월 2,000만원 ~ 5,000만원</option>
+                    <option value="50M-100M">월 5,000만원 ~ 1억원</option>
+                    <option value="100M+">월 1억원 이상</option>
                 </select>
             </div>
 
+            <!-- 이메일 -->
             <div class="form-group">
-                <label class="form-label">이메일 주소 <span class="required">*</span></label>
-                <input type="email" id="email" class="form-input" placeholder="예: founder@example.com" required>
-                <div class="form-hint">분석 결과와 상담 정보를 받을 이메일입니다</div>
+                <label class="form-label">이메일 *</label>
+                <input type="email" class="form-input" id="email" placeholder="your@email.com" required>
+                <p class="form-hint">진단 결과와 상담 안내를 이 이메일로 보내드립니다.</p>
             </div>
 
-            <div class="divider"></div>
-
-            <h2 style="font-size: 20px; font-weight: 300; margin-bottom: 32px; margin-top: 60px;">당신의 고민</h2>
-
-            <div class="consultation-box">
-                <h3>💡 좋은 고민 작성 팁</h3>
-                <p><strong>이렇게 작성하면 분석이 더 정확해집니다:</strong></p>
-                <p style="margin-top: 12px;">• "현재 매출은 나쁘지 않지만 성장이 멈춰 있습니다"</p>
-                <p>• "어떤 채널에 집중해야 할지 모르겠습니다"</p>
-                <p>• "고객들이 가격대를 이해하지 못하는 것 같습니다"</p>
-                <p>• "경쟁사와 어떻게 차별화할지 고민됩니다"</p>
+            <!-- 고민 입력 -->
+            <div class="form-group">
+                <label class="form-label">가장 큰 고민은 무엇인가요? *</label>
+                <textarea class="form-textarea" id="consultation" placeholder="예: 좋은 제품을 만들었는데 고객들이 모르고 있어요. 신뢰도가 낮은 것 같은데 어떻게 개선해야 할까요?" required></textarea>
+                <p class="form-hint" id="charCount">최소 50자 이상 입력해주세요 (현재: 0자)</p>
             </div>
 
-            <div class="form-group" style="margin-top: 40px;">
-                <label class="form-label">당신의 브랜드 상황을 자유롭게 적어주세요 <span class="required">*</span></label>
-                <textarea 
-                    id="consultation" 
-                    class="form-textarea" 
-                    placeholder="어디서부터 손대야 할지 모르는 마케팅 고민부터, 실행 인력이 없어 멈춰버린 프로젝트까지... 브랜드의 상황을 자유롭게 적어주세요. 채움의 AI 전략실이 분석하여 맞춤형 리포트를 보내드립니다."
-                    required
-                    minlength="50"
-                ></textarea>
-                <div class="form-hint">최소 50자 이상 작성해주세요. 구체적일수록 더 정확한 분석이 가능합니다.</div>
+            <div class="tip-box">
+                <div class="tip-title">💡 좋은 고민 작성 팁</div>
+                <div class="tip-text">
+                    • 현재 상황을 구체적으로 설명해주세요<br>
+                    • 겪고 있는 문제점이 무엇인지<br>
+                    • 지금까지 시도한 것들이 있는지<br>
+                    • 3개월 뒤 이루고 싶은 목표가 무엇인지<br><br>
+                    구체할수록 더 정확한 진단을 받을 수 있습니다.
+                </div>
             </div>
 
-            <div class="button-group">
-                <button type="submit" class="btn-primary" id="submitBtn">AI 분석하기</button>
-                <button type="reset" class="btn-secondary">초기화</button>
+            <!-- 제출 버튼 -->
+            <button type="submit" class="btn-submit" id="submitBtn">AI 분석하기</button>
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p style="margin-top: 12px; font-size: 14px; color: var(--gray);">AI가 분석 중입니다...</p>
             </div>
         </form>
-
-        <!-- LOADING -->
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <div class="loading-text">채움의 AI 전략실이 분석 중입니다...</div>
-        </div>
     </div>
 
     <!-- FOOTER -->
     <footer>
-        <p>© 2026 CHAEUM</p>
-        <div>
-            <a href="./index.html">Home</a>
-            <a href="./portfolio.html">Portfolio</a>
-            <a href="./index.html#blog">Blog</a>
-            <a href="https://cal.com/chaeum" target="_blank">Schedule</a>
-        </div>
+        <a href="./index.html">Home</a>
+        <a href="./services.html">Services</a>
+        <a href="./portfolio.html">Portfolio</a>
+        <a href="./about.html">About</a>
     </footer>
 
     <script>
-        const form = document.getElementById('consultationForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const loading = document.getElementById('loading');
-        const errorMessage = document.getElementById('errorMessage');
+        // ===== SUPABASE 설정 =====
+        const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_EGj8-Rc7qI_xQEGWddL5fg_kLgVilMn';
 
-        form.addEventListener('submit', async (e) => {
+        // 고민 입력 글자 수 세기
+        document.getElementById('consultation').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('charCount').textContent = `최소 50자 이상 입력해주세요 (현재: ${count}자)`;
+            
+            if (count >= 50) {
+                document.getElementById('charCount').style.color = 'rgba(100, 200, 100, 0.7)';
+            } else {
+                document.getElementById('charCount').style.color = 'var(--gray)';
+            }
+        });
+
+        // 폼 제출
+        document.getElementById('diagnosisForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const name = document.getElementById('name').value.trim();
@@ -522,24 +407,21 @@
             const email = document.getElementById('email').value.trim();
             const consultation = document.getElementById('consultation').value.trim();
 
-            if (!name || !brandName || !revenueScale || !email || !consultation || consultation.length < 50) {
-                showError('모든 필드를 정확히 입력해주세요. 고민은 최소 50자 이상이어야 합니다.');
+            // 유효성 검사
+            if (consultation.length < 50) {
+                alert('고민을 50자 이상 입력해주세요.');
                 return;
             }
 
-            submitBtn.disabled = true;
-            form.style.display = 'none';
-            loading.classList.add('active');
-            errorMessage.classList.remove('active');
+            // 로딩 상태
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('loadingSpinner').style.display = 'block';
 
             try {
-                const diagnosis = await generateDiagnosis({
-                    name,
-                    brandName,
-                    revenueScale,
-                    consultation
-                });
+                // AI 분석 (mock)
+                const diagnosis = await generateDiagnosis(name, brandName, email, consultation);
 
+                // 데이터 객체
                 const resultData = {
                     name,
                     brandName,
@@ -550,46 +432,106 @@
                     timestamp: new Date().toISOString()
                 };
 
-                sessionStorage.setItem('diagnosisData', JSON.stringify(resultData));
-                console.log('Data saved:', resultData);
+                // 📊 Supabase에 저장 시도
+                await saveToDatabaseOptional(resultData);
 
+                // 📱 SessionStorage에도 저장
+                sessionStorage.setItem('diagnosisData', JSON.stringify(resultData));
+                console.log('✅ Data ready for report');
+
+                // 리포트 페이지로 이동
                 setTimeout(() => {
                     window.location.href = './diagnosis-report.html';
                 }, 500);
 
             } catch (error) {
-                console.error('Error:', error);
-                showError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
-                submitBtn.disabled = false;
-                form.style.display = 'block';
-                loading.classList.remove('active');
+                console.error('❌ Error:', error);
+                alert('처리 중 오류가 발생했습니다. 다시 시도해주세요.');
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('loadingSpinner').style.display = 'none';
             }
         });
 
-        async function generateDiagnosis(userData) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const diagnosis = `**1. 핵심 문제 진단:**
-당신이 적어주신 상황을 보면 "${userData.brandName}"은(는) 현재 제품이나 서비스의 품질은 우수하지만 시장에서 '제대로 인식받지 못하는' 상태로 보입니다. 이는 포지셔닝의 부재이거나, 메시지 전달이 명확하지 않다는 의미입니다.
+        // AI 분석 (Mock)
+        async function generateDiagnosis(name, brandName, email, consultation) {
+            // 실제로는 OpenAI API 호출하는 부분
+            // 지금은 Mock 분석 반환
+            
+            return `**1. 핵심 문제 진단:**
+당신이 공유해주신 고민을 분석해보니, "${brandName}"의 가장 큰 병목 구간은 '포지셔닝 부족'으로 파악됩니다. 좋은 제품이 있지만 시장에서 제대로 인식받지 못하고 있는 상황입니다. 이는 대부분의 성장 초기 브랜드가 겪는 전형적인 문제입니다.
 
 **2. 전략적 병목 구간:**
-현재 가장 큰 문제는 정체된 성장입니다. 이는 전략의 부재나 실행 동력의 고갈에서 비롯되었을 가능성이 높습니다. 새로운 채널을 시도하거나 기존 방식을 개선할 '전략적 방향'이 필요한 시점입니다.
+현재 ${brandName}의 상황을 보면 3가지 병목이 있습니다:
+- 명확한 포지셔닝 부재: 고객들이 당신의 브랜드가 무엇인지 명확히 모름
+- 신뢰도 구축 부족: 좋은 제품이지만 그 가치를 설명하지 못함
+- 타겟팅 불명확: 누가 고객인지 정의되지 않음
+
+이 3가지를 동시에 해결하면, 3개월 안에 매출 2배 성장이 충분히 가능합니다.
 
 **3. 채움이 제안하는 방향:**
-현재 ${userData.brandName}의 상황을 고려할 때, 전체 브랜딩을 새로 구축하기보다 **[타겟 재설정 + 메시지 정렬 + 고효율 채널 집중]** 조합으로 즉시 효과를 볼 수 있을 것으로 판단됩니다. 3-4개월 내 의미 있는 성장을 기대할 수 있습니다.
+채움은 "${brandName}"을 위해 다음과 같은 전략을 제안합니다:
+- 1단계: 타겟 고객 정확히 정의 (페르소나 설계)
+- 2단계: 신뢰도 높은 포지셔닝 메시지 개발
+- 3단계: 고객 터치포인트별 메시지 최적화
+- 4단계: 실행 및 데이터 기반 개선
+
+이 과정을 거치면 ${brandName}은 시장에서 '우리는 이런 브랜드다'라고 명확히 인식될 수 있습니다.
 
 **4. 20분 무료 상담 가이드:**
-상담 시 **"현재 타겟 고객이 누구인지, 그들이 당신의 브랜드를 어떻게 인식하고 있는지"**에 대해 집중적으로 논의하겠습니다. 이것이 명확해지면 나머지 전략은 자연스럽게 따라옵니다. 지금 바로 20분 상담을 예약하시면, 구체적인 실행 계획까지 함께 만들 수 있습니다.`;
+상담에서는 다음 내용을 구체적으로 논의할 예정입니다:
+- 현재 고객들이 당신의 브랜드를 어떻게 인식하고 있는지
+- 경쟁사 대비 당신의 차별점이 정확히 무엇인지
+- 3개월 안에 달성 가능한 구체적인 목표 수치
+- 맞춤형 실행 계획 및 투자 규모
 
-                    resolve(diagnosis);
-                }, 2000);
-            });
+${name}님의 고민을 함께 풀 준비가 되어있습니다.`;
         }
 
-        function showError(message) {
-            const errorEl = document.getElementById('errorMessage');
-            errorEl.textContent = message;
-            errorEl.classList.add('active');
+        // Supabase 저장 (선택사항)
+        async function saveToDatabaseOptional(data) {
+            // Supabase URL과 Key가 설정되지 않으면 스킵
+            if (SUPABASE_URL.includes('YOUR_PROJECT')) {
+                console.log('⚠️ Supabase not configured, skipping database save');
+                return;
+            }
+
+            try {
+                console.log('📊 Saving to Supabase...');
+                
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/diagnosis_submissions`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        },
+                        body: JSON.stringify({
+                            name: data.name,
+                            brand_name: data.brandName,
+                            revenue_scale: data.revenueScale,
+                            email: data.email,
+                            consultation: data.consultation,
+                            diagnosis: data.diagnosis,
+                            timestamp: data.timestamp,
+                            status: 'new',
+                        })
+                    }
+                );
+
+                if (response.ok) {
+                    console.log('✅ Data saved to Supabase');
+                    return true;
+                } else {
+                    console.warn('⚠️ Supabase save failed, but continuing...');
+                    return false;
+                }
+            } catch (error) {
+                console.warn('⚠️ Supabase save error (non-critical):', error);
+                // 에러 발생해도 진행 (SessionStorage 사용)
+                return false;
+            }
         }
     </script>
 </body>
