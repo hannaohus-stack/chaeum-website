@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -13,1028 +14,1039 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg: #4B4545;
-            --white: #FFFFFF;
-            --gray: #888888;
-        }
+```
+    :root {
+        --bg: #4B4545;
+        --white: #FFFFFF;
+        --gray: #888888;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: var(--white);
-        }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px;
-        }
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px;
+    }
 
-        h1 {
-            font-size: 32px;
-            margin-bottom: 12px;
-            font-weight: 300;
-        }
+    h1 {
+        font-size: 32px;
+        margin-bottom: 12px;
+        font-weight: 300;
+    }
 
-        .subtitle {
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 40px;
-        }
+    .subtitle {
+        font-size: 14px;
+        color: var(--gray);
+        margin-bottom: 40px;
+    }
 
-        /* ===== STATS ===== */
+    /* ===== STATS ===== */
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .stat-box {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 24px;
+        border-radius: 4px;
+    }
+
+    .stat-number {
+        font-size: 36px;
+        font-weight: 300;
+        margin-bottom: 8px;
+        color: var(--white);
+    }
+
+    .stat-label {
+        font-size: 13px;
+        color: var(--gray);
+        letter-spacing: 0.5px;
+    }
+
+    /* ===== CONTROLS ===== */
+    .controls {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .filter-group {
+        display: flex;
+        gap: 8px;
+    }
+
+    .filter-btn {
+        background: transparent;
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+        border-color: var(--white);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .export-btn {
+        background-color: var(--white);
+        color: var(--bg);
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .export-btn:hover {
+        opacity: 0.9;
+    }
+
+    .search-box {
+        background-color: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 8px 16px;
+        border-radius: 4px;
+        color: var(--white);
+        width: 200px;
+        font-size: 12px;
+    }
+
+    /* ===== TABLE ===== */
+    .table-container {
+        background-color: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px;
+    }
+
+    thead {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    th {
+        padding: 16px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: var(--white);
+    }
+
+    td {
+        padding: 16px;
+        font-size: 13px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--gray);
+    }
+
+    tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .name-cell {
+        color: var(--white);
+        font-weight: 500;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .status-new {
+        background-color: rgba(100, 200, 255, 0.2);
+        color: #64C8FF;
+    }
+
+    .status-contacted {
+        background-color: rgba(255, 165, 0, 0.2);
+        color: #FFA500;
+    }
+
+    .status-converted {
+        background-color: rgba(100, 255, 100, 0.2);
+        color: #64FF64;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .action-btn {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        padding: 4px 8px;
+        border-radius: 2px;
+        cursor: pointer;
+        font-size: 11px;
+        transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+        border-color: var(--white);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ===== MODAL ===== */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background-color: var(--bg);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 4px;
+        padding: 32px;
+        max-width: 800px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        font-size: 20px;
+        font-weight: 300;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-close {
+        background: none;
+        border: none;
+        color: var(--white);
+        font-size: 24px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+    }
+
+    .modal-close:hover {
+        opacity: 1;
+    }
+
+    .modal-tabs {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .modal-tab {
+        background: none;
+        border: none;
+        color: var(--gray);
+        padding: 12px 0;
+        cursor: pointer;
+        font-size: 13px;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s ease;
+    }
+
+    .modal-tab.active {
+        color: var(--white);
+        border-bottom-color: var(--white);
+    }
+
+    .modal-tab:hover {
+        color: var(--white);
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    /* ===== REPORT ===== */
+    .report-section {
+        margin-bottom: 24px;
+    }
+
+    .report-section h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--white);
+    }
+
+    .report-text {
+        font-size: 13px;
+        color: var(--gray);
+        line-height: 1.8;
+        background-color: rgba(255, 255, 255, 0.02);
+        padding: 12px;
+        border-radius: 4px;
+        border-left: 3px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* ===== QUOTATION ===== */
+    .quotation-form {
+        display: grid;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: grid;
+        gap: 8px;
+    }
+
+    .form-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--white);
+        letter-spacing: 0.5px;
+    }
+
+    .service-section {
+        background-color: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 16px;
+        border-radius: 4px;
+        margin-bottom: 16px;
+    }
+
+    .service-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 12px;
+    }
+
+    .service-options {
+        display: grid;
+        gap: 8px;
+    }
+
+    .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px;
+        background-color: rgba(255, 255, 255, 0.02);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .radio-option:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .radio-option input {
+        cursor: pointer;
+    }
+
+    .radio-label {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .radio-price {
+        color: var(--white);
+        font-weight: 600;
+    }
+
+    .total-section {
+        background-color: rgba(255, 165, 0, 0.1);
+        border: 1px solid rgba(255, 165, 0, 0.3);
+        padding: 16px;
+        border-radius: 4px;
+        margin-top: 20px;
+    }
+
+    .total-label {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .total-price {
+        font-size: 28px;
+        font-weight: 300;
+        color: #FFA500;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .btn-submit {
+        flex: 1;
+        background-color: var(--white);
+        color: var(--bg);
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    .btn-submit:hover {
+        opacity: 0.9;
+    }
+
+    .btn-cancel {
+        flex: 1;
+        background: transparent;
+        color: var(--white);
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-cancel:hover {
+        border-color: var(--white);
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .loading {
+        text-align: center;
+        padding: 60px 40px;
+        color: var(--gray);
+    }
+
+    .error {
+        background-color: rgba(255, 100, 100, 0.1);
+        border: 1px solid rgba(255, 100, 100, 0.3);
+        color: #FF6464;
+        padding: 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
         .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(2, 1fr);
         }
+    }
 
-        .stat-box {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 24px;
-            border-radius: 4px;
-        }
-
-        .stat-number {
-            font-size: 36px;
-            font-weight: 300;
-            margin-bottom: 8px;
-            color: var(--white);
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: var(--gray);
-            letter-spacing: 0.5px;
-        }
-
-        /* ===== CONTROLS ===== */
-        .controls {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .filter-btn {
-            background: transparent;
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            border-color: var(--white);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .export-btn {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .export-btn:hover {
-            opacity: 0.9;
-        }
-
-        .search-box {
-            background-color: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 8px 16px;
-            border-radius: 4px;
-            color: var(--white);
-            width: 200px;
-            font-size: 12px;
-        }
-
-        /* ===== TABLE ===== */
-        .table-container {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
-        }
-
-        thead {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        th {
-            padding: 16px;
-            text-align: left;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: var(--white);
-        }
-
-        td {
-            padding: 16px;
-            font-size: 13px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--gray);
-        }
-
-        tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        .name-cell {
-            color: var(--white);
-            font-weight: 500;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .status-new {
-            background-color: rgba(100, 200, 255, 0.2);
-            color: #64C8FF;
-        }
-
-        .status-contacted {
-            background-color: rgba(255, 165, 0, 0.2);
-            color: #FFA500;
-        }
-
-        .status-converted {
-            background-color: rgba(100, 255, 100, 0.2);
-            color: #64FF64;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--white);
-            padding: 4px 8px;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 11px;
-            transition: all 0.2s ease;
-        }
-
-        .action-btn:hover {
-            border-color: var(--white);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* ===== MODAL ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
+    @media (max-width: 768px) {
+        .container {
             padding: 20px;
         }
 
-        .modal.active {
-            display: flex;
+        .stats {
+            grid-template-columns: 1fr;
         }
 
         .modal-content {
-            background-color: var(--bg);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
-            padding: 32px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            font-size: 20px;
-            font-weight: 300;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s ease;
-        }
-
-        .modal-close:hover {
-            opacity: 1;
-        }
-
-        .modal-tabs {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .modal-tab {
-            background: none;
-            border: none;
-            color: var(--gray);
-            padding: 12px 0;
-            cursor: pointer;
-            font-size: 13px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .modal-tab.active {
-            color: var(--white);
-            border-bottom-color: var(--white);
-        }
-
-        .modal-tab:hover {
-            color: var(--white);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* ===== REPORT ===== */
-        .report-section {
-            margin-bottom: 24px;
-        }
-
-        .report-section h3 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--white);
-        }
-
-        .report-text {
-            font-size: 13px;
-            color: var(--gray);
-            line-height: 1.8;
-            background-color: rgba(255, 255, 255, 0.02);
-            padding: 12px;
-            border-radius: 4px;
-            border-left: 3px solid rgba(255, 255, 255, 0.2);
-        }
-
-        /* ===== QUOTATION ===== */
-        .quotation-form {
-            display: grid;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: grid;
-            gap: 8px;
-        }
-
-        .form-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--white);
-            letter-spacing: 0.5px;
-        }
-
-        .service-section {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 16px;
-            border-radius: 4px;
-            margin-bottom: 16px;
-        }
-
-        .service-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 12px;
-        }
-
-        .service-options {
-            display: grid;
-            gap: 8px;
-        }
-
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px;
-            background-color: rgba(255, 255, 255, 0.02);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .radio-option:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .radio-option input {
-            cursor: pointer;
-        }
-
-        .radio-label {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .radio-price {
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .total-section {
-            background-color: rgba(255, 165, 0, 0.1);
-            border: 1px solid rgba(255, 165, 0, 0.3);
-            padding: 16px;
-            border-radius: 4px;
-            margin-top: 20px;
-        }
-
-        .total-label {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .total-price {
-            font-size: 28px;
-            font-weight: 300;
-            color: #FFA500;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .btn-submit {
-            flex: 1;
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .btn-submit:hover {
-            opacity: 0.9;
-        }
-
-        .btn-cancel {
-            flex: 1;
-            background: transparent;
-            color: var(--white);
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-cancel:hover {
-            border-color: var(--white);
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .loading {
-            text-align: center;
-            padding: 60px 40px;
-            color: var(--gray);
-        }
-
-        .error {
-            background-color: rgba(255, 100, 100, 0.1);
-            border: 1px solid rgba(255, 100, 100, 0.3);
-            color: #FF6464;
             padding: 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
         }
+    }
+</style>
+```
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-content {
-                padding: 20px;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>📊 AI 진단 데이터 관리</h1>
         <p class="subtitle">고객 데이터 + 견적서 PDF 생성</p>
 
-        <!-- STATS -->
-        <div class="stats">
-            <div class="stat-box">
-                <div class="stat-number" id="totalCount">0</div>
-                <div class="stat-label">총 신청건</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number" id="newCount">0</div>
-                <div class="stat-label">미접촉</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number" id="contactedCount">0</div>
-                <div class="stat-label">연락됨</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number" id="convertedCount">0</div>
-                <div class="stat-label">전환됨</div>
-            </div>
+```
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-box">
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-label">총 신청건</div>
         </div>
-
-        <!-- CONTROLS -->
-        <div class="controls">
-            <div class="filter-group">
-                <button class="filter-btn active" onclick="filterByStatus('all')">모든 고객</button>
-                <button class="filter-btn" onclick="filterByStatus('new')">미접촉</button>
-                <button class="filter-btn" onclick="filterByStatus('contacted')">연락됨</button>
-                <button class="filter-btn" onclick="filterByStatus('converted')">전환됨</button>
-            </div>
-            <input type="text" class="search-box" id="searchBox" placeholder="이름, 이메일 검색">
-            <button class="export-btn" onclick="exportToCSV()">📥 CSV 다운로드</button>
+        <div class="stat-box">
+            <div class="stat-number" id="newCount">0</div>
+            <div class="stat-label">미접촉</div>
         </div>
-
-        <!-- ERROR -->
-        <div id="error" class="error" style="display: none;"></div>
-
-        <!-- LOADING -->
-        <div id="loading" class="loading">데이터 로딩 중...</div>
-
-        <!-- TABLE -->
-        <div class="table-container" id="tableContainer" style="display: none;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>이름</th>
-                        <th>브랜드</th>
-                        <th>이메일</th>
-                        <th>매출규모</th>
-                        <th>상태</th>
-                        <th>신청일</th>
-                        <th>관리</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
+        <div class="stat-box">
+            <div class="stat-number" id="contactedCount">0</div>
+            <div class="stat-label">연락됨</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" id="convertedCount">0</div>
+            <div class="stat-label">전환됨</div>
         </div>
     </div>
 
-    <!-- MODAL -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span id="modalTitle">고객 상세 정보</span>
-                <button class="modal-close" onclick="closeModal()">×</button>
+    <!-- CONTROLS -->
+    <div class="controls">
+        <div class="filter-group">
+            <button class="filter-btn active" onclick="filterByStatus('all')">모든 고객</button>
+            <button class="filter-btn" onclick="filterByStatus('new')">미접촉</button>
+            <button class="filter-btn" onclick="filterByStatus('contacted')">연락됨</button>
+            <button class="filter-btn" onclick="filterByStatus('converted')">전환됨</button>
+        </div>
+        <input type="text" class="search-box" id="searchBox" placeholder="이름, 이메일 검색">
+        <button class="export-btn" onclick="exportToCSV()">📥 CSV 다운로드</button>
+    </div>
+
+    <!-- ERROR -->
+    <div id="error" class="error" style="display: none;"></div>
+
+    <!-- LOADING -->
+    <div id="loading" class="loading">데이터 로딩 중...</div>
+
+    <!-- TABLE -->
+    <div class="table-container" id="tableContainer" style="display: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>브랜드</th>
+                    <th>이메일</th>
+                    <th>매출규모</th>
+                    <th>상태</th>
+                    <th>신청일</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="modalTitle">고객 상세 정보</span>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+
+        <!-- TABS -->
+        <div class="modal-tabs">
+            <button class="modal-tab active" onclick="switchTab('report')">📋 진단 리포트</button>
+            <button class="modal-tab" onclick="switchTab('quotation')">💰 견적서 작성</button>
+        </div>
+
+        <!-- REPORT TAB -->
+        <div id="reportTab" class="tab-content active">
+            <div class="report-section">
+                <h3>고객 정보</h3>
+                <p style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">
+                    <strong>이름:</strong> <span id="reportName" style="color: var(--white);"></span>
+                </p>
+                <p style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">
+                    <strong>브랜드:</strong> <span id="reportBrand" style="color: var(--white);"></span>
+                </p>
+                <p style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">
+                    <strong>이메일:</strong> <span id="reportEmail" style="color: var(--white);"></span>
+                </p>
+                <p style="font-size: 13px; color: var(--gray);">
+                    <strong>매출 규모:</strong> <span id="reportRevenue" style="color: var(--white);"></span>
+                </p>
             </div>
 
-            <!-- TABS -->
-            <div class="modal-tabs">
-                <button class="modal-tab active" onclick="switchTab('report')">📋 진단 리포트</button>
-                <button class="modal-tab" onclick="switchTab('quotation')">💰 견적서 작성</button>
+            <div class="report-section">
+                <h3>고객의 고민</h3>
+                <div class="report-text" id="reportConsultation"></div>
             </div>
 
-            <!-- REPORT TAB -->
-            <div id="reportTab" class="tab-content active">
-                <div class="report-section">
-                    <h3>고객 정보</h3>
-                    <p style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">
-                        <strong>이름:</strong> <span id="reportName" style="color: var(--white);"></span>
-                    </p>
-                    <p style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">
-                        <strong>브랜드:</strong> <span id="reportBrand" style="color: var(--white);"></span>
-                    </p>
-                    <p style="font-size: 13px; color: var(--gray); margin-bottom: 4px;">
-                        <strong>이메일:</strong> <span id="reportEmail" style="color: var(--white);"></span>
-                    </p>
-                    <p style="font-size: 13px; color: var(--gray);">
-                        <strong>매출 규모:</strong> <span id="reportRevenue" style="color: var(--white);"></span>
+            <div class="report-section">
+                <h3>AI 진단 결과</h3>
+                <div id="reportDiagnosis" style="display: grid; gap: 16px;"></div>
+            </div>
+        </div>
+
+        <!-- QUOTATION TAB -->
+        <div id="quotationTab" class="tab-content">
+            <form class="quotation-form" id="quotationForm">
+                <!-- 전략 설계 -->
+                <div class="service-section">
+                    <div class="service-title">1️⃣ 전략 설계 (The Blueprint) - 1회성</div>
+                    <div class="service-options">
+                        <label class="radio-option">
+                            <input type="radio" name="blueprint" value="lite" onchange="updateQuotation()">
+                            <div class="radio-label">
+                                <span>Lite - 초기 브랜드 진단</span>
+                                <span class="radio-price">₩3,000,000</span>
+                            </div>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="blueprint" value="standard" onchange="updateQuotation()">
+                            <div class="radio-label">
+                                <span>Standard ⭐ - 성장기 브랜드 (추천)</span>
+                                <span class="radio-price">₩5,000,000</span>
+                            </div>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="blueprint" value="premium" onchange="updateQuotation()">
+                            <div class="radio-label">
+                                <span>Premium - 성숙기 브랜드</span>
+                                <span class="radio-price">₩8,000,000</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 실행 관리 -->
+                <div class="service-section">
+                    <div class="service-title">2️⃣ 실행 관리 (The Running) - 월간 리테이너</div>
+                    <div class="service-options">
+                        <label class="radio-option">
+                            <input type="radio" name="running" value="standard" onchange="updateQuotation()">
+                            <div class="radio-label">
+                                <span>Standard - 핵심 채널 운영</span>
+                                <span class="radio-price">월 ₩1,500,000</span>
+                            </div>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="running" value="essential" onchange="updateQuotation()">
+                            <div class="radio-label">
+                                <span>Essential ⭐ - 커스텀 콘텐츠 + 주 1회 세션</span>
+                                <span class="radio-price">월 ₩3,000,000</span>
+                            </div>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="running" value="professional" onchange="updateQuotation()">
+                            <div class="radio-label">
+                                <span>Professional - 전담 PM + 영상 제작</span>
+                                <span class="radio-price">월 ₩5,000,000</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 계약 기간 -->
+                <div class="form-group">
+                    <label class="form-label">계약 기간 (실행 관리)</label>
+                    <select id="contractMonth" onchange="updateQuotation()" style="background-color: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px; border-radius: 4px; color: var(--white); font-size: 12px;">
+                        <option value="3">3개월</option>
+                        <option value="6" selected>6개월</option>
+                        <option value="12">12개월</option>
+                    </select>
+                </div>
+
+                <!-- 전략 의견 -->
+                <div class="form-group">
+                    <label class="form-label">✍️ Hanna의 전략 의견 (고객맞춤 솔루션)</label>
+                    <textarea id="strategyOpinion" style="background-color: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px; border-radius: 4px; color: var(--white); font-size: 12px; min-height: 120px; font-family: inherit; resize: vertical;" placeholder="예: 이 브랜드의 핵심 이슈는 고급 포지셔닝 부재입니다. 타겟층은 30대 이상 고소득층이므로, 프리미엄 메시지로의 전환이 가장 중요합니다. 먼저 랜딩페이지의 비주얼과 카피를 고급스럽게 재정의하고, SNS 채널 전략을 일관되게 유지하면 3개월 내 신뢰도 상승을 기대할 수 있습니다."></textarea>
+                    <p style="font-size: 11px; color: var(--gray); margin-top: 8px;">
+                        고객의 상황을 분석하고 맞춤형 솔루션을 작성해주세요. 이 내용은 PDF 견적서에 포함됩니다.
                     </p>
                 </div>
 
-                <div class="report-section">
-                    <h3>고객의 고민</h3>
-                    <div class="report-text" id="reportConsultation"></div>
+                <!-- 총액 -->
+                <div class="total-section">
+                    <div class="total-label">총 예상 투자 비용</div>
+                    <div class="total-price" id="totalPrice">₩0</div>
+                    <p style="font-size: 11px; color: var(--gray); margin-top: 8px;">
+                        전략 설계(1회) + 실행 관리(월간 × 계약개월)
+                    </p>
                 </div>
 
-                <div class="report-section">
-                    <h3>AI 진단 결과</h3>
-                    <div id="reportDiagnosis" style="display: grid; gap: 16px;"></div>
+                <!-- 버튼 -->
+                <div class="button-group">
+                    <button type="button" class="btn-submit" onclick="generatePDF()">📄 PDF 견적서 생성</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal()">취소</button>
                 </div>
-            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-            <!-- QUOTATION TAB -->
-            <div id="quotationTab" class="tab-content">
-                <form class="quotation-form" id="quotationForm">
-                    <!-- 전략 설계 -->
-                    <div class="service-section">
-                        <div class="service-title">1️⃣ 전략 설계 (The Blueprint) - 1회성</div>
-                        <div class="service-options">
-                            <label class="radio-option">
-                                <input type="radio" name="blueprint" value="lite" onchange="updateQuotation()">
-                                <div class="radio-label">
-                                    <span>Lite - 초기 브랜드 진단</span>
-                                    <span class="radio-price">₩3,000,000</span>
-                                </div>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="blueprint" value="standard" onchange="updateQuotation()">
-                                <div class="radio-label">
-                                    <span>Standard ⭐ - 성장기 브랜드 (추천)</span>
-                                    <span class="radio-price">₩5,000,000</span>
-                                </div>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="blueprint" value="premium" onchange="updateQuotation()">
-                                <div class="radio-label">
-                                    <span>Premium - 성숙기 브랜드</span>
-                                    <span class="radio-price">₩8,000,000</span>
-                                </div>
-                            </label>
+<script>
+    // Supabase 설정
+    const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_EGj8-Rc7qI_xQEGWddL5fg_kLgVilMn';
+
+    let allData = [];
+    let currentFilter = 'all';
+    let currentCustomer = null;
+
+    // 가격 테이블
+    const prices = {
+        blueprint: { lite: 3000000, standard: 5000000, premium: 8000000 },
+        running: { standard: 1500000, essential: 3000000, professional: 5000000 }
+    };
+
+    // 데이터 로드
+    async function loadData() {
+        try {
+            const response = await fetch(
+                `${SUPABASE_URL}/rest/v1/diagnosis_submissions?order=created_at.desc`,
+                {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    }
+                }
+            );
+
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+            allData = await response.json();
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('tableContainer').style.display = 'block';
+            
+            updateStats();
+            renderTable(allData);
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').textContent = `오류: ${error.message}`;
+        }
+    }
+
+    // 통계 업데이트
+    function updateStats() {
+        const total = allData.length;
+        const newCount = allData.filter(d => d.status === 'new').length;
+        const contacted = allData.filter(d => d.status === 'contacted').length;
+        const converted = allData.filter(d => d.status === 'converted').length;
+
+        document.getElementById('totalCount').textContent = total;
+        document.getElementById('newCount').textContent = newCount;
+        document.getElementById('contactedCount').textContent = contacted;
+        document.getElementById('convertedCount').textContent = converted;
+    }
+
+    // 테이블 렌더링
+    function renderTable(data) {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            const date = new Date(row.created_at).toLocaleDateString('ko-KR');
+            const statusClass = `status-${row.status}`;
+            const statusText = { new: '미접촉', contacted: '연락됨', converted: '전환됨' }[row.status];
+
+            tr.innerHTML = `
+                <td class="name-cell">${row.name || '-'}</td>
+                <td>${row.brand_name || '-'}</td>
+                <td>${row.email || '-'}</td>
+                <td>${row.revenue_scale || '-'}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                <td>${date}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="viewDetail(${row.id})">상세보기</button>
+                        <button class="action-btn" onclick="updateStatus(${row.id}, 'contacted')">연락</button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // 필터
+    function filterByStatus(status) {
+        currentFilter = status;
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        let filtered = status === 'all' ? allData : allData.filter(d => d.status === status);
+        const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+        if (searchTerm) {
+            filtered = filtered.filter(d => 
+                (d.name || '').toLowerCase().includes(searchTerm) ||
+                (d.email || '').toLowerCase().includes(searchTerm)
+            );
+        }
+        renderTable(filtered);
+    }
+
+    // 검색
+    document.getElementById('searchBox').addEventListener('input', function() {
+        filterByStatus(currentFilter);
+    });
+
+    // 상세보기
+    function viewDetail(id) {
+        const data = allData.find(d => d.id === id);
+        if (!data) return;
+
+        currentCustomer = data;
+
+        document.getElementById('modalTitle').textContent = `${data.name} (${data.brand_name})`;
+
+        // 리포트 탭 채우기
+        document.getElementById('reportName').textContent = data.name;
+        document.getElementById('reportBrand').textContent = data.brand_name;
+        document.getElementById('reportEmail').textContent = data.email;
+        document.getElementById('reportRevenue').textContent = data.revenue_scale || '미입력';
+
+        const consultationText = (data.consultation || '없음').replace(/\n/g, '<br>');
+        document.getElementById('reportConsultation').innerHTML = consultationText;
+
+        // AI 진단 결과
+        const diagnosisDiv = document.getElementById('reportDiagnosis');
+        diagnosisDiv.innerHTML = '';
+        if (data.diagnosis) {
+            const sections = data.diagnosis.split(/\*\*([^*]+)\*\*/);
+            for (let i = 1; i < sections.length; i += 2) {
+                const title = sections[i].replace(/^\d+\.\s*/, '');
+                const content = sections[i + 1].trim();
+                const section = document.createElement('div');
+                section.className = 'report-section';
+                section.innerHTML = `
+                    <h3>${title}</h3>
+                    <div class="report-text">${content.replace(/\n\n/g, '<br><br>')}</div>
+                `;
+                diagnosisDiv.appendChild(section);
+            }
+        }
+
+        // 견적서 탭 초기화
+        document.getElementById('quotationForm').reset();
+        updateQuotation();
+
+        document.getElementById('modal').classList.add('active');
+    }
+
+    // 탭 전환
+    function switchTab(tab) {
+        document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById(tab + 'Tab').classList.add('active');
+    }
+
+    // 견적 계산
+    function updateQuotation() {
+        const blueprintValue = document.querySelector('input[name="blueprint"]:checked')?.value;
+        const runningValue = document.querySelector('input[name="running"]:checked')?.value;
+        const contractMonth = parseInt(document.getElementById('contractMonth').value);
+
+        let total = 0;
+        if (blueprintValue) total += prices.blueprint[blueprintValue];
+        if (runningValue) total += prices.running[runningValue] * contractMonth;
+
+        const formatter = new Intl.NumberFormat('ko-KR');
+        document.getElementById('totalPrice').textContent = `₩${formatter.format(total)}`;
+    }
+
+    // PDF 생성
+    async function generatePDF() {
+        if (!currentCustomer) return;
+
+        const blueprintValue = document.querySelector('input[name="blueprint"]:checked')?.value;
+        const runningValue = document.querySelector('input[name="running"]:checked')?.value;
+        const contractMonth = parseInt(document.getElementById('contractMonth').value);
+
+        if (!blueprintValue && !runningValue) {
+            alert('서비스를 선택해주세요.');
+            return;
+        }
+
+        // 견적서 HTML 생성
+        const blueprintText = { lite: 'Lite', standard: 'Standard', premium: 'Premium' }[blueprintValue];
+        const runningText = { standard: 'Standard', essential: 'Essential', professional: 'Professional' }[runningValue];
+
+        let servicesHTML = '';
+        if (blueprintValue) {
+            servicesHTML += `
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid #ddd;">전략 설계 (The Blueprint) - ${blueprintText}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #ddd; text-align: right;">₩${prices.blueprint[blueprintValue].toLocaleString('ko-KR')}</td>
+                </tr>
+            `;
+        }
+        if (runningValue) {
+            servicesHTML += `
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid #ddd;">실행 관리 (The Running) - ${runningText} × ${contractMonth}개월</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #ddd; text-align: right;">월 ₩${prices.running[runningValue].toLocaleString('ko-KR')} × ${contractMonth}</td>
+                </tr>
+            `;
+        }
+
+        let total = 0;
+        if (blueprintValue) total += prices.blueprint[blueprintValue];
+        if (runningValue) total += prices.running[runningValue] * contractMonth;
+
+        const quotationHTML = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <style>
+                    body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background: white; }
+                    .container { max-width: 900px; margin: 0 auto; padding: 40px; }
+                    .header { text-align: center; margin-bottom: 40px; border-bottom: 3px solid #4B4545; padding-bottom: 20px; }
+                    .logo { font-size: 32px; font-weight: bold; color: #4B4545; margin-bottom: 10px; }
+                    .title { font-size: 24px; color: #4B4545; margin: 20px 0; }
+                    .customer-info { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 4px; }
+                    .info-row { margin: 8px 0; font-size: 14px; }
+                    .info-label { font-weight: bold; width: 120px; display: inline-block; }
+                    .services-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                    .services-table th { background: #4B4545; color: white; padding: 12px; text-align: left; }
+                    .services-table td { padding: 12px; }
+                    .total-row { background: #f5f5f5; font-weight: bold; font-size: 16px; }
+                    .diagnosis { background: #f9f9f9; padding: 20px; margin: 20px 0; border-left: 4px solid #4B4545; }
+                    .diagnosis-title { font-weight: bold; font-size: 14px; margin-bottom: 10px; color: #4B4545; }
+                    .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #ddd; padding-top: 20px; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <div class="logo">CHAEUM</div>
+                        <div style="font-size: 14px; color: #666;">AI 진단 기반 맞춤 견적서</div>
+                    </div>
+
+                    <div class="title">📋 AI 진단 맞춤 견적서</div>
+
+                    <div class="customer-info">
+                        <div class="info-row">
+                            <span class="info-label">고객명:</span>
+                            <span>${currentCustomer.name || '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">브랜드명:</span>
+                            <span>${currentCustomer.brand_name || '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">이메일:</span>
+                            <span>${currentCustomer.email || '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">매출규모:</span>
+                            <span>${currentCustomer.revenue_scale || '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">신청일:</span>
+                            <span>${new Date(currentCustomer.created_at).toLocaleDateString('ko-KR')}</span>
                         </div>
                     </div>
 
-                    <!-- 실행 관리 -->
-                    <div class="service-section">
-                        <div class="service-title">2️⃣ 실행 관리 (The Running) - 월간 리테이너</div>
-                        <div class="service-options">
-                            <label class="radio-option">
-                                <input type="radio" name="running" value="standard" onchange="updateQuotation()">
-                                <div class="radio-label">
-                                    <span>Standard - 핵심 채널 운영</span>
-                                    <span class="radio-price">월 ₩1,500,000</span>
-                                </div>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="running" value="essential" onchange="updateQuotation()">
-                                <div class="radio-label">
-                                    <span>Essential ⭐ - 커스텀 콘텐츠 + 주 1회 세션</span>
-                                    <span class="radio-price">월 ₩3,000,000</span>
-                                </div>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="running" value="professional" onchange="updateQuotation()">
-                                <div class="radio-label">
-                                    <span>Professional - 전담 PM + 영상 제작</span>
-                                    <span class="radio-price">월 ₩5,000,000</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- 계약 기간 -->
-                    <div class="form-group">
-                        <label class="form-label">계약 기간 (실행 관리)</label>
-                        <select id="contractMonth" onchange="updateQuotation()" style="background-color: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px; border-radius: 4px; color: var(--white); font-size: 12px;">
-                            <option value="3">3개월</option>
-                            <option value="6" selected>6개월</option>
-                            <option value="12">12개월</option>
-                        </select>
-                    </div>
-
-                    <!-- 총액 -->
-                    <div class="total-section">
-                        <div class="total-label">총 예상 투자 비용</div>
-                        <div class="total-price" id="totalPrice">₩0</div>
-                        <p style="font-size: 11px; color: var(--gray); margin-top: 8px;">
-                            전략 설계(1회) + 실행 관리(월간 × 계약개월)
+                    <div class="diagnosis">
+                        <div class="diagnosis-title">🔍 AI 진단 요약</div>
+                        <p style="font-size: 13px; line-height: 1.6; margin: 0; color: #666;">
+                            ${(currentCustomer.consultation || '').substring(0, 200)}...
                         </p>
                     </div>
 
-                    <!-- 버튼 -->
-                    <div class="button-group">
-                        <button type="button" class="btn-submit" onclick="generatePDF()">📄 PDF 견적서 생성</button>
-                        <button type="button" class="btn-cancel" onclick="closeModal()">취소</button>
+                    <div class="diagnosis" style="background: #f0f9ff; border-left-color: #0066cc;">
+                        <div class="diagnosis-title" style="color: #0066cc;">✍️ Hanna의 전략 의견</div>
+                        <p style="font-size: 13px; line-height: 1.8; margin: 0; color: #333; white-space: pre-wrap;">
+                            ${document.getElementById('strategyOpinion').value || '전략 의견이 입력되지 않았습니다.'}
+                        </p>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        // Supabase 설정
-        const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_EGj8-Rc7qI_xQEGWddL5fg_kLgVilMn';
+                    <div class="title">💰 제안 서비스</div>
 
-        let allData = [];
-        let currentFilter = 'all';
-        let currentCustomer = null;
+                    <table class="services-table">
+                        <thead>
+                            <tr>
+                                <th>서비스</th>
+                                <th style="text-align: right; width: 200px;">요금</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${servicesHTML}
+                            <tr class="total-row">
+                                <td>총 예상 투자 비용</td>
+                                <td style="text-align: right;">₩${total.toLocaleString('ko-KR')}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        // 가격 테이블
-        const prices = {
-            blueprint: { lite: 3000000, standard: 5000000, premium: 8000000 },
-            running: { standard: 1500000, essential: 3000000, professional: 5000000 }
-        };
+                    <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; border-radius: 4px;">
+                        <strong>⏰ 제한된 시간 제안</strong><br>
+                        <span style="font-size: 13px; color: #666;">이 견적서는 AI 진단 완료 시점부터 30일간 유효합니다.<br>20분 무료 상담을 통해 구체적인 실행 계획을 수립할 수 있습니다.</span>
+                    </div>
 
-        // 데이터 로드
-        async function loadData() {
-            try {
-                const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/diagnosis_submissions?order=created_at.desc`,
-                    {
-                        headers: {
-                            'apikey': SUPABASE_ANON_KEY,
-                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        }
-                    }
-                );
+                    <div style="background: #f0f0f0; padding: 20px; margin-top: 40px; border-radius: 4px;">
+                        <div style="font-weight: bold; color: #4B4545; margin-bottom: 10px;">📞 다음 단계</div>
+                        <ul style="margin: 0; padding-left: 20px; color: #666; font-size: 13px;">
+                            <li>이 견적서를 검토해주세요</li>
+                            <li>20분 무료 상담 예약: https://cal.com/chaeum</li>
+                            <li>구체적인 실행 계획 수립</li>
+                            <li>계약 및 프로젝트 시작</li>
+                        </ul>
+                    </div>
 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-                allData = await response.json();
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('tableContainer').style.display = 'block';
-                
-                updateStats();
-                renderTable(allData);
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('error').textContent = `오류: ${error.message}`;
-            }
-        }
-
-        // 통계 업데이트
-        function updateStats() {
-            const total = allData.length;
-            const newCount = allData.filter(d => d.status === 'new').length;
-            const contacted = allData.filter(d => d.status === 'contacted').length;
-            const converted = allData.filter(d => d.status === 'converted').length;
-
-            document.getElementById('totalCount').textContent = total;
-            document.getElementById('newCount').textContent = newCount;
-            document.getElementById('contactedCount').textContent = contacted;
-            document.getElementById('convertedCount').textContent = converted;
-        }
-
-        // 테이블 렌더링
-        function renderTable(data) {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                const date = new Date(row.created_at).toLocaleDateString('ko-KR');
-                const statusClass = `status-${row.status}`;
-                const statusText = { new: '미접촉', contacted: '연락됨', converted: '전환됨' }[row.status];
-
-                tr.innerHTML = `
-                    <td class="name-cell">${row.name || '-'}</td>
-                    <td>${row.brand_name || '-'}</td>
-                    <td>${row.email || '-'}</td>
-                    <td>${row.revenue_scale || '-'}</td>
-                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                    <td>${date}</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="action-btn" onclick="viewDetail(${row.id})">상세보기</button>
-                            <button class="action-btn" onclick="updateStatus(${row.id}, 'contacted')">연락</button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // 필터
-        function filterByStatus(status) {
-            currentFilter = status;
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            let filtered = status === 'all' ? allData : allData.filter(d => d.status === status);
-            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
-            if (searchTerm) {
-                filtered = filtered.filter(d => 
-                    (d.name || '').toLowerCase().includes(searchTerm) ||
-                    (d.email || '').toLowerCase().includes(searchTerm)
-                );
-            }
-            renderTable(filtered);
-        }
-
-        // 검색
-        document.getElementById('searchBox').addEventListener('input', function() {
-            filterByStatus(currentFilter);
-        });
-
-        // 상세보기
-        function viewDetail(id) {
-            const data = allData.find(d => d.id === id);
-            if (!data) return;
-
-            currentCustomer = data;
-
-            document.getElementById('modalTitle').textContent = `${data.name} (${data.brand_name})`;
-
-            // 리포트 탭 채우기
-            document.getElementById('reportName').textContent = data.name;
-            document.getElementById('reportBrand').textContent = data.brand_name;
-            document.getElementById('reportEmail').textContent = data.email;
-            document.getElementById('reportRevenue').textContent = data.revenue_scale || '미입력';
-
-            const consultationText = (data.consultation || '없음').replace(/\n/g, '<br>');
-            document.getElementById('reportConsultation').innerHTML = consultationText;
-
-            // AI 진단 결과
-            const diagnosisDiv = document.getElementById('reportDiagnosis');
-            diagnosisDiv.innerHTML = '';
-            if (data.diagnosis) {
-                const sections = data.diagnosis.split(/\*\*([^*]+)\*\*/);
-                for (let i = 1; i < sections.length; i += 2) {
-                    const title = sections[i].replace(/^\d+\.\s*/, '');
-                    const content = sections[i + 1].trim();
-                    const section = document.createElement('div');
-                    section.className = 'report-section';
-                    section.innerHTML = `
-                        <h3>${title}</h3>
-                        <div class="report-text">${content.replace(/\n\n/g, '<br><br>')}</div>
-                    `;
-                    diagnosisDiv.appendChild(section);
-                }
-            }
-
-            // 견적서 탭 초기화
-            document.getElementById('quotationForm').reset();
-            updateQuotation();
-
-            document.getElementById('modal').classList.add('active');
-        }
-
-        // 탭 전환
-        function switchTab(tab) {
-            document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(tab + 'Tab').classList.add('active');
-        }
-
-        // 견적 계산
-        function updateQuotation() {
-            const blueprintValue = document.querySelector('input[name="blueprint"]:checked')?.value;
-            const runningValue = document.querySelector('input[name="running"]:checked')?.value;
-            const contractMonth = parseInt(document.getElementById('contractMonth').value);
-
-            let total = 0;
-            if (blueprintValue) total += prices.blueprint[blueprintValue];
-            if (runningValue) total += prices.running[runningValue] * contractMonth;
-
-            const formatter = new Intl.NumberFormat('ko-KR');
-            document.getElementById('totalPrice').textContent = `₩${formatter.format(total)}`;
-        }
+                    <div class="footer">
+                        <p>© 2026 CHAEUM. 당신의 브랜드를 위한 외주 전략실</p>
+                        <p>이 견적서는 기밀 문서입니다. 무단 배포를 금합니다.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        `;
 
         // PDF 생성
-        async function generatePDF() {
-            if (!currentCustomer) return;
+        const element = document.createElement('div');
+        element.innerHTML = quotationHTML;
 
-            const blueprintValue = document.querySelector('input[name="blueprint"]:checked')?.value;
-            const runningValue = document.querySelector('input[name="running"]:checked')?.value;
-            const contractMonth = parseInt(document.getElementById('contractMonth').value);
+        const opt = {
+            margin: 0,
+            filename: `CHAEUM_견적서_${currentCustomer.name}_${new Date().toLocaleDateString('ko-KR')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
 
-            if (!blueprintValue && !runningValue) {
-                alert('서비스를 선택해주세요.');
-                return;
-            }
-
-            // 견적서 HTML 생성
-            const blueprintText = { lite: 'Lite', standard: 'Standard', premium: 'Premium' }[blueprintValue];
-            const runningText = { standard: 'Standard', essential: 'Essential', professional: 'Professional' }[runningValue];
-
-            let servicesHTML = '';
-            if (blueprintValue) {
-                servicesHTML += `
-                    <tr>
-                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">전략 설계 (The Blueprint) - ${blueprintText}</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #ddd; text-align: right;">₩${prices.blueprint[blueprintValue].toLocaleString('ko-KR')}</td>
-                    </tr>
-                `;
-            }
-            if (runningValue) {
-                servicesHTML += `
-                    <tr>
-                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">실행 관리 (The Running) - ${runningText} × ${contractMonth}개월</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #ddd; text-align: right;">월 ₩${prices.running[runningValue].toLocaleString('ko-KR')} × ${contractMonth}</td>
-                    </tr>
-                `;
-            }
-
-            let total = 0;
-            if (blueprintValue) total += prices.blueprint[blueprintValue];
-            if (runningValue) total += prices.running[runningValue] * contractMonth;
-
-            const quotationHTML = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <style>
-                        body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background: white; }
-                        .container { max-width: 900px; margin: 0 auto; padding: 40px; }
-                        .header { text-align: center; margin-bottom: 40px; border-bottom: 3px solid #4B4545; padding-bottom: 20px; }
-                        .logo { font-size: 32px; font-weight: bold; color: #4B4545; margin-bottom: 10px; }
-                        .title { font-size: 24px; color: #4B4545; margin: 20px 0; }
-                        .customer-info { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 4px; }
-                        .info-row { margin: 8px 0; font-size: 14px; }
-                        .info-label { font-weight: bold; width: 120px; display: inline-block; }
-                        .services-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-                        .services-table th { background: #4B4545; color: white; padding: 12px; text-align: left; }
-                        .services-table td { padding: 12px; }
-                        .total-row { background: #f5f5f5; font-weight: bold; font-size: 16px; }
-                        .diagnosis { background: #f9f9f9; padding: 20px; margin: 20px 0; border-left: 4px solid #4B4545; }
-                        .diagnosis-title { font-weight: bold; font-size: 14px; margin-bottom: 10px; color: #4B4545; }
-                        .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #ddd; padding-top: 20px; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <div class="logo">CHAEUM</div>
-                            <div style="font-size: 14px; color: #666;">AI 진단 기반 맞춤 견적서</div>
-                        </div>
-
-                        <div class="title">📋 AI 진단 맞춤 견적서</div>
-
-                        <div class="customer-info">
-                            <div class="info-row">
-                                <span class="info-label">고객명:</span>
-                                <span>${currentCustomer.name || '-'}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">브랜드명:</span>
-                                <span>${currentCustomer.brand_name || '-'}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">이메일:</span>
-                                <span>${currentCustomer.email || '-'}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">매출규모:</span>
-                                <span>${currentCustomer.revenue_scale || '-'}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">신청일:</span>
-                                <span>${new Date(currentCustomer.created_at).toLocaleDateString('ko-KR')}</span>
-                            </div>
-                        </div>
-
-                        <div class="diagnosis">
-                            <div class="diagnosis-title">🔍 AI 진단 요약</div>
-                            <p style="font-size: 13px; line-height: 1.6; margin: 0; color: #666;">
-                                ${(currentCustomer.consultation || '').substring(0, 200)}...
-                            </p>
-                        </div>
-
-                        <div class="title">💰 제안 서비스</div>
-
-                        <table class="services-table">
-                            <thead>
-                                <tr>
-                                    <th>서비스</th>
-                                    <th style="text-align: right; width: 200px;">요금</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${servicesHTML}
-                                <tr class="total-row">
-                                    <td>총 예상 투자 비용</td>
-                                    <td style="text-align: right;">₩${total.toLocaleString('ko-KR')}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; border-radius: 4px;">
-                            <strong>⏰ 제한된 시간 제안</strong><br>
-                            <span style="font-size: 13px; color: #666;">이 견적서는 AI 진단 완료 시점부터 30일간 유효합니다.<br>20분 무료 상담을 통해 구체적인 실행 계획을 수립할 수 있습니다.</span>
-                        </div>
-
-                        <div style="background: #f0f0f0; padding: 20px; margin-top: 40px; border-radius: 4px;">
-                            <div style="font-weight: bold; color: #4B4545; margin-bottom: 10px;">📞 다음 단계</div>
-                            <ul style="margin: 0; padding-left: 20px; color: #666; font-size: 13px;">
-                                <li>이 견적서를 검토해주세요</li>
-                                <li>20분 무료 상담 예약: https://cal.com/chaeum</li>
-                                <li>구체적인 실행 계획 수립</li>
-                                <li>계약 및 프로젝트 시작</li>
-                            </ul>
-                        </div>
-
-                        <div class="footer">
-                            <p>© 2026 CHAEUM. 당신의 브랜드를 위한 외주 전략실</p>
-                            <p>이 견적서는 기밀 문서입니다. 무단 배포를 금합니다.</p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `;
-
-            // PDF 생성
-            const element = document.createElement('div');
-            element.innerHTML = quotationHTML;
-
-            const opt = {
-                margin: 0,
-                filename: `CHAEUM_견적서_${currentCustomer.name}_${new Date().toLocaleDateString('ko-KR')}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            };
-
-            html2pdf().set(opt).from(element).save();
-            
-            closeModal();
-            alert('PDF 견적서가 다운로드되었습니다.');
-        }
-
-        // 모달 닫기
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-            currentCustomer = null;
-        }
-
-        // 상태 업데이트
-        async function updateStatus(id, status) {
+        html2pdf().set(opt).from(element).save();
+        
+        // 📊 Supabase에 전략 의견 저장
+        const strategyOpinion = document.getElementById('strategyOpinion').value;
+        if (strategyOpinion && currentCustomer.id) {
             try {
                 const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/diagnosis_submissions?id=eq.${id}`,
+                    `${SUPABASE_URL}/rest/v1/diagnosis_submissions?id=eq.${currentCustomer.id}`,
                     {
                         method: 'PATCH',
                         headers: {
@@ -1042,42 +1054,79 @@
                             'apikey': SUPABASE_ANON_KEY,
                             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
                         },
-                        body: JSON.stringify({ status })
+                        body: JSON.stringify({ 
+                            notes: strategyOpinion,
+                            status: 'contacted'
+                        })
                     }
                 );
-
-                if (response.ok) loadData();
+                console.log('✅ 전략 의견이 저장되었습니다.');
             } catch (error) {
-                console.error('Error:', error);
+                console.warn('⚠️ 저장 중 오류:', error);
             }
         }
+        
+        closeModal();
+        alert('PDF 견적서가 다운로드되었습니다.');
+        loadData();  // 데이터 새로고침
+    }
 
-        // CSV 다운로드
-        function exportToCSV() {
-            const headers = ['이름', '브랜드', '이메일', '매출규모', '고민', '상태', '신청일'];
-            const rows = allData.map(d => [
-                d.name || '',
-                d.brand_name || '',
-                d.email || '',
-                d.revenue_scale || '',
-                (d.consultation || '').replace(/\n/g, ' ').substring(0, 50),
-                { new: '미접촉', contacted: '연락됨', converted: '전환됨' }[d.status],
-                new Date(d.created_at).toLocaleDateString('ko-KR')
-            ]);
+    // 모달 닫기
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+        currentCustomer = null;
+    }
 
-            let csv = headers.map(h => `"${h}"`).join(',') + '\n';
-            rows.forEach(row => csv += row.map(cell => `"${cell}"`).join(',') + '\n');
+    // 상태 업데이트
+    async function updateStatus(id, status) {
+        try {
+            const response = await fetch(
+                `${SUPABASE_URL}/rest/v1/diagnosis_submissions?id=eq.${id}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    },
+                    body: JSON.stringify({ status })
+                }
+            );
 
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `CHAEUM_AI진단_${new Date().toLocaleDateString('ko-KR')}.csv`;
-            link.click();
+            if (response.ok) loadData();
+        } catch (error) {
+            console.error('Error:', error);
         }
+    }
 
-        // 초기 로드
-        loadData();
-        setInterval(loadData, 5000);
-    </script>
+    // CSV 다운로드
+    function exportToCSV() {
+        const headers = ['이름', '브랜드', '이메일', '매출규모', '고민', '상태', '신청일'];
+        const rows = allData.map(d => [
+            d.name || '',
+            d.brand_name || '',
+            d.email || '',
+            d.revenue_scale || '',
+            (d.consultation || '').replace(/\n/g, ' ').substring(0, 50),
+            { new: '미접촉', contacted: '연락됨', converted: '전환됨' }[d.status],
+            new Date(d.created_at).toLocaleDateString('ko-KR')
+        ]);
+
+        let csv = headers.map(h => `"${h}"`).join(',') + '\n';
+        rows.forEach(row => csv += row.map(cell => `"${cell}"`).join(',') + '\n');
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `CHAEUM_AI진단_${new Date().toLocaleDateString('ko-KR')}.csv`;
+        link.click();
+    }
+
+    // 초기 로드
+    loadData();
+    setInterval(loadData, 5000);
+</script>
+```
+
 </body>
 </html>
