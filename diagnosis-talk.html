@@ -40,7 +40,7 @@
         }
         .required { color: #FF6464; }
         
-        input { 
+        input, textarea { 
             width: 100%; 
             padding: 12px; 
             background: rgba(255,255,255,0.08); 
@@ -50,31 +50,15 @@
             font-size: 14px;
             font-family: inherit;
         }
-        input::placeholder { color: #666; }
-        input:focus { 
+        textarea { min-height: 80px; resize: vertical; }
+        input::placeholder, textarea::placeholder { color: #666; }
+        input:focus, textarea:focus { 
             outline: none; 
             border-color: rgba(255,255,255,0.3); 
             background: rgba(255,255,255,0.12); 
         }
         
-        .hint { 
-            font-size: 11px; 
-            color: #666; 
-            margin-top: 6px; 
-        }
-
-        .analyzing {
-            font-size: 11px;
-            color: #64C8FF;
-            margin-top: 6px;
-            display: none;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
+        .hint { font-size: 11px; color: #666; margin-top: 6px; }
         
         .error { 
             background: rgba(255, 107, 107, 0.1); 
@@ -103,36 +87,73 @@
             transform: translateY(-2px); 
             box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
         }
-        button:disabled { 
-            opacity: 0.5; 
-            cursor: not-allowed; 
-        }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="hero">
             <h1>브랜드 진단</h1>
-            <p class="subtitle">웹사이트 URL을 입력하면<br>AI가 자동으로 분석합니다</p>
+            <p class="subtitle">기본 정보를 입력하면<br>AI가 분석 리포트를 생성합니다</p>
         </div>
 
         <div id="error" class="error"></div>
 
         <form id="diagnosisForm">
             <div class="form-section">
-                <!-- 1. URL -->
+                <!-- 1. 브랜드명 -->
+                <div class="form-group">
+                    <label>브랜드명 <span class="required">*</span></label>
+                    <input 
+                        type="text"
+                        id="brandName" 
+                        placeholder="ex) Krk, Nonfiction"
+                        required>
+                    <p class="hint">브랜드 이름</p>
+                </div>
+
+                <!-- 2. 웹사이트 -->
                 <div class="form-group">
                     <label>웹사이트 <span class="required">*</span></label>
                     <input 
                         type="text"
-                        id="brandUrl" 
+                        id="website" 
                         placeholder="https://example.com"
                         required>
-                    <p class="hint">웹사이트 주소를 입력하세요</p>
-                    <div class="analyzing" id="analyzing">분석 중...</div>
+                    <p class="hint">웹사이트 주소</p>
                 </div>
 
-                <!-- 2. 이메일 -->
+                <!-- 3. 서비스 설명 -->
+                <div class="form-group">
+                    <label>서비스 설명 <span class="required">*</span></label>
+                    <textarea 
+                        id="service" 
+                        placeholder="브랜드가 제공하는 서비스를 설명해주세요"
+                        required></textarea>
+                    <p class="hint">최소 20자 이상</p>
+                </div>
+
+                <!-- 4. 타깃 페인 -->
+                <div class="form-group">
+                    <label>타깃의 주요 고민 <span class="required">*</span></label>
+                    <textarea 
+                        id="painPoint" 
+                        placeholder="고객이 겪는 가장 큰 문제를 설명해주세요"
+                        required></textarea>
+                    <p class="hint">구체적일수록 좋습니다</p>
+                </div>
+
+                <!-- 5. 현재 메시지 -->
+                <div class="form-group">
+                    <label>현재 포지셔닝 메시지 <span class="required">*</span></label>
+                    <textarea 
+                        id="currentMessaging" 
+                        placeholder="지금 사용하고 있는 슬로건이나 메시지"
+                        required></textarea>
+                    <p class="hint">웹사이트 헤드라인이나 슬로건</p>
+                </div>
+
+                <!-- 6. 이메일 -->
                 <div class="form-group">
                     <label>이메일 <span class="required">*</span></label>
                     <input 
@@ -149,49 +170,13 @@
     </div>
 
     <script>
-        const brandUrlInput = document.getElementById('brandUrl');
-        let apiAnalysisData = null;
+        const websiteInput = document.getElementById('website');
         
-        // URL focus 시 자동 https:// 추가
-        brandUrlInput.addEventListener('focus', function() {
+        // 웹사이트 입력 시 자동 https:// 추가
+        websiteInput.addEventListener('focus', function() {
             if (!this.value) {
                 this.value = 'https://';
                 this.setSelectionRange(8, 8);
-            }
-        });
-
-        // URL blur 시 API 호출 (핵심 부분)
-        brandUrlInput.addEventListener('blur', async function() {
-            const url = this.value.trim();
-            
-            // https:// 형태일 때만 분석
-            if (!url.startsWith('http')) {
-                return;
-            }
-
-            try {
-                document.getElementById('analyzing').style.display = 'block';
-                
-                console.log('API 호출 시작:', url);
-                
-                const response = await fetch(`/api/analyze?url=${encodeURIComponent(url)}`);
-                const data = await response.json();
-
-                console.log('API 응답:', data);
-
-                if (response.ok) {
-                    // API 응답 데이터 저장
-                    apiAnalysisData = data;
-                    console.log('분석 완료:', apiAnalysisData);
-                    hideError();
-                } else {
-                    console.warn('API 오류:', data.error);
-                }
-                
-            } catch (error) {
-                console.error('API 호출 오류:', error);
-            } finally {
-                document.getElementById('analyzing').style.display = 'none';
             }
         });
 
@@ -199,49 +184,56 @@
         document.getElementById('diagnosisForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const brandUrl = document.getElementById('brandUrl').value.trim();
+            const brandName = document.getElementById('brandName').value.trim();
+            const website = document.getElementById('website').value.trim();
+            const service = document.getElementById('service').value.trim();
+            const painPoint = document.getElementById('painPoint').value.trim();
+            const currentMessaging = document.getElementById('currentMessaging').value.trim();
             const email = document.getElementById('email').value.trim();
 
             // 검증
-            if (!brandUrl || !email) {
+            if (!brandName || !website || !service || !painPoint || !currentMessaging || !email) {
                 showError('모든 항목을 입력해주세요');
                 return;
             }
 
-            if (!isValidUrl(brandUrl)) {
+            if (service.length < 20) {
+                showError('서비스 설명을 더 자세히 입력해주세요 (최소 20자)');
+                return;
+            }
+
+            if (!isValidUrl(website)) {
                 showError('유효한 URL을 입력해주세요');
                 return;
             }
 
-            // API 분석이 완료되지 않았으면 기다리기
-            if (!apiAnalysisData) {
-                showError('URL 분석이 완료되지 않았습니다. 잠시 후 다시 시도해주세요.');
-                return;
-            }
-
-            let finalUrl = brandUrl;
+            let finalUrl = website;
             if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
                 finalUrl = 'https://' + finalUrl;
             }
 
+            // 서비스 유형 자동 감지
+            const serviceType = detectServiceType(service, currentMessaging);
+
             document.getElementById('submitBtn').disabled = true;
 
             try {
-                // API 분석 데이터 + 사용자 입력 합치기
                 const analysisData = {
-                    ...apiAnalysisData,  // API에서 받은 분석 데이터
-                    email,
+                    brandName,
                     website: finalUrl,
+                    service,
+                    painPoint,
+                    currentMessaging,
+                    email,
+                    serviceType,
                     timestamp: new Date().toISOString()
                 };
-
-                console.log('저장 데이터:', analysisData);
 
                 localStorage.setItem('diagnosisData', JSON.stringify(analysisData));
                 
                 setTimeout(() => {
                     window.location.href = './diagnosis-report.html';
-                }, 1000);
+                }, 800);
 
             } catch (error) {
                 console.error('오류:', error);
@@ -260,15 +252,27 @@
             }
         }
 
+        function detectServiceType(service, messaging) {
+            const text = `${service} ${messaging}`.toLowerCase();
+
+            if (text.match(/saas|app|tool|software|platform/)) return 'saas';
+            if (text.match(/beauty|cosmetic|skincare|makeup|뷰티|화장품/)) return 'lifestyle';
+            if (text.match(/food|cafe|restaurant|음식|음료|카페/)) return 'food';
+            if (text.match(/design|creative|studio|디자인|창작/)) return 'design';
+            if (text.match(/fintech|payment|finance|금융|투자/)) return 'fintech';
+            if (text.match(/health|fitness|wellness|gym|헬스|요가/)) return 'health';
+            if (text.match(/shop|store|ecommerce|상점|쇼핑/)) return 'ecommerce';
+            if (text.match(/course|learn|education|학습|교육/)) return 'education';
+            if (text.match(/consulting|strategy|business|컨설팅/)) return 'consulting';
+
+            return 'lifestyle';
+        }
+
         function showError(msg) {
             const el = document.getElementById('error');
             el.textContent = msg;
             el.style.display = 'block';
-        }
-
-        function hideError() {
-            const el = document.getElementById('error');
-            el.style.display = 'none';
+            setTimeout(() => { el.style.display = 'none'; }, 3000);
         }
     </script>
 </body>
