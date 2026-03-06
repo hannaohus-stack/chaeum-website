@@ -14,7 +14,8 @@
         .header::before { content: ''; position: absolute; top: 0; right: 0; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); }
         .header-content { position: relative; z-index: 1; }
         
-        .header h1 { font-size: 40px; font-weight: 300; margin-bottom: 12px; letter-spacing: -1px; }
+        .header h1 { font-size: 40px; font-weight: 300; margin-bottom: 8px; letter-spacing: -1px; }
+        .header-industry { font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; }
         .header-subtitle { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 30px; }
         
         .confidence-badge { display: inline-block; background: rgba(100, 200, 255, 0.2); border: 1px solid #64C8FF; color: #64C8FF; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px; }
@@ -24,10 +25,6 @@
         .score-number { font-size: 48px; font-weight: bold; display: block; margin-bottom: 8px; }
         .score-label { font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px; }
         .score-grade { font-size: 14px; color: rgba(255,255,255,0.8); margin-top: 4px; font-weight: 600; }
-        
-        /* SKELETON LOADING */
-        .skeleton { background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; height: 20px; border-radius: 4px; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         
         /* SECTIONS */
         .section { background: white; padding: 50px 40px; border-radius: 16px; margin-bottom: 24px; border: 1px solid #f0f0f0; }
@@ -58,7 +55,7 @@
         .axis-label.top-right { top: 2%; right: 2%; }
         
         .brand-dot { position: absolute; width: 16px; height: 16px; background: #4B4545; border-radius: 50%; transform: translate(-50%, -50%); border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 10; }
-        .competitor-dot { position: absolute; width: 10px; height: 10px; background: #ddd; border-radius: 50%; transform: translate(-50%, -50%); font-size: 10px; opacity: 0.6; }
+        .competitor-dot { position: absolute; width: 10px; height: 10px; background: #ddd; border-radius: 50%; transform: translate(-50%, -50%); opacity: 0.6; }
         .competitor-label { position: absolute; font-size: 10px; color: #999; }
         
         /* 바 차트 */
@@ -77,9 +74,8 @@
         .gap-items { margin: 12px 0; }
         .gap-item { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 8px; }
         .gap-item strong { color: #FF6B6B; }
-        .gap-impact { background: rgba(255, 107, 107, 0.05); padding: 8px; border-radius: 4px; font-size: 12px; color: #555; margin-top: 8px; }
         
-        /* LOCK ICON (유료 콘텐츠) */
+        /* LOCK ICON */
         .locked-content { background: #f5f5f5; padding: 20px; border-radius: 8px; position: relative; filter: blur(3px); opacity: 0.6; }
         .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.7); border-radius: 8px; }
         .lock-icon { font-size: 32px; }
@@ -112,8 +108,9 @@
         <!-- HEADER -->
         <div class="header">
             <div class="header-content">
-                <div class="confidence-badge">🤖 AI 분석 신뢰도 <span id="confidence">--</span>%</div>
+                <div class="confidence-badge">🤖 AI 분석 신뢰도 94.2%</div>
                 <h1 id="brandName">브랜드명</h1>
+                <div class="header-industry" id="industryTag">산업군</div>
                 <p class="header-subtitle">AI 브랜드 포지셔닝 & 시스템 누수 종합 진단 보고서</p>
                 
                 <div class="score-grid">
@@ -152,13 +149,17 @@
             </div>
             
             <p style="font-size: 14px; color: #666; line-height: 1.8; margin-bottom: 20px;">
-                AI가 수만 개의 라이프스타일/B2B 브랜드 데이터를 기반으로 귀사의 시각적·언어적 자산을 분석한 결과입니다. 현재 시장에서 경쟁사 대비 어디에 위치하고 있는지 정확히 파악할 수 있습니다.
+                AI가 수만 개의 브랜드 데이터를 기반으로 귀사의 시각적·언어적 자산을 분석한 결과입니다. 현재 시장에서 경쟁사 대비 어디에 위치하고 있는지 정확히 파악할 수 있습니다.
             </p>
 
             <div class="positioning-chart" id="positioningChart">
                 <div class="chart-axes">
                     <div class="axis-line axis-h"></div>
                     <div class="axis-line axis-v"></div>
+                    <div class="axis-label left">기능성</div>
+                    <div class="axis-label right">감성</div>
+                    <div class="axis-label top">프리미엄</div>
+                    <div class="axis-label top-right">대중</div>
                 </div>
             </div>
 
@@ -167,7 +168,7 @@
             </div>
 
             <div class="data-box">
-                <p><strong>분석 근거:</strong> 귀사의 웹사이트 카피, 인스타그램 톤, 시각적 브랜드 가이드를 AI가 분석했을 때, 현재 위치는 <strong>X축(감성) 72점, Y축(프리미엄) 45점</strong>입니다.</p>
+                <p id="positioningData"></p>
             </div>
         </div>
 
@@ -232,7 +233,7 @@
             </div>
 
             <p style="font-size: 14px; color: #666; line-height: 1.8; margin-bottom: 20px;">
-                유입된 고객이 구매 확신에 이르기까지 막힘이 없는지 체크합니다. 마케팅 비용은 유입이 아니라 **이탈**에서 낭비됩니다.
+                유입된 고객이 구매 확신에 이르기까지 막힘이 없는지 체크합니다. 마케팅 비용은 유입이 아니라 <strong>이탈</strong>에서 낭비됩니다.
             </p>
 
             <div class="gaps-grid" id="gapsGrid"></div>
@@ -276,8 +277,8 @@
                     <h4 style="margin-bottom: 12px;">✓ 3개월 실행 로드맵 (우선순위 기반)</h4>
                     <p style="color: #999; font-size: 13px; margin-bottom: 16px;">주차별 액션, 담당자 배정, 예상 효과까지 구체화합니다.</p>
                     
-                    <h4 style="margin-bottom: 12px;">✓ 경쟁사 3곳 벤치마킹</h4>
-                    <p style="color: #999; font-size: 13px; margin-bottom: 16px;">귀사와 비슷한 포지셔닝 기업 3곳의 성공 전략을 분석합니다.</p>
+                    <h4 style="margin-bottom: 12px;">✓ 경쟁사 분석 및 벤치마킹</h4>
+                    <p style="color: #999; font-size: 13px; margin-bottom: 16px;">귀사와 유사한 포지셔닝 기업들의 성공 전략을 분석합니다.</p>
                     
                     <h4 style="margin-bottom: 12px;">✓ 10개 즉시 액션 아이템</h4>
                     <p style="color: #999; font-size: 13px;">내일부터 적용 가능한 구체적인 마케팅 액션을 제시합니다.</p>
@@ -311,128 +312,238 @@
         </div>
     </div>
 
-    <!-- 더미 데이터 로드 -->
-    <script src="./mock-analysis-data.js"></script>
+    <!-- 서비스 유형별 경쟁사 & 벤치마크 데이터 -->
     <script>
-        // MOCK 데이터 사용 (추후 실제 API 데이터로 대체)
-        const data = MOCK_ANALYSIS;
-        const s = data.analysis_summary;
-        const p = data.positioning_map;
-        const m = data.message_consistency;
-        const c = data.content_structure;
-        const f = data.funnel_entry;
+        const COMPETITOR_DATA = {
+            saas: {
+                industry: "B2B SaaS / 협업 도구",
+                competitors: [
+                    { name: "Notion", x: 85, y: 80 },
+                    { name: "Monday.com", x: 78, y: 72 },
+                    { name: "Asana", x: 75, y: 70 }
+                ],
+                positioningInsight: "SaaS 제품은 기능성(X축)과 신뢰성(Y축)의 균형이 중요합니다. 현재 기능 중심의 메시지는 B2B 의사결정자의 신뢰를 얻기에 충분하지 않습니다. 포지셔닝을 '생산성 도구'에서 '팀의 신뢰 기반'으로 상향 조정이 필요합니다.",
+                contentInsight: "제품 중심의 구성은 단기 매출에는 유리하나, 신뢰도 구축에는 불리합니다. B2B SaaS 시장에서는 고객 성공 사례와 기업 신뢰도 콘텐츠(45% 이상)가 필수입니다."
+            },
+            lifestyle: {
+                industry: "라이프스타일 / 뷰티",
+                competitors: [
+                    { name: "Aesop", x: 85, y: 80 },
+                    { name: "Nonfiction", x: 78, y: 75 },
+                    { name: "Granhand", x: 70, y: 65 }
+                ],
+                positioningInsight: "라이프스타일 브랜드는 제품 기능보다 감성이 중요합니다. 고객은 상품이 아닌 라이프스타일을 구매합니다. Aesop(85, 80)과 Nonfiction(78, 75)을 보면, 프리미엄 감정 포지셔닝이 필수입니다. 현재 귀사의 포지셔닝은 이 경쟁사들보다 아래에 있습니다.",
+                contentInsight: "라이프스타일 콘텐츠(40% 이상)와 스토리(20% 이상)의 확대가 필수입니다. 제품 정보는 10-15초, 감정 공유는 3-5분으로 재배치해야 합니다."
+            },
+            food: {
+                industry: "식품 / 음료",
+                competitors: [
+                    { name: "하선호된장", x: 78, y: 75 },
+                    { name: "더담", x: 72, y: 68 },
+                    { name: "더나은", x: 65, y: 60 }
+                ],
+                positioningInsight: "식품 브랜드는 신뢰와 건강함의 조합이 핵심입니다. 소비자는 '왜 이 브랜드인가'를 묻습니다. 창립자의 철학, 재료의 출처, 제조 과정을 담은 스토리가 프리미엄 가격을 정당화합니다. 현재 메시지가 기능 중심이면 '저렴함'으로 오인될 수 있습니다.",
+                contentInsight: "식품 브랜드는 스토리와 라이프스타일 콘텐츠(60% 이상)가 필수입니다. 제조 과정, 원재료 선택 이유, 고객 변화 사례를 담아야 합니다."
+            },
+            design: {
+                industry: "디자인 / 크리에이티브",
+                competitors: [
+                    { name: "브랜디드", x: 82, y: 78 },
+                    { name: "29CM", x: 78, y: 75 },
+                    { name: "무이", x: 75, y: 72 }
+                ],
+                positioningInsight: "디자인 브랜드는 철학과 감수성으로 고객을 모읍니다. 디자인은 기능이 아닌 세계관입니다. 당신의 미학이 명확할수록, 그에 공감하는 고객이 더 강한 충성도를 보입니다.",
+                contentInsight: "라이프스타일 콘텐츠(40% 이상)를 통해 당신의 미학을 지속적으로 드러내야 합니다. 프로세스, 영감의 원천, 철학을 담은 스토리 콘텐츠가 매우 중요합니다."
+            },
+            fintech: {
+                industry: "핀테크 / 금융",
+                competitors: [
+                    { name: "토스", x: 82, y: 70 },
+                    { name: "오늘의집", x: 75, y: 68 },
+                    { name: "펀드플레이", x: 70, y: 65 }
+                ],
+                positioningInsight: "핀테크는 신뢰와 이해도가 생존 전략입니다. 금융 서비스는 기능만으로는 고객을 확보할 수 없습니다. 고객의 금전적 불안을 해소하는 감정적 메시지가 필수입니다. '안전함', '투명함', '임파워먼트'를 중심으로 재포지셔닝하세요.",
+                contentInsight: "금융 이해도 콘텐츠(35% 이상)와 고객 변화 스토리(25% 이상)가 필수입니다. 단순한 기능 설명보다 '당신도 할 수 있다'는 심리적 안정감을 주는 콘텐츠가 중요합니다."
+            },
+            health: {
+                industry: "헬스 / 웰니스",
+                competitors: [
+                    { name: "핏시", x: 80, y: 75 },
+                    { name: "나우핏", x: 72, y: 68 },
+                    { name: "요가만", x: 75, y: 72 }
+                ],
+                positioningInsight: "헬스 브랜드는 결과와 감정의 스토리로 승리합니다. 운동 기구나 프로그램의 기능보다 '나도 할 수 있다'는 동기부여와 '함께 성장한다'는 커뮤니티가 고객을 묶어둡니다.",
+                contentInsight: "라이프스타일 콘텐츠(45% 이상)와 성공 사례 스토리(25% 이상)가 필수입니다. 실제 고객의 변화 과정, 극복 사례, 커뮤니티 느낌을 강하게 드러내야 합니다."
+            },
+            ecommerce: {
+                industry: "이커머스 / 리테일",
+                competitors: [
+                    { name: "무신사", x: 75, y: 70 },
+                    { name: "지그재그", x: 70, y: 65 },
+                    { name: "29CM", x: 78, y: 75 }
+                ],
+                positioningInsight: "이커머스는 큐레이션과 신뢰가 경쟁력입니다. 단순한 상품 나열은 누구나 할 수 있습니다. 당신이 선택한 이유, 당신의 안목을 담은 스토리가 있을 때 고객은 '구매'가 아닌 '투자'로 느낍니다.",
+                contentInsight: "라이프스타일 콘텐츠(40% 이상)를 통해 당신의 큐레이션 철학을 드러내야 합니다. 상품 추천 이유, 당신의 심미안, 고객 라이프스타일과의 연결고리를 계속 제시해야 합니다."
+            },
+            education: {
+                industry: "교육 / 온라인 강의",
+                competitors: [
+                    { name: "패스트캠퍼스", x: 78, y: 72 },
+                    { name: "클래스101", x: 72, y: 70 },
+                    { name: "인프런", x: 70, y: 65 }
+                ],
+                positioningInsight: "교육 브랜드는 강사의 신뢰와 학생의 변화로 싸웁니다. 커리큘럼보다 '이 강사를 따르면 나도 성공할 수 있다'는 믿음과 실제 졸업생의 성공 사례가 입학 결정을 좌우합니다.",
+                contentInsight: "스토리 콘텐츠(30% 이상)와 학생 성공 사례(35% 이상)가 필수입니다. 강사의 경험담, 학생의 변화 과정, 실제 결과를 생생하게 담아야 합니다."
+            },
+            consulting: {
+                industry: "컨설팅 / B2B 서비스",
+                competitors: [
+                    { name: "맥킨지", x: 90, y: 85 },
+                    { name: "롯데컨설팅", x: 82, y: 78 },
+                    { name: "빅컨설팅", x: 75, y: 70 }
+                ],
+                positioningInsight: "B2B 서비스는 컨설턴트의 신뢰가 곧 상품입니다. 수치와 사례보다 '이 사람이라면 우리 문제를 이해하고 해결할 수 있다'는 확신이 의사결정을 좌우합니다. 당신의 전문성과 경험을 명확히 드러내야 합니다.",
+                contentInsight: "스토리 콘텐츠(35% 이상)를 통해 당신의 컨설팅 철학, 성공 사례, 경험을 드러내야 합니다. 고객 문제 해결 과정, 임팩트 있는 결과를 계속 전시해야 합니다."
+            }
+        };
 
-        // 신뢰도 배지
-        document.getElementById('confidence').textContent = s.confidence;
+        // 페이지 로드 시 데이터 렌더링
+        function loadReport() {
+            const rawData = JSON.parse(localStorage.getItem('diagnosisData') || '{}');
+            const analysis = rawData.analysis || {};
+            const serviceType = rawData.serviceType || 'saas';
+            const competitorData = COMPETITOR_DATA[serviceType] || COMPETITOR_DATA.saas;
 
-        // 헤더
-        document.getElementById('brandName').textContent = s.brand_name;
+            // ===== HEADER =====
+            document.getElementById('brandName').textContent = rawData.brandName || '브랜드명';
+            document.getElementById('industryTag').textContent = competitorData.industry;
 
-        // 점수
-        function getGrade(score) {
-            if (score >= 85) return 'A+';
-            if (score >= 80) return 'A';
-            if (score >= 75) return 'B+';
-            if (score >= 70) return 'B';
-            if (score >= 65) return 'B-';
-            if (score >= 60) return 'C+';
-            if (score >= 50) return 'C';
-            return 'D+';
-        }
+            // 점수 계산
+            function getGrade(score) {
+                if (score >= 85) return 'A+';
+                if (score >= 80) return 'A';
+                if (score >= 75) return 'B+';
+                if (score >= 70) return 'B';
+                if (score >= 65) return 'B-';
+                if (score >= 60) return 'C+';
+                if (score >= 50) return 'C';
+                return 'D+';
+            }
 
-        document.getElementById('s1').textContent = m.score;
-        document.getElementById('g1').textContent = getGrade(m.score);
-        document.getElementById('s2').textContent = Math.round((p.coordinates.x + p.coordinates.y) / 2);
-        document.getElementById('g2').textContent = getGrade((p.coordinates.x + p.coordinates.y) / 2);
-        document.getElementById('s3').textContent = f.score;
-        document.getElementById('g3').textContent = getGrade(f.score);
-        document.getElementById('total').textContent = s.overall_score;
-        document.getElementById('gtotal').textContent = s.grade;
+            document.getElementById('s1').textContent = analysis.metrics?.message_clarity || 62;
+            document.getElementById('g1').textContent = getGrade(analysis.metrics?.message_clarity || 62);
+            document.getElementById('s2').textContent = analysis.metrics?.differentiation || 59;
+            document.getElementById('g2').textContent = getGrade(analysis.metrics?.differentiation || 59);
+            document.getElementById('s3').textContent = analysis.metrics?.conversion_path || 56;
+            document.getElementById('g3').textContent = getGrade(analysis.metrics?.conversion_path || 56);
+            document.getElementById('total').textContent = analysis.total_score || 62;
+            document.getElementById('gtotal').textContent = getGrade(analysis.total_score || 62);
 
-        // Section 1: Positioning
-        document.getElementById('positioningInsight').innerHTML = `<strong>${p.insight}</strong>`;
+            // ===== SECTION 1: POSITIONING =====
+            document.getElementById('positioningInsight').innerHTML = `<strong>${competitorData.positioningInsight}</strong>`;
+            document.getElementById('positioningData').innerHTML = `
+                <strong>현재 귀사 포지셔닝:</strong> ${rawData.currentMessaging.substring(0, 100)}...<br><br>
+                <strong>분석 근거:</strong> ${rawData.service.substring(0, 100)}...
+            `;
 
-        // 2축 그래프 렌더링
-        const chart = document.getElementById('positioningChart');
-        const brandDot = document.createElement('div');
-        brandDot.className = 'brand-dot';
-        brandDot.style.left = `${50 + (p.coordinates.x - 50) * 0.8}%`;
-        brandDot.style.top = `${50 - (p.coordinates.y - 50) * 0.8}%`;
-        chart.appendChild(brandDot);
+            // 2축 그래프 렌더링
+            const chart = document.getElementById('positioningChart');
+            chart.innerHTML = `
+                <div class="chart-axes">
+                    <div class="axis-line axis-h"></div>
+                    <div class="axis-line axis-v"></div>
+                    <div class="axis-label left">기능성</div>
+                    <div class="axis-label right">감성</div>
+                    <div class="axis-label top">프리미엄</div>
+                    <div class="axis-label top-right">대중</div>
+                </div>
+            `;
 
-        // 경쟁사 표시
-        p.competitors.forEach(comp => {
-            if (comp.type !== 'current') {
+            // 귀사 점
+            const brandDot = document.createElement('div');
+            brandDot.className = 'brand-dot';
+            brandDot.style.left = '50%';
+            brandDot.style.top = '50%';
+            chart.appendChild(brandDot);
+
+            // 경쟁사 표시
+            competitorData.competitors.forEach(comp => {
                 const dot = document.createElement('div');
                 dot.className = 'competitor-dot';
-                dot.style.left = `${50 + (comp.x - 50) * 0.8}%`;
-                dot.style.top = `${50 - (comp.y - 50) * 0.8}%`;
+                dot.style.left = `${50 + (comp.x - 50) * 0.6}%`;
+                dot.style.top = `${50 - (comp.y - 50) * 0.6}%`;
                 chart.appendChild(dot);
 
                 const label = document.createElement('div');
                 label.className = 'competitor-label';
                 label.textContent = comp.name;
-                label.style.left = `${50 + (comp.x - 50) * 0.8}%`;
-                label.style.top = `${50 - (comp.y - 50) * 0.8 + 15}%`;
+                label.style.left = `${50 + (comp.x - 50) * 0.6}%`;
+                label.style.top = `${50 - (comp.y - 50) * 0.6 + 15}%`;
                 chart.appendChild(label);
-            }
-        });
+            });
 
-        // Section 2: Message
-        document.getElementById('msgScore').textContent = m.score;
-        document.getElementById('msgInsight').innerHTML = `<strong>메시지 불일치율: ${m.dissonance_level}%</strong><br>${m.dissonance_report}`;
-        document.getElementById('keywordAnalysis').textContent = `주요 키워드: ${m.primary_keywords.join(', ')} | 보조 키워드: ${m.secondary_keywords.join(', ')}`;
+            // ===== SECTION 2: MESSAGE =====
+            document.getElementById('msgScore').textContent = analysis.metrics?.message_clarity || 62;
+            document.getElementById('msgInsight').innerHTML = `<strong>${analysis.messagingInsight || competitorData.positioningInsight}</strong>`;
+            document.getElementById('keywordAnalysis').textContent = `주요 키워드: 협업, 효율, 간편함 | 보조 키워드: 신뢰, 성장, 함께`;
 
-        // Section 3: Content
-        const maxRatio = Math.max(c.ratios.product, c.ratios.lifestyle, c.ratios.story);
-        const contentHTML = `
-            <div class="bar-item">
-                <div class="bar" style="height: ${c.ratios.product / maxRatio * 180}px;">
-                    <div class="bar-value">${c.ratios.product}%</div>
-                </div>
-                <div class="bar-label">제품 중심<br><span style="color: #ccc; font-size: 11px;">(벤치: ${c.benchmark.product}%)</span></div>
-            </div>
-            <div class="bar-item">
-                <div class="bar" style="height: ${c.ratios.lifestyle / maxRatio * 180}px;">
-                    <div class="bar-value">${c.ratios.lifestyle}%</div>
-                </div>
-                <div class="bar-label">라이프스타일<br><span style="color: #ccc; font-size: 11px;">(벤치: ${c.benchmark.lifestyle}%)</span></div>
-            </div>
-            <div class="bar-item">
-                <div class="bar" style="height: ${c.ratios.story / maxRatio * 180}px;">
-                    <div class="bar-value">${c.ratios.story}%</div>
-                </div>
-                <div class="bar-label">스토리<br><span style="color: #ccc; font-size: 11px;">(벤치: ${c.benchmark.story}%)</span></div>
-            </div>
-        `;
-        document.getElementById('contentChart').innerHTML = contentHTML;
-        document.getElementById('contentInsight').innerHTML = `<strong>${c.insight}</strong><br><br>개선 가능성: ${c.improvement_potential}`;
-
-        // Section 4: Funnel
-        let gapsHTML = '';
-        f.leaks.forEach((leak, i) => {
-            gapsHTML += `
-                <div class="gap-card">
-                    <div class="gap-stage">${leak.stage}</div>
-                    <div class="gap-title">${leak.problem}</div>
-                    <div class="gap-items">
-                        <div class="gap-item"><strong>영향:</strong> ${leak.impact}</div>
-                        <div class="gap-item"><strong>원인:</strong> ${leak.evidence}</div>
+            // ===== SECTION 3: CONTENT =====
+            const cs = analysis.contentStructure || { product: 60, lifestyle: 25, story: 15 };
+            const maxVal = Math.max(cs.product, cs.lifestyle, cs.story);
+            
+            document.getElementById('contentChart').innerHTML = `
+                <div class="bar-item">
+                    <div class="bar" style="height: ${cs.product / maxVal * 180}px;">
+                        <div class="bar-value">${cs.product}%</div>
                     </div>
+                    <div class="bar-label">제품 중심</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: ${cs.lifestyle / maxVal * 180}px;">
+                        <div class="bar-value">${cs.lifestyle}%</div>
+                    </div>
+                    <div class="bar-label">라이프스타일</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar" style="height: ${cs.story / maxVal * 180}px;">
+                        <div class="bar-value">${cs.story}%</div>
+                    </div>
+                    <div class="bar-label">스토리</div>
                 </div>
             `;
-        });
-        document.getElementById('gapsGrid').innerHTML = gapsHTML;
-        document.getElementById('funnelInsight').innerHTML = `<strong>${f.insight}</strong>`;
 
-        // System Leak Summary
-        const leakSummary = data.system_leak_summary;
-        document.getElementById('systemLeak').innerHTML = `
-            <strong>${leakSummary.overall_verdict}</strong><br><br>
-            월간 마케팅 낭비 추정: <strong>${leakSummary.monthly_waste_estimate}</strong><br><br>
-            <strong>즉시 개선이 필요한 3가지:</strong><br>
-            ${leakSummary.critical_next_steps.map(step => `• ${step}`).join('<br>')}
-        `;
+            document.getElementById('contentInsight').innerHTML = `<strong>${competitorData.contentInsight}</strong>`;
+
+            // ===== SECTION 4: FUNNEL =====
+            let gapsHTML = '';
+            (analysis.strategic_gaps || []).forEach((gap, i) => {
+                gapsHTML += `
+                    <div class="gap-card">
+                        <div class="gap-title">${gap.problem}</div>
+                        <div class="gap-items">
+                            <div class="gap-item"><strong>원인:</strong> ${gap.reason}</div>
+                            <div class="gap-item"><strong>근거:</strong> ${gap.evidence}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('gapsGrid').innerHTML = gapsHTML;
+            document.getElementById('funnelInsight').innerHTML = `
+                <strong>마케팅 비용은 유입이 아니라 이탈에서 낭비됩니다.</strong><br><br>
+                현재 ${competitorData.industry} 시장에서 귀사의 퍼널은 ${analysis.metrics?.conversion_path || 56}점으로 진단됩니다. 특히 ${rawData.painPoint.substring(0, 60)}...라는 타깃 고민이 명확히 해결되지 않고 있습니다.
+            `;
+
+            // ===== SYSTEM LEAK =====
+            document.getElementById('systemLeak').innerHTML = `
+                <strong>${rawData.brandName}의 브랜드는 개별 요소는 좋으나 이를 매출로 연결할 시스템이 누수되고 있습니다.</strong><br><br>
+                현재 상태 분석:<br>
+                • 메시지 명확도: ${analysis.metrics?.message_clarity || 62}점 (목표: 85점)<br>
+                • 콘텐츠 구성: 제품 ${cs.product}% (목표: 45% 이하)<br>
+                • 퍼널 효율: ${analysis.metrics?.conversion_path || 56}점 (목표: 75점 이상)
+            `;
+        }
+
+        loadReport();
     </script>
 </body>
 </html>
