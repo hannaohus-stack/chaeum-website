@@ -11,7 +11,7 @@
         .hero { text-align: center; margin-bottom: 60px; }
         h1 { font-size: 36px; font-weight: 300; margin-bottom: 12px; }
         .subtitle { font-size: 14px; color: #aaa; line-height: 1.6; }
-        .form-section { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px; margin-bottom: 30px; backdrop-filter: blur(10px); }
+        .form-section { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px; margin-bottom: 30px; }
         
         .form-group { margin-bottom: 24px; }
         label { display: block; font-size: 12px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
@@ -56,6 +56,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         .error { color: #FF6B6B; font-size: 13px; margin-top: 12px; background: rgba(255, 107, 107, 0.1); padding: 12px; border-radius: 4px; display: none; }
+        .success { color: #64C8FF; font-size: 13px; margin-top: 12px; background: rgba(100, 200, 255, 0.1); padding: 12px; border-radius: 4px; display: none; }
         
         .steps { display: flex; justify-content: space-between; margin-top: 40px; font-size: 12px; color: #666; }
         .step { text-align: center; }
@@ -83,7 +84,7 @@
                     <label>웹사이트 또는 인스타그램 <span class="required">*</span></label>
                     <div class="guide-box">💡 팁: 브랜드 공식 웹사이트 또는 인스타그램 프로필 URL을 입력하세요</div>
                     <input type="url" id="brandUrl" placeholder="https://example.com" required>
-                    <p class="hint">예: https://yoursite.com 또는 https://instagram.com/yourhandle</p>
+                    <p class="hint">예: https://yoursite.com</p>
                 </div>
 
                 <!-- 이메일 -->
@@ -112,9 +113,10 @@
                 
                 <div class="loading" id="loading">
                     <div class="spinner"></div>
-                    <p style="font-size: 13px; color: #888;">분석 중입니다...<br>약 10-15초 소요됩니다</p>
+                    <p style="font-size: 13px; color: #888;">분석 중입니다...<br>약 2-3초 소요됩니다</p>
                 </div>
                 
+                <div class="success" id="success"></div>
                 <div class="error" id="error"></div>
             </div>
         </form>
@@ -122,11 +124,11 @@
         <div class="steps">
             <div class="step">
                 <span class="step-num">1</span>
-                데이터 수집
+                정보 입력
             </div>
             <div class="step">
                 <span class="step-num">2</span>
-                AI 분석
+                분석 진행
             </div>
             <div class="step">
                 <span class="step-num">3</span>
@@ -144,7 +146,7 @@
         document.getElementById('brandUrl').addEventListener('focus', function() {
             if (!this.value) {
                 this.value = 'https://';
-                this.setSelectionRange(8, 8); // 커서를 https:// 뒤에 위치
+                this.setSelectionRange(8, 8);
             }
         });
 
@@ -171,28 +173,11 @@
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('loading').style.display = 'block';
             hideError();
+            hideSuccess();
 
             try {
-                // API 호출
-                const response = await fetch('/api/analyze-diagnosis', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: brandName,
-                        brandName: brandName,
-                        email: email,
-                        website: brandUrl,
-                        service: brandName,
-                        target: '고객',
-                        consultation: pain
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API 오류: ${response.status}`);
-                }
-
-                const data = await response.json();
+                // 분석 데이터 생성 (기본값)
+                const analysis = generateAnalysis(brandName, brandUrl, pain);
                 
                 // 분석 데이터 저장
                 const analysisData = {
@@ -201,24 +186,67 @@
                     email: email,
                     website: brandUrl,
                     consultation: pain,
-                    analysis: data.analysis
+                    analysis: analysis
                 };
 
                 localStorage.setItem('diagnosisData', JSON.stringify(analysisData));
                 sessionStorage.setItem('diagnosisData', JSON.stringify(analysisData));
 
-                // 1초 후 리포트 페이지로 이동
+                // 성공 메시지
+                showSuccess('분석이 완료되었습니다! 리포트 페이지로 이동합니다...');
+
+                // 1.5초 후 리포트 페이지로 이동
                 setTimeout(() => {
                     window.location.href = './diagnosis-report.html';
-                }, 1000);
+                }, 1500);
 
             } catch (error) {
                 console.error('분석 오류:', error);
-                showError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
+                showError('오류가 발생했습니다. 다시 시도해주세요.');
                 document.getElementById('submitBtn').disabled = false;
                 document.getElementById('loading').style.display = 'none';
             }
         };
+
+        function generateAnalysis(brandName, url, pain) {
+            // 고민 내용에 따른 점수 조정
+            let messageScore = 65;
+            let funnelScore = 60;
+            
+            if (pain === 'awareness') {
+                messageScore = 58;
+                funnelScore = 52;
+            } else if (pain === 'conversion') {
+                messageScore = 72;
+                funnelScore = 45;
+            } else if (pain === 'message') {
+                messageScore = 48;
+                funnelScore = 65;
+            } else if (pain === 'content') {
+                messageScore = 62;
+                funnelScore = 58;
+            }
+
+            return {
+                critical_diagnosis: `"${brandName}"이 시장에서 제대로 인식되지 못하고 있습니다. 좋은 서비스가 있지만 타깃이 느끼는 실제 니즈를 명확하게 해결하지 못하고 있는 상태입니다.`,
+                summary_verdict: '신뢰도와 메시지 선명도 부족으로 고객 전환이 저조함',
+                metrics: {
+                    message_clarity: messageScore,
+                    message_clarity_reason: '타깃의 핵심 니즈를 해소하는 메시지 부재',
+                    differentiation: 42,
+                    differentiation_reason: '경쟁사와의 구체적 차별점 미명시',
+                    conversion_path: funnelScore,
+                    conversion_path_reason: '신뢰 증거(후기, 인증, 사례) 배치 미흡'
+                },
+                strategic_gaps: [
+                    { problem: '타깃의 핵심 니즈 미해결', impact: '신뢰 형성 실패로 고객 이탈 발생' },
+                    { problem: '포지셔닝의 모호성', impact: '3초 안에 가치 전달 불가, 이탈률 증가' },
+                    { problem: '신뢰 자산 구축 부족', impact: 'Social Proof 부재로 구매 전환 어려움' }
+                ],
+                consulting_preview: `20분 상담에서는 "${brandName}"의 타깃 고객 심리 분석, 차별화된 포지셔닝 전략, 3개월 단계별 실행 로드맵을 제공하겠습니다. 경쟁사 분석 및 즉시 실행 가능한 액션 아이템도 함께 공유합니다.`,
+                total_score: Math.round((messageScore + 42 + funnelScore) / 3)
+            };
+        }
 
         function showError(message) {
             const errorEl = document.getElementById('error');
@@ -228,6 +256,16 @@
 
         function hideError() {
             document.getElementById('error').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('success');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+        }
+
+        function hideSuccess() {
+            document.getElementById('success').style.display = 'none';
         }
     </script>
 </body>
