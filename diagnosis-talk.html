@@ -64,11 +64,44 @@
             color: #64C8FF; 
             margin-top: 6px;
             display: none;
+        }
+
+        .analyzing-list {
+            display: none;
+            background: rgba(100, 200, 255, 0.05);
+            border: 1px solid rgba(100, 200, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+
+        .analyzing-list.active {
+            display: block;
+        }
+
+        .analyzing-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #64C8FF;
+        }
+
+        .analyzing-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .spinner {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #64C8FF;
+            margin-right: 8px;
             animation: pulse 1.5s infinite;
         }
-        
+
         @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
+            0%, 100% { opacity: 0.4; }
             50% { opacity: 1; }
         }
         
@@ -106,7 +139,7 @@
     <div class="container">
         <div class="hero">
             <h1>브랜드 진단</h1>
-            <p class="subtitle">웹사이트 URL을 입력하면<br>AI가 자동으로 분석합니다</p>
+            <p class="subtitle">AI가 당신의 브랜드를<br>깊이 있게 분석합니다</p>
         </div>
 
         <div id="error" class="error"></div>
@@ -123,6 +156,20 @@
                         required>
                     <p class="hint">웹사이트 주소를 입력하세요</p>
                     <div class="analyzing" id="analyzing">분석 중...</div>
+                    <div class="analyzing-list" id="analyzingList">
+                        <div class="analyzing-item">
+                            <div class="spinner"></div>
+                            <span>브랜드 메시지 분석 중</span>
+                        </div>
+                        <div class="analyzing-item">
+                            <div class="spinner" style="animation-delay: 0.3s;"></div>
+                            <span>포지셔닝 구조 분석 중</span>
+                        </div>
+                        <div class="analyzing-item">
+                            <div class="spinner" style="animation-delay: 0.6s;"></div>
+                            <span>고객 문제 인식 분석 중</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 2. 이메일 -->
@@ -145,7 +192,6 @@
         const websiteInput = document.getElementById('website');
         let analysisData = null;
         
-        // URL focus 시 자동 https:// 추가
         websiteInput.addEventListener('focus', function() {
             if (!this.value) {
                 this.value = 'https://';
@@ -153,7 +199,6 @@
             }
         });
 
-        // URL blur 시 API로 자동 분석
         websiteInput.addEventListener('blur', async function() {
             const url = this.value.trim();
             
@@ -161,8 +206,8 @@
 
             try {
                 document.getElementById('analyzing').style.display = 'block';
+                document.getElementById('analyzingList').classList.add('active');
                 
-                // 서버 API 호출
                 analysisData = await analyzeWebsite(url);
                 
                 console.log('✅ 분석 완료:', analysisData);
@@ -171,10 +216,10 @@
                 console.error('분석 오류:', error);
             } finally {
                 document.getElementById('analyzing').style.display = 'none';
+                document.getElementById('analyzingList').classList.remove('active');
             }
         });
 
-        // 폼 제출
         document.getElementById('diagnosisForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -191,7 +236,6 @@
                 return;
             }
 
-            // 분석이 완료되지 않았으면 재분석
             if (!analysisData) {
                 showError('URL 분석이 완료되지 않았습니다. 잠시 후 다시 시도하세요.');
                 return;
@@ -205,7 +249,6 @@
             document.getElementById('submitBtn').disabled = true;
 
             try {
-                // 분석 데이터 + 사용자 입력 합치기
                 const finalData = {
                     ...analysisData,
                     website: finalUrl,
@@ -227,9 +270,6 @@
             }
         });
 
-        /**
-         * 서버 API를 통한 실제 웹사이트 분석
-         */
         async function analyzeWebsite(url) {
             try {
                 const response = await fetch('/api/analyze', {
@@ -244,14 +284,17 @@
 
                 if (!response.ok) {
                     console.warn('분석 실패:', data.error);
-                    // 실패해도 기본값으로 진행
                     return {
                         brandName: extractBrandName(url),
                         serviceType: 'default',
-                        service: '⚠️ 웹사이트 분석에 실패했습니다. 나중에 다시 시도해주세요.',
+                        service: '⚠️ 웹사이트 분석에 실패했습니다.',
                         painPoint: '기술적 오류로 인해 분석을 완료하지 못했습니다.',
                         currentMessaging: '분석 중...',
-                        extractedData: {}
+                        extractedData: {},
+                        diagnosis: { positioningScore: 0, messagingScore: 0, conversionScore: 0 },
+                        growthPotential: '분석 불가',
+                        funnelStrategy: [],
+                        strategyRecommendations: []
                     };
                 }
 
@@ -266,7 +309,11 @@
                     service: '⚠️ 분석 엔진에 연결할 수 없습니다.',
                     painPoint: '네트워크 오류가 발생했습니다.',
                     currentMessaging: '분석 불가',
-                    extractedData: {}
+                    extractedData: {},
+                    diagnosis: { positioningScore: 0, messagingScore: 0, conversionScore: 0 },
+                    growthPotential: '분석 불가',
+                    funnelStrategy: [],
+                    strategyRecommendations: []
                 };
             }
         }
