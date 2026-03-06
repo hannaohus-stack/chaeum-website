@@ -28,25 +28,22 @@ export default async function handler(req, res) {
     const combinedText = `${title} ${ogDesc} ${metaDesc} ${h1}`.toLowerCase();
     let serviceType = 'lifestyle';
 
-    if (combinedText.match(/saas|app|tool|platform|협업|도구/)) serviceType = 'saas';
-    else if (combinedText.match(/shop|store|mall|쇼핑|판매/)) serviceType = 'ecommerce';
-    else if (combinedText.match(/beauty|cosmetic|뷰티|화장품/)) serviceType = 'lifestyle';
-    else if (combinedText.match(/food|cafe|음식|식품/)) serviceType = 'food';
+    if (combinedText.match(/saas|app|tool|platform/)) serviceType = 'saas';
+    else if (combinedText.match(/beauty|cosmetic/)) serviceType = 'lifestyle';
+    else if (combinedText.match(/food|cafe/)) serviceType = 'food';
 
-    const analysis = {
-      brandName: ogTitle || title || '알 수 없는 브랜드',
-      service: ogDesc || metaDesc || h1 || '설명을 찾을 수 없습니다.',
-      currentMessaging: h1 || title || '메인 메시지를 분석 중입니다.',
-      painPoint: `해당 분야에서 겪는 불편함을 해결하고 싶어합니다.`,
+    return res.status(200).json({
+      brandName: ogTitle || title || '브랜드',
+      service: ogDesc || metaDesc || '서비스 설명',
+      currentMessaging: h1 || title || '메시지',
+      painPoint: '타깃 고객의 주요 고민',
       serviceType: serviceType
-    };
-
-    return res.status(200).json(analysis);
+    });
 
   } catch (error) {
     console.error('분석 오류:', error.message);
     return res.status(500).json({ 
-      error: '웹사이트를 분석할 수 없습니다.',
+      error: '분석 실패',
       details: error.message 
     });
   }
