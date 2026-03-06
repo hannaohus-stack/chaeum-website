@@ -53,7 +53,7 @@
             transition: all 0.2s;
         }
         textarea { 
-            min-height: 100px; 
+            min-height: 80px; 
             resize: vertical; 
         }
         input::placeholder, textarea::placeholder { 
@@ -69,6 +69,18 @@
             font-size: 12px; 
             color: #666; 
             margin-top: 8px; 
+        }
+
+        .analyzing {
+            font-size: 12px;
+            color: #64C8FF;
+            margin-top: 8px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
         
         .error { 
@@ -138,7 +150,7 @@
     <div class="container">
         <div class="hero">
             <h1>브랜드 진단</h1>
-            <p class="subtitle">5가지 정보만 입력하면<br>AI 자동 분석 리포트가 생성됩니다</p>
+            <p class="subtitle">웹사이트 URL을 분석하면<br>AI가 자동으로 정보를 채웁니다</p>
         </div>
 
         <div id="error" class="error"></div>
@@ -146,50 +158,51 @@
 
         <form id="diagnosisForm">
             <div class="form-section">
-                <!-- 1. URL -->
+                <!-- 1. URL (자동 분석) -->
                 <div class="form-group">
-                    <label>🔗 웹사이트 또는 인스타그램 <span class="required">*</span></label>
+                    <label>웹사이트 또는 인스타그램 <span class="required">*</span></label>
                     <input 
                         type="text"
                         id="brandUrl" 
                         placeholder="https://yoursite.com"
                         required>
-                    <p class="hint">브랜드 주소를 입력하세요</p>
+                    <p class="hint">URL을 입력하면 자동으로 분석됩니다</p>
+                    <div class="analyzing" id="analyzing" style="display: none;">분석 중...</div>
                 </div>
 
-                <!-- 2. 서비스 설명 -->
+                <!-- 2. 서비스 설명 (자동 채우기, 수정 가능) -->
                 <div class="form-group">
-                    <label>📝 서비스/제품 설명 <span class="required">*</span></label>
+                    <label>서비스/제품 설명 <span class="required">*</span></label>
                     <textarea 
                         id="service" 
-                        placeholder="예: 소상공인을 위한 식품 라벨 생성 SaaS. 디자인 경험 없이도 2분 만에 전문가급 라벨을 만들 수 있습니다."
+                        placeholder="URL 분석으로 자동 채워집니다. 필요시 수정하세요."
                         required></textarea>
-                    <p class="hint">✨ 이 부분이 분석의 핵심입니다. 최소 20자 이상 입력해주세요.</p>
+                    <p class="hint">URL에서 추출된 설명입니다. 자유롭게 수정 가능합니다.</p>
                 </div>
 
-                <!-- 3. 타깃 고객 페인 -->
+                <!-- 3. 타깃 고객 페인 (자동 채우기, 수정 가능) -->
                 <div class="form-group">
-                    <label>⚠️ 타깃 고객의 가장 큰 고민 <span class="required">*</span></label>
+                    <label>타깃 고객의 가장 큰 고민 <span class="required">*</span></label>
                     <textarea 
                         id="painPoint" 
-                        placeholder="예: 소상공인은 디자인 비용이 너무 비싸고, 시간도 오래 걸려서 제품 출시를 미루고 있습니다."
+                        placeholder="URL 분석으로 자동 채워집니다. 필요시 수정하세요."
                         required></textarea>
-                    <p class="hint">✨ 이 부분도 분석에 매우 중요합니다</p>
+                    <p class="hint">고객이 실제로 겪는 문제를 설명하세요.</p>
                 </div>
 
-                <!-- 4. 현재 포지셔닝 -->
+                <!-- 4. 현재 포지셔닝 메시지 (자동 채우기, 수정 가능) -->
                 <div class="form-group">
-                    <label>💬 지금 어떻게 표현하고 있나요? <span class="required">*</span></label>
+                    <label>현재 포지셔닝 메시지 <span class="required">*</span></label>
                     <textarea 
                         id="currentMessaging" 
-                        placeholder="예: '누구나 쉬운 라벨 디자인' 또는 '5분만에 프로 같은 라벨을 만드세요'"
+                        placeholder="URL 분석으로 자동 채워집니다. 필요시 수정하세요."
                         required></textarea>
-                    <p class="hint">✨ 분석의 기준이 됩니다</p>
+                    <p class="hint">웹사이트에서 주로 사용하는 메시지입니다.</p>
                 </div>
 
-                <!-- 5. 이메일 -->
+                <!-- 5. 이메일 (수동 입력) -->
                 <div class="form-group">
-                    <label>📧 이메일 <span class="required">*</span></label>
+                    <label>이메일 <span class="required">*</span></label>
                     <input 
                         type="email" 
                         id="email" 
@@ -215,6 +228,43 @@
             }
         });
 
+        // URL blur 시 자동 분석
+        brandUrlInput.addEventListener('blur', async function() {
+            const url = this.value.trim();
+            
+            // https:// 형태일 때만 분석
+            if (!url.startsWith('http')) {
+                return;
+            }
+
+            try {
+                document.getElementById('analyzing').style.display = 'block';
+                
+                // API 호출
+                const response = await fetch(`/api/analyze?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    // 자동으로 필드 채우기
+                    document.getElementById('service').value = data.service || '';
+                    document.getElementById('painPoint').value = data.painPoint || '';
+                    document.getElementById('currentMessaging').value = data.currentMessaging || '';
+                    
+                    console.log('URL 분석 완료:', data);
+                    hideError();
+                } else {
+                    console.warn('분석 실패:', data.error);
+                }
+                
+                document.getElementById('analyzing').style.display = 'none';
+                
+            } catch (error) {
+                console.error('API 호출 오류:', error);
+                document.getElementById('analyzing').style.display = 'none';
+                // 실패해도 계속 진행 가능하도록 에러 표시하지 않음
+            }
+        });
+
         // 폼 제출
         document.getElementById('diagnosisForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -237,7 +287,7 @@
             }
 
             if (!isValidUrl(brandUrl)) {
-                showError('유효한 URL 형식을 입력해주세요 (예: https://example.com)');
+                showError('유효한 URL 형식을 입력해주세요');
                 return;
             }
 
@@ -269,7 +319,7 @@
                 // localStorage에 저장
                 localStorage.setItem('diagnosisData', JSON.stringify(analysisData));
                 
-                showSuccess('✅ 분석 완료! 리포트로 이동합니다...');
+                showSuccess('분석 완료! 리포트로 이동합니다...');
 
                 // 2초 후 리포트 페이지로 이동
                 setTimeout(() => {
@@ -288,7 +338,6 @@
          */
         function isValidUrl(url) {
             try {
-                // https:// 자동 추가
                 const testUrl = url.startsWith('http') ? url : 'https://' + url;
                 new URL(testUrl);
                 return true;
@@ -305,12 +354,10 @@
                 const domain = new URL(url).hostname;
                 const domainName = domain.split('.')[0];
                 
-                // 한글 감지
                 if (/[가-힣]/.test(domainName)) {
                     return domainName;
                 }
                 
-                // 영문 첫글자 대문자
                 return domainName.charAt(0).toUpperCase() + domainName.slice(1);
             } catch (error) {
                 return 'Brand';
@@ -323,7 +370,6 @@
         function detectServiceType(service, messaging) {
             const text = `${service} ${messaging}`.toLowerCase();
 
-            // 각 유형별 키워드 매칭
             if (text.match(/saas|app|tool|software|platform|협업|도구|시스템|솔루션|api/)) {
                 return 'saas';
             }
@@ -352,7 +398,6 @@
                 return 'consulting';
             }
 
-            // 기본값
             return 'lifestyle';
         }
 
@@ -364,10 +409,17 @@
             el.textContent = msg;
             el.style.display = 'block';
             
-            // 3초 후 자동 숨김
             setTimeout(() => {
-                el.style.display = 'none';
+                hideError();
             }, 3000);
+        }
+
+        /**
+         * 에러 메시지 숨김
+         */
+        function hideError() {
+            const el = document.getElementById('error');
+            el.style.display = 'none';
         }
 
         /**
