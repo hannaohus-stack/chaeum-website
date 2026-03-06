@@ -15,21 +15,21 @@
             align-items: center;
             justify-content: center;
         }
-        .container { max-width: 650px; width: 100%; padding: 40px 20px; }
+        .container { max-width: 550px; width: 100%; padding: 40px 20px; }
         
-        .hero { text-align: center; margin-bottom: 50px; }
-        h1 { font-size: 48px; font-weight: 300; margin-bottom: 12px; letter-spacing: -0.5px; }
-        .subtitle { font-size: 14px; color: #aaa; line-height: 1.8; }
+        .hero { text-align: center; margin-bottom: 60px; }
+        h1 { font-size: 44px; font-weight: 300; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .subtitle { font-size: 14px; color: #aaa; line-height: 1.6; }
         
         .form-section { 
             background: rgba(255,255,255,0.05); 
             border: 1px solid rgba(255,255,255,0.1); 
             border-radius: 12px; 
-            padding: 40px; 
+            padding: 32px; 
             backdrop-filter: blur(10px);
         }
         
-        .form-group { margin-bottom: 32px; }
+        .form-group { margin-bottom: 28px; }
         label { 
             display: block; 
             font-size: 12px; 
@@ -37,11 +37,11 @@
             text-transform: uppercase; 
             letter-spacing: 0.5px; 
             font-weight: 600; 
-            margin-bottom: 12px; 
+            margin-bottom: 10px; 
         }
         .required { color: #FF6464; }
         
-        input, textarea { 
+        input { 
             width: 100%; 
             padding: 14px; 
             background: rgba(255,255,255,0.08); 
@@ -52,29 +52,25 @@
             font-family: inherit;
             transition: all 0.2s;
         }
-        textarea { 
-            min-height: 80px; 
-            resize: vertical; 
-        }
-        input::placeholder, textarea::placeholder { 
+        input::placeholder { 
             color: #666; 
         }
-        input:focus, textarea:focus { 
+        input:focus { 
             outline: none; 
             border-color: rgba(255,255,255,0.3); 
             background: rgba(255,255,255,0.12); 
         }
         
         .hint { 
-            font-size: 12px; 
+            font-size: 11px; 
             color: #666; 
-            margin-top: 8px; 
+            margin-top: 6px; 
         }
 
         .analyzing {
-            font-size: 12px;
+            font-size: 11px;
             color: #64C8FF;
-            margin-top: 8px;
+            margin-top: 6px;
             animation: pulse 1.5s infinite;
         }
 
@@ -86,10 +82,10 @@
         .error { 
             background: rgba(255, 107, 107, 0.1); 
             color: #FF6B6B; 
-            padding: 12px; 
+            padding: 10px; 
             border-radius: 4px; 
             display: none; 
-            font-size: 13px; 
+            font-size: 12px; 
             margin-bottom: 20px;
             border-left: 4px solid #FF6B6B;
             animation: slideDown 0.3s ease;
@@ -97,10 +93,10 @@
         .success { 
             background: rgba(100, 200, 255, 0.1); 
             color: #64C8FF; 
-            padding: 12px; 
+            padding: 10px; 
             border-radius: 4px; 
             display: none; 
-            font-size: 13px; 
+            font-size: 12px; 
             margin-bottom: 20px;
             border-left: 4px solid #64C8FF;
             animation: slideDown 0.3s ease;
@@ -119,7 +115,7 @@
         
         button { 
             width: 100%; 
-            padding: 16px; 
+            padding: 14px; 
             background: white; 
             color: #4B4545; 
             border: none; 
@@ -128,7 +124,6 @@
             font-size: 14px; 
             cursor: pointer; 
             transition: all 0.2s;
-            margin-top: 8px;
         }
         button:hover:not(:disabled) { 
             transform: translateY(-2px); 
@@ -140,9 +135,10 @@
         }
 
         @media (max-width: 768px) {
-            .container { padding: 20px 16px; }
+            .container { padding: 30px 16px; }
             .form-section { padding: 24px; }
             h1 { font-size: 36px; }
+            .hero { margin-bottom: 40px; }
         }
     </style>
 </head>
@@ -150,7 +146,7 @@
     <div class="container">
         <div class="hero">
             <h1>브랜드 진단</h1>
-            <p class="subtitle">웹사이트 URL을 분석하면<br>AI가 자동으로 정보를 채웁니다</p>
+            <p class="subtitle">웹사이트 URL만 입력하면<br>AI가 자동으로 분석합니다</p>
         </div>
 
         <div id="error" class="error"></div>
@@ -158,49 +154,19 @@
 
         <form id="diagnosisForm">
             <div class="form-section">
-                <!-- 1. URL (자동 분석) -->
+                <!-- 1. URL -->
                 <div class="form-group">
-                    <label>웹사이트 또는 인스타그램 <span class="required">*</span></label>
+                    <label>웹사이트 <span class="required">*</span></label>
                     <input 
                         type="text"
                         id="brandUrl" 
                         placeholder="https://yoursite.com"
                         required>
-                    <p class="hint">URL을 입력하면 자동으로 분석됩니다</p>
+                    <p class="hint">웹사이트 주소를 입력하세요</p>
                     <div class="analyzing" id="analyzing" style="display: none;">분석 중...</div>
                 </div>
 
-                <!-- 2. 서비스 설명 (자동 채우기, 수정 가능) -->
-                <div class="form-group">
-                    <label>서비스/제품 설명 <span class="required">*</span></label>
-                    <textarea 
-                        id="service" 
-                        placeholder="URL 분석으로 자동 채워집니다. 필요시 수정하세요."
-                        required></textarea>
-                    <p class="hint">URL에서 추출된 설명입니다. 자유롭게 수정 가능합니다.</p>
-                </div>
-
-                <!-- 3. 타깃 고객 페인 (자동 채우기, 수정 가능) -->
-                <div class="form-group">
-                    <label>타깃 고객의 가장 큰 고민 <span class="required">*</span></label>
-                    <textarea 
-                        id="painPoint" 
-                        placeholder="URL 분석으로 자동 채워집니다. 필요시 수정하세요."
-                        required></textarea>
-                    <p class="hint">고객이 실제로 겪는 문제를 설명하세요.</p>
-                </div>
-
-                <!-- 4. 현재 포지셔닝 메시지 (자동 채우기, 수정 가능) -->
-                <div class="form-group">
-                    <label>현재 포지셔닝 메시지 <span class="required">*</span></label>
-                    <textarea 
-                        id="currentMessaging" 
-                        placeholder="URL 분석으로 자동 채워집니다. 필요시 수정하세요."
-                        required></textarea>
-                    <p class="hint">웹사이트에서 주로 사용하는 메시지입니다.</p>
-                </div>
-
-                <!-- 5. 이메일 (수동 입력) -->
+                <!-- 2. 이메일 -->
                 <div class="form-group">
                     <label>이메일 <span class="required">*</span></label>
                     <input 
@@ -208,16 +174,15 @@
                         id="email" 
                         placeholder="your@email.com"
                         required>
-                    <p class="hint">상세 리포트 수신용</p>
+                    <p class="hint">리포트 수신용</p>
                 </div>
 
-                <button type="submit" id="submitBtn">분석 시작 (무료)</button>
+                <button type="submit" id="submitBtn">분석 시작</button>
             </div>
         </form>
     </div>
 
     <script>
-        // URL 입력 필드
         const brandUrlInput = document.getElementById('brandUrl');
         
         // URL focus 시 자동 https:// 추가
@@ -232,7 +197,6 @@
         brandUrlInput.addEventListener('blur', async function() {
             const url = this.value.trim();
             
-            // https:// 형태일 때만 분석
             if (!url.startsWith('http')) {
                 return;
             }
@@ -240,28 +204,19 @@
             try {
                 document.getElementById('analyzing').style.display = 'block';
                 
-                // API 호출
                 const response = await fetch(`/api/analyze?url=${encodeURIComponent(url)}`);
                 const data = await response.json();
 
                 if (response.ok) {
-                    // 자동으로 필드 채우기
-                    document.getElementById('service').value = data.service || '';
-                    document.getElementById('painPoint').value = data.painPoint || '';
-                    document.getElementById('currentMessaging').value = data.currentMessaging || '';
-                    
                     console.log('URL 분석 완료:', data);
                     hideError();
-                } else {
-                    console.warn('분석 실패:', data.error);
                 }
                 
                 document.getElementById('analyzing').style.display = 'none';
                 
             } catch (error) {
-                console.error('API 호출 오류:', error);
+                console.error('분석 오류:', error);
                 document.getElementById('analyzing').style.display = 'none';
-                // 실패해도 계속 진행 가능하도록 에러 표시하지 않음
             }
         });
 
@@ -270,72 +225,49 @@
             e.preventDefault();
 
             const brandUrl = document.getElementById('brandUrl').value.trim();
-            const service = document.getElementById('service').value.trim();
-            const painPoint = document.getElementById('painPoint').value.trim();
-            const currentMessaging = document.getElementById('currentMessaging').value.trim();
             const email = document.getElementById('email').value.trim();
 
-            // 입력값 검증
-            if (!brandUrl || !service || !painPoint || !currentMessaging || !email) {
-                showError('모든 필수 항목을 입력해주세요');
-                return;
-            }
-
-            if (service.length < 20) {
-                showError('서비스 설명을 더 자세히 입력해주세요 (최소 20자)');
+            // 검증
+            if (!brandUrl || !email) {
+                showError('모든 항목을 입력해주세요');
                 return;
             }
 
             if (!isValidUrl(brandUrl)) {
-                showError('유효한 URL 형식을 입력해주세요');
+                showError('유효한 URL을 입력해주세요');
                 return;
             }
 
-            // URL 형식 정정
             let finalUrl = brandUrl;
             if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
                 finalUrl = 'https://' + finalUrl;
             }
 
-            // 서비스 유형 자동 감지
-            const serviceType = detectServiceType(service, currentMessaging);
-
-            // 제출 버튼 비활성화
             document.getElementById('submitBtn').disabled = true;
 
             try {
-                // 분석 데이터 구성
                 const analysisData = {
                     brandName: extractBrandName(finalUrl),
-                    service,
-                    painPoint,
-                    currentMessaging,
                     email,
                     website: finalUrl,
-                    serviceType: serviceType,
                     timestamp: new Date().toISOString()
                 };
 
-                // localStorage에 저장
                 localStorage.setItem('diagnosisData', JSON.stringify(analysisData));
                 
-                showSuccess('분석 완료! 리포트로 이동합니다...');
+                showSuccess('분석 중입니다. 잠시만 기다려주세요...');
 
-                // 2초 후 리포트 페이지로 이동
                 setTimeout(() => {
                     window.location.href = './diagnosis-report.html';
-                }, 2000);
+                }, 1500);
 
             } catch (error) {
-                console.error('저장 오류:', error);
-                showError('오류가 발생했습니다. 다시 시도해주세요.');
+                console.error('오류:', error);
+                showError('오류가 발생했습니다');
                 document.getElementById('submitBtn').disabled = false;
             }
         });
 
-        /**
-         * URL 유효성 검증
-         */
         function isValidUrl(url) {
             try {
                 const testUrl = url.startsWith('http') ? url : 'https://' + url;
@@ -346,9 +278,6 @@
             }
         }
 
-        /**
-         * URL에서 브랜드명 추출
-         */
         function extractBrandName(url) {
             try {
                 const domain = new URL(url).hostname;
@@ -364,46 +293,6 @@
             }
         }
 
-        /**
-         * 입력된 정보로 서비스 유형 자동 감지
-         */
-        function detectServiceType(service, messaging) {
-            const text = `${service} ${messaging}`.toLowerCase();
-
-            if (text.match(/saas|app|tool|software|platform|협업|도구|시스템|솔루션|api/)) {
-                return 'saas';
-            }
-            if (text.match(/beauty|cosmetic|skincare|makeup|패션|뷰티|스킨케어|화장품/)) {
-                return 'lifestyle';
-            }
-            if (text.match(/food|cafe|restaurant|recipe|음식|음료|카페|베이커리|식품/)) {
-                return 'food';
-            }
-            if (text.match(/design|creative|studio|디자인|창작|아트|브랜딩/)) {
-                return 'design';
-            }
-            if (text.match(/fintech|payment|finance|crypto|금융|투자|결제|뱅킹/)) {
-                return 'fintech';
-            }
-            if (text.match(/health|fitness|wellness|gym|요가|헬스|운동|트레이닝/)) {
-                return 'health';
-            }
-            if (text.match(/shop|store|ecommerce|상점|쇼핑|판매|마켓/)) {
-                return 'ecommerce';
-            }
-            if (text.match(/course|learn|education|학습|교육|강의|아카데미/)) {
-                return 'education';
-            }
-            if (text.match(/consulting|strategy|business|컨설팅|전략|비즈니스/)) {
-                return 'consulting';
-            }
-
-            return 'lifestyle';
-        }
-
-        /**
-         * 에러 메시지 표시
-         */
         function showError(msg) {
             const el = document.getElementById('error');
             el.textContent = msg;
@@ -414,17 +303,11 @@
             }, 3000);
         }
 
-        /**
-         * 에러 메시지 숨김
-         */
         function hideError() {
             const el = document.getElementById('error');
             el.style.display = 'none';
         }
 
-        /**
-         * 성공 메시지 표시
-         */
         function showSuccess(msg) {
             const el = document.getElementById('success');
             el.textContent = msg;
