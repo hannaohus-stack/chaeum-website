@@ -12,18 +12,51 @@
         h1 { font-size: 36px; font-weight: 300; margin-bottom: 12px; }
         .subtitle { font-size: 14px; color: #aaa; line-height: 1.6; }
         .form-section { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px; margin-bottom: 30px; backdrop-filter: blur(10px); }
-        label { display: block; font-size: 12px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        input { width: 100%; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 14px; margin-bottom: 20px; }
-        input:focus { outline: none; border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); }
-        .hint { font-size: 12px; color: #666; margin-top: -16px; margin-bottom: 20px; }
-        .input-tag { display: inline-block; background: rgba(74, 158, 255, 0.2); color: #4A9EFF; padding: 4px 12px; border-radius: 4px; font-size: 11px; margin-left: 8px; }
-        button { width: 100%; padding: 16px; background: white; color: #4B4545; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s; }
-        button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        
+        .form-group { margin-bottom: 24px; }
+        label { display: block; font-size: 12px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .required { color: #FF6464; }
+        
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
+            background: rgba(255,255,255,0.08); 
+            border: 1px solid rgba(255,255,255,0.15); 
+            border-radius: 8px; 
+            color: white; 
+            font-size: 14px;
+        }
+        input::placeholder { color: #666; }
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: rgba(255,255,255,0.3); 
+            background: rgba(255,255,255,0.12); 
+        }
+        
+        .hint { font-size: 12px; color: #666; margin-top: 6px; }
+        .guide-box { background: rgba(74, 158, 255, 0.1); border-left: 3px solid #4A9EFF; padding: 12px; border-radius: 4px; font-size: 12px; color: #aaa; margin-bottom: 20px; }
+        
+        button { 
+            width: 100%; 
+            padding: 16px; 
+            background: white; 
+            color: #4B4545; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            font-size: 14px; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .loading { display: none; text-align: center; }
+        
+        .loading { display: none; text-align: center; margin-top: 20px; }
         .spinner { border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid white; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 12px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .error { color: #FF6B6B; font-size: 13px; margin-top: 12px; }
+        
+        .error { color: #FF6B6B; font-size: 13px; margin-top: 12px; background: rgba(255, 107, 107, 0.1); padding: 12px; border-radius: 4px; display: none; }
+        
         .steps { display: flex; justify-content: space-between; margin-top: 40px; font-size: 12px; color: #666; }
         .step { text-align: center; }
         .step-num { display: block; font-weight: 600; color: #888; margin-bottom: 4px; }
@@ -33,33 +66,55 @@
     <div class="container">
         <div class="hero">
             <h1>브랜드 진단</h1>
-            <p class="subtitle">URL 하나로 보는<br>당신의 브랜드 포지셔닝과 시스템 누수</p>
+            <p class="subtitle">URL 하나로 보는<br>당신의 브랜드 포지셔닝과 시스템 분석</p>
         </div>
 
         <form id="diagnosisForm">
             <div class="form-section">
-                <label>인스타그램 또는 웹사이트</label>
-                <input type="text" id="brandUrl" placeholder="@yourhandle 또는 https://yoursite.com" required>
-                <p class="hint">분석을 위해 최신 콘텐츠를 수집합니다</p>
+                <!-- 브랜드명 -->
+                <div class="form-group">
+                    <label>브랜드명 <span class="required">*</span></label>
+                    <input type="text" id="brandName" placeholder="예: 케이알케이, 더데이" required>
+                    <p class="hint">분석할 브랜드 이름을 입력하세요</p>
+                </div>
 
-                <label>이메일 주소</label>
-                <input type="email" id="email" placeholder="report@your-email.com" required>
-                <p class="hint">상세 리포트를 이메일로 받을 주소</p>
+                <!-- 웹사이트/인스타 URL -->
+                <div class="form-group">
+                    <label>웹사이트 또는 인스타그램 <span class="required">*</span></label>
+                    <div class="guide-box">💡 팁: 브랜드 공식 웹사이트 또는 인스타그램 프로필 URL을 입력하세요</div>
+                    <input type="url" id="brandUrl" placeholder="https://example.com" required>
+                    <p class="hint">예: https://yoursite.com 또는 https://instagram.com/yourhandle</p>
+                </div>
 
-                <label>가장 큰 고민은? <span class="input-tag">선택</span></label>
-                <select id="pain" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 14px; margin-bottom: 20px;">
-                    <option value="">선택해주세요</option>
-                    <option value="awareness">브랜드 인지도 저하</option>
-                    <option value="conversion">전환율 부족</option>
-                    <option value="message">메시지 혼란</option>
-                    <option value="content">콘텐츠 전략 부재</option>
-                </select>
+                <!-- 이메일 -->
+                <div class="form-group">
+                    <label>이메일 주소 <span class="required">*</span></label>
+                    <input type="email" id="email" placeholder="example@email.com" required>
+                    <p class="hint">상세 리포트를 받을 이메일</p>
+                </div>
 
+                <!-- 고민 -->
+                <div class="form-group">
+                    <label>가장 큰 고민은? <span class="required">*</span></label>
+                    <select id="pain" required>
+                        <option value="">선택해주세요</option>
+                        <option value="awareness">브랜드 인지도 부족</option>
+                        <option value="conversion">판매 전환 어려움</option>
+                        <option value="message">메시지 전달 혼란</option>
+                        <option value="content">콘텐츠 전략 부재</option>
+                        <option value="positioning">포지셔닝 불명확</option>
+                    </select>
+                    <p class="hint">현재 가장 시급한 문제를 선택하세요</p>
+                </div>
+
+                <!-- 제출 버튼 -->
                 <button type="submit" id="submitBtn">분석 시작 (무료)</button>
+                
                 <div class="loading" id="loading">
                     <div class="spinner"></div>
-                    <p style="font-size: 13px; color: #888;">분석 중입니다...</p>
+                    <p style="font-size: 13px; color: #888;">분석 중입니다...<br>약 10-15초 소요됩니다</p>
                 </div>
+                
                 <div class="error" id="error"></div>
             </div>
         </form>
@@ -85,45 +140,95 @@
     </div>
 
     <script>
+        // URL 입력창에 기본값 추가
+        document.getElementById('brandUrl').addEventListener('focus', function() {
+            if (!this.value) {
+                this.value = 'https://';
+                this.setSelectionRange(8, 8); // 커서를 https:// 뒤에 위치
+            }
+        });
+
         document.getElementById('diagnosisForm').onsubmit = async (e) => {
             e.preventDefault();
 
-            const brandUrl = document.getElementById('brandUrl').value;
-            const email = document.getElementById('email').value;
+            const brandName = document.getElementById('brandName').value.trim();
+            const brandUrl = document.getElementById('brandUrl').value.trim();
+            const email = document.getElementById('email').value.trim();
             const pain = document.getElementById('pain').value;
 
-            if (!pain) {
-                document.getElementById('error').textContent = '고민을 선택해주세요';
+            // 검증
+            if (!brandName || !brandUrl || !email || !pain) {
+                showError('모든 필드를 입력해주세요');
                 return;
             }
 
+            if (!brandUrl.startsWith('http')) {
+                showError('URL은 http:// 또는 https://로 시작해야 합니다');
+                return;
+            }
+
+            // UI 업데이트
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('loading').style.display = 'block';
-            document.getElementById('error').textContent = '';
+            hideError();
 
             try {
-                const res = await fetch('/api/analyze-brand-url', {
+                // API 호출
+                const response = await fetch('/api/analyze-diagnosis', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ brandUrl, email, pain })
+                    body: JSON.stringify({
+                        name: brandName,
+                        brandName: brandName,
+                        email: email,
+                        website: brandUrl,
+                        service: brandName,
+                        target: '고객',
+                        consultation: pain
+                    })
                 });
 
-                if (!res.ok) throw new Error('분석 실패');
+                if (!response.ok) {
+                    throw new Error(`API 오류: ${response.status}`);
+                }
 
-                const data = await res.json();
+                const data = await response.json();
                 
-                localStorage.setItem('brandAnalysis', JSON.stringify(data));
+                // 분석 데이터 저장
+                const analysisData = {
+                    name: brandName,
+                    brandName: brandName,
+                    email: email,
+                    website: brandUrl,
+                    consultation: pain,
+                    analysis: data.analysis
+                };
+
+                localStorage.setItem('diagnosisData', JSON.stringify(analysisData));
+                sessionStorage.setItem('diagnosisData', JSON.stringify(analysisData));
+
+                // 1초 후 리포트 페이지로 이동
                 setTimeout(() => {
-                    window.location.href = './brand-report.html';
+                    window.location.href = './diagnosis-report.html';
                 }, 1000);
 
             } catch (error) {
-                console.error(error);
-                document.getElementById('error').textContent = '분석 중 오류가 발생했습니다';
+                console.error('분석 오류:', error);
+                showError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
                 document.getElementById('submitBtn').disabled = false;
                 document.getElementById('loading').style.display = 'none';
             }
         };
+
+        function showError(message) {
+            const errorEl = document.getElementById('error');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('error').style.display = 'none';
+        }
     </script>
 </body>
 </html>
