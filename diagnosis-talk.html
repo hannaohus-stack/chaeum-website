@@ -33,40 +33,170 @@
 </div>
 
 <script>
+    // URL 입력 필드
     const brandUrlInput = document.getElementById('brandUrl');
-    const serviceInput = document.getElementById('service');
-    const aiSection = document.getElementById('aiDiscoverySection');
-
-    // URL 입력이 끝나면(focus out) 자동으로 분석 호출
-    brandUrlInput.addEventListener('blur', async () => {
-        const url = brandUrlInput.value.trim();
-        if (url.length < 10) return;
-
-        // 로딩 상태 표시
-        serviceInput.placeholder = "AI가 웹사이트를 읽어오는 중입니다...";
-        aiSection.style.display = 'block';
-
-        try {
-            // 실제 배포 시에는 작성한 Vercel API 주소로 연결
-            const response = await fetch(`/api/analyze?url=${encodeURIComponent(url)}`);
-            const data = await response.json();
-
-            if (data) {
-                // AI가 긁어온 정보로 자동 채우기
-                serviceInput.value = data.service || '';
-                document.getElementById('painPoint').value = data.painPoint || '';
-                document.getElementById('currentMessaging').value = data.currentMessaging || '';
-                showSuccess('브랜드 정보를 성공적으로 가져왔습니다.');
-            }
-        } catch (error) {
-            serviceInput.placeholder = "자동 분석에 실패했습니다. 직접 간략히 적어주세요.";
-            console.error("분석 오류:", error);
+    
+    // URL focus 시 자동 https:// 추가
+    brandUrlInput.addEventListener('focus', function() {
+        if (!this.value) {
+            this.value = 'https://';
+            this.setSelectionRange(8, 8);
         }
     });
 
-    // 폼 제출 로직 (기존과 동일하되 데이터 수집 방식 최적화)
+    // ✅ 새로 추가: URL blur 시 자동 분석 (선택사항)
+    brandUrlInput.addEventListener('blur', async () => {
+        const url = brandUrlInput.value.trim();
+        
+        // https:// 형태일 때만 실행
+        if (!url.startsWith('http')) return;
+
+        try {
+            const response = await fetch(`/api/analyze?url=${encodeURIComponent(url)}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                // 자동으로 필드 채우기
+                document.getElementById('service').value = data.service || '';
+                document.getElementById('currentMessaging').value = data.currentMessaging || '';
+                document.getElementById('painPoint').value = data.painPoint || '';
+                console.log("✅ URL 분석 완료:", data);
+            }
+        } catch (err) {
+            console.error("❌ 자동 분석 실패:", err);
+            // 실패해도 계속 진행 가능하도록 (필드 수동 입력)
+        }
+    });
+
+    // 폼 제출
     document.getElementById('diagnosisForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        // ... (localStorage 저장 및 리포트 이동 로직)
+
+        const brandUrl = document.getElementById('brandUrl').value.trim();
+        const service = document.getElementById('service').value.trim();
+        const painPoint = document.getElementById('painPoint').value.trim();
+        const currentMessaging = document.getElementById('currentMessaging').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        // 입력값 검증
+        if (!brandUrl || !service || !painPoint || !currentMessaging || !email) {
+            showError('모든 필수 항목을 입력해주세요');
+            return;
+        }
+
+        if (service.length < 20) {
+            showError('서비스 설명을 더 자세히 입력해주세요 (최소 20자)');
+            return;
+        }
+
+        if (!isValidUrl(brandUrl)) {
+            showError('유효한 URL 형식을 입력해주세요');
+            return;
+        }
+
+        let finalUrl = brandUrl;
+        if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+            finalUrl = 'https://' + finalUrl;
+        }
+
+        const serviceType = detectServiceType(service, currentMessaging);
+        document.getElementById('submitBtn').disabled = true;
+
+        try {
+            const analysisData = {
+                brandName: extractBrandName(finalUrl),
+                service,
+                painPoint,
+                currentMessaging,
+                email,
+                website: finalUrl,
+                serviceType: serviceType,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('diagnosisData', JSON.stringify(analysisData));
+            showSuccess('✅ 분석 완료! 리포트로 이동합니다...');
+
+            setTimeout(() => {
+                window.location.href = './diagnosis-report.html';
+            }, 2000);
+
+        } catch (error) {
+            console.error('저장 오류:', error);
+            showError('오류가 발생했습니다. 다시 시도해주세요.');
+            document.getElementById('submitBtn').disabled = false;
+        }
     });
+
+    function isValidUrl(url) {
+        try {
+            const testUrl = url.startsWith('http') ? url : 'https://' + url;
+            new URL(testUrl);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function extractBrandName(url) {
+        try {
+            const domain = new URL(url).hostname;
+            const domainName = domain.split('.')[0];
+            if (/[가-힣]/.test(domainName)) {
+                return domainName;
+            }
+            return domainName.charAt(0).toUpperCase() + domainName.slice(1);
+        } catch (error) {
+            return 'Brand';
+        }
+    }
+
+    function detectServiceType(service, messaging) {
+        const text = `${service} ${messaging}`.toLowerCase();
+
+        if (text.match(/saas|app|tool|software|platform|협업|도구|시스템|솔루션|api/)) {
+            return 'saas';
+        }
+        if (text.match(/beauty|cosmetic|skincare|makeup|패션|뷰티|스킨케어|화장품/)) {
+            return 'lifestyle';
+        }
+        if (text.match(/food|cafe|restaurant|recipe|음식|음료|카페|베이커리|식품/)) {
+            return 'food';
+        }
+        if (text.match(/design|creative|studio|디자인|창작|아트|브랜딩/)) {
+            return 'design';
+        }
+        if (text.match(/fintech|payment|finance|crypto|금융|투자|결제|뱅킹/)) {
+            return 'fintech';
+        }
+        if (text.match(/health|fitness|wellness|gym|요가|헬스|운동|트레이닝/)) {
+            return 'health';
+        }
+        if (text.match(/shop|store|ecommerce|상점|쇼핑|판매|마켓/)) {
+            return 'ecommerce';
+        }
+        if (text.match(/course|learn|education|학습|교육|강의|아카데미/)) {
+            return 'education';
+        }
+        if (text.match(/consulting|strategy|business|컨설팅|전략|비즈니스/)) {
+            return 'consulting';
+        }
+
+        return 'lifestyle';
+    }
+
+    function showError(msg) {
+        const el = document.getElementById('error');
+        el.textContent = msg;
+        el.style.display = 'block';
+        setTimeout(() => {
+            el.style.display = 'none';
+        }, 3000);
+    }
+
+    function showSuccess(msg) {
+        const el = document.getElementById('success');
+        el.textContent = msg;
+        el.style.display = 'block';
+    }
 </script>
