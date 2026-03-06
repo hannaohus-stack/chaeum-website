@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CHAEUM AI Brand Analysis System",
   "private": true,
-  "engines": {
+  "engines": {          // <--- 여기 이미 잘 들어가 있어요!
     "node": "20.x"
   },
   "dependencies": {
