@@ -3,195 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 진단 | CHAEUM</title>
+    <title>브랜드 분석 | CHAEUM</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background-color: #4B4545; color: white; }
-        .container { max-width: 700px; margin: 0 auto; padding: 80px 40px; }
-        h1 { font-size: 32px; margin-bottom: 20px; font-weight: 300; }
-        .subtitle { color: #888888; margin-bottom: 40px; font-size: 14px; }
-        .section { margin-top: 40px; margin-bottom: 24px; }
-        .section-label { color: #888888; font-size: 12px; letter-spacing: 1px; margin-bottom: 20px; font-weight: 600; opacity: 0.7; }
-        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; }
-        .required { color: #FF6464; }
-        input, textarea, select {
-            width: 100%; padding: 12px; background-color: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15); border-radius: 4px;
-            color: white; font-size: 14px; font-family: inherit; margin-bottom: 8px;
-        }
-        textarea { min-height: 80px; resize: vertical; }
-        input:focus, textarea:focus, select:focus {
-            outline: none; border-color: rgba(255,255,255,0.3);
-            background-color: rgba(255,255,255,0.12);
-        }
-        .char-info { font-size: 12px; color: #888888; margin-bottom: 16px; }
-        .char-info.ok { color: #64C8FF; }
-        button { width: 100%; padding: 14px; background-color: white; color: #4B4545;
-            border: none; border-radius: 4px; font-size: 14px; font-weight: 600;
-            cursor: pointer; margin-top: 20px; transition: opacity 0.2s;
-        }
-        button:hover { opacity: 0.9; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%); color: white; min-height: 100vh; display: flex; align-items: center; }
+        .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
+        .hero { text-align: center; margin-bottom: 60px; }
+        h1 { font-size: 36px; font-weight: 300; margin-bottom: 12px; }
+        .subtitle { font-size: 14px; color: #aaa; line-height: 1.6; }
+        .form-section { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px; margin-bottom: 30px; backdrop-filter: blur(10px); }
+        label { display: block; font-size: 12px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        input { width: 100%; padding: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 14px; margin-bottom: 20px; }
+        input:focus { outline: none; border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); }
+        .hint { font-size: 12px; color: #666; margin-top: -16px; margin-bottom: 20px; }
+        .input-tag { display: inline-block; background: rgba(74, 158, 255, 0.2); color: #4A9EFF; padding: 4px 12px; border-radius: 4px; font-size: 11px; margin-left: 8px; }
+        button { width: 100%; padding: 16px; background: white; color: #4B4545; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .loading { display: none; text-align: center; margin-top: 20px; }
-        .spinner { border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid white;
-            border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
+        .loading { display: none; text-align: center; }
+        .spinner { border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid white; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 12px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .error { color: #FF6464; margin-top: 12px; font-size: 14px; }
-        .hint { font-size: 12px; color: #888888; margin-top: 4px; line-height: 1.5; }
+        .error { color: #FF6B6B; font-size: 13px; margin-top: 12px; }
+        .steps { display: flex; justify-content: space-between; margin-top: 40px; font-size: 12px; color: #666; }
+        .step { text-align: center; }
+        .step-num { display: block; font-weight: 600; color: #888; margin-bottom: 4px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎯 AI 브랜드 진단</h1>
-        <p class="subtitle">전문가 수준의 분석을 위해 몇 가지만 알려주세요</p>
+        <div class="hero">
+            <h1>브랜드 진단</h1>
+            <p class="subtitle">URL 하나로 보는<br>당신의 브랜드 포지셔닝과 시스템 누수</p>
+        </div>
 
-        <form>
-            <div class="section">
-                <div class="section-label">기본 정보</div>
-                <label>이름 <span class="required">*</span></label>
-                <input type="text" id="name" required>
-                <label>브랜드명 <span class="required">*</span></label>
-                <input type="text" id="brandName" required>
-                <label>월 매출 규모</label>
-                <select id="revenueScale">
-                    <option value="">선택</option>
-                    <option value="1M-5M">100만-500만원</option>
-                    <option value="5M-20M">500만-2000만원</option>
-                    <option value="20M-50M">2000만-5000만원</option>
-                    <option value="50M+">5000만원+</option>
+        <form id="diagnosisForm">
+            <div class="form-section">
+                <label>인스타그램 또는 웹사이트</label>
+                <input type="text" id="brandUrl" placeholder="@yourhandle 또는 https://yoursite.com" required>
+                <p class="hint">분석을 위해 최신 콘텐츠를 수집합니다</p>
+
+                <label>이메일 주소</label>
+                <input type="email" id="email" placeholder="report@your-email.com" required>
+                <p class="hint">상세 리포트를 이메일로 받을 주소</p>
+
+                <label>가장 큰 고민은? <span class="input-tag">선택</span></label>
+                <select id="pain" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 14px; margin-bottom: 20px;">
+                    <option value="">선택해주세요</option>
+                    <option value="awareness">브랜드 인지도 저하</option>
+                    <option value="conversion">전환율 부족</option>
+                    <option value="message">메시지 혼란</option>
+                    <option value="content">콘텐츠 전략 부재</option>
                 </select>
-                <label>이메일 <span class="required">*</span></label>
-                <input type="email" id="email" required>
-            </div>
 
-            <div class="section">
-                <div class="section-label">비즈니스 정보</div>
-                <label>웹사이트 URL</label>
-                <input type="url" id="website" placeholder="https://example.com">
-                <p class="hint">있으면 입력해주세요</p>
-                <label>주요 서비스/제품 <span class="required">*</span></label>
-                <textarea id="service" placeholder="예: 소셜커머스 플랫폼으로 중소 브랜드의 온라인 판매를 돕습니다"></textarea>
-                <p class="char-info" id="serviceInfo">0자 (최소 20자)</p>
-                <label>타겟 고객층 <span class="required">*</span></label>
-                <textarea id="target" placeholder="예: 30대 여성, 보안을 중요시하는 기업"></textarea>
-                <p class="char-info" id="targetInfo">0자 (최소 20자)</p>
+                <button type="submit" id="submitBtn">분석 시작 (무료)</button>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p style="font-size: 13px; color: #888;">분석 중입니다...</p>
+                </div>
+                <div class="error" id="error"></div>
             </div>
-
-            <div class="section">
-                <div class="section-label">현재 고민</div>
-                <label>가장 큰 고민은? <span class="required">*</span></label>
-                <textarea id="consultation" placeholder="예: 좋은 제품인데 경쟁사 대비 인지도가 낮습니다"></textarea>
-                <p class="char-info" id="consultationInfo">0자 (최소 30자)</p>
-            </div>
-
-            <button type="button" onclick="handleSubmit()">전문 분석 받기</button>
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>전문가가 분석 중입니다...</p>
-            </div>
-            <div class="error" id="error"></div>
         </form>
+
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">1</span>
+                데이터 수집
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                AI 분석
+            </div>
+            <div class="step">
+                <span class="step-num">3</span>
+                리포트 생성
+            </div>
+            <div class="step">
+                <span class="step-num">4</span>
+                전략 제시
+            </div>
+        </div>
     </div>
 
     <script>
-        const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_EGj8-Rc7qI_xQEGWddL5fg_kLgVilMn';
+        document.getElementById('diagnosisForm').onsubmit = async (e) => {
+            e.preventDefault();
 
-        document.getElementById('service').addEventListener('input', function() {
-            const count = this.value.length;
-            const el = document.getElementById('serviceInfo');
-            el.textContent = count + '자 (최소 20자)';
-            el.className = count >= 20 ? 'char-info ok' : 'char-info';
-        });
-
-        document.getElementById('target').addEventListener('input', function() {
-            const count = this.value.length;
-            const el = document.getElementById('targetInfo');
-            el.textContent = count + '자 (최소 20자)';
-            el.className = count >= 20 ? 'char-info ok' : 'char-info';
-        });
-
-        document.getElementById('consultation').addEventListener('input', function() {
-            const count = this.value.length;
-            const el = document.getElementById('consultationInfo');
-            el.textContent = count + '자 (최소 30자)';
-            el.className = count >= 30 ? 'char-info ok' : 'char-info';
-        });
-
-        async function handleSubmit() {
-            const name = document.getElementById('name').value;
-            const brandName = document.getElementById('brandName').value;
+            const brandUrl = document.getElementById('brandUrl').value;
             const email = document.getElementById('email').value;
-            const revenueScale = document.getElementById('revenueScale').value;
-            const website = document.getElementById('website').value;
-            const service = document.getElementById('service').value;
-            const target = document.getElementById('target').value;
-            const consultation = document.getElementById('consultation').value;
+            const pain = document.getElementById('pain').value;
 
-            if (!name || !brandName || !email) {
-                document.getElementById('error').textContent = '필수 정보를 입력해주세요';
-                return;
-            }
-            if (service.length < 20) {
-                document.getElementById('error').textContent = '서비스 설명을 20자 이상 입력하세요';
-                return;
-            }
-            if (target.length < 20) {
-                document.getElementById('error').textContent = '타겟 고객층을 20자 이상 입력하세요';
-                return;
-            }
-            if (consultation.length < 30) {
-                document.getElementById('error').textContent = '고민을 30자 이상 입력하세요';
+            if (!pain) {
+                document.getElementById('error').textContent = '고민을 선택해주세요';
                 return;
             }
 
-            document.getElementById('error').textContent = '';
+            document.getElementById('submitBtn').disabled = true;
             document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').textContent = '';
 
             try {
-                let analysis = null;
-
-                const apiRes = await fetch('/api/analyze-diagnosis', {
+                const res = await fetch('/api/analyze-brand-url', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, brandName, email, revenueScale, website, service, target, consultation })
+                    body: JSON.stringify({ brandUrl, email, pain })
                 });
 
-                if (apiRes.ok) {
-                    const data = await apiRes.json();
-                    analysis = data.analysis;
-                }
+                if (!res.ok) throw new Error('분석 실패');
 
-                fetch(`${SUPABASE_URL}/rest/v1/diagnosis_submissions`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-                    body: JSON.stringify({
-                        name, brand_name: brandName, revenue_scale: revenueScale, email,
-                        consultation: `[웹사이트] ${website}\n[서비스] ${service}\n[타겟] ${target}\n[고민] ${consultation}`,
-                        diagnosis: analysis ? JSON.stringify(analysis) : '분석 중',
-                        status: 'new'
-                    })
-                }).catch(e => console.warn('저장:', e));
-
-                const reportData = {
-                    name, brandName, email, consultation, 
-                    analysis: analysis || null
-                };
-                localStorage.setItem('diagnosisData', JSON.stringify(reportData));
-                sessionStorage.setItem('diagnosisData', JSON.stringify(reportData));
-
+                const data = await res.json();
+                
+                localStorage.setItem('brandAnalysis', JSON.stringify(data));
                 setTimeout(() => {
-                    window.location.href = './diagnosis-report.html';
-                }, 500);
+                    window.location.href = './brand-report.html';
+                }, 1000);
 
             } catch (error) {
-                console.error('에러:', error);
-                document.getElementById('error').textContent = '처리 중 오류가 발생했습니다';
+                console.error(error);
+                document.getElementById('error').textContent = '분석 중 오류가 발생했습니다';
+                document.getElementById('submitBtn').disabled = false;
                 document.getElementById('loading').style.display = 'none';
             }
-        }
+        };
     </script>
 </body>
 </html>
