@@ -2,15 +2,12 @@
   "name": "chaeum-website",
   "version": "1.0.0",
   "description": "CHAEUM AI Brand Analysis System",
-  "scripts": {
-    "dev": "vercel dev",
-    "build": "vercel build"
+  "private": true,
+  "engines": {
+    "node": "18.x"
   },
   "dependencies": {
     "axios": "^1.6.0",
     "cheerio": "^1.0.0-rc.12"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }
