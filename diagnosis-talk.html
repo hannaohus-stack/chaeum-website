@@ -59,6 +59,19 @@
         
         .hint { font-size: 11px; color: #666; margin-top: 6px; }
         
+        .analyzing { 
+            font-size: 11px; 
+            color: #64C8FF; 
+            margin-top: 6px;
+            display: none;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
         .error { 
             background: rgba(255, 107, 107, 0.1); 
             color: #FF6B6B; 
@@ -109,6 +122,7 @@
                         placeholder="https://example.com"
                         required>
                     <p class="hint">웹사이트 주소를 입력하세요</p>
+                    <div class="analyzing" id="analyzing">분석 중...</div>
                 </div>
 
                 <!-- 2. 이메일 -->
@@ -129,6 +143,7 @@
 
     <script>
         const websiteInput = document.getElementById('website');
+        let analysisData = null;
         
         websiteInput.addEventListener('focus', function() {
             if (!this.value) {
@@ -137,6 +152,28 @@
             }
         });
 
+        // URL blur 시 자동 분석 (클라이언트 사이드)
+        websiteInput.addEventListener('blur', async function() {
+            const url = this.value.trim();
+            
+            if (!url.startsWith('http')) return;
+
+            try {
+                document.getElementById('analyzing').style.display = 'block';
+                
+                // 클라이언트 사이드 분석 엔진 실행
+                analysisData = await analyzeWebsite(url);
+                
+                console.log('분석 완료:', analysisData);
+                
+            } catch (error) {
+                console.error('분석 오류:', error);
+            } finally {
+                document.getElementById('analyzing').style.display = 'none';
+            }
+        });
+
+        // 폼 제출
         document.getElementById('diagnosisForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -153,6 +190,12 @@
                 return;
             }
 
+            // 분석이 완료되지 않았으면 재분석
+            if (!analysisData) {
+                showError('URL 분석이 완료되지 않았습니다. 잠시 후 다시 시도하세요.');
+                return;
+            }
+
             let finalUrl = website;
             if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
                 finalUrl = 'https://' + finalUrl;
@@ -161,23 +204,115 @@
             document.getElementById('submitBtn').disabled = true;
 
             try {
-                const analysisData = {
+                // 분석 데이터 + 사용자 입력 합치기
+                const finalData = {
+                    ...analysisData,
                     website: finalUrl,
                     email: email,
                     timestamp: new Date().toISOString()
                 };
 
-                localStorage.setItem('diagnosisData', JSON.stringify(analysisData));
+                console.log('저장할 데이터:', finalData);
+                localStorage.setItem('diagnosisData', JSON.stringify(finalData));
                 
                 setTimeout(() => {
                     window.location.href = './diagnosis-report.html';
                 }, 800);
 
             } catch (error) {
+                console.error('오류:', error);
                 showError('오류가 발생했습니다');
                 document.getElementById('submitBtn').disabled = false;
             }
         });
+
+        /**
+         * 클라이언트 사이드 분석 엔진
+         */
+        async function analyzeWebsite(url) {
+            try {
+                // URL에서 도메인명 추출
+                const domain = new URL(url.startsWith('http') ? url : 'https://' + url).hostname;
+                const brandName = domain.split('.')[0];
+                
+                // 간단한 서비스 유형 감지 (도메인명 기반)
+                const serviceType = detectServiceType(domain);
+                
+                // Mock 분석 데이터 생성
+                const mockAnalysis = generateMockAnalysis(brandName, serviceType);
+
+                return {
+                    brandName: brandName.charAt(0).toUpperCase() + brandName.slice(1),
+                    website: url.startsWith('http') ? url : 'https://' + url,
+                    serviceType: serviceType,
+                    ...mockAnalysis
+                };
+
+            } catch (error) {
+                console.error('분석 실패:', error);
+                return {
+                    brandName: 'Brand',
+                    serviceType: 'lifestyle',
+                    service: '서비스 분석 중입니다',
+                    painPoint: '타깃 고객의 니즈를 파악하고 있습니다',
+                    currentMessaging: '브랜드 포지셔닝을 분석 중입니다'
+                };
+            }
+        }
+
+        /**
+         * Mock 분석 데이터 생성
+         */
+        function generateMockAnalysis(brandName, serviceType) {
+            const analysisMap = {
+                saas: {
+                    service: '팀의 생산성을 높이는 협업 및 업무 관리 솔루션을 제공합니다.',
+                    painPoint: '반복되는 업무 프로세스로 인해 팀의 생산성이 정체되어 있으며, 기존 시스템과의 통합이 어려워하고 있습니다.',
+                    currentMessaging: '업무 효율을 높이는 스마트한 솔루션'
+                },
+                lifestyle: {
+                    service: '일상의 질을 높이고 개인의 취향을 반영한 라이프스타일 제품 및 서비스를 제공합니다.',
+                    painPoint: '개인의 감성을 표현하고 싶지만 자신의 취향을 정확히 담은 제품을 찾기 어려워하고 있습니다.',
+                    currentMessaging: '당신의 라이프스타일을 표현하는 선택'
+                },
+                food: {
+                    service: '건강하고 신뢰할 수 있는 식품을 제공하여 소비자의 건강한 삶을 돕습니다.',
+                    painPoint: '건강한 식품을 원하지만 제품의 품질과 안전성을 확신하기 어렵고, 가격 대비 가치를 판단하는 것이 복잡합니다.',
+                    currentMessaging: '건강함을 선택하다'
+                },
+                ecommerce: {
+                    service: '신뢰할 수 있는 제품을 엄선하여 제공하는 큐레이션 쇼핑 플랫폼입니다.',
+                    painPoint: '온라인에서 원하는 제품을 찾을 때 품질과 진정성을 믿기 어렵고, 선택지가 너무 많아 결정이 어렵습니다.',
+                    currentMessaging: '엄선된 제품으로 신뢰를 쌓다'
+                },
+                default: {
+                    service: '고객의 니즈를 해결하기 위한 혁신적인 서비스를 제공합니다.',
+                    painPoint: '시장에서 차별화된 포지션을 찾기 어렵고, 고객과의 신뢰 관계 형성이 과제입니다.',
+                    currentMessaging: '새로운 가치를 만드는 브랜드'
+                }
+            };
+
+            return analysisMap[serviceType] || analysisMap['default'];
+        }
+
+        /**
+         * 서비스 유형 감지
+         */
+        function detectServiceType(domainOrText) {
+            const text = domainOrText.toLowerCase();
+
+            if (text.match(/saas|app|tool|software|platform|dev|tech/)) return 'saas';
+            if (text.match(/beauty|cosmetic|skincare|makeup|fashion/)) return 'lifestyle';
+            if (text.match(/food|cafe|restaurant|kitchen|cook|meal/)) return 'food';
+            if (text.match(/shop|store|commerce|market|buy|sell/)) return 'ecommerce';
+            if (text.match(/design|creative|studio|art|visual/)) return 'design';
+            if (text.match(/health|fitness|wellness|gym|exercise/)) return 'health';
+            if (text.match(/course|learn|education|academy|class/)) return 'education';
+            if (text.match(/finance|pay|bank|invest|trading/)) return 'fintech';
+            if (text.match(/consulting|strategy|agency|business/)) return 'consulting';
+
+            return 'lifestyle';
+        }
 
         function isValidUrl(url) {
             try {
