@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm install",
+  "outputDirectory": "/",
+  "framework": "static",
+  "nodeVersion": "20.x"
+}
