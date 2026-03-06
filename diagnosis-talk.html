@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -48,155 +47,151 @@
         <h1>🎯 AI 브랜드 진단</h1>
         <p class="subtitle">전문가 수준의 분석을 위해 몇 가지만 알려주세요</p>
 
-```
-    <form>
-        <div class="section">
-            <div class="section-label">기본 정보</div>
-            <label>이름 <span class="required">*</span></label>
-            <input type="text" id="name" required>
-            <label>브랜드명 <span class="required">*</span></label>
-            <input type="text" id="brandName" required>
-            <label>월 매출 규모</label>
-            <select id="revenueScale">
-                <option value="">선택</option>
-                <option value="1M-5M">100만-500만원</option>
-                <option value="5M-20M">500만-2000만원</option>
-                <option value="20M-50M">2000만-5000만원</option>
-                <option value="50M+">5000만원+</option>
-            </select>
-            <label>이메일 <span class="required">*</span></label>
-            <input type="email" id="email" required>
-        </div>
+        <form>
+            <div class="section">
+                <div class="section-label">기본 정보</div>
+                <label>이름 <span class="required">*</span></label>
+                <input type="text" id="name" required>
+                <label>브랜드명 <span class="required">*</span></label>
+                <input type="text" id="brandName" required>
+                <label>월 매출 규모</label>
+                <select id="revenueScale">
+                    <option value="">선택</option>
+                    <option value="1M-5M">100만-500만원</option>
+                    <option value="5M-20M">500만-2000만원</option>
+                    <option value="20M-50M">2000만-5000만원</option>
+                    <option value="50M+">5000만원+</option>
+                </select>
+                <label>이메일 <span class="required">*</span></label>
+                <input type="email" id="email" required>
+            </div>
 
-        <div class="section">
-            <div class="section-label">비즈니스 정보</div>
-            <label>웹사이트 URL</label>
-            <input type="url" id="website" placeholder="https://example.com">
-            <p class="hint">있으면 입력해주세요</p>
-            <label>주요 서비스/제품 <span class="required">*</span></label>
-            <textarea id="service" placeholder="예: 소셜커머스 플랫폼으로 중소 브랜드의 온라인 판매를 돕습니다"></textarea>
-            <p class="char-info" id="serviceInfo">0자 (최소 20자)</p>
-            <label>타겟 고객층 <span class="required">*</span></label>
-            <textarea id="target" placeholder="예: 30대 여성, 보안을 중요시하는 기업"></textarea>
-            <p class="char-info" id="targetInfo">0자 (최소 20자)</p>
-        </div>
+            <div class="section">
+                <div class="section-label">비즈니스 정보</div>
+                <label>웹사이트 URL</label>
+                <input type="url" id="website" placeholder="https://example.com">
+                <p class="hint">있으면 입력해주세요</p>
+                <label>주요 서비스/제품 <span class="required">*</span></label>
+                <textarea id="service" placeholder="예: 소셜커머스 플랫폼으로 중소 브랜드의 온라인 판매를 돕습니다"></textarea>
+                <p class="char-info" id="serviceInfo">0자 (최소 20자)</p>
+                <label>타겟 고객층 <span class="required">*</span></label>
+                <textarea id="target" placeholder="예: 30대 여성, 보안을 중요시하는 기업"></textarea>
+                <p class="char-info" id="targetInfo">0자 (최소 20자)</p>
+            </div>
 
-        <div class="section">
-            <div class="section-label">현재 고민</div>
-            <label>가장 큰 고민은? <span class="required">*</span></label>
-            <textarea id="consultation" placeholder="예: 좋은 제품인데 경쟁사 대비 인지도가 낮습니다"></textarea>
-            <p class="char-info" id="consultationInfo">0자 (최소 30자)</p>
-        </div>
+            <div class="section">
+                <div class="section-label">현재 고민</div>
+                <label>가장 큰 고민은? <span class="required">*</span></label>
+                <textarea id="consultation" placeholder="예: 좋은 제품인데 경쟁사 대비 인지도가 낮습니다"></textarea>
+                <p class="char-info" id="consultationInfo">0자 (최소 30자)</p>
+            </div>
 
-        <button type="button" onclick="handleSubmit()">전문 분석 받기</button>
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>전문가가 분석 중입니다...</p>
-        </div>
-        <div class="error" id="error"></div>
-    </form>
-</div>
+            <button type="button" onclick="handleSubmit()">전문 분석 받기</button>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>전문가가 분석 중입니다...</p>
+            </div>
+            <div class="error" id="error"></div>
+        </form>
+    </div>
 
-<script>
-    const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_EGj8-Rc7qI_xQEGWddL5fg_kLgVilMn';
+    <script>
+        const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_EGj8-Rc7qI_xQEGWddL5fg_kLgVilMn';
 
-    document.getElementById('service').addEventListener('input', function() {
-        const count = this.value.length;
-        const el = document.getElementById('serviceInfo');
-        el.textContent = count + '자 (최소 20자)';
-        el.className = count >= 20 ? 'char-info ok' : 'char-info';
-    });
+        document.getElementById('service').addEventListener('input', function() {
+            const count = this.value.length;
+            const el = document.getElementById('serviceInfo');
+            el.textContent = count + '자 (최소 20자)';
+            el.className = count >= 20 ? 'char-info ok' : 'char-info';
+        });
 
-    document.getElementById('target').addEventListener('input', function() {
-        const count = this.value.length;
-        const el = document.getElementById('targetInfo');
-        el.textContent = count + '자 (최소 20자)';
-        el.className = count >= 20 ? 'char-info ok' : 'char-info';
-    });
+        document.getElementById('target').addEventListener('input', function() {
+            const count = this.value.length;
+            const el = document.getElementById('targetInfo');
+            el.textContent = count + '자 (최소 20자)';
+            el.className = count >= 20 ? 'char-info ok' : 'char-info';
+        });
 
-    document.getElementById('consultation').addEventListener('input', function() {
-        const count = this.value.length;
-        const el = document.getElementById('consultationInfo');
-        el.textContent = count + '자 (최소 30자)';
-        el.className = count >= 30 ? 'char-info ok' : 'char-info';
-    });
+        document.getElementById('consultation').addEventListener('input', function() {
+            const count = this.value.length;
+            const el = document.getElementById('consultationInfo');
+            el.textContent = count + '자 (최소 30자)';
+            el.className = count >= 30 ? 'char-info ok' : 'char-info';
+        });
 
-    async function handleSubmit() {
-        const name = document.getElementById('name').value;
-        const brandName = document.getElementById('brandName').value;
-        const email = document.getElementById('email').value;
-        const revenueScale = document.getElementById('revenueScale').value;
-        const website = document.getElementById('website').value;
-        const service = document.getElementById('service').value;
-        const target = document.getElementById('target').value;
-        const consultation = document.getElementById('consultation').value;
+        async function handleSubmit() {
+            const name = document.getElementById('name').value;
+            const brandName = document.getElementById('brandName').value;
+            const email = document.getElementById('email').value;
+            const revenueScale = document.getElementById('revenueScale').value;
+            const website = document.getElementById('website').value;
+            const service = document.getElementById('service').value;
+            const target = document.getElementById('target').value;
+            const consultation = document.getElementById('consultation').value;
 
-        if (!name || !brandName || !email) {
-            document.getElementById('error').textContent = '필수 정보를 입력해주세요';
-            return;
-        }
-        if (service.length < 20) {
-            document.getElementById('error').textContent = '서비스 설명을 20자 이상 입력하세요';
-            return;
-        }
-        if (target.length < 20) {
-            document.getElementById('error').textContent = '타겟 고객층을 20자 이상 입력하세요';
-            return;
-        }
-        if (consultation.length < 30) {
-            document.getElementById('error').textContent = '고민을 30자 이상 입력하세요';
-            return;
-        }
-
-        document.getElementById('error').textContent = '';
-        document.getElementById('loading').style.display = 'block';
-
-        try {
-            let analysis = null;
-
-            const apiRes = await fetch('/api/analyze-diagnosis', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, brandName, email, revenueScale, website, service, target, consultation })
-            });
-
-            if (apiRes.ok) {
-                const data = await apiRes.json();
-                analysis = data.analysis;
+            if (!name || !brandName || !email) {
+                document.getElementById('error').textContent = '필수 정보를 입력해주세요';
+                return;
+            }
+            if (service.length < 20) {
+                document.getElementById('error').textContent = '서비스 설명을 20자 이상 입력하세요';
+                return;
+            }
+            if (target.length < 20) {
+                document.getElementById('error').textContent = '타겟 고객층을 20자 이상 입력하세요';
+                return;
+            }
+            if (consultation.length < 30) {
+                document.getElementById('error').textContent = '고민을 30자 이상 입력하세요';
+                return;
             }
 
-            // Supabase 저장
-            fetch(`${SUPABASE_URL}/rest/v1/diagnosis_submissions`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-                body: JSON.stringify({
-                    name, brand_name: brandName, revenue_scale: revenueScale, email,
-                    consultation: `[웹사이트] ${website}\n[서비스] ${service}\n[타겟] ${target}\n[고민] ${consultation}`,
-                    diagnosis: analysis ? JSON.stringify(analysis) : '분석 중',
-                    status: 'new'
-                })
-            }).catch(e => console.warn('저장:', e));
+            document.getElementById('error').textContent = '';
+            document.getElementById('loading').style.display = 'block';
 
-            // 데이터 저장 및 이동
-            const reportData = {
-                name, brandName, email, consultation, 
-                analysis: analysis || null
-            };
-            sessionStorage.setItem('diagnosisData', JSON.stringify(reportData));
+            try {
+                let analysis = null;
 
-            setTimeout(() => {
-                window.location.href = './diagnosis-report.html';
-            }, 500);
+                const apiRes = await fetch('/api/analyze-diagnosis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, brandName, email, revenueScale, website, service, target, consultation })
+                });
 
-        } catch (error) {
-            console.error('에러:', error);
-            document.getElementById('error').textContent = '처리 중 오류가 발생했습니다';
-            document.getElementById('loading').style.display = 'none';
+                if (apiRes.ok) {
+                    const data = await apiRes.json();
+                    analysis = data.analysis;
+                }
+
+                fetch(`${SUPABASE_URL}/rest/v1/diagnosis_submissions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+                    body: JSON.stringify({
+                        name, brand_name: brandName, revenue_scale: revenueScale, email,
+                        consultation: `[웹사이트] ${website}\n[서비스] ${service}\n[타겟] ${target}\n[고민] ${consultation}`,
+                        diagnosis: analysis ? JSON.stringify(analysis) : '분석 중',
+                        status: 'new'
+                    })
+                }).catch(e => console.warn('저장:', e));
+
+                const reportData = {
+                    name, brandName, email, consultation, 
+                    analysis: analysis || null
+                };
+                localStorage.setItem('diagnosisData', JSON.stringify(reportData));
+                sessionStorage.setItem('diagnosisData', JSON.stringify(reportData));
+
+                setTimeout(() => {
+                    window.location.href = './diagnosis-report.html';
+                }, 500);
+
+            } catch (error) {
+                console.error('에러:', error);
+                document.getElementById('error').textContent = '처리 중 오류가 발생했습니다';
+                document.getElementById('loading').style.display = 'none';
+            }
         }
-    }
-</script>
-```
-
+    </script>
 </body>
 </html>
