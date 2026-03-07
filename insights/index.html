@@ -514,7 +514,7 @@
             const container = document.getElementById('blogFeed');
 
             try {
-                const response = await fetch('./data/posts.json');
+                const response = await fetch('/insights/data/posts.json');
                 const posts = await response.json();
 
                 if (!Array.isArray(posts) || posts.length === 0) {
