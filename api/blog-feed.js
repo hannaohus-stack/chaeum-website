@@ -14,15 +14,14 @@ export default async function handler(req, res) {
 
     const xml = await response.text();
 
-    const itemMatches = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
-    const items = itemMatches.map((match) => parseItem(match[1])).filter(Boolean);
+    const items = parseRssItems(xml);
 
     return res.status(200).json({
       ok: true,
       debug: {
         rssUrl: RSS_URL,
         xmlLength: xml.length,
-        itemCount: itemMatches.length
+        itemCount: items.length
       },
       items: items.slice(0, 6)
     });
@@ -37,43 +36,63 @@ export default async function handler(req, res) {
   }
 }
 
-function parseItem(itemXml) {
-  const title = decodeHtmlEntities(extractTag(itemXml, 'title'));
-  const link = decodeHtmlEntities(extractTag(itemXml, 'link'));
-  const descriptionRaw = extractTag(itemXml, 'description');
-  const pubDateRaw = extractTag(itemXml, 'pubDate');
-  const category = decodeHtmlEntities(extractTag(itemXml, 'category')) || 'Insight';
+function parseRssItems(xml) {
+  const itemBlocks = xml.split('<item>').slice(1);
+  const items = [];
 
-  if (!title || !link) return null;
+  for (const block of itemBlocks) {
+    const itemXml = block.split('</item>')[0];
+    if (!itemXml) continue;
 
-  return {
-    title,
-    link,
-    description: cleanDescription(descriptionRaw),
-    pubDate: formatDate(pubDateRaw),
-    category
-  };
+    const title = decodeHtml(extractTag(itemXml, 'title'));
+    const link = decodeHtml(extractTag(itemXml, 'link'));
+    const descriptionRaw = extractTag(itemXml, 'description');
+    const pubDateRaw = extractTag(itemXml, 'pubDate');
+    const category = decodeHtml(extractTag(itemXml, 'category')) || 'Insight';
+
+    if (!title || !link) continue;
+
+    items.push({
+      title,
+      link,
+      description: cleanDescription(descriptionRaw),
+      pubDate: formatDate(pubDateRaw),
+      category
+    });
+  }
+
+  return items;
 }
 
 function extractTag(xml, tagName) {
-  // CDATA 우선
-  const cdataRegex = new RegExp(
-    `<${tagName}><!\$begin:math:display$CDATA\\\\\[\(\[\\\\s\\\\S\]\*\?\)\\$end:math:display$\\]><\\/${tagName}>`,
-    'i'
-  );
-  const cdataMatch = xml.match(cdataRegex);
-  if (cdataMatch) return cdataMatch[1].trim();
+  const openCdata = `<${tagName}><![CDATA[`;
+  const closeCdata = `]]></${tagName}>`;
+  const openTag = `<${tagName}>`;
+  const closeTag = `</${tagName}>`;
 
-  // 일반 태그
-  const normalRegex = new RegExp(`<${tagName}>([\\s\\S]*?)<\\/${tagName}>`, 'i');
-  const normalMatch = xml.match(normalRegex);
-  if (normalMatch) return normalMatch[1].trim();
+  if (xml.includes(openCdata)) {
+    const start = xml.indexOf(openCdata) + openCdata.length;
+    const end = xml.indexOf(closeCdata, start);
+    if (end !== -1) {
+      return xml.slice(start, end).trim();
+    }
+  }
+
+  if (xml.includes(openTag)) {
+    const start = xml.indexOf(openTag) + openTag.length;
+    const end = xml.indexOf(closeTag, start);
+    if (end !== -1) {
+      return xml.slice(start, end).trim();
+    }
+  }
 
   return '';
 }
 
 function cleanDescription(html) {
-  if (!html) return '채움의 브랜드 전략 인사이트를 확인해보세요.';
+  if (!html) {
+    return '채움의 브랜드 전략 인사이트를 확인해보세요.';
+  }
 
   const stripped = html
     .replace(/<img[^>]*>/gi, ' ')
@@ -83,7 +102,7 @@ function cleanDescription(html) {
     .replace(/\s+/g, ' ')
     .trim();
 
-  const decoded = decodeHtmlEntities(stripped);
+  const decoded = decodeHtml(stripped);
 
   if (!decoded) {
     return '채움의 브랜드 전략 인사이트를 확인해보세요.';
@@ -105,9 +124,8 @@ function formatDate(dateString) {
   return `${yyyy}. ${mm}. ${dd}`;
 }
 
-function decodeHtmlEntities(str) {
+function decodeHtml(str) {
   return String(str || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
