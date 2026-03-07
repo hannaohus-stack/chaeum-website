@@ -104,6 +104,35 @@
             0%, 100% { opacity: 0.4; }
             50% { opacity: 1; }
         }
+
+        .choice-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .choice-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .choice-item input[type="radio"],
+        .choice-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            accent-color: white;
+            transform: scale(1.05);
+        }
+
+        .choice-item span {
+            font-size: 13px;
+            color: #ddd;
+            line-height: 1.4;
+        }
         
         .error { 
             background: rgba(255, 107, 107, 0.1); 
@@ -155,21 +184,6 @@
                         placeholder="https://example.com"
                         required>
                     <p class="hint">웹사이트 주소를 입력하세요</p>
-                    <div class="analyzing" id="analyzing">분석 중...</div>
-                    <div class="analyzing-list" id="analyzingList">
-                        <div class="analyzing-item">
-                            <div class="spinner"></div>
-                            <span>브랜드 메시지 분석 중</span>
-                        </div>
-                        <div class="analyzing-item">
-                            <div class="spinner" style="animation-delay: 0.3s;"></div>
-                            <span>포지셔닝 구조 분석 중</span>
-                        </div>
-                        <div class="analyzing-item">
-                            <div class="spinner" style="animation-delay: 0.6s;"></div>
-                            <span>고객 문제 인식 분석 중</span>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- 2. 이메일 -->
@@ -183,232 +197,311 @@
                     <p class="hint">리포트 수신용</p>
                 </div>
 
+                <!-- 3. 가장 큰 고민 -->
+                <div class="form-group">
+                    <label>가장 큰 고민 <span class="required">*</span></label>
+                    <div class="choice-grid">
+                        <label class="choice-item">
+                            <input type="radio" name="mainProblem" value="messaging">
+                            <span>브랜드 메시지가 약함</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="radio" name="mainProblem" value="traffic">
+                            <span>고객 유입이 부족함</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="radio" name="mainProblem" value="conversion">
+                            <span>전환율이 낮음</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="radio" name="mainProblem" value="positioning">
+                            <span>포지셔닝이 불명확함</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="radio" name="mainProblem" value="growth">
+                            <span>장기 성장 구조가 없음</span>
+                        </label>
+                    </div>
+                    <p class="hint">현재 가장 먼저 해결하고 싶은 문제를 선택하세요</p>
+                </div>
+
+                <!-- 4. 브랜드 상태 체크 -->
+                <div class="form-group">
+                    <label>현재 브랜드 상태</label>
+                    <div class="choice-grid">
+                        <label class="choice-item">
+                            <input type="checkbox" name="brandChecks" value="clearTarget">
+                            <span>핵심 고객이 명확하다</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="checkbox" name="brandChecks" value="clearOffer">
+                            <span>대표 제품/서비스가 명확하다</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="checkbox" name="brandChecks" value="clearMessage">
+                            <span>브랜드 메시지가 일관된다</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="checkbox" name="brandChecks" value="hasConversionPath">
+                            <span>SNS/홈페이지가 문의 또는 구매로 연결된다</span>
+                        </label>
+                        <label class="choice-item">
+                            <input type="checkbox" name="brandChecks" value="hasRetention">
+                            <span>재구매/반복매출 구조가 있다</span>
+                        </label>
+                    </div>
+                    <p class="hint">해당되는 항목만 체크하세요</p>
+
+                    <div class="analyzing" id="analyzing">분석 중...</div>
+                    <div class="analyzing-list" id="analyzingList">
+                        <div class="analyzing-item">
+                            <div class="spinner"></div>
+                            <span>브랜드 메시지 분석 중</span>
+                        </div>
+                        <div class="analyzing-item">
+                            <div class="spinner" style="animation-delay: 0.3s;"></div>
+                            <span>포지셔닝 구조 분석 중</span>
+                        </div>
+                        <div class="analyzing-item">
+                            <div class="spinner" style="animation-delay: 0.6s;"></div>
+                            <span>고객 행동 흐름 분석 중</span>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" id="submitBtn">분석 시작</button>
             </div>
         </form>
     </div>
 
-<script>
-    const websiteInput = document.getElementById('website');
-    const form = document.getElementById('diagnosisForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const analyzingEl = document.getElementById('analyzing');
-    const analyzingListEl = document.getElementById('analyzingList');
+    <script>
+        const websiteInput = document.getElementById('website');
+        const form = document.getElementById('diagnosisForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const analyzingEl = document.getElementById('analyzing');
+        const analyzingListEl = document.getElementById('analyzingList');
 
-    let analysisData = null;
-    let isSubmitting = false;
+        let analysisData = null;
+        let isSubmitting = false;
 
-    websiteInput.addEventListener('focus', function() {
-        if (!this.value) {
-            this.value = 'https://';
-            this.setSelectionRange(8, 8);
-        }
-    });
+        websiteInput.addEventListener('focus', function() {
+            if (!this.value) {
+                this.value = 'https://';
+                this.setSelectionRange(8, 8);
+            }
+        });
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        if (isSubmitting) return;
+            if (isSubmitting) return;
 
-        const website = document.getElementById('website').value.trim();
-        const email = document.getElementById('email').value.trim();
+            const website = document.getElementById('website').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mainProblem = document.querySelector('input[name="mainProblem"]:checked')?.value || '';
+            const brandChecks = Array.from(document.querySelectorAll('input[name="brandChecks"]:checked')).map(el => el.value);
 
-        if (!website || !email) {
-            showError('모든 항목을 입력해주세요');
-            return;
-        }
-
-        if (!isValidUrl(website)) {
-            showError('유효한 URL을 입력해주세요');
-            return;
-        }
-
-        const finalUrl = normalizeUrl(website);
-
-        try {
-            isSubmitting = true;
-            setLoadingState(true);
-
-            analysisData = await analyzeWebsite(finalUrl);
-
-            const finalData = {
-                ...analysisData,
-                website: finalUrl,
-                email: email,
-                timestamp: new Date().toISOString()
-            };
-
-            console.log('저장할 데이터:', finalData);
-            localStorage.setItem('diagnosisData', JSON.stringify(finalData));
-
-            window.location.href = './diagnosis-report.html';
-        } catch (error) {
-            console.error('제출 오류:', error);
-            showError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
-        } finally {
-            isSubmitting = false;
-            setLoadingState(false);
-        }
-    });
-
-    async function analyzeWebsite(url) {
-        try {
-            const response = await fetch('/api/analyze', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ url })
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                console.warn('분석 실패:', data.error);
-                return buildFallbackAnalysisData(url, {
-                    detail: data.detail || data.error || '웹사이트 분석에 실패했습니다.'
-                });
+            if (!website || !email) {
+                showError('웹사이트와 이메일을 입력해주세요');
+                return;
             }
 
-            console.log('✅ API 분석 완료:', data);
+            if (!mainProblem) {
+                showError('가장 큰 고민을 선택해주세요');
+                return;
+            }
 
+            if (!isValidUrl(website)) {
+                showError('유효한 URL을 입력해주세요');
+                return;
+            }
+
+            const finalUrl = normalizeUrl(website);
+
+            try {
+                isSubmitting = true;
+                setLoadingState(true);
+
+                analysisData = await analyzeWebsite(finalUrl);
+
+                const finalData = {
+                    ...analysisData,
+                    website: finalUrl,
+                    email: email,
+                    mainProblem: mainProblem,
+                    brandChecks: brandChecks,
+                    timestamp: new Date().toISOString()
+                };
+
+                console.log('저장할 데이터:', finalData);
+                localStorage.setItem('diagnosisData', JSON.stringify(finalData));
+
+                window.location.href = './diagnosis-report.html';
+            } catch (error) {
+                console.error('제출 오류:', error);
+                showError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
+            } finally {
+                isSubmitting = false;
+                setLoadingState(false);
+            }
+        });
+
+        async function analyzeWebsite(url) {
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.warn('분석 실패:', data.error);
+                    return buildFallbackAnalysisData(url, {
+                        detail: data.detail || data.error || '웹사이트 분석에 실패했습니다.'
+                    });
+                }
+
+                return {
+                    brandName: data.brandName || extractBrandName(url),
+                    website: data.website || url,
+                    serviceType: data.serviceType || 'default',
+                    stage: data.stage || 'Early',
+                    scores: normalizeScores(data.scores),
+                    bottleneck: data.bottleneck || 'brandClarity',
+                    bottleneckLabel: data.bottleneckLabel || '브랜드 선명도 부족',
+                    strongestAsset: data.strongestAsset || '기초 구조',
+                    summary: data.summary || '브랜드의 현재 구조를 바탕으로 핵심 병목을 분석했습니다.',
+                    chaeumInsight: data.chaeumInsight || '채움 관점에서 브랜드 구조 정리가 우선 필요합니다.',
+                    funnelDiagnosis: normalizeFunnelDiagnosis(data.funnelDiagnosis),
+                    extractedData: normalizeExtractedData(data.extractedData),
+                    timestamp: new Date().toISOString()
+                };
+
+            } catch (error) {
+                console.error('API 호출 오류:', error);
+                return buildFallbackAnalysisData(url, {
+                    detail: '네트워크 오류가 발생했습니다.'
+                });
+            }
+        }
+
+        function buildFallbackAnalysisData(url, options = {}) {
             return {
-                brandName: data.brandName || extractBrandName(url),
-                website: data.website || url,
-                serviceType: data.serviceType || 'default',
-                stage: data.stage || 'Early',
-                scores: normalizeScores(data.scores),
-                bottleneck: data.bottleneck || 'brandClarity',
-                bottleneckLabel: data.bottleneckLabel || '브랜드 선명도 부족',
-                strongestAsset: data.strongestAsset || '기초 구조',
-                summary: data.summary || '브랜드의 현재 구조를 바탕으로 핵심 병목을 분석했습니다.',
-                chaeumInsight: data.chaeumInsight || '채움 관점에서 브랜드 구조 정리가 우선 필요합니다.',
-                funnelDiagnosis: normalizeFunnelDiagnosis(data.funnelDiagnosis),
-                extractedData: normalizeExtractedData(data.extractedData),
+                brandName: extractBrandName(url),
+                website: url,
+                serviceType: 'default',
+                stage: 'Early',
+                scores: {
+                    brandClarity: 0,
+                    messageStrength: 0,
+                    trustStructure: 0,
+                    conversionStructure: 0,
+                    growthReadiness: 0
+                },
+                bottleneck: 'brandClarity',
+                bottleneckLabel: '분석 불가',
+                strongestAsset: '확인 불가',
+                summary: options.detail || '기술적 문제로 분석을 완료하지 못했습니다.',
+                chaeumInsight: '현재는 자동 분석 결과를 불러오지 못했습니다. 상담을 통해 수동 진단이 가능합니다.',
+                funnelDiagnosis: {
+                    awareness: '분석 불가',
+                    trust: '분석 불가',
+                    conversion: '분석 불가',
+                    keyIssue: '분석 불가'
+                },
+                extractedData: {
+                    title: '',
+                    metaDescription: '',
+                    h1: '',
+                    h2List: [],
+                    buttons: []
+                },
                 timestamp: new Date().toISOString()
             };
-
-        } catch (error) {
-            console.error('API 호출 오류:', error);
-            return buildFallbackAnalysisData(url, {
-                detail: '네트워크 오류가 발생했습니다.'
-            });
         }
-    }
 
-    function buildFallbackAnalysisData(url, options = {}) {
-        return {
-            brandName: extractBrandName(url),
-            website: url,
-            serviceType: 'default',
-            stage: 'Early',
-            scores: {
-                brandClarity: 0,
-                messageStrength: 0,
-                trustStructure: 0,
-                conversionStructure: 0,
-                growthReadiness: 0
-            },
-            bottleneck: 'brandClarity',
-            bottleneckLabel: '분석 불가',
-            strongestAsset: '확인 불가',
-            summary: options.detail || '기술적 문제로 분석을 완료하지 못했습니다.',
-            chaeumInsight: '현재는 자동 분석 결과를 불러오지 못했습니다. 상담을 통해 수동 진단이 가능합니다.',
-            funnelDiagnosis: {
-                awareness: '분석 불가',
-                trust: '분석 불가',
-                conversion: '분석 불가',
-                keyIssue: '분석 불가'
-            },
-            extractedData: {
-                title: '',
-                metaDescription: '',
-                h1: '',
-                h2List: [],
-                buttons: []
-            },
-            timestamp: new Date().toISOString()
-        };
-    }
-
-    function normalizeScores(scores = {}) {
-        return {
-            brandClarity: safeNumber(scores.brandClarity),
-            messageStrength: safeNumber(scores.messageStrength),
-            trustStructure: safeNumber(scores.trustStructure),
-            conversionStructure: safeNumber(scores.conversionStructure),
-            growthReadiness: safeNumber(scores.growthReadiness)
-        };
-    }
-
-    function normalizeFunnelDiagnosis(funnel = {}) {
-        return {
-            awareness: funnel.awareness || '분석 결과가 없습니다.',
-            trust: funnel.trust || '분석 결과가 없습니다.',
-            conversion: funnel.conversion || '분석 결과가 없습니다.',
-            keyIssue: funnel.keyIssue || '분석 결과가 없습니다.'
-        };
-    }
-
-    function normalizeExtractedData(data = {}) {
-        return {
-            title: data.title || '',
-            metaDescription: data.metaDescription || '',
-            h1: data.h1 || '',
-            h2List: Array.isArray(data.h2List) ? data.h2List : [],
-            buttons: Array.isArray(data.buttons) ? data.buttons : []
-        };
-    }
-
-    function safeNumber(value) {
-        const num = Number(value);
-        if (Number.isNaN(num)) return 0;
-        return Math.max(0, Math.min(100, Math.round(num)));
-    }
-
-    function normalizeUrl(url) {
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            return 'https://' + url;
+        function normalizeScores(scores = {}) {
+            return {
+                brandClarity: safeNumber(scores.brandClarity),
+                messageStrength: safeNumber(scores.messageStrength),
+                trustStructure: safeNumber(scores.trustStructure),
+                conversionStructure: safeNumber(scores.conversionStructure),
+                growthReadiness: safeNumber(scores.growthReadiness)
+            };
         }
-        return url;
-    }
 
-    function extractBrandName(url) {
-        try {
-            const domain = new URL(normalizeUrl(url)).hostname.replace('www.', '');
-            const name = domain.split('.')[0];
-            return name.charAt(0).toUpperCase() + name.slice(1);
-        } catch {
-            return 'Brand';
+        function normalizeFunnelDiagnosis(funnel = {}) {
+            return {
+                awareness: funnel.awareness || '분석 결과가 없습니다.',
+                trust: funnel.trust || '분석 결과가 없습니다.',
+                conversion: funnel.conversion || '분석 결과가 없습니다.',
+                keyIssue: funnel.keyIssue || '분석 결과가 없습니다.'
+            };
         }
-    }
 
-    function isValidUrl(url) {
-        try {
-            new URL(normalizeUrl(url));
-            return true;
-        } catch {
-            return false;
+        function normalizeExtractedData(data = {}) {
+            return {
+                title: data.title || '',
+                metaDescription: data.metaDescription || '',
+                h1: data.h1 || '',
+                h2List: Array.isArray(data.h2List) ? data.h2List : [],
+                buttons: Array.isArray(data.buttons) ? data.buttons : []
+            };
         }
-    }
 
-    function setLoadingState(isLoading) {
-        submitBtn.disabled = isLoading;
-        submitBtn.textContent = isLoading ? '분석 중...' : '분석 시작';
-        analyzingEl.style.display = isLoading ? 'block' : 'none';
-        analyzingListEl.classList.toggle('active', isLoading);
-    }
+        function safeNumber(value) {
+            const num = Number(value);
+            if (Number.isNaN(num)) return 0;
+            return Math.max(0, Math.min(100, Math.round(num)));
+        }
 
-    function showError(msg) {
-        const el = document.getElementById('error');
-        el.textContent = msg;
-        el.style.display = 'block';
+        function normalizeUrl(url) {
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                return 'https://' + url;
+            }
+            return url;
+        }
 
-        clearTimeout(showError._timer);
-        showError._timer = setTimeout(() => {
-            el.style.display = 'none';
-        }, 3000);
-    }
-</script>
+        function extractBrandName(url) {
+            try {
+                const domain = new URL(normalizeUrl(url)).hostname.replace('www.', '');
+                const name = domain.split('.')[0];
+                return name.charAt(0).toUpperCase() + name.slice(1);
+            } catch {
+                return 'Brand';
+            }
+        }
+
+        function isValidUrl(url) {
+            try {
+                new URL(normalizeUrl(url));
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        function setLoadingState(isLoading) {
+            submitBtn.disabled = isLoading;
+            submitBtn.textContent = isLoading ? '분석 중...' : '분석 시작';
+            analyzingEl.style.display = isLoading ? 'block' : 'none';
+            analyzingListEl.classList.toggle('active', isLoading);
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('error');
+            el.textContent = msg;
+            el.style.display = 'block';
+
+            clearTimeout(showError._timer);
+            showError._timer = setTimeout(() => {
+                el.style.display = 'none';
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
