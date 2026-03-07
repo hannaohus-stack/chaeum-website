@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights | CHAEUM</title>
+    <meta name="description" content="포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #4B4545;
+            --white: #FFFFFF;
+            --gray: #888888;
+            --light-gray: #666666;
+            --border: rgba(255, 255, 255, 0.12);
+            --panel: rgba(255, 255, 255, 0.02);
+            --panel-hover: rgba(255, 255, 255, 0.05);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(75, 69, 69, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 1;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            opacity: 1;
+        }
+
+        .btn-consult {
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 28px;
+            border: none;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-weight: 400;
+        }
+
+        .btn-consult:hover {
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 140px 40px 100px 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .page-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 24px;
+            opacity: 0.7;
+        }
+
+        .page-heading {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+
+        .page-description {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 56px 0;
+        }
+
+        .feature-box {
+            background-color: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            padding: 36px;
+            margin-bottom: 48px;
+        }
+
+        .feature-box h2 {
+            font-size: 22px;
+            font-weight: 300;
+            margin-bottom: 14px;
+        }
+
+        .feature-box p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.9;
+            max-width: 760px;
+        }
+
+        .featured-post {
+            border: 1px solid var(--border);
+            background-color: var(--panel);
+            padding: 40px;
+            border-radius: 2px;
+            margin-bottom: 36px;
+            transition: all 0.3s ease;
+        }
+
+        .featured-post:hover {
+            background-color: var(--panel-hover);
+            border-color: rgba(255,255,255,0.24);
+        }
+
+        .featured-label {
+            font-size: 11px;
+            color: var(--gray);
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .featured-title {
+            font-size: 34px;
+            font-weight: 300;
+            line-height: 1.35;
+            margin-bottom: 16px;
+        }
+
+        .featured-excerpt {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.9;
+            margin-bottom: 20px;
+            max-width: 860px;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 18px;
+        }
+
+        .read-link {
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid var(--white);
+            padding-bottom: 4px;
+        }
+
+        .read-link:hover {
+            opacity: 0.8;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-bottom: 56px;
+        }
+
+        .blog-card {
+            border: 1px solid var(--border);
+            padding: 28px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            background-color: var(--panel);
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+        }
+
+        .blog-card:hover {
+            border-color: rgba(255, 255, 255, 0.28);
+            background-color: var(--panel-hover);
+            transform: translateY(-2px);
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 18px;
+            font-size: 11px;
+            color: var(--gray);
+            opacity: 0.85;
+        }
+
+        .blog-category {
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .blog-date {
+            white-space: nowrap;
+        }
+
+        .blog-title {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.45;
+            margin-bottom: 14px;
+            color: var(--white);
+        }
+
+        .blog-excerpt {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .loading-box,
+        .empty-box,
+        .error-box {
+            border: 1px solid var(--border);
+            background-color: var(--panel);
+            padding: 48px 32px;
+            text-align: center;
+            border-radius: 2px;
+            margin-bottom: 48px;
+        }
+
+        .loading-box h3,
+        .empty-box h3,
+        .error-box h3 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 14px;
+        }
+
+        .loading-box p,
+        .empty-box p,
+        .error-box p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--bg);
+            padding: 12px 32px;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-link:hover {
+            opacity: 0.9;
+        }
+
+        .cta-box {
+            margin-top: 64px;
+            border: 1px solid var(--border);
+            background-color: var(--panel);
+            padding: 44px 36px;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .cta-box h3 {
+            font-size: 30px;
+            font-weight: 300;
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+
+        .cta-box p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.9;
+            margin-bottom: 28px;
+        }
+
+        .cta-actions {
+            display: inline-flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 12px 32px;
+            border: 1px solid var(--white);
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.08);
+        }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        @media (max-width: 980px) {
+            .blog-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-heading {
+                font-size: 34px;
+            }
+
+            .featured-title {
+                font-size: 28px;
+            }
+
+            header {
+                padding: 20px 24px;
+            }
+
+            .header-wrapper {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .container {
+                padding: 120px 24px 60px 24px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-box h3 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrapper">
+            <a href="../index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="../services.html">Services</a>
+                <a href="../portfolio.html">Portfolio</a>
+                <a href="./index.html" class="active">Blog</a>
+                <a href="../about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='../diagnosis-talk.html'">AI 진단 받기</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="page-title">Insights</div>
+            <h1 class="page-heading">전략 인사이트</h1>
+            <p class="page-description">
+                포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.
+            </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="feature-box">
+            <h2>CHAEUM의 블로그</h2>
+            <p>
+                브랜드 전략, 마케팅 구조, 포지셔닝, 고객 전환 설계에 대한 인사이트를 정기적으로 공유합니다.
+                단순한 정보가 아니라 실제 브랜드 성장에 연결되는 구조를 중심으로 다룹니다.
+            </p>
+        </div>
+
+        <div id="blogFeed">
+            <div class="loading-box">
+                <h3>인사이트를 불러오는 중입니다</h3>
+                <p>채움의 최신 인사이트를 가져오고 있습니다.</p>
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <h3>브랜드 전략을 직접 진단해보고 싶다면</h3>
+            <p>
+                인사이트를 읽는 것과 실제 브랜드 구조를 진단하는 것은 다릅니다.<br>
+                지금 무료 AI 진단으로 당신 브랜드의 핵심 병목을 먼저 확인해보세요.
+            </p>
+            <div class="cta-actions">
+                <a href="../diagnosis-talk.html" class="btn-link">AI 브랜드 진단</a>
+                <a href="https://cal.com/chaeum" target="_blank" class="btn-secondary">빠른 상담 예약</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 CHAEUM</p>
+        <div>
+            <a href="../index.html">Home</a>
+            <a href="../services.html">Services</a>
+            <a href="../portfolio.html">Portfolio</a>
+            <a href="../about.html">About</a>
+        </div>
+    </footer>
+
+    <script>
+        async function loadPosts() {
+            const container = document.getElementById('blogFeed');
+
+            try {
+                const response = await fetch('./data/posts.json');
+                const posts = await response.json();
+
+                if (!Array.isArray(posts) || posts.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-box">
+                            <h3>아직 등록된 글이 없습니다</h3>
+                            <p>곧 채움의 인사이트가 업데이트됩니다.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const featured = posts[0];
+                const others = posts.slice(1);
+
+                container.innerHTML = `
+                    <article class="featured-post">
+                        <div class="featured-label">Featured Insight</div>
+                        <div class="featured-meta">
+                            <span>${escapeHtml(featured.category || 'Insight')}</span>
+                            <span>${escapeHtml(featured.date || '')}</span>
+                        </div>
+                        <h2 class="featured-title">${escapeHtml(featured.title)}</h2>
+                        <p class="featured-excerpt">${escapeHtml(featured.excerpt)}</p>
+                        <a href="./post.html?slug=${encodeURIComponent(featured.slug)}" class="read-link">글 읽기</a>
+                    </article>
+
+                    ${others.length > 0 ? `
+                        <div class="blog-grid">
+                            ${others.map(post => `
+                                <article class="blog-card">
+                                    <div class="blog-meta">
+                                        <span class="blog-category">${escapeHtml(post.category || 'Insight')}</span>
+                                        <span class="blog-date">${escapeHtml(post.date || '')}</span>
+                                    </div>
+                                    <h3 class="blog-title">${escapeHtml(post.title)}</h3>
+                                    <p class="blog-excerpt">${escapeHtml(post.excerpt)}</p>
+                                    <a href="./post.html?slug=${encodeURIComponent(post.slug)}" class="read-link">글 읽기</a>
+                                </article>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                `;
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `
+                    <div class="error-box">
+                        <h3>글 목록을 불러오지 못했습니다</h3>
+                        <p>잠시 후 다시 시도해주세요.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        loadPosts();
+    </script>
+</body>
+</html>
