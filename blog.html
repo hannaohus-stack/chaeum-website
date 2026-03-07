@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | CHAEUM</title>
+    <title>Insights | CHAEUM</title>
     <style>
         * {
             margin: 0;
@@ -16,6 +16,9 @@
             --white: #FFFFFF;
             --gray: #888888;
             --light-gray: #666666;
+            --border: rgba(255, 255, 255, 0.12);
+            --panel: rgba(255, 255, 255, 0.02);
+            --panel-hover: rgba(255, 255, 255, 0.05);
         }
 
         html {
@@ -30,7 +33,6 @@
             letter-spacing: -0.3px;
         }
 
-        /* ===== HEADER ===== */
         header {
             position: fixed;
             top: 0;
@@ -82,7 +84,8 @@
             transition: opacity 0.3s ease;
         }
 
-        .nav-menu a:hover {
+        .nav-menu a:hover,
+        .nav-menu a.active {
             opacity: 1;
         }
 
@@ -103,16 +106,15 @@
             opacity: 0.9;
         }
 
-        /* ===== CONTAINER ===== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 140px 40px 80px 40px;
+            padding: 140px 40px 100px 40px;
         }
 
         .page-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 64px;
         }
 
         .page-title {
@@ -133,53 +135,143 @@
         .page-description {
             font-size: 16px;
             color: var(--gray);
-            max-width: 700px;
+            max-width: 760px;
             margin: 0 auto;
             line-height: 1.8;
         }
 
-        /* ===== DIVIDER ===== */
         .divider {
             height: 1px;
             background-color: rgba(255, 255, 255, 0.1);
-            margin: 60px 0;
+            margin: 56px 0;
         }
 
-        /* ===== BLOG CONTAINER ===== */
-        .blog-container {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .feature-box {
+            background-color: var(--panel);
+            border: 1px solid var(--border);
             border-radius: 2px;
-            overflow: hidden;
-            min-height: 600px;
+            padding: 36px;
+            margin-bottom: 48px;
         }
 
-        .blog-iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-            background-color: var(--white);
-        }
-
-        .blog-fallback {
-            padding: 60px 40px;
-            text-align: center;
-        }
-
-        .blog-fallback h2 {
-            font-size: 24px;
+        .feature-box h2 {
+            font-size: 22px;
             font-weight: 300;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
-        .blog-fallback p {
+        .feature-box p {
             font-size: 14px;
             color: var(--gray);
-            margin-bottom: 24px;
+            line-height: 1.9;
+            max-width: 760px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-bottom: 56px;
+        }
+
+        .blog-card {
+            border: 1px solid var(--border);
+            padding: 28px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            background-color: var(--panel);
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+        }
+
+        .blog-card:hover {
+            border-color: rgba(255, 255, 255, 0.28);
+            background-color: var(--panel-hover);
+            transform: translateY(-2px);
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 18px;
+            font-size: 11px;
+            color: var(--gray);
+            opacity: 0.85;
+        }
+
+        .blog-category {
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .blog-date {
+            white-space: nowrap;
+        }
+
+        .blog-title {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.45;
+            margin-bottom: 14px;
+            color: var(--white);
+        }
+
+        .blog-excerpt {
+            font-size: 13px;
+            color: var(--gray);
             line-height: 1.8;
+            margin-bottom: 24px;
+            flex: 1;
         }
 
         .blog-link {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.86;
+            transition: opacity 0.3s ease;
+        }
+
+        .blog-link:hover {
+            opacity: 1;
+        }
+
+        .loading-box,
+        .empty-box,
+        .error-box {
+            border: 1px solid var(--border);
+            background-color: var(--panel);
+            padding: 48px 32px;
+            text-align: center;
+            border-radius: 2px;
+            margin-bottom: 48px;
+        }
+
+        .loading-box h3,
+        .empty-box h3,
+        .error-box h3 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 14px;
+        }
+
+        .loading-box p,
+        .empty-box p,
+        .error-box p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+
+        .btn-link {
             display: inline-block;
             background-color: var(--white);
             color: var(--bg);
@@ -191,32 +283,57 @@
             transition: all 0.3s ease;
         }
 
-        .blog-link:hover {
+        .btn-link:hover {
             opacity: 0.9;
         }
 
-        /* ===== INFO BOX ===== */
-        .info-box {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 32px;
+        .cta-box {
+            margin-top: 64px;
+            border: 1px solid var(--border);
+            background-color: var(--panel);
+            padding: 44px 36px;
+            text-align: center;
             border-radius: 2px;
-            margin-top: 60px;
         }
 
-        .info-box h3 {
-            font-size: 16px;
-            font-weight: 400;
-            margin-bottom: 12px;
+        .cta-box h3 {
+            font-size: 30px;
+            font-weight: 300;
+            margin-bottom: 18px;
+            line-height: 1.4;
         }
 
-        .info-box p {
-            font-size: 13px;
+        .cta-box p {
+            font-size: 14px;
             color: var(--gray);
-            line-height: 1.8;
+            line-height: 1.9;
+            margin-bottom: 28px;
         }
 
-        /* ===== FOOTER ===== */
+        .cta-actions {
+            display: inline-flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 12px 32px;
+            border: 1px solid var(--white);
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.08);
+        }
+
         footer {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 60px 40px;
@@ -241,14 +358,15 @@
             color: var(--white);
         }
 
-        /* ===== RESPONSIVE ===== */
+        @media (max-width: 980px) {
+            .blog-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .page-heading {
-                font-size: 32px;
-            }
-
-            .blog-iframe {
-                height: 600px;
+                font-size: 34px;
             }
 
             header {
@@ -269,55 +387,70 @@
             .container {
                 padding: 120px 24px 60px 24px;
             }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-box h3 {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
     <header>
         <div class="header-wrapper">
             <a href="./index.html" class="logo">CHAEUM</a>
             <div class="nav-menu">
                 <a href="./services.html">Services</a>
                 <a href="./portfolio.html">Portfolio</a>
-                <a href="https://chaeum-arch.tistory.com" target="_blank">Blog</a>
+                <a href="./blog.html" class="active">Blog</a>
                 <a href="./about.html">About</a>
-                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
+                <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <div class="container">
         <div class="page-header">
             <div class="page-title">Insights</div>
             <h1 class="page-heading">전략 인사이트</h1>
-            <p class="page-description">포지셔닝부터 마케팅까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.</p>
+            <p class="page-description">
+                포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.
+            </p>
         </div>
 
         <div class="divider"></div>
 
-        <!-- BLOG EMBED SECTION -->
-        <div class="blog-container" id="blogContainer">
-            <div class="blog-fallback">
-                <h2>블로그를 불러오는 중입니다</h2>
-                <p>외부 블로그 URL이 연동되어 여기에 표시됩니다.<br>아래 버튼을 클릭하여 바로 이동할 수 있습니다.</p>
-                <a href="#" class="blog-link" id="blogDirectLink" target="_blank">블로그 보러가기</a>
+        <div class="feature-box">
+            <h2>CHAEUM의 블로그</h2>
+            <p>
+                브랜드 전략, 마케팅 구조, 포지셔닝, 고객 전환 설계에 대한 인사이트를 정기적으로 공유합니다.
+                단순한 정보가 아니라 실제 브랜드 성장에 연결되는 구조를 중심으로 다룹니다.
+            </p>
+        </div>
+
+        <div id="blogFeed">
+            <div class="loading-box">
+                <h3>블로그를 불러오는 중입니다</h3>
+                <p>채움의 최신 인사이트를 가져오고 있습니다.</p>
             </div>
         </div>
 
-        <!-- INFO BOX -->
-        <div class="info-box">
-            <h3>📝 블로그 URL 설정 가이드</h3>
+        <div class="cta-box">
+            <h3>브랜드 전략을 직접 진단해보고 싶다면</h3>
             <p>
-                이 페이지에 블로그를 임베드하려면, 아래 JavaScript를 수정하거나 <strong>개발자에게 외부 블로그 URL</strong>을 제공하세요.<br><br>
-                <strong>예시 URL:</strong> https://blog.chaeum.com, https://medium.com/@chaeum, https://brunch.co.kr/@chaeum<br><br>
-                또는 이 페이지를 블로그로 연동하지 않고 <strong>"블로그 보러가기" 버튼으로 외부 블로그로 바로 이동</strong>하도록 설정할 수도 있습니다.
+                블로그에서 인사이트를 읽는 것과 실제 브랜드 구조를 진단하는 것은 다릅니다.<br>
+                지금 무료 AI 진단으로 당신 브랜드의 핵심 병목을 먼저 확인해보세요.
             </p>
+            <div class="cta-actions">
+                <a href="./diagnosis-talk.html" class="btn-link">AI 브랜드 진단</a>
+                <a href="https://chaeum-arch.tistory.com" target="_blank" class="btn-secondary">티스토리 전체 보기</a>
+            </div>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <p>© 2026 CHAEUM</p>
         <div>
@@ -329,42 +462,70 @@
     </footer>
 
     <script>
-        // ===== 블로그 URL 설정 =====
-        // 아래의 BLOG_URL을 당신의 실제 블로그 URL로 변경하세요
-        const BLOG_URL = 'https://chaeum-arch.tistory.com'; // 예시: 'https://blog.example.com'
+        const TISTORY_URL = 'https://chaeum-arch.tistory.com';
 
-        // 블로그 임베드 설정
-        const blogContainer = document.getElementById('blogContainer');
-        const blogDirectLink = document.getElementById('blogDirectLink');
+        async function loadBlogFeed() {
+            const container = document.getElementById('blogFeed');
 
-        if (BLOG_URL) {
-            // BLOG_URL이 설정되어 있으면 iframe으로 임베드
-            // 주의: CORS 문제가 발생할 수 있습니다. 그 경우 개발자에게 문의하세요.
-            
-            // Notion, Medium, Brunch 등 특정 플랫폼의 경우 직접 임베드가 어려울 수 있습니다.
-            // 이 경우 아래처럼 링크만 제공하는 방식이 권장됩니다.
+            try {
+                const response = await fetch('/api/blog-feed');
+                const data = await response.json();
 
-            blogContainer.innerHTML = `
-                <div style="padding: 60px 40px; text-align: center;">
-                    <h2 style="font-size: 24px; font-weight: 300; margin-bottom: 16px;">채움의 블로그</h2>
-                    <p style="font-size: 14px; color: var(--gray); margin-bottom: 24px; line-height: 1.8;">
-                        포지셔닝, 마케팅, 브랜드 전략에 대한 인사이트를 정기적으로 공유하고 있습니다.
-                    </p>
-                    <a href="${BLOG_URL}" target="_blank" style="display: inline-block; background-color: var(--white); color: var(--bg); padding: 12px 32px; text-decoration: none; border-radius: 2px; font-size: 12px; letter-spacing: 1px; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">블로그 방문하기</a>
-                </div>
-            `;
-            
-            blogDirectLink.href = BLOG_URL;
-        } else {
-            // BLOG_URL이 설정되지 않았으면 가이드 표시
-            blogDirectLink.style.pointerEvents = 'none';
-            blogDirectLink.style.opacity = '0.5';
-            blogDirectLink.textContent = 'URL 미설정';
+                if (!response.ok || !data.ok || !data.items || data.items.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-box">
+                            <h3>아직 불러올 글이 없습니다</h3>
+                            <p>티스토리 블로그에서 최신 글을 확인해보세요.</p>
+                            <a href="${TISTORY_URL}" target="_blank" class="btn-link">티스토리 바로가기</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="blog-grid">
+                        ${data.items.map(item => `
+                            <article class="blog-card">
+                                <div class="blog-meta">
+                                    <span class="blog-category">${escapeHtml(item.category || 'Insight')}</span>
+                                    <span class="blog-date">${escapeHtml(item.pubDate || '')}</span>
+                                </div>
+                                <h3 class="blog-title">${escapeHtml(item.title)}</h3>
+                                <p class="blog-excerpt">${escapeHtml(item.description)}</p>
+                                <a href="${escapeAttribute(item.link)}" target="_blank" class="blog-link">
+                                    더 읽기 <span>→</span>
+                                </a>
+                            </article>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('블로그 피드 로드 오류:', error);
+
+                container.innerHTML = `
+                    <div class="error-box">
+                        <h3>블로그를 불러오지 못했습니다</h3>
+                        <p>외부 피드를 가져오는 중 문제가 발생했습니다. 아래 버튼으로 티스토리에서 직접 확인해주세요.</p>
+                        <a href="${TISTORY_URL}" target="_blank" class="btn-link">티스토리 바로가기</a>
+                    </div>
+                `;
+            }
         }
 
-        // 선택적: Medium, Brunch 등 특정 플랫폼에서의 설정 예시
-        console.log('Blog Page 로드됨');
-        console.log('BLOG_URL을 설정하려면 위 스크립트에서 const BLOG_URL = "" 부분을 수정하세요.');
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function escapeAttribute(value) {
+            return String(value || '').replace(/"/g, '&quot;');
+        }
+
+        loadBlogFeed();
     </script>
 </body>
 </html>
