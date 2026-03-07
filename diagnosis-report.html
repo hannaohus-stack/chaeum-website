@@ -1,4 +1,155 @@
-<script>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>분석 리포트 | CHAEUM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: #fafafa; 
+            color: #333; 
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        
+        .header { 
+            background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%); 
+            color: white; 
+            padding: 60px 40px; 
+            border-radius: 12px; 
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        h1 { font-size: 40px; font-weight: 300; margin-bottom: 8px; }
+        .subtitle { font-size: 14px; opacity: 0.8; }
+        
+        .report-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4B4545;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            width: 140px;
+            flex-shrink: 0;
+        }
+        
+        .info-value {
+            color: #333;
+            flex: 1;
+            word-break: break-word;
+            line-height: 1.6;
+        }
+        
+        .info-value a {
+            color: #4A9EFF;
+            text-decoration: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #f0f0f0;
+            color: #666;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .cta {
+            background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .cta p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #4B4545;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .error button {
+            background: #c33;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="brandNameDisplay">브랜드 분석</h1>
+            <p class="subtitle">AI 자동 분석 리포트</p>
+        </div>
+
+        <div id="errorContainer"></div>
+        <div id="reportContainer"></div>
+    </div>
+
+    <script>
     window.addEventListener('DOMContentLoaded', function() {
         try {
             const data = JSON.parse(localStorage.getItem('diagnosisData'));
@@ -263,3 +414,5 @@
         document.getElementById('errorContainer').innerHTML = html;
     }
 </script>
+</body>
+</html>
