@@ -1,85 +1,118 @@
 export default async function handler(req, res) {
-  try {
-    const RSS_URL = "https://chaeum-arch.tistory.com/rss";
+  const RSS_URL = 'https://chaeum-arch.tistory.com/rss';
 
-    const response = await fetch(RSS_URL);
+  try {
+    const response = await fetch(RSS_URL, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; CHAEUMBot/1.0)'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`RSS fetch failed: ${response.status}`);
+    }
 
     const xml = await response.text();
 
-    const items = parseItems(xml);
+    const itemMatches = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
+    const items = itemMatches.map((match) => parseItem(match[1])).filter(Boolean);
 
-    res.status(200).json({
+    return res.status(200).json({
       ok: true,
+      debug: {
+        rssUrl: RSS_URL,
+        xmlLength: xml.length,
+        itemCount: itemMatches.length
+      },
       items: items.slice(0, 6)
     });
+  } catch (error) {
+    console.error('blog-feed error:', error);
 
-  } catch (err) {
-    console.error(err);
-
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
+      error: error.message || '블로그 피드 처리 실패',
       items: []
     });
   }
 }
 
-function parseItems(xml) {
+function parseItem(itemXml) {
+  const title = decodeHtmlEntities(extractTag(itemXml, 'title'));
+  const link = decodeHtmlEntities(extractTag(itemXml, 'link'));
+  const descriptionRaw = extractTag(itemXml, 'description');
+  const pubDateRaw = extractTag(itemXml, 'pubDate');
+  const category = decodeHtmlEntities(extractTag(itemXml, 'category')) || 'Insight';
 
-  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+  if (!title || !link) return null;
 
-  const items = [];
+  return {
+    title,
+    link,
+    description: cleanDescription(descriptionRaw),
+    pubDate: formatDate(pubDateRaw),
+    category
+  };
+}
 
-  let match;
+function extractTag(xml, tagName) {
+  // CDATA 우선
+  const cdataRegex = new RegExp(
+    `<${tagName}><!\$begin:math:display$CDATA\\\\\[\(\[\\\\s\\\\S\]\*\?\)\\$end:math:display$\\]><\\/${tagName}>`,
+    'i'
+  );
+  const cdataMatch = xml.match(cdataRegex);
+  if (cdataMatch) return cdataMatch[1].trim();
 
-  while ((match = itemRegex.exec(xml))) {
+  // 일반 태그
+  const normalRegex = new RegExp(`<${tagName}>([\\s\\S]*?)<\\/${tagName}>`, 'i');
+  const normalMatch = xml.match(normalRegex);
+  if (normalMatch) return normalMatch[1].trim();
 
-    const item = match[1];
+  return '';
+}
 
-    const title = extract(item, "title");
-    const link = extract(item, "link");
-    const description = extract(item, "description");
-    const pubDate = extract(item, "pubDate");
+function cleanDescription(html) {
+  if (!html) return '채움의 브랜드 전략 인사이트를 확인해보세요.';
 
-    const cleanDesc = stripHtml(description).slice(0, 120);
+  const stripped = html
+    .replace(/<img[^>]*>/gi, ' ')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<\/p>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 
-    items.push({
-      title,
-      link,
-      description: cleanDesc + "...",
-      pubDate: formatDate(pubDate),
-      category: "Insight"
-    });
+  const decoded = decodeHtmlEntities(stripped);
+
+  if (!decoded) {
+    return '채움의 브랜드 전략 인사이트를 확인해보세요.';
   }
 
-  return items;
-}
-
-function extract(text, tag) {
-
-  const regex = new RegExp(`<${tag}><!\$begin:math:display$CDATA\\\\\[\(\[\\\\s\\\\S\]\*\?\)\\$end:math:display$\\]><\\/${tag}>|<${tag}>([\\s\\S]*?)<\\/${tag}>`);
-
-  const match = text.match(regex);
-
-  if (!match) return "";
-
-  return (match[1] || match[2] || "").trim();
-}
-
-function stripHtml(html) {
-
-  return html
-    .replace(/<img[^>]*>/g, "")
-    .replace(/<br\s*\/?>/g, " ")
-    .replace(/<[^>]+>/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+  return decoded.length > 120 ? decoded.slice(0, 120).trim() + '...' : decoded;
 }
 
 function formatDate(dateString) {
+  if (!dateString) return '';
 
-  const d = new Date(dateString);
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return '';
 
-  if (isNaN(d)) return "";
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
 
-  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`;
+  return `${yyyy}. ${mm}. ${dd}`;
+}
+
+function decodeHtmlEntities(str) {
+  return String(str || '')
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .trim();
 }
