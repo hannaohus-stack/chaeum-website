@@ -146,27 +146,6 @@
             margin: 56px 0;
         }
 
-        .feature-box {
-            background-color: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 2px;
-            padding: 36px;
-            margin-bottom: 48px;
-        }
-
-        .feature-box h2 {
-            font-size: 22px;
-            font-weight: 300;
-            margin-bottom: 14px;
-        }
-
-        .feature-box p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.9;
-            max-width: 760px;
-        }
-
         .featured-post {
             border: 1px solid var(--border);
             background-color: var(--panel);
@@ -221,10 +200,6 @@
             text-decoration: none;
             border-bottom: 1px solid var(--white);
             padding-bottom: 4px;
-        }
-
-        .read-link:hover {
-            opacity: 0.8;
         }
 
         .blog-grid {
@@ -285,6 +260,16 @@
             line-height: 1.8;
             margin-bottom: 24px;
             flex: 1;
+        }
+
+        .card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card-link:hover {
+            color: inherit;
         }
 
         .loading-box,
@@ -471,14 +456,6 @@
 
         <div class="divider"></div>
 
-        <div class="feature-box">
-            <h2>CHAEUM의 블로그</h2>
-            <p>
-                브랜드 전략, 마케팅 구조, 포지셔닝, 고객 전환 설계에 대한 인사이트를 정기적으로 공유합니다.
-                단순한 정보가 아니라 실제 브랜드 성장에 연결되는 구조를 중심으로 다룹니다.
-            </p>
-        </div>
-
         <div id="blogFeed">
             <div class="loading-box">
                 <h3>인사이트를 불러오는 중입니다</h3>
@@ -531,29 +508,33 @@
                 const others = posts.slice(1);
 
                 container.innerHTML = `
-                    <article class="featured-post">
-                        <div class="featured-label">Featured Insight</div>
-                        <div class="featured-meta">
-                            <span>${escapeHtml(featured.category || 'Insight')}</span>
-                            <span>${escapeHtml(featured.date || '')}</span>
-                        </div>
-                        <h2 class="featured-title">${escapeHtml(featured.title)}</h2>
-                        <p class="featured-excerpt">${escapeHtml(featured.excerpt)}</p>
-                        <a href="${featured.url}" class="read-link">글 읽기</a>
-                    </article>
+                    <a href="${featured.url}" class="card-link">
+                        <article class="featured-post">
+                            <div class="featured-label">Featured Insight</div>
+                            <div class="featured-meta">
+                                <span>${escapeHtml(featured.category || 'Insight')}</span>
+                                <span>${escapeHtml(featured.date || '')}</span>
+                            </div>
+                            <h2 class="featured-title">${escapeHtml(featured.title)}</h2>
+                            <p class="featured-excerpt">${escapeHtml(featured.excerpt)}</p>
+                            <span class="read-link">글 읽기</span>
+                        </article>
+                    </a>
 
                     ${others.length > 0 ? `
                         <div class="blog-grid">
                             ${others.map(post => `
-                                <article class="blog-card">
-                                    <div class="blog-meta">
-                                        <span class="blog-category">${escapeHtml(post.category || 'Insight')}</span>
-                                        <span class="blog-date">${escapeHtml(post.date || '')}</span>
-                                    </div>
-                                    <h3 class="blog-title">${escapeHtml(post.title)}</h3>
-                                    <p class="blog-excerpt">${escapeHtml(post.excerpt)}</p>
-                                    <a href="${post.url}" class="read-link">글 읽기</a>
-                                </article>
+                                <a href="${post.url}" class="card-link">
+                                    <article class="blog-card">
+                                        <div class="blog-meta">
+                                            <span class="blog-category">${escapeHtml(post.category || 'Insight')}</span>
+                                            <span class="blog-date">${escapeHtml(post.date || '')}</span>
+                                        </div>
+                                        <h3 class="blog-title">${escapeHtml(post.title)}</h3>
+                                        <p class="blog-excerpt">${escapeHtml(post.excerpt)}</p>
+                                        <span class="read-link">글 읽기</span>
+                                    </article>
+                                </a>
                             `).join('')}
                         </div>
                     ` : ''}
