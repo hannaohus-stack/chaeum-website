@@ -539,7 +539,7 @@
                         </div>
                         <h2 class="featured-title">${escapeHtml(featured.title)}</h2>
                         <p class="featured-excerpt">${escapeHtml(featured.excerpt)}</p>
-                        <a href="./post.html?slug=${encodeURIComponent(featured.slug)}" class="read-link">글 읽기</a>
+                        <a href="${featured.url}" class="read-link">글 읽기</a>
                     </article>
 
                     ${others.length > 0 ? `
@@ -552,7 +552,7 @@
                                     </div>
                                     <h3 class="blog-title">${escapeHtml(post.title)}</h3>
                                     <p class="blog-excerpt">${escapeHtml(post.excerpt)}</p>
-                                    <a href="./post.html?slug=${encodeURIComponent(post.slug)}" class="read-link">글 읽기</a>
+                                    <a href="${post.url}" class="read-link">글 읽기</a>
                                 </article>
                             `).join('')}
                         </div>
