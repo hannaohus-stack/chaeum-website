@@ -364,3 +364,13 @@ footer {
         padding: 30px 24px 40px;
     }
 }
+.post-image{
+    margin:40px 0;
+}
+
+.post-image img{
+    width:100%;
+    height:auto;
+    border-radius:2px;
+    display:block;
+}
