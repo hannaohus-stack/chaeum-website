@@ -11,8 +11,8 @@ export default async function handler(req, res) {
     }
 
     const targetUrl = normalizeUrl(url);
-
     const html = await fetchWebsiteHtml(targetUrl);
+
     const extracted = extractWebsiteSignals(html, targetUrl);
     const scores = calculateScores(extracted);
     const bottleneck = detectBottleneck(scores);
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
       detail: error.message || '알 수 없는 오류',
       brandName: 'Brand',
       website: '',
-      serviceType: 'default',
+      serviceType: 'other',
       stage: 'Early',
       scores: {
         brandClarity: 0,
@@ -117,20 +117,13 @@ async function fetchWebsiteHtml(targetUrl) {
 
 function extractWebsiteSignals(html, targetUrl) {
   const title = matchOne(html, /<title[^>]*>(.*?)<\/title>/is);
-  const metaDescription = matchOne(
-    html,
-    /<meta[^>]+name=["']description["'][^>]+content=["'](.*?)["'][^>]*>/is,
-    1,
-    true
-  ) || matchOne(
-    html,
-    /<meta[^>]+content=["'](.*?)["'][^>]+name=["']description["'][^>]*>/is,
-    1,
-    true
-  );
+  const metaDescription =
+    matchOne(html, /<meta[^>]+name=["']description["'][^>]+content=["'](.*?)["'][^>]*>/is, 1) ||
+    matchOne(html, /<meta[^>]+content=["'](.*?)["'][^>]+name=["']description["'][^>]*>/is, 1);
 
   const h1 = matchOne(html, /<h1[^>]*>(.*?)<\/h1>/is);
   const h2List = matchAll(html, /<h2[^>]*>(.*?)<\/h2>/gis);
+
   const buttonTexts = [
     ...matchAll(html, /<button[^>]*>(.*?)<\/button>/gis),
     ...matchAll(html, /<a[^>]*>(.*?)<\/a>/gis)
@@ -174,7 +167,7 @@ function extractWebsiteSignals(html, targetUrl) {
     combinedText: combined,
 
     hasTargetAudience: /for |help|designed for|ideal for|브랜드|고객|사장님|창업자|팀|운영자|사용자/.test(combined),
-    hasValueProposition: /solution|benefit|value|growth|improve|better|simplify|clarity|전략|성장|해결|개선|차별화|브랜딩/.test(combined),
+    hasValueProposition: /solution|benefit|value|growth|improve|better|simplify|clarity|전략|성장|해결|개선|차별화|브랜딩|자동화|단축|효율/.test(combined),
     hasCTA: /문의|상담|신청|예약|구매|시작|contact|book|schedule|request|demo|start|get started|apply/.test(buttonTexts.join(' ').toLowerCase()),
     hasTrustSignal: /review|testimonial|case study|client|partner|featured|후기|사례|고객사|브랜드와 함께|works|trusted by/.test(combined),
     hasContentHub: /blog|journal|insight|article|news|콘텐츠|인사이트|블로그/.test(combined),
@@ -183,6 +176,7 @@ function extractWebsiteSignals(html, targetUrl) {
     hasConversionPath: /buy|shop|purchase|checkout|문의|상담|예약|구매|신청|demo|contact/.test(combined),
     hasRetentionSignal: /membership|community|newsletter|subscribe|club|멤버십|구독|커뮤니티|뉴스레터|회원/.test(combined),
     hasSocialProof: /instagram|youtube|threads|newsletter|press|media|언론|리뷰|후기/.test(combined),
+
     h1Length: h1.length,
     h2Count: h2List.length,
     buttonCount: buttonTexts.length
@@ -190,46 +184,62 @@ function extractWebsiteSignals(html, targetUrl) {
 }
 
 function calculateScores(extracted) {
-  let brandClarity = 25;
-  let messageStrength = 20;
-  let trustStructure = 15;
-  let conversionStructure = 15;
-  let growthReadiness = 15;
+  let brandClarity = 0;
+  let messageStrength = 0;
+  let trustStructure = 0;
+  let conversionStructure = 0;
+  let growthReadiness = 0;
 
+  // Brand Clarity
   if (extracted.title) brandClarity += 10;
   if (extracted.h1) brandClarity += 15;
-  if (extracted.hasTargetAudience) brandClarity += 15;
-  if (extracted.hasValueProposition) brandClarity += 15;
+  if (extracted.hasTargetAudience) brandClarity += 20;
+  if (extracted.hasValueProposition) brandClarity += 25;
   if (extracted.hasStory) brandClarity += 10;
-  if (extracted.h1Length >= 8 && extracted.h1Length <= 120) brandClarity += 5;
+  if (extracted.h1Length >= 8 && extracted.h1Length <= 120) brandClarity += 10;
+  if (extracted.h2Count >= 2) brandClarity += 10;
 
-  if (extracted.metaDescription) messageStrength += 10;
+  // Message Strength
+  if (extracted.metaDescription) messageStrength += 15;
+  if (extracted.h1) messageStrength += 15;
   if (extracted.h2Count >= 2) messageStrength += 10;
-  if (extracted.hasValueProposition) messageStrength += 20;
+  if (extracted.hasValueProposition) messageStrength += 25;
   if (extracted.hasTargetAudience) messageStrength += 15;
   if (extracted.buttonCount >= 2) messageStrength += 10;
-  if (extracted.h1) messageStrength += 10;
+  if (extracted.title && extracted.metaDescription) messageStrength += 10;
 
+  // Trust Structure
   if (extracted.hasTrustSignal) trustStructure += 35;
   if (extracted.hasStory) trustStructure += 15;
   if (extracted.hasContentHub) trustStructure += 10;
   if (extracted.hasSocialProof) trustStructure += 10;
   if (extracted.h2Count >= 3) trustStructure += 10;
+  if (/about|team|story|vision|mission|소개|철학|브랜드/.test(extracted.navText.toLowerCase())) {
+    trustStructure += 10;
+  }
 
+  // Conversion Structure
   if (extracted.hasCTA) conversionStructure += 25;
   if (extracted.hasConversionPath) conversionStructure += 25;
   if (extracted.hasPricingInfo) conversionStructure += 10;
-  if (extracted.buttonCount >= 3) conversionStructure += 15;
-  if (/contact|book|schedule|request|문의|상담|예약/.test(extracted.buttons.join(' ').toLowerCase())) {
-    conversionStructure += 10;
+  if (extracted.buttonCount >= 3) conversionStructure += 10;
+  if (/contact|book|schedule|request|문의|상담|예약|신청/.test(extracted.buttons.join(' ').toLowerCase())) {
+    conversionStructure += 15;
+  }
+  if (/buy|shop|purchase|구매|주문/.test(extracted.buttons.join(' ').toLowerCase())) {
+    conversionStructure += 15;
   }
 
+  // Growth Readiness
   if (extracted.hasRetentionSignal) growthReadiness += 25;
   if (extracted.hasContentHub) growthReadiness += 15;
   if (extracted.hasPricingInfo) growthReadiness += 10;
   if (extracted.hasConversionPath) growthReadiness += 10;
   if (extracted.hasTrustSignal) growthReadiness += 10;
   if (extracted.hasSocialProof) growthReadiness += 10;
+  if (/newsletter|community|membership|subscribe|구독|멤버십|회원/.test(extracted.combinedText)) {
+    growthReadiness += 20;
+  }
 
   return {
     brandClarity: clamp(brandClarity),
@@ -310,7 +320,7 @@ function generateSummary(scores, bottleneck) {
   return `${base} ${detailMap[bottleneck] || ''}`.trim();
 }
 
-function generateChaeumInsight(bottleneck, extracted, scores) {
+function generateChaeumInsight(bottleneck) {
   const map = {
     brandClarity: '채움 관점에서 지금 가장 필요한 것은 감각을 더하는 일이 아니라, 고객이 즉시 이해할 수 있는 포지셔닝 문장 정리입니다.',
     messageStrength: '채움 관점에서 이 브랜드는 보기 좋은 표현보다 먼저, 고객 문제와 해결 가치를 더 선명하게 연결해야 합니다.',
@@ -338,16 +348,17 @@ function generateFunnelDiagnosis(extracted, scores) {
 }
 
 function detectServiceType(text) {
+  if (/식품 라벨|표시사항|식품 신고|라벨 생성|nutrition label|food label|label automation/.test(text)) return 'food-tech';
   if (/saas|software|api|platform|workflow|dashboard|automation|tool/.test(text)) return 'saas';
-  if (/food|restaurant|meal|ingredient|nutrition|recipe|menu/.test(text)) return 'food';
-  if (/beauty|skincare|wellness|cosmetic|hair/.test(text)) return 'lifestyle';
   if (/consulting|strategy|branding|agency|marketing/.test(text)) return 'consulting';
+  if (/beauty|skincare|wellness|cosmetic|hair/.test(text)) return 'lifestyle';
   if (/shop|store|buy|product|ecommerce|commerce/.test(text)) return 'ecommerce';
   if (/design|studio|creative|portfolio/.test(text)) return 'design';
   if (/education|course|academy|training|learn/.test(text)) return 'education';
   if (/health|fitness|medical|clinic|therapy/.test(text)) return 'health';
   if (/finance|payment|bank|invest|fintech/.test(text)) return 'fintech';
-  return 'default';
+  if (/food|restaurant|meal|ingredient|nutrition|recipe|menu/.test(text)) return 'food';
+  return 'other';
 }
 
 function inferBrandName(url, title) {
@@ -357,7 +368,7 @@ function inferBrandName(url, title) {
   }
   try {
     const hostname = new URL(url).hostname.replace('www.', '');
-    return hostname.split('.')[0];
+    return hostname.split('.')[0].toUpperCase();
   } catch {
     return 'Brand';
   }
@@ -368,7 +379,7 @@ function extractNavText(html) {
   return cleanText(navBlocks.join(' '));
 }
 
-function matchOne(text, regex, groupIndex = 1, isMeta = false) {
+function matchOne(text, regex, groupIndex = 1) {
   const match = text.match(regex);
   if (!match) return '';
   return cleanText(match[groupIndex] || '');
