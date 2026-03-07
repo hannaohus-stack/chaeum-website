@@ -374,3 +374,68 @@ footer {
     border-radius:2px;
     display:block;
 }
+
+/* CTA 강제 반전 */
+.cta-box{
+    margin-top:72px;
+    padding:40px;
+    border:1px solid rgba(75,69,69,0.18);
+    background:#4B4545 !important;
+    border-radius:2px;
+}
+
+.cta-box h3{
+    font-size:30px;
+    font-weight:300;
+    line-height:1.35;
+    color:#F1F0EB !important;
+    margin-bottom:14px;
+}
+
+.cta-box p{
+    font-size:15px;
+    color:rgba(241,240,235,0.78) !important;
+    line-height:1.9;
+    margin-bottom:24px;
+}
+
+.cta-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.btn-primary{
+    display:inline-block;
+    background:#F1F0EB !important;
+    color:#4B4545 !important;
+    padding:13px 26px;
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:1px;
+    border-radius:2px;
+    transition:opacity 0.3s ease;
+    border:none;
+}
+
+.btn-primary:hover{
+    opacity:0.9;
+}
+
+.btn-secondary{
+    display:inline-block;
+    background:transparent;
+    color:#F1F0EB !important;
+    padding:13px 26px;
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:1px;
+    border:1px solid rgba(241,240,235,0.35) !important;
+    border-radius:2px;
+    transition:background 0.3s ease,color 0.3s ease;
+}
+
+.btn-secondary:hover{
+    background:rgba(241,240,235,0.08);
+    color:#F1F0EB !important;
+}
