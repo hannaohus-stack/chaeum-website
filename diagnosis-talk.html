@@ -6,6 +6,7 @@
     <title>브랜드 진단 | CHAEUM</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body { 
             font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
             background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%); 
@@ -15,53 +16,159 @@
             align-items: center;
             justify-content: center;
         }
-        .container { max-width: 550px; width: 100%; padding: 40px 20px; }
-        
-        .hero { text-align: center; margin-bottom: 50px; }
-        h1 { font-size: 44px; font-weight: 300; margin-bottom: 12px; }
-        .subtitle { font-size: 14px; color: #aaa; line-height: 1.6; }
-        
-        .form-section { 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 12px; 
-            padding: 32px; 
+
+        .container {
+            max-width: 620px;
+            width: 100%;
+            padding: 40px 20px;
         }
-        
-        .form-group { margin-bottom: 24px; }
-        label { 
-            display: block; 
-            font-size: 12px; 
-            color: #888; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px; 
-            font-weight: 600; 
-            margin-bottom: 10px; 
+
+        .hero {
+            text-align: center;
+            margin-bottom: 42px;
         }
-        .required { color: #FF6464; }
-        
-        input { 
-            width: 100%; 
-            padding: 12px; 
-            background: rgba(255,255,255,0.08); 
-            border: 1px solid rgba(255,255,255,0.15); 
-            border-radius: 8px; 
-            color: white; 
+
+        h1 {
+            font-size: 44px;
+            font-weight: 300;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .form-section {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label.form-label {
+            display: block;
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .required {
+            color: #FF6464;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: white;
             font-size: 14px;
             font-family: inherit;
         }
-        input::placeholder { color: #666; }
-        input:focus { 
-            outline: none; 
-            border-color: rgba(255,255,255,0.3); 
-            background: rgba(255,255,255,0.12); 
+
+        input::placeholder {
+            color: #666;
         }
-        
-        .hint { font-size: 11px; color: #666; margin-top: 6px; }
-        
-        .analyzing { 
-            font-size: 11px; 
-            color: #64C8FF; 
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.12);
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image:
+                linear-gradient(45deg, transparent 50%, #aaa 50%),
+                linear-gradient(135deg, #aaa 50%, transparent 50%);
+            background-position:
+                calc(100% - 18px) calc(50% - 2px),
+                calc(100% - 12px) calc(50% - 2px);
+            background-size: 6px 6px, 6px 6px;
+            background-repeat: no-repeat;
+        }
+
+        select option {
+            color: #222;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #666;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .question-card {
+            padding: 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .question-title {
+            font-size: 13px;
+            color: #ddd;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .yn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .yn-option input[type="radio"] {
+            display: none;
+        }
+
+        .yn-option span {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            color: #cfcfcf;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .yn-option input[type="radio"]:checked + span {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.4);
+            color: white;
+            font-weight: 600;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+        }
+
+        .yn-option span:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .analyzing {
+            font-size: 11px;
+            color: #64C8FF;
             margin-top: 6px;
             display: none;
         }
@@ -105,63 +212,54 @@
             50% { opacity: 1; }
         }
 
-        .choice-grid {
-            display: grid;
-            gap: 10px;
-        }
-
-        .choice-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-        }
-
-        .choice-item input[type="radio"],
-        .choice-item input[type="checkbox"] {
-            width: auto;
-            margin: 0;
-            accent-color: white;
-            transform: scale(1.05);
-        }
-
-        .choice-item span {
-            font-size: 13px;
-            color: #ddd;
-            line-height: 1.4;
-        }
-        
-        .error { 
-            background: rgba(255, 107, 107, 0.1); 
-            color: #FF6B6B; 
-            padding: 10px; 
-            border-radius: 4px; 
-            display: none; 
-            font-size: 12px; 
+        .error {
+            background: rgba(255, 107, 107, 0.1);
+            color: #FF6B6B;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+            font-size: 12px;
             margin-bottom: 20px;
             border-left: 4px solid #FF6B6B;
         }
-        
-        button { 
-            width: 100%; 
-            padding: 14px; 
-            background: white; 
-            color: #4B4545; 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: 600; 
-            font-size: 14px; 
-            cursor: pointer; 
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: white;
+            color: #4B4545;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
             transition: all 0.2s;
+            margin-top: 8px;
         }
-        button:hover:not(:disabled) { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 28px 16px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .form-section {
+                padding: 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -175,82 +273,120 @@
 
         <form id="diagnosisForm">
             <div class="form-section">
-                <!-- 1. URL -->
+
+                <!-- 웹사이트 -->
                 <div class="form-group">
-                    <label>웹사이트 <span class="required">*</span></label>
+                    <label class="form-label">웹사이트 <span class="required">*</span></label>
                     <input 
                         type="text"
-                        id="website" 
+                        id="website"
                         placeholder="https://example.com"
-                        required>
+                        required
+                    />
                     <p class="hint">웹사이트 주소를 입력하세요</p>
                 </div>
 
-                <!-- 2. 이메일 -->
+                <!-- 이메일 -->
                 <div class="form-group">
-                    <label>이메일 <span class="required">*</span></label>
+                    <label class="form-label">이메일 <span class="required">*</span></label>
                     <input 
-                        type="email" 
-                        id="email" 
+                        type="email"
+                        id="email"
                         placeholder="your@email.com"
-                        required>
+                        required
+                    />
                     <p class="hint">리포트 수신용</p>
                 </div>
 
-                <!-- 3. 가장 큰 고민 -->
+                <!-- 가장 큰 고민: 드롭다운 -->
                 <div class="form-group">
-                    <label>가장 큰 고민 <span class="required">*</span></label>
-                    <div class="choice-grid">
-                        <label class="choice-item">
-                            <input type="radio" name="mainProblem" value="messaging">
-                            <span>브랜드 메시지가 약함</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="radio" name="mainProblem" value="traffic">
-                            <span>고객 유입이 부족함</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="radio" name="mainProblem" value="conversion">
-                            <span>전환율이 낮음</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="radio" name="mainProblem" value="positioning">
-                            <span>포지셔닝이 불명확함</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="radio" name="mainProblem" value="growth">
-                            <span>장기 성장 구조가 없음</span>
-                        </label>
-                    </div>
+                    <label class="form-label">가장 큰 고민 <span class="required">*</span></label>
+                    <select id="mainProblem" required>
+                        <option value="">선택해주세요</option>
+                        <option value="messaging">브랜드 메시지가 약함</option>
+                        <option value="traffic">고객 유입이 부족함</option>
+                        <option value="conversion">전환율이 낮음</option>
+                        <option value="positioning">포지셔닝이 불명확함</option>
+                        <option value="growth">장기 성장 구조가 없음</option>
+                    </select>
                     <p class="hint">현재 가장 먼저 해결하고 싶은 문제를 선택하세요</p>
                 </div>
 
-                <!-- 4. 브랜드 상태 체크 -->
+                <!-- 브랜드 상태: Yes / No -->
                 <div class="form-group">
-                    <label>현재 브랜드 상태</label>
-                    <div class="choice-grid">
-                        <label class="choice-item">
-                            <input type="checkbox" name="brandChecks" value="clearTarget">
-                            <span>핵심 고객이 명확하다</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="checkbox" name="brandChecks" value="clearOffer">
-                            <span>대표 제품/서비스가 명확하다</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="checkbox" name="brandChecks" value="clearMessage">
-                            <span>브랜드 메시지가 일관된다</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="checkbox" name="brandChecks" value="hasConversionPath">
-                            <span>SNS/홈페이지가 문의 또는 구매로 연결된다</span>
-                        </label>
-                        <label class="choice-item">
-                            <input type="checkbox" name="brandChecks" value="hasRetention">
-                            <span>재구매/반복매출 구조가 있다</span>
-                        </label>
+                    <label class="form-label">현재 브랜드 상태 <span class="required">*</span></label>
+
+                    <div class="question-card">
+                        <div class="question-title">핵심 고객이 명확하다</div>
+                        <div class="yn-grid">
+                            <label class="yn-option">
+                                <input type="radio" name="clearTarget" value="yes" required>
+                                <span>Yes</span>
+                            </label>
+                            <label class="yn-option">
+                                <input type="radio" name="clearTarget" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
                     </div>
-                    <p class="hint">해당되는 항목만 체크하세요</p>
+
+                    <div class="question-card">
+                        <div class="question-title">대표 제품/서비스가 명확하다</div>
+                        <div class="yn-grid">
+                            <label class="yn-option">
+                                <input type="radio" name="clearOffer" value="yes" required>
+                                <span>Yes</span>
+                            </label>
+                            <label class="yn-option">
+                                <input type="radio" name="clearOffer" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-title">브랜드 메시지가 일관된다</div>
+                        <div class="yn-grid">
+                            <label class="yn-option">
+                                <input type="radio" name="clearMessage" value="yes" required>
+                                <span>Yes</span>
+                            </label>
+                            <label class="yn-option">
+                                <input type="radio" name="clearMessage" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-title">SNS/홈페이지가 문의 또는 구매로 연결된다</div>
+                        <div class="yn-grid">
+                            <label class="yn-option">
+                                <input type="radio" name="hasConversionPath" value="yes" required>
+                                <span>Yes</span>
+                            </label>
+                            <label class="yn-option">
+                                <input type="radio" name="hasConversionPath" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-title">재구매 또는 반복매출 구조가 있다</div>
+                        <div class="yn-grid">
+                            <label class="yn-option">
+                                <input type="radio" name="hasRetention" value="yes" required>
+                                <span>Yes</span>
+                            </label>
+                            <label class="yn-option">
+                                <input type="radio" name="hasRetention" value="no">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <p class="hint">각 문항마다 Yes 또는 No를 선택하세요</p>
 
                     <div class="analyzing" id="analyzing">분석 중...</div>
                     <div class="analyzing-list" id="analyzingList">
@@ -298,8 +434,15 @@
 
             const website = document.getElementById('website').value.trim();
             const email = document.getElementById('email').value.trim();
-            const mainProblem = document.querySelector('input[name="mainProblem"]:checked')?.value || '';
-            const brandChecks = Array.from(document.querySelectorAll('input[name="brandChecks"]:checked')).map(el => el.value);
+            const mainProblem = document.getElementById('mainProblem').value;
+
+            const brandSurvey = {
+                clearTarget: getRadioValue('clearTarget'),
+                clearOffer: getRadioValue('clearOffer'),
+                clearMessage: getRadioValue('clearMessage'),
+                hasConversionPath: getRadioValue('hasConversionPath'),
+                hasRetention: getRadioValue('hasRetention')
+            };
 
             if (!website || !email) {
                 showError('웹사이트와 이메일을 입력해주세요');
@@ -308,6 +451,11 @@
 
             if (!mainProblem) {
                 showError('가장 큰 고민을 선택해주세요');
+                return;
+            }
+
+            if (Object.values(brandSurvey).some(v => !v)) {
+                showError('브랜드 상태 문항에 모두 답변해주세요');
                 return;
             }
 
@@ -327,15 +475,13 @@
                 const finalData = {
                     ...analysisData,
                     website: finalUrl,
-                    email: email,
-                    mainProblem: mainProblem,
-                    brandChecks: brandChecks,
+                    email,
+                    mainProblem,
+                    brandSurvey,
                     timestamp: new Date().toISOString()
                 };
 
-                console.log('저장할 데이터:', finalData);
                 localStorage.setItem('diagnosisData', JSON.stringify(finalData));
-
                 window.location.href = './diagnosis-report.html';
             } catch (error) {
                 console.error('제출 오류:', error);
@@ -345,6 +491,10 @@
                 setLoadingState(false);
             }
         });
+
+        function getRadioValue(name) {
+            return document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+        }
 
         async function analyzeWebsite(url) {
             try {
@@ -359,7 +509,6 @@
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.warn('분석 실패:', data.error);
                     return buildFallbackAnalysisData(url, {
                         detail: data.detail || data.error || '웹사이트 분석에 실패했습니다.'
                     });
@@ -380,7 +529,6 @@
                     extractedData: normalizeExtractedData(data.extractedData),
                     timestamp: new Date().toISOString()
                 };
-
             } catch (error) {
                 console.error('API 호출 오류:', error);
                 return buildFallbackAnalysisData(url, {
