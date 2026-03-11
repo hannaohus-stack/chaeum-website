@@ -1,15 +1,5 @@
 [
   {
-    "slug": "brand-positioning-what-it-is",
-    "url": "/insights/brand-positioning-what-it-is.html",
-    "title": "브랜드 포지셔닝이란 무엇인가? 대부분의 창업자가 잘못 이해하는 이유",
-    "date": "2026. 03. 11",
-    "category": "Positioning",
-    "excerpt": "브랜드 포지셔닝은 차별화가 아니라 고객의 머릿속에서 자리를 만드는 전략이다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773242046434-IMG-1024.jpeg",
-    "featured": false
-  },
-  {
     "slug": "test",
     "url": "/insights/test.html",
     "title": "Test. ",
@@ -17,6 +7,16 @@
     "category": "Positioning",
     "excerpt": "",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773242307523-IMG-0628.jpeg",
+    "featured": false
+  },
+  {
+    "slug": "brand-positioning-what-it-is",
+    "url": "/insights/brand-positioning-what-it-is.html",
+    "title": "브랜드 포지셔닝이란 무엇인가? 대부분의 창업자가 잘못 이해하는 이유",
+    "date": "2026. 03. 11",
+    "category": "Positioning",
+    "excerpt": "브랜드 포지셔닝은 차별화가 아니라 고객의 머릿속에서 자리를 만드는 전략이다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773242046434-IMG-1024.jpeg",
     "featured": false
   }
 ]
