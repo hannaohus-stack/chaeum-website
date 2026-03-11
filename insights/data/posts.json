@@ -1,22 +1,12 @@
 [
   {
-    "slug": "brand-competitiveness-positioning",
-    "url": "/insights/brand-competitiveness-positioning.html",
-    "title": "브랜드 경쟁력은 제품이 아니라 ‘포지셔닝’에서 나온다",
+    "slug": "brand-positioning-what-it-really-mean",
+    "url": "/insights/brand-positioning-what-it-really-mean.html",
+    "title": "브랜드 포지셔닝이란 무엇인가? 대부분의 창업자가 잘못 이해하는 이유",
     "date": "2026. 03. 11",
     "category": "Positioning",
-    "excerpt": "브랜드 경쟁력은 제품 개선이 아니라 고객 인식 속에서 어떤 포지션을 차지하느냐에서 결정된다.",
-    "thumbnail": "",
-    "featured": false
-  },
-  {
-    "slug": "brand-competitiveness-positioning-copy-1773238117553",
-    "url": "/insights/brand-competitiveness-positioning-copy-1773238117553.html",
-    "title": "브랜드 경쟁력은 제품이 아니라 ‘포지셔닝’에서 나온다 (복사",
-    "date": "2026. 03. 11",
-    "category": "Positioning",
-    "excerpt": "브랜드 경쟁력은 제품 개선이 아니라 고객 인식 속에서 어떤 포지션을 차지하느냐에서 결정된다.",
-    "thumbnail": "",
+    "excerpt": "대부분의 창업자는 차별화를 포지셔닝이라고 착각한다. 하지만 포지셔닝은 시장이 당신을 인식하는 ‘자리’를 설계하는 것이다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773241113379-IMG-1024.jpeg",
     "featured": false
   }
 ]
