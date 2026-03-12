@@ -1,21 +1,11 @@
 [
   {
-    "slug": "nonfiction-brand-ritual-strategy",
-    "url": "/insights/nonfiction-brand-ritual-strategy.html",
-    "title": "논픽션(Nonfiction)이 증명한 '스몰 럭셔리'의 자산 가치 설계법",
-    "date": "2026. 03. 12",
-    "category": "Positioning",
-    "excerpt": "화려한 수식어를 비우고 본질적인 향으로 채우다. 논픽션이 '선물하기' 시장을 점유하고 독보적인 브랜드 자산을 구축한 비즈니스 모델 분석.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773284933523-IMG-1044.jpeg",
-    "featured": false
-  },
-  {
     "slug": "recto-brand-positioning-strategy",
     "url": "/insights/recto-brand-positioning-strategy.html",
-    "title": "렉토는 단순한 옷이 아니라 하나의 '페이지'를 제안한다",
+    "title": "로고가 사라진 자리, 실루엣으로 증명하는 브랜드의 격(格), RECTO",
     "date": "2026. 03. 12",
     "category": "Positioning",
-    "excerpt": "로고가 없어도 렉토임을 알 수 있는 이유. 젠더의 경계를 허무는 실루엣과 오감을 깨우는 공간 설계로 글로벌 자산 가치를 구축한 렉토의 전략.",
+    "excerpt": "한남동의 정제된 콘크리트 너머, 로고 없는 실루엣만으로 존재감을 증명하는 렉토(RECTO)의 비즈니스 아키텍처.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773284405764-IMG-1043.jpeg",
     "featured": false
   },
@@ -27,6 +17,16 @@
     "category": "Revenue Structure",
     "excerpt": "옷이 아니라 '정신건강'이라는 가치를 채우다. 매드해피가 단순 의류 브랜드를 넘어 대체 불가능한 브랜드 자산을 구축한 비결.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773283677869-IMG-1042.jpeg",
+    "featured": false
+  },
+  {
+    "slug": "nonfiction-brand-ritual-strategy",
+    "url": "/insights/nonfiction-brand-ritual-strategy.html",
+    "title": "논픽션(Nonfiction)이 증명한 '스몰 럭셔리'의 자산 가치 설계법",
+    "date": "2026. 03. 12",
+    "category": "Positioning",
+    "excerpt": "화려한 수식어를 비우고 본질적인 향으로 채우다. 논픽션이 '선물하기' 시장을 점유하고 독보적인 브랜드 자산을 구축한 비즈니스 모델 분석.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773284933523-IMG-1044.jpeg",
     "featured": false
   },
   {
