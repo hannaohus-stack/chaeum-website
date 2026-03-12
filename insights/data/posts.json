@@ -1,15 +1,5 @@
 [
   {
-    "slug": "madhappy-brand-asset-strategy",
-    "url": "/insights/madhappy-brand-asset-strategy.html",
-    "title": "LVMH는 왜 후드티 브랜드에 투자했나: 매드해피의 자산화 전략",
-    "date": "2026. 03. 13",
-    "category": "Revenue Structure",
-    "excerpt": "옷이 아니라 '정신건강'이라는 가치를 채우다. 매드해피가 단순 의류 브랜드를 넘어 대체 불가능한 브랜드 자산을 구축한 비결.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773283677869-IMG-1042.jpeg",
-    "featured": false
-  },
-  {
     "slug": "what-is-branding-definition",
     "url": "/insights/what-is-branding-definition.html",
     "title": "당신의 로고는 브랜드가 아닙니다: 브랜딩의 진짜 정의",
@@ -17,6 +7,16 @@
     "category": "Positioning",
     "excerpt": "로고는 심볼일 뿐입니다. 진짜 브랜드는 고객의 머리와 마음속에 남는 '직관적인 감정(Gut feeling)'이며, 이는 비즈니스의 평판이자 결과입니다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773281336464-IMG-1040.jpeg",
+    "featured": false
+  },
+  {
+    "slug": "madhappy-brand-asset-strategy",
+    "url": "/insights/madhappy-brand-asset-strategy.html",
+    "title": "LVMH는 왜 후드티 브랜드에 투자했나: 매드해피의 자산화 전략",
+    "date": "2026. 03. 12",
+    "category": "Revenue Structure",
+    "excerpt": "옷이 아니라 '정신건강'이라는 가치를 채우다. 매드해피가 단순 의류 브랜드를 넘어 대체 불가능한 브랜드 자산을 구축한 비결.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773283677869-IMG-1042.jpeg",
     "featured": false
   },
   {
