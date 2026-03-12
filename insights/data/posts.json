@@ -28,5 +28,15 @@
     "excerpt": "로고는 브랜드를 상징하는 유용한 도구일 뿐, 실제 브랜드는 고객의 머리와 가슴 속에 남겨진 ‘직관적인 감정(Gut feeling)’의 결과물입니다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304821133-IMG-1029.jpeg",
     "featured": false
+  },
+  {
+    "slug": "brand-is-completed",
+    "url": "/insights/brand-is-completed.html",
+    "title": "브랜드는 어디에서 완성되는가: 기업이 아닌 고객의 머릿속에서",
+    "date": "2026. 03. 12",
+    "category": "Positioning",
+    "excerpt": "브랜드는 기업이 설계하지만, 완성하는 것은 고객이다. 메시지와 경험이라는 재료가 고객의 해석을 통해 비로소 하나의 평판으로 굳어진다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773305488879-IMG-1060.jpeg",
+    "featured": false
   }
 ]
