@@ -18,5 +18,15 @@
     "excerpt": "화려한 장식 대신 향과 여백으로 감각을 설계한 브랜드, 논픽션은 일상 속 사적인 의식을 통해 새로운 사치를 제안한다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304414545-IMG-1057.png",
     "featured": false
+  },
+  {
+    "slug": "what-is-branding",
+    "url": "/insights/what-is-branding.html",
+    "title": "로고라는 환상을 넘어, 고객의 심장에 닿는 브랜딩의 본질",
+    "date": "2026. 03. 12",
+    "category": "Positioning",
+    "excerpt": "로고는 브랜드를 상징하는 유용한 도구일 뿐, 실제 브랜드는 고객의 머리와 가슴 속에 남겨진 ‘직관적인 감정(Gut feeling)’의 결과물입니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304821133-IMG-1029.jpeg",
+    "featured": false
   }
 ]
