@@ -10,63 +10,13 @@
     "featured": false
   },
   {
-    "slug": "madhappy-brand-asset-strategy",
-    "url": "/insights/madhappy-brand-asset-strategy.html",
-    "title": "LVMH는 왜 후드티 브랜드에 투자했나: 매드해피의 자산화 전략",
+    "slug": "nonfiction",
+    "url": "/insights/nonfiction.html",
+    "title": "향기로 설계된 사색의 순간, 논픽션이 만든 조용한 사치",
     "date": "2026. 03. 12",
-    "category": "Revenue Structure",
-    "excerpt": "옷이 아니라 '정신건강'이라는 가치를 채우다. 매드해피가 단순 의류 브랜드를 넘어 대체 불가능한 브랜드 자산을 구축한 비결.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773283677869-IMG-1042.jpeg",
-    "featured": false
-  },
-  {
-    "slug": "nonfiction-brand-ritual-strategy",
-    "url": "/insights/nonfiction-brand-ritual-strategy.html",
-    "title": "논픽션(Nonfiction)이 증명한 '스몰 럭셔리'의 자산 가치 설계법",
-    "date": "2026. 03. 12",
-    "category": "Positioning",
-    "excerpt": "화려한 수식어를 비우고 본질적인 향으로 채우다. 논픽션이 '선물하기' 시장을 점유하고 독보적인 브랜드 자산을 구축한 비즈니스 모델 분석.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773284933523-IMG-1044.jpeg",
-    "featured": false
-  },
-  {
-    "slug": "what-is-branding-definition",
-    "url": "/insights/what-is-branding-definition.html",
-    "title": "당신의 로고는 브랜드가 아닙니다: 브랜딩의 진짜 정의",
-    "date": "2026. 03. 12",
-    "category": "Positioning",
-    "excerpt": "로고는 심볼일 뿐입니다. 진짜 브랜드는 고객의 머리와 마음속에 남는 '직관적인 감정(Gut feeling)'이며, 이는 비즈니스의 평판이자 결과입니다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773281336464-IMG-1040.jpeg",
-    "featured": false
-  },
-  {
-    "slug": "warm-tech-design-strategy",
-    "url": "/insights/warm-tech-design-strategy.html",
-    "title": "Warm Tech: 당신의 기술은 왜 차갑고 딱딱하기만 한가?",
-    "date": "2026. 03. 12",
-    "category": "Positioning",
-    "excerpt": "소모품을 넘어 공간을 완성하는 가구로. 차가운 기술에 온기를 채워 독보적인 브랜드 자산을 만드는 'Warm Tech' 전략.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773280149317-IMG-1028.jpeg",
-    "featured": false
-  },
-  {
-    "slug": "true-rebranding-system",
-    "url": "/insights/true-rebranding-system.html",
-    "title": "리브랜딩의 함정: 로고를 바꿀 때 매출은 왜 제자리인가?",
-    "date": "2026. 03. 12",
-    "category": "Positioning",
-    "excerpt": "브랜드는 로고가 아니라 고객의 '본능적인 감정'입니다. 5년 차 기업이 직면한 정체성 혼란을 비즈니스 구조로 해결하는 법.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773279195819-IMG-1025.jpeg",
-    "featured": false
-  },
-  {
-    "slug": "positioning-price-competition-tra",
-    "url": "/insights/positioning-price-competition-tra.html",
-    "title": "포지셔닝 없는 브랜드는 왜 항상 가격 경쟁에 걸릴까",
-    "date": "2026. 03. 11",
-    "category": "Positioning",
-    "excerpt": "포지셔닝이 없는 브랜드는 결국 가격으로만 비교되는 시장에 들어가게 된다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773243268574-IMG-1024.jpeg",
+    "category": "Case Study",
+    "excerpt": "화려한 장식 대신 향과 여백으로 감각을 설계한 브랜드, 논픽션은 일상 속 사적인 의식을 통해 새로운 사치를 제안한다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304414545-IMG-1057.png",
     "featured": false
   }
 ]
