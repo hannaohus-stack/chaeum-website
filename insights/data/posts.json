@@ -10,6 +10,16 @@
     "featured": false
   },
   {
+    "slug": "brand-ownership-customer",
+    "url": "/insights/brand-ownership-customer.html",
+    "title": "브랜딩은 고객이 완성한다.",
+    "date": "2026. 03. 13",
+    "category": "Positioning",
+    "excerpt": "브랜드는 기업의 회의실이 아닌 고객의 무의식에서 완성됩니다. 마티 뉴마이어가 정의한 ‘직관적인 감정’을 통해 브랜딩의 주권을 분석합니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773387351135-IMG-1077.jpeg",
+    "featured": false
+  },
+  {
     "slug": "recto-brand-positioning-strategy",
     "url": "/insights/recto-brand-positioning-strategy.html",
     "title": "로고가 사라진 자리, 실루엣으로 증명하는 브랜드의 격(格), RECTO",
