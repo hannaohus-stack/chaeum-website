@@ -14,10 +14,10 @@
 
         :root {
             --bg: #4B4545;
-            --white: #FFFFFF;
+            --white: #FFFDF7;
             --gray: #888888;
             --light-gray: #666666;
-            --border: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 253, 247, 0.12);
             --panel: rgba(255, 255, 255, 0.02);
             --panel-hover: rgba(255, 255, 255, 0.05);
         }
@@ -316,7 +316,13 @@
             opacity: 0.9;
         }
 
-        .cta-box {
+        .cta-section-divider {
+            border-top: 1px solid var(--border);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .cta-box-removed {
             margin-top: 64px;
             border: 1px solid var(--border);
             background-color: var(--panel);
@@ -437,8 +443,8 @@
             <a href="../index.html" class="logo">CHAEUM</a>
             <div class="nav-menu">
                 <a href="../services.html">Services</a>
-                <a href="../portfolio.html">Portfolio</a>
-                <a href="./index.html" class="active">Blog</a>
+                <a href="../portfolio.html">Case Study</a>
+                <a href="./index.html" class="active">Insight</a>
                 <a href="../about.html">About</a>
                 <button class="btn-consult" onclick="window.location.href='../diagnosis-talk.html'">AI 진단 받기</button>
             </div>
@@ -463,8 +469,8 @@
             </div>
         </div>
 
-        <div class="cta-box">
-            <h3>브랜드 전략을 직접 진단해보고 싶다면</h3>
+        <div class="cta-section-divider">
+            <h3>지금 당신의 브랜드를 진단해보세요</h3>
             <p>
                 인사이트를 읽는 것과 실제 브랜드 구조를 진단하는 것은 다릅니다.<br>
                 지금 무료 AI 진단으로 당신 브랜드의 핵심 병목을 먼저 확인해보세요.
@@ -481,7 +487,7 @@
         <div>
             <a href="../index.html">Home</a>
             <a href="../services.html">Services</a>
-            <a href="../portfolio.html">Portfolio</a>
+            <a href="../portfolio.html">Case Study</a>
             <a href="../about.html">About</a>
         </div>
     </footer>
