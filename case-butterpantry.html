@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Butter Pantry | CHAEUM Case Study</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #4B4545; --white: #FFFDF7; --sub-text: rgba(255,253,247,0.55); --border: rgba(255,253,247,0.12); }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background-color: var(--bg); color: var(--white); line-height: 1.6; letter-spacing: -0.3px; }
+        header { position: fixed; top: 0; left: 0; right: 0; background-color: rgba(75,69,69,0.98); backdrop-filter: blur(10px); padding: 24px 48px; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .header-wrapper { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+        .nav-menu { display: flex; align-items: center; gap: 40px; }
+        .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+        .nav-menu a:hover { opacity: 1; }
+        .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+        .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+        .breadcrumb { margin-top: 80px; padding: 20px 50px; border-bottom: 1px solid var(--border); }
+        .breadcrumb-inner { max-width: 1400px; margin: 0 auto; font-size: 11px; letter-spacing: 1px; color: var(--sub-text); text-transform: uppercase; }
+        .breadcrumb a { color: var(--sub-text); text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: var(--white); }
+        .breadcrumb span { margin: 0 10px; opacity: 0.4; }
+        .hero { padding: 80px 50px; border-bottom: 1px solid var(--border); }
+        .hero-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+        .hero-tag { font-size: 11px; letter-spacing: 2px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 24px; }
+        .hero-title { font-size: 52px; font-weight: 300; line-height: 1.15; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 18px; color: var(--sub-text); line-height: 1.7; margin-bottom: 40px; }
+        .hero-metrics { display: flex; gap: 40px; flex-wrap: wrap; }
+        .metric-value { font-size: 32px; font-weight: 300; letter-spacing: -1px; margin-bottom: 6px; }
+        .metric-label { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase; }
+        .hero-overview { border: 1px solid var(--border); }
+        .hero-overview-item { display: flex; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .hero-overview-item:last-child { border-bottom: none; }
+        .overview-key { color: var(--sub-text); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+        .overview-val { color: var(--white); }
+        .slideshow-section { border-bottom: 1px solid var(--border); }
+        .slideshow-wrapper { position: relative; overflow: hidden; background-color: #3a3535; height: 560px; }
+        .slides { display: flex; transition: transform 0.5s ease; height: 100%; }
+        .slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: var(--sub-text); }
+        .slide-placeholder-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        .slide-placeholder-num { font-size: 48px; font-weight: 200; opacity: 0.3; }
+        .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 50px; background: linear-gradient(transparent, rgba(75,69,69,0.85)); font-size: 13px; color: var(--sub-text); }
+        .slideshow-controls { padding: 24px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .slide-dots { display: flex; gap: 10px; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--sub-text); cursor: pointer; transition: background-color 0.3s; }
+        .dot.active { background-color: var(--white); }
+        .slide-arrows { display: flex; gap: 12px; }
+        .arrow-btn { background: none; border: 1px solid var(--border); color: var(--white); width: 40px; height: 40px; cursor: pointer; font-size: 14px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .arrow-btn:hover { border-color: var(--white); }
+        .slide-counter { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); }
+        .section { padding: 80px 50px; border-bottom: 1px solid var(--border); }
+        .section-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 260px 1fr; gap: 80px; }
+        .section-label { font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text); text-transform: uppercase; padding-top: 6px; }
+        .section-title { font-size: 28px; font-weight: 300; margin-bottom: 24px; line-height: 1.4; }
+        .section-text { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 24px; max-width: 640px; }
+        .section-text strong { color: var(--white); font-weight: 500; }
+        .insight-block { border-left: 2px solid rgba(255,253,247,0.3); padding: 24px 28px; margin: 32px 0; max-width: 560px; }
+        .insight-label { font-size: 10px; letter-spacing: 2px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 10px; }
+        .insight-text { font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--white); }
+        .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); margin-top: 32px; }
+        .strategy-card { padding: 36px; background-color: var(--bg); }
+        .strategy-num { font-size: 10px; letter-spacing: 2px; color: var(--sub-text); margin-bottom: 14px; text-transform: uppercase; }
+        .strategy-title { font-size: 17px; font-weight: 400; margin-bottom: 12px; }
+        .strategy-desc { font-size: 13px; color: var(--sub-text); line-height: 1.9; }
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--border); margin-top: 32px; }
+        .result-card { padding: 40px 36px; background-color: var(--bg); }
+        .result-value { font-size: 40px; font-weight: 200; letter-spacing: -1px; margin-bottom: 10px; }
+        .result-label { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 12px; }
+        .result-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
+        .cta-section { padding: 100px 50px; text-align: center; }
+        .cta-title { font-size: 40px; font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
+        .cta-desc { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 48px; }
+        .btn-primary { background-color: var(--white); color: var(--bg); border: none; padding: 16px 48px; font-size: 12px; letter-spacing: 1px; cursor: pointer; font-family: inherit; text-transform: uppercase; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+        .btn-secondary-link { display: inline-block; margin-top: 16px; font-size: 12px; color: var(--sub-text); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+        .btn-secondary-link:hover { color: var(--white); }
+        footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+        .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+        .footer-column ul { list-style: none; }
+        .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+        .footer-column a:hover { color: var(--white); }
+        .footer-column li { color: var(--sub-text); font-size: 13px; line-height: 2.2; }
+        .footer-bottom { max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text); }
+        .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
+        @media (max-width: 1024px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } .strategy-grid, .results-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { header { padding: 20px 24px; } .header-wrapper { flex-direction: column; gap: 16px; } .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; } .breadcrumb, .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; } .hero-title { font-size: 36px; } .section-inner { grid-template-columns: 1fr; gap: 32px; } .slideshow-wrapper { height: 300px; } .footer-content { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Case Study</a>
+                <a href="./insights/index.html">Insight</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
+            </div>
+        </div>
+    </header>
+
+```
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="./portfolio.html">Case Study</a>
+        <span>→</span>
+        The Butter Pantry
+    </div>
+</div>
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">푸드 · 채널 확장</div>
+            <h1 class="hero-title">The Butter<br>Pantry</h1>
+            <p class="hero-subtitle">성수동의 신뢰를<br>전국으로 확장했습니다.</p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">홈쇼핑</div>
+                    <div class="metric-label">입점 성공</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">신세계</div>
+                    <div class="metric-label">마트 입점</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">전국</div>
+                    <div class="metric-label">채널 확대</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-overview">
+                <div class="hero-overview-item"><span class="overview-key">Client</span><span class="overview-val">The Butter Pantry</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Category</span><span class="overview-val">푸드 · 채널 확장</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Scope</span><span class="overview-val">브랜드 포지셔닝 · 채널 전략 · 홈페이지</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Year</span><span class="overview-val">2018</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="slideshow-section">
+    <div class="slideshow-wrapper">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="./Image/butterpantry-01.jpeg" alt="The Butter Pantry" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">01</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">브랜드 — 성수동에서 시작한 프리미엄 버터 브랜드</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/butterpantry-02.jpeg" alt="제품" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">02</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">제품 — 신선함과 건강한 재료를 담은 버터 라인</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/butterpantry-03.jpeg" alt="패키징" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">03</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">패키징 — 성수동의 따뜻함을 담은 프리미엄 패키징</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/butterpantry-04.jpeg" alt="채널" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">04</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">채널 — 홈쇼핑 · 신세계마트 입점</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/butterpantry-05.jpeg" alt="결과" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">05</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">결과 — 로컬에서 전국 브랜드로</div>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <div class="slide-dots" id="dots"></div>
+        <div class="slide-counter" id="counter">1 / 5</div>
+        <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn">←</button>
+            <button class="arrow-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Problem</div>
+        <div class="section-content">
+            <h2 class="section-title">좋은 제품이 있었지만<br>성수동 밖으로 나갈 수 없었습니다.</h2>
+            <p class="section-text">The Butter Pantry는 성수동의 작은 매장에서 시작해 충성 고객을 확보했습니다. 그러나 수작업 기반 소량 생산 구조로는 대형 유통 진출이 불가능했습니다. 경쟁사의 카피 제품까지 등장하면서 확장이 시급한 상황이었습니다.</p>
+            <div class="insight-block">
+                <div class="insight-label">CHAEUM이 정의한 구조적 결함</div>
+                <div class="insight-text">"개인 사업의 신뢰도는 있었지만,<br>브랜드 기업으로서의 구조가 없었다."</div>
+            </div>
+            <p class="section-text">로컬 팬은 확보했지만 광역 시장으로의 확산은 정체 상태였습니다. 성수동에서 쌓은 신뢰를 전국으로 전달하기 위해서는 개인 사업에서 브랜드 기업으로의 전환이 필요했습니다.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Strategy</div>
+        <div class="section-content">
+            <h2 class="section-title">개인사업에서<br>신뢰 기반 식품 기업으로.</h2>
+            <p class="section-text">CHAEUM은 The Butter Pantry를 <strong>"성수동의 신선함, 이제 전국으로"</strong>라는 메시지로 재정의했습니다. 프리미엄 품질은 유지하되, 시스템화를 통해 대형 유통을 가능하게 했습니다.</p>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-num">01 · 브랜드 재정의</div>
+                    <div class="strategy-title">개인 → 기업 이미지 전환</div>
+                    <p class="strategy-desc">개인 사업의 한계를 넘어 신뢰할 수 있는 식품 브랜드로 재정의했습니다. 홈페이지 제작으로 신뢰도와 전문성을 시각적으로 확보했습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">02 · 생산 시스템화</div>
+                    <div class="strategy-title">품질 유지 + 확장성 확보</div>
+                    <p class="strategy-desc">수작업의 핵심 가치(신선함, 건강한 재료)는 절대 타협하지 않으면서, 재현 가능한 시스템을 구축해 대형 유통 진출 기반을 마련했습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">03 · 채널 전략</div>
+                    <div class="strategy-title">멀티채널 동시 진출</div>
+                    <p class="strategy-desc">홈쇼핑(신뢰도 높은 채널), 신세계마트(프리미엄 이미지), 온라인(접근성)을 동시에 공략하는 멀티채널 전략으로 전국 시장에 진입했습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">04 · 패키징</div>
+                    <div class="strategy-title">성수동의 따뜻함을 전달</div>
+                    <p class="strategy-desc">성수동 매장의 아날로그적 따뜻함을 프리미엄 패키징으로 옮겼습니다. 각 제품별 생산 스토리를 공개해 신뢰를 강화했습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Results</div>
+        <div class="section-content">
+            <h2 class="section-title">로컬 브랜드가<br>전국 채널로 확장됐습니다.</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value">홈쇼핑</div>
+                    <div class="result-label">입점 성공</div>
+                    <p class="result-desc">홈쇼핑 진출로 전국 소비자에게 브랜드를 알리고 즉각적인 판매 채널을 확보했습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">신세계</div>
+                    <div class="result-label">마트 입점</div>
+                    <p class="result-desc">신세계마트 고급 식품 코너 입점으로 프리미엄 이미지를 강화하고 오프라인 채널을 확장했습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">전국</div>
+                    <div class="result-label">유통망 확보</div>
+                    <p class="result-desc">마켓컬리, 쿠팡 프레쉬 등 프리미엄 온라인 채널 입점으로 전국 소비자 접근이 가능해졌습니다.</p>
+                </div>
+            </div>
+            <div class="insight-block" style="margin-top:40px;">
+                <div class="insight-label">정성적 변화</div>
+                <div class="insight-text">"성수동에서 찾던 그 맛을<br>이제 집에서"라는 인식이 형성되며<br>프리미엄 버터 시장 자체를 성장시켰습니다.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <h2 class="cta-title">로컬의 신뢰를<br>전국 채널로 확장하고 싶다면.</h2>
+    <p class="cta-desc">좋은 제품이 있다면, 구조를 바꾸면 됩니다.<br>CHAEUM과 함께 채널 확장 전략을 설계해보세요.</p>
+    <a href="./diagnosis-talk.html" class="btn-primary">AI 무료 진단 시작</a><br>
+    <a href="./portfolio.html" class="btn-secondary-link">다른 사례 보기 →</a>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column"><h3>Services</h3><ul><li><a href="./services.html">Self-OS</a></li><li><a href="./services.html">Architecture</a></li><li><a href="./services.html">Engineering</a></li><li><a href="./services.html">Management</a></li></ul></div>
+        <div class="footer-column"><h3>Company</h3><ul><li><a href="./about.html">About CHAEUM</a></li><li><a href="./insights/index.html">Insights</a></li><li><a href="./portfolio.html">Case Studies</a></li></ul></div>
+        <div class="footer-column"><h3>Contact</h3><ul><li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li><li><a href="./diagnosis-talk.html">AI 진단 받기</a></li><li><a href="https://cal.com/chaeum">상담 예약</a></li></ul></div>
+        <div class="footer-column"><h3>Location</h3><ul><li>Seoul, Korea</li><li>Seongdong-gu</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span class="footer-logo">CHAEUM</span><span>&copy; 2026 CHAEUM. All rights reserved.</span></div>
+</footer>
+
+<script>
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current = 0;
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    }
+    function goTo(index) {
+        current = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+        counter.textContent = `${current + 1} / ${totalSlides}`;
+    }
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+    setInterval(() => goTo(current + 1), 5000);
+</script>
+```
+
+</body>
+</html>
