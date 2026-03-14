@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funnel Engineering | CHAEUM Services</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #4B4545;
+            --white: #FFFDF7;
+            --sub-text: rgba(255, 253, 247, 0.55);
+            --border: rgba(255, 253, 247, 0.12);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--white);
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+        }
+
+```
+    /* HEADER */
+    header {
+        position: fixed; top: 0; left: 0; right: 0;
+        background-color: rgba(75, 69, 69, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 24px 48px;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header-wrapper {
+        max-width: 1400px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+    .nav-menu { display: flex; align-items: center; gap: 40px; }
+    .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+    .nav-menu a:hover { opacity: 1; }
+    .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+    .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+        margin-top: 80px;
+        padding: 20px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-inner {
+        max-width: 1400px; margin: 0 auto;
+        font-size: 11px; letter-spacing: 1px; color: var(--sub-text);
+        text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--sub-text); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb span { margin: 0 10px; opacity: 0.4; }
+
+    /* HERO */
+    .hero {
+        padding: 80px 50px 80px;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    .hero-left {}
+    .hero-level {
+        font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title { font-size: 56px; font-weight: 300; line-height: 1.15; margin-bottom: 16px; }
+    .hero-title-en { font-size: 13px; letter-spacing: 2px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 32px; }
+    .hero-tagline { font-size: 18px; line-height: 1.7; margin-bottom: 40px; max-width: 480px; }
+    .hero-price-block { margin-bottom: 32px; }
+    .hero-price-label { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 8px; }
+    .hero-price { font-size: 42px; font-weight: 300; letter-spacing: -1px; }
+    .hero-price-note { font-size: 12px; color: var(--sub-text); margin-top: 6px; }
+    .hero-cta { display: flex; flex-direction: column; gap: 10px; max-width: 280px; }
+    .btn-primary { background-color: var(--white); color: var(--bg); border: none; padding: 15px 24px; font-size: 12px; letter-spacing: 1px; cursor: pointer; font-family: inherit; text-transform: uppercase; transition: all 0.3s; text-align: center; text-decoration: none; display: block; }
+    .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+    .btn-secondary { background-color: transparent; color: var(--white); border: 1px solid rgba(255,253,247,0.25); padding: 14px 24px; font-size: 12px; letter-spacing: 1px; cursor: pointer; font-family: inherit; text-transform: uppercase; transition: all 0.3s; text-align: center; text-decoration: none; display: block; }
+    .btn-secondary:hover { border-color: var(--white); }
+
+    .hero-right {}
+    .hero-desc { font-size: 15px; color: var(--sub-text); line-height: 1.9; margin-bottom: 40px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-size: 11px; letter-spacing: 1px; border: 1px solid var(--border); padding: 6px 14px; color: var(--sub-text); text-transform: uppercase; }
+
+    /* FOR WHO */
+    .for-who {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .for-who-inner { max-width: 1400px; margin: 0 auto; }
+    .section-label { font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 48px; }
+    .for-who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
+    .for-who-col { padding: 48px; background-color: var(--bg); }
+    .for-who-title { font-size: 16px; font-weight: 400; margin-bottom: 28px; }
+    .for-who-item { font-size: 14px; color: var(--sub-text); line-height: 1.8; padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; gap: 14px; }
+    .for-who-item:last-child { border-bottom: none; }
+    .for-who-item.yes::before { content: "✓"; color: var(--white); opacity: 0.8; flex-shrink: 0; }
+    .for-who-item.no::before { content: "✕"; color: var(--sub-text); flex-shrink: 0; }
+
+    /* INCLUDES */
+    .includes {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .includes-inner { max-width: 1400px; margin: 0 auto; }
+    .includes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background-color: var(--border); margin-top: 48px; }
+    .include-card { padding: 44px; background-color: var(--bg); }
+    .include-num { font-size: 11px; letter-spacing: 2px; color: var(--sub-text); margin-bottom: 16px; }
+    .include-title { font-size: 20px; font-weight: 300; margin-bottom: 14px; }
+    .include-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
+
+    /* PROCESS */
+    .process {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .process-inner { max-width: 1400px; margin: 0 auto; }
+    .process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--border); margin-top: 48px; }
+    .process-step { padding: 44px; background-color: var(--bg); }
+    .step-num { font-size: 11px; letter-spacing: 2px; color: var(--sub-text); margin-bottom: 16px; }
+    .step-title { font-size: 18px; font-weight: 300; margin-bottom: 12px; }
+    .step-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
+
+    /* CTA */
+    .cta-section { padding: 100px 50px; text-align: center; }
+    .cta-title { font-size: 40px; font-weight: 300; margin-bottom: 20px; line-height: 1.3; }
+    .cta-desc { font-size: 14px; color: var(--sub-text); margin-bottom: 48px; line-height: 1.9; }
+    .cta-buttons { display: flex; justify-content: center; gap: 12px; }
+
+    /* FOOTER */
+    footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+    .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+    .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+    .footer-column ul { list-style: none; }
+    .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+    .footer-column a:hover { color: var(--white); }
+    .footer-bottom { max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text); }
+    .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
+
+    @media (max-width: 1024px) {
+        .hero { grid-template-columns: 1fr; gap: 40px; }
+        .for-who-grid, .includes-grid { grid-template-columns: 1fr; }
+        .process-steps { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+        header { padding: 20px 24px; }
+        .header-wrapper { flex-direction: column; gap: 16px; }
+        .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .hero, .for-who, .includes, .process, .cta-section { padding-left: 24px; padding-right: 24px; }
+        .hero-title { font-size: 38px; }
+        .process-steps { grid-template-columns: 1fr; }
+        .footer-content { grid-template-columns: 1fr 1fr; }
+        .cta-buttons { flex-direction: column; align-items: center; }
+    }
+</style>
+```
+
+</head>
+<body>
+
+```
+<header>
+    <div class="header-wrapper">
+        <a href="./index.html" class="logo">CHAEUM</a>
+        <div class="nav-menu">
+            <a href="./services.html">Services</a>
+            <a href="./portfolio.html">Case Study</a>
+            <a href="./insights/index.html">Insight</a>
+            <a href="./about.html">About</a>
+            <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
+        </div>
+    </div>
+</header>
+
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="./services.html">Services</a>
+        <span>→</span>
+        Level 2 · Engineering
+    </div>
+</div>
+
+<!-- HERO -->
+<div style="max-width:1400px; margin:0 auto;">
+<section class="hero">
+    <div class="hero-left">
+        <div class="hero-level">Level 2 · Build</div>
+        <h1 class="hero-title">CHAEUM<br>Funnel Engineering</h1>
+        <div class="hero-title-en">퍼널 시스템 구축</div>
+        <p class="hero-tagline">
+            실제 매출이 일어나는<br>수익 통로를 건축합니다.
+        </p>
+        <div class="hero-price-block">
+            <div class="hero-price-label">Price</div>
+            <div class="hero-price">₩8,000,000~</div>
+            <div class="hero-price-note">VAT 별도 · 범위에 따라 협의</div>
+        </div>
+        <div class="hero-cta">
+            <a href="#" class="btn-primary">상담 신청</a>
+        </div>
+    </div>
+    <div class="hero-right">
+        <p class="hero-desc">
+            <!-- TODO: 상세 설명 입력 -->
+            CHAEUM의 전략 프레임워크를 노션 템플릿으로 구현했습니다.<br><br>
+            브랜드 진단부터 퍼널 설계, 콘텐츠 워크플로우까지 — 혼자 운영하는 브랜드라도 체계적으로 관리할 수 있는 자동화 시스템입니다.<br><br>
+            [여기에 추가 설명을 입력하세요]
+        </p>
+        <div class="hero-tags">
+            <span class="tag">Notion Template</span>
+            <span class="tag">즉시 사용 가능</span>
+            <span class="tag">업데이트 포함</span>
+        </div>
+    </div>
+</section>
+</div>
+
+<!-- FOR WHO -->
+<section class="for-who">
+    <div class="for-who-inner">
+        <div class="section-label">For Who</div>
+        <div class="for-who-grid">
+            <div class="for-who-col">
+                <div class="for-who-title">이런 분께 필요합니다</div>
+                <!-- TODO: 대상 입력 -->
+                <div class="for-who-item yes">브랜드를 시작했지만 방향이 잡히지 않는 분</div>
+                <div class="for-who-item yes">전략 컨설팅 비용이 부담스러운 초기 창업자</div>
+                <div class="for-who-item yes">직접 해보고 싶지만 체계적인 틀이 없는 분</div>
+                <div class="for-who-item yes">[추가 대상 입력]</div>
+            </div>
+            <div class="for-who-col">
+                <div class="for-who-title">이런 분께는 맞지 않습니다</div>
+                <!-- TODO: 비대상 입력 -->
+                <div class="for-who-item no">직접 실행보다 전문가 위임을 원하는 분</div>
+                <div class="for-who-item no">즉각적인 매출 성장 솔루션을 원하는 분</div>
+                <div class="for-who-item no">[추가 비대상 입력]</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INCLUDES -->
+<section class="includes">
+    <div class="includes-inner">
+        <div class="section-label">What's Included</div>
+        <div class="includes-grid">
+            <div class="include-card">
+                <div class="include-num">01</div>
+                <div class="include-title">브랜드 자가진단 템플릿</div>
+                <!-- TODO: 상세 설명 입력 -->
+                <p class="include-desc">10개의 핵심 질문으로 브랜드의 현재 위치를 진단합니다. [상세 설명 추가]</p>
+            </div>
+            <div class="include-card">
+                <div class="include-num">02</div>
+                <div class="include-title">퍼널 설계 캔버스</div>
+                <p class="include-desc">고객의 인지부터 구매까지, 전환 흐름을 직접 설계하는 템플릿. [상세 설명 추가]</p>
+            </div>
+            <div class="include-card">
+                <div class="include-num">03</div>
+                <div class="include-title">OSMU 콘텐츠 워크플로우</div>
+                <p class="include-desc">하나의 콘텐츠를 여러 채널에 효율적으로 배포하는 시스템. [상세 설명 추가]</p>
+            </div>
+            <div class="include-card">
+                <div class="include-num">04</div>
+                <div class="include-title">포지셔닝 맵 작성 가이드</div>
+                <p class="include-desc">시장 내 경쟁 구도를 시각화하고 독점 위치를 찾는 프레임워크. [상세 설명 추가]</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+    <div class="process-inner">
+        <div class="section-label">How It Works</div>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-num">01</div>
+                <div class="step-title">구매 & 즉시 발송</div>
+                <p class="step-desc">결제 완료 후 입력한 이메일로 노션 템플릿 링크가 자동 발송됩니다.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">02</div>
+                <div class="step-title">노션에 복제</div>
+                <p class="step-desc">링크를 통해 나의 노션 워크스페이스에 템플릿을 복제합니다.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">03</div>
+                <div class="step-title">브랜드에 맞게 작성</div>
+                <p class="step-desc">가이드에 따라 항목을 채워가며 브랜드를 스스로 정렬합니다. [추가 설명]</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2 class="cta-title">지금 바로 시작할 수 있습니다.</h2>
+    <p class="cta-desc">결제 후 즉시 발송 · 노션 계정만 있으면 됩니다.</p>
+    <div class="cta-buttons">
+        <a href="#" class="btn-primary" style="padding: 16px 48px;">₩8,000,000~ · 상담 신청</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="./service-engineering.html">Funnel Engineering</a></li>
+                <li><a href="./service-architecture.html">Architecture</a></li>
+                <li><a href="./service-engineering.html">Engineering</a></li>
+                <li><a href="./service-management.html">Management</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="./about.html">About CHAEUM</a></li>
+                <li><a href="./insights/index.html">Insights</a></li>
+                <li><a href="./portfolio.html">Case Studies</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <ul>
+                <li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li>
+                <li><a href="./diagnosis-talk.html">AI 진단 받기</a></li>
+                <li><a href="https://cal.com/chaeum">상담 예약</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Location</h3>
+            <ul>
+                <li>Seoul, Korea</li>
+                <li>Seongdong-gu</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">CHAEUM</span>
+        <span>&copy; 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</footer>
+```
+
+</body>
+</html>
