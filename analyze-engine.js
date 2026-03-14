@@ -1,4 +1,4 @@
-import OpenAI from 'openai';
+const OpenAI = require('openai');
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -74,7 +74,7 @@ function cleanJsonText(text = '') {
     .trim();
 }
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -107,14 +107,13 @@ CHAEUM sells revenue structure:
 
 Your task is to identify the most important structural bottleneck.
 
-You must think like a sharp consultant:
+Think like a sharp consultant:
 - not generic
-- not soft
 - not motivational
 - not decorative branding
 - focus on what blocks money flow
 
-Return ONLY valid JSON with this exact shape:
+Return ONLY valid JSON with this exact structure:
 
 {
   "bottleneckKey": "",
@@ -130,9 +129,9 @@ Return ONLY valid JSON with this exact shape:
 }
 
 Rules:
-- If product planning is the missing piece, say so clearly.
+- If product planning is missing, say product planning is needed first.
 - If conversion is weak, point to landing / offer / CTA / funnel.
-- If traffic is the issue, distinguish between true traffic problem and traffic-after-click structure problem.
+- If traffic is the issue, distinguish between true traffic problem and post-click structure problem.
 - If branding is weak, translate it into positioning/message structure.
 - Always recommend what CHAEUM should likely sell.
 
@@ -190,4 +189,4 @@ Main problem selected by user: ${mainProblemLabel || '없음'}
     console.error('Analyze API error:', error);
     return res.status(200).json(fallbackReport(input));
   }
-}
+};
