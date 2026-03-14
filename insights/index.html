@@ -129,6 +129,7 @@
             </div>
         </div>
     </header>
+
 <div class="container">
     <div class="page-header">
         <div class="page-title">Insights</div>
@@ -222,7 +223,8 @@
             const others = posts.slice(1);
 
             const featuredImageHtml = featured.thumbnail
-                ? `<div class="featured-image"><img src="${featured.thumbnail}" alt="${escapeHtml(featured.title)}" onerror="this.parentElement.innerHTML='<div class=\\"featured-image-placeholder\\">Image</div>'"></div>
+                ? `<div class="featured-image"><img src="${featured.thumbnail}" alt="${escapeHtml(featured.title)}" onerror="this.style.display='none'"></div>`
+                : '';
 
             container.innerHTML = `
                 <a href="${featured.url}" class="card-link">
@@ -245,7 +247,7 @@
                     <div class="blog-grid">
                         ${others.map(post => {
                             const imgHtml = post.thumbnail
-                                ? `<div class="blog-card-image"><img src="${post.thumbnail}" alt="${escapeHtml(post.title)}" onerror="this.parentElement.innerHTML='<div class=\\"blog-card-image-placeholder\\">Image</div>'"></div>`
+                                ? `<div class="blog-card-image"><img src="${post.thumbnail}" alt="${escapeHtml(post.title)}" onerror="this.style.display='none'"></div>`
                                 : `<div class="blog-card-image"><div class="blog-card-image-placeholder">No Image</div></div>`;
                             return `
                             <a href="${post.url}" class="card-link">
