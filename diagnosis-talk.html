@@ -1,580 +1,653 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>브랜드 진단 | CHAEUM</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>브랜드 진단 | CHAEUM</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-        --bg: #4B4545;
-        --surface: #524c4c;
-        --white: #FFFDF7;
-        --sub: rgba(255,253,247,0.55);
-        --border: rgba(255,253,247,0.12);
-        --user-bg: #FFFDF7;
-        --user-color: #4B4545;
-    }
-
-    html, body {
-        height: 100%;
-        overflow: hidden;
+    :root{
+      --bg:#4B4545;
+      --bg2:#2a2625;
+      --card:rgba(255,255,255,0.06);
+      --card-strong:rgba(255,255,255,0.08);
+      --border:rgba(255,255,255,0.12);
+      --text:#FFFDF7;
+      --sub:rgba(255,255,255,0.68);
+      --muted:rgba(255,255,255,0.42);
+      --accent:#ffffff;
+      --danger:#ff7b7b;
     }
 
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-        background: var(--bg);
-        color: var(--white);
-        display: flex;
-        flex-direction: column;
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:linear-gradient(135deg,var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      min-height:100vh;
     }
 
-    /* ── HEADER ── */
-    .header {
-        flex-shrink: 0;
-        background: rgba(75,69,69,0.97);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
-        padding: 16px 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .header-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--white); opacity: 0.75; }
-    .header-logo { font-size: 12px; letter-spacing: 2.5px; font-weight: 300; color: var(--white); text-decoration: none; opacity: 0.9; }
-    .header-sep { color: var(--sub); font-size: 12px; }
-    .header-label { font-size: 11px; letter-spacing: 1px; color: var(--sub); }
-    .progress { margin-left: auto; display: flex; gap: 5px; align-items: center; }
-    .prog-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,253,247,0.2); transition: background 0.4s; flex-shrink: 0; }
-    .prog-dot.done { background: var(--white); }
-    .prog-dot.active { background: rgba(255,253,247,0.6); }
-
-    /* ── MESSAGES ── */
-    .messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 24px 16px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        max-width: 640px;
-        width: 100%;
-        margin: 0 auto;
-        scroll-behavior: smooth;
-    }
-    .messages::-webkit-scrollbar { width: 3px; }
-    .messages::-webkit-scrollbar-thumb { background: rgba(255,253,247,0.12); border-radius: 2px; }
-
-    .msg-row { display: flex; gap: 9px; align-items: flex-end; animation: fadeUp 0.3s ease; }
-    .msg-row.user { flex-direction: row-reverse; }
-
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(8px); }
-        to { opacity: 1; transform: translateY(0); }
+    .wrap{
+      max-width:760px;
+      margin:0 auto;
+      padding:32px 20px 60px;
     }
 
-    .avatar {
-        width: 28px; height: 28px; border-radius: 50%;
-        background: rgba(255,253,247,0.08);
-        border: 1px solid rgba(255,253,247,0.18);
-        display: flex; align-items: center; justify-content: center;
-        flex-shrink: 0; font-size: 9px; color: var(--white); font-weight: 600; letter-spacing: 0.5px;
+    .hero{
+      text-align:center;
+      margin-bottom:28px;
     }
 
-    .bubble {
-        max-width: 78%;
-        padding: 12px 16px;
-        font-size: 14px;
-        line-height: 1.75;
-        white-space: pre-wrap;
-        word-break: keep-all;
-    }
-    .bubble.c {
-        background: rgba(255,253,247,0.07);
-        border: 1px solid rgba(255,253,247,0.1);
-        border-radius: 4px 16px 16px 16px;
-        color: var(--white);
-    }
-    .bubble.u {
-        background: var(--user-bg);
-        color: var(--user-color);
-        border-radius: 16px 16px 4px 16px;
-        font-size: 13px;
+    .eyebrow{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      font-weight:700;
+      margin-bottom:12px;
     }
 
-    /* result bubble */
-    .bubble.result {
-        background: rgba(255,253,247,0.09);
-        border: 1px solid rgba(255,253,247,0.18);
-        border-radius: 4px 16px 16px 16px;
-        max-width: 90%;
-    }
-    .result-score {
-        display: flex; gap: 8px; margin: 14px 0;
-    }
-    .score-bar-wrap {
-        flex: 1;
-    }
-    .score-label { font-size: 11px; letter-spacing: 1px; color: var(--sub); margin-bottom: 5px; text-transform: uppercase; }
-    .score-bar { height: 4px; background: rgba(255,253,247,0.12); border-radius: 2px; overflow: hidden; }
-    .score-fill { height: 100%; border-radius: 2px; transition: width 1s ease; }
-
-    /* typing */
-    .typing { display: flex; gap: 5px; align-items: center; padding: 12px 16px; background: rgba(255,253,247,0.07); border: 1px solid rgba(255,253,247,0.1); border-radius: 4px 16px 16px 16px; }
-    .tdot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,253,247,0.45); animation: bounce 1.2s infinite; }
-    .tdot:nth-child(2) { animation-delay: 0.2s; }
-    .tdot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
-
-    /* ── INPUT AREA ── */
-    .input-wrap {
-        flex-shrink: 0;
-        padding: 10px 16px 20px;
-        max-width: 640px;
-        width: 100%;
-        margin: 0 auto;
+    h1{
+      font-size:44px;
+      line-height:1.08;
+      letter-spacing:-0.04em;
+      font-weight:300;
+      margin-bottom:10px;
     }
 
-    /* text input */
-    .text-row {
-        display: flex;
-        gap: 8px;
+    .subtitle{
+      font-size:15px;
+      color:var(--sub);
+      line-height:1.7;
     }
-    .txt-in {
-        flex: 1;
-        background: rgba(255,253,247,0.07);
-        border: 1px solid rgba(255,253,247,0.18);
-        color: var(--white);
-        padding: 13px 16px;
-        border-radius: 12px;
-        font-size: 14px;
-        outline: none;
-        font-family: inherit;
-        transition: border-color 0.2s;
-    }
-    .txt-in:focus { border-color: rgba(255,253,247,0.4); }
-    .txt-in::placeholder { color: var(--sub); }
-    .send-btn {
-        background: var(--white);
-        color: var(--user-color);
-        border: none;
-        padding: 13px 20px;
-        border-radius: 12px;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        font-family: inherit;
-        flex-shrink: 0;
-        transition: opacity 0.2s;
-    }
-    .send-btn:hover { opacity: 0.82; }
 
-    /* options */
-    .opts { display: flex; flex-direction: column; gap: 7px; }
-    .opt-btn {
-        background: rgba(255,253,247,0.05);
-        border: 1px solid rgba(255,253,247,0.14);
-        color: var(--white);
-        padding: 12px 16px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 13px;
-        text-align: left;
-        letter-spacing: 0.2px;
-        transition: all 0.18s;
-        font-family: inherit;
-        line-height: 1.4;
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:28px;
+      backdrop-filter: blur(8px);
+      margin-bottom:18px;
     }
-    .opt-btn:hover { background: rgba(255,253,247,0.11); border-color: rgba(255,253,247,0.32); }
-    .opt-or { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
-    .opt-or span { font-size: 11px; color: var(--sub); letter-spacing: 1px; flex-shrink: 0; }
-    .opt-or div { flex: 1; height: 1px; background: var(--border); }
 
-    /* CTA */
-    .cta-wrap {
-        background: rgba(255,253,247,0.06);
-        border: 1px solid rgba(255,253,247,0.15);
-        border-radius: 14px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
+    .section-title{
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      font-weight:700;
+      margin-bottom:16px;
     }
-    .cta-note { font-size: 11px; color: var(--sub); text-align: center; letter-spacing: 0.5px; margin-bottom: 2px; }
-    .cta-main {
-        display: block;
-        background: var(--white);
-        color: var(--user-color);
-        padding: 15px;
-        border-radius: 10px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        transition: opacity 0.2s;
-    }
-    .cta-main:hover { opacity: 0.84; }
-    .cta-sub {
-        background: transparent;
-        border: 1px solid rgba(255,253,247,0.18);
-        color: var(--sub);
-        padding: 11px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 12px;
-        font-family: inherit;
-        transition: all 0.2s;
-    }
-    .cta-sub:hover { border-color: rgba(255,253,247,0.38); color: var(--white); }
 
-    @media (max-width: 500px) {
-        .bubble { max-width: 85%; font-size: 13px; }
-        .opt-btn { font-size: 12px; }
+    .form-group{
+      margin-bottom:18px;
     }
-</style>
 
+    label{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
 
+    input, textarea, select{
+      width:100%;
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.08);
+      color:var(--text);
+      padding:14px;
+      border-radius:12px;
+      font-size:14px;
+      font-family:inherit;
+      outline:none;
+    }
+
+    textarea{
+      min-height:92px;
+      resize:vertical;
+      line-height:1.6;
+    }
+
+    input::placeholder, textarea::placeholder{
+      color:#8b8585;
+    }
+
+    input:focus, textarea:focus, select:focus{
+      border-color:rgba(255,255,255,0.28);
+      background:rgba(255,255,255,0.12);
+    }
+
+    .hint{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    button{
+      appearance:none;
+      border:none;
+      border-radius:12px;
+      padding:14px 18px;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    button:hover:not(:disabled){
+      transform:translateY(-1px);
+    }
+
+    button:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:var(--bg);
+      min-width:180px;
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,0.08);
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+
+    .error{
+      display:none;
+      margin-bottom:16px;
+      padding:12px 14px;
+      border-radius:12px;
+      color:#ffd6d6;
+      background:rgba(255,123,123,0.1);
+      border:1px solid rgba(255,123,123,0.24);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .loading{
+      display:none;
+      margin-top:16px;
+      padding:16px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .loading p{
+      font-size:13px;
+      color:var(--sub);
+      margin-bottom:10px;
+    }
+
+    .loading-list{
+      display:grid;
+      gap:8px;
+    }
+
+    .loading-item{
+      font-size:13px;
+      color:#d7f1ff;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .dot{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#7ed0ff;
+      animation:pulse 1.5s infinite;
+    }
+
+    @keyframes pulse{
+      0%,100%{opacity:.35}
+      50%{opacity:1}
+    }
+
+    .result{
+      display:none;
+    }
+
+    .result h2{
+      font-size:30px;
+      font-weight:300;
+      letter-spacing:-0.03em;
+      margin-bottom:18px;
+    }
+
+    .result-box{
+      padding:20px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      margin-bottom:16px;
+    }
+
+    .result-box p{
+      font-size:15px;
+      line-height:1.85;
+      color:var(--sub);
+      margin-bottom:14px;
+    }
+
+    .result-box p:last-child{
+      margin-bottom:0;
+    }
+
+    .result-box strong{
+      color:var(--text);
+    }
+
+    .bullet-list{
+      margin:8px 0 14px 0;
+      padding-left:18px;
+    }
+
+    .bullet-list li{
+      color:var(--sub);
+      line-height:1.8;
+      margin-bottom:4px;
+      font-size:15px;
+    }
+
+    .permission{
+      padding:20px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.10);
+    }
+
+    .permission-title{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:10px;
+      letter-spacing:-0.02em;
+    }
+
+    .permission-text{
+      color:var(--sub);
+      font-size:14px;
+      line-height:1.8;
+      margin-bottom:14px;
+    }
+
+    @media (max-width:768px){
+      .wrap{ padding:24px 16px 48px; }
+      h1{ font-size:36px; }
+      .card{ padding:22px; }
+      .result h2{ font-size:26px; }
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow">CHAEUM / AI Diagnosis</div>
+      <h1>브랜드 진단</h1>
+      <p class="subtitle">
+        채움은 브랜드를 예쁘게 보지 않습니다.<br>
+        돈이 흐르는 구조가 있는지 먼저 봅니다.
+      </p>
+    </div>
 
-<div class="header">
-    <div class="header-dot"></div>
-    <a href="./index.html" class="header-logo">CHAEUM</a>
-    <span class="header-sep">·</span>
-    <span class="header-label">브랜드 진단</span>
-    <div class="progress" id="progress"></div>
-</div>
+    <div id="error" class="error"></div>
 
-<div class="messages" id="messages"></div>
+    <div class="card">
+      <div class="section-title">브랜드 정보 입력</div>
 
-<div class="input-wrap" id="inputWrap"></div>
+      <div class="form-group">
+        <label for="website">웹사이트</label>
+        <input id="website" type="text" placeholder="https://example.com">
+        <p class="hint">웹사이트가 있다면 입력하세요. URL이 없더라도 아래 설명만으로 1차 진단은 가능합니다.</p>
+      </div>
 
-<script>
-const TOTAL = 9;
+      <div class="form-group">
+        <label for="brandDescription">브랜드 설명</label>
+        <textarea id="brandDescription" placeholder="예: 프리미엄 말차를 현대적인 방식으로 제안하는 라이프스타일 티 브랜드"></textarea>
+        <p class="hint">무엇을 누구에게 어떤 방식으로 파는 브랜드인지 간단히 적어주세요.</p>
+      </div>
 
-const FLOW = [
-    // 0 — 브랜드명
-    {
-        type: "text",
-        text: "안녕하세요. CHAEUM 브랜드 진단입니다.\n\n먼저 브랜드명을 알려주세요.",
-        placeholder: "브랜드명을 입력해주세요",
-        key: "brand"
-    },
-    // 1 — 이메일
-    {
-        type: "text",
-        text: "{{brand}}님, 반갑습니다.\n\n진단 결과를 보내드릴 이메일 주소를 입력해주세요.",
-        placeholder: "이메일 주소",
-        key: "email"
-    },
-    // 2 — 업종
-    {
-        type: "options",
-        text: "{{brand}}의 업종을 선택해주세요.",
-        options: ["식음료 / 푸드", "뷰티 / 스킨케어", "라이프스타일", "패션 / 의류", "서비스업 / 컨설팅", "기타"],
-        key: "industry"
-    },
-    // 3 — 운영 단계
-    {
-        type: "options",
-        text: "현재 브랜드 운영 단계는 어디에 해당하나요?",
-        options: ["아직 런칭 전", "런칭 후 1년 미만", "1~3년 운영 중", "3년 이상"],
-        key: "stage"
-    },
-    // 4 — 타겟
-    {
-        type: "options",
-        text: "{{brand}}의 주요 타겟 고객은 누구인가요?",
-        options: [
-            "20~30대 여성 (트렌드 민감층)",
-            "30~40대 여성 (프리미엄 소비층)",
-            "20~30대 남성",
-            "40대 이상 (중장년층)",
-            "B2B (기업 고객)",
-            "아직 명확하지 않다"
-        ],
-        key: "target"
-    },
-    // 5 — 고민
-    {
-        type: "options",
-        text: "지금 {{brand}}의 가장 큰 고민은 무엇인가요?",
-        options: [
-            "매출이 정체되어 있다",
-            "재구매가 없고 신규 고객만 찾는다",
-            "우리가 뭔지 고객이 모르는 것 같다",
-            "가격 경쟁에서 계속 밀린다",
-            "대표가 없으면 브랜드가 멈춘다",
-            "브랜드 방향 자체가 불명확하다"
-        ],
-        key: "problem"
-    },
-    // 6 — 매출
-    {
-        type: "options",
-        text: "월 매출 규모는 어느 정도인가요?\n(정확하지 않아도 괜찮습니다)",
-        options: [
-            "아직 매출 없음",
-            "100만원 미만",
-            "100~500만원",
-            "500만~1500만원",
-            "1500만원 이상"
-        ],
-        key: "revenue"
-    },
-    // 7 — 마케팅 채널
-    {
-        type: "options",
-        text: "현재 주로 사용하는 마케팅 채널은 어디인가요?",
-        options: [
-            "인스타그램 / SNS",
-            "블로그 / 네이버",
-            "유튜브 / 영상 콘텐츠",
-            "오프라인 팝업 / 매장",
-            "지인 소개 / 입소문",
-            "아직 별도 마케팅 없음"
-        ],
-        key: "channel"
-    },
-    // 8 — 목표
-    {
-        type: "options",
-        text: "마지막으로, 지금 {{brand}}에게 가장 필요한 것은 무엇인가요?",
-        options: [
-            "브랜드 포지셔닝을 명확히 잡고 싶다",
-            "재구매 구조와 팬덤을 만들고 싶다",
-            "가격을 올려도 팔리는 브랜드가 되고 싶다",
-            "대표 없이도 굴러가는 구조를 만들고 싶다",
-            "전문가의 시각으로 객관적 진단을 받고 싶다"
-        ],
-        key: "goal"
-    }
-];
+      <div class="form-group">
+        <label for="targetCustomer">주요 고객</label>
+        <input id="targetCustomer" type="text" placeholder="예: 30대 여성 직장인 / 소규모 브랜드 창업자 / B2B 카페 운영자">
+      </div>
 
-let step = 0;
-let data = {};
+      <div class="form-group">
+        <label for="mainProduct">대표 제품 / 서비스</label>
+        <input id="mainProduct" type="text" placeholder="예: 브랜드 컨설팅 / 말차 / 구독 상품 / 디지털 템플릿">
+      </div>
 
-const msgEl = document.getElementById('messages');
-const inputEl = document.getElementById('inputWrap');
-const progEl = document.getElementById('progress');
+      <div class="form-group">
+        <label for="mainProblem">현재 가장 큰 고민</label>
+        <select id="mainProblem">
+          <option value="">선택해주세요</option>
+          <option value="messaging">브랜드 메시지가 약함</option>
+          <option value="traffic">고객 유입이 부족함</option>
+          <option value="conversion">전환율이 낮음</option>
+          <option value="positioning">포지셔닝이 불명확함</option>
+          <option value="growth">장기 성장 구조가 없음</option>
+        </select>
+      </div>
 
-// ── 진행 도트 ──
-function initProg() {
-    progEl.innerHTML = '';
-    for (let i = 0; i < TOTAL; i++) {
-        const d = document.createElement('div');
-        d.className = 'prog-dot';
-        d.id = `pd${i}`;
-        progEl.appendChild(d);
-    }
-}
+      <div class="actions">
+        <button id="runBtn" class="btn-primary" onclick="runDiagnosis()">AI 진단 시작</button>
+      </div>
 
-function updateProg() {
-    for (let i = 0; i < TOTAL; i++) {
-        const el = document.getElementById(`pd${i}`);
-        if (!el) continue;
-        el.className = 'prog-dot' + (i < step ? ' done' : i === step ? ' active' : '');
-    }
-}
-
-// ── 텍스트 치환 ──
-function fill(text) {
-    return text
-        .replace(/\{\{brand\}\}/g, data.brand || '브랜드')
-        .replace(/\{\{email\}\}/g, data.email || '');
-}
-
-// ── 스크롤 ──
-function scroll() {
-    setTimeout(() => { msgEl.scrollTop = msgEl.scrollHeight; }, 50);
-}
-
-// ── 말풍선 추가 ──
-function addC(text, isResult) {
-    const row = document.createElement('div');
-    row.className = 'msg-row';
-    const formatted = esc(text)
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\n/g, '<br>');
-    row.innerHTML = `
-        <div class="avatar">C</div>
-        <div class="bubble ${isResult ? 'result' : 'c'}">${formatted}</div>
-    `;
-    msgEl.appendChild(row);
-    scroll();
-}
-
-function addU(text) {
-    const row = document.createElement('div');
-    row.className = 'msg-row user';
-    row.innerHTML = `<div class="bubble u">${esc(text)}</div>`;
-    msgEl.appendChild(row);
-    scroll();
-}
-
-function showTyping() {
-    const row = document.createElement('div');
-    row.className = 'msg-row';
-    row.id = 'typing';
-    row.innerHTML = `<div class="avatar">C</div><div class="typing"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
-    msgEl.appendChild(row);
-    scroll();
-}
-function removeTyping() { const el = document.getElementById('typing'); if (el) el.remove(); }
-
-// ── 입력 UI ──
-function renderInput() {
-    if (step >= TOTAL) return;
-    const q = FLOW[step];
-    inputEl.innerHTML = '';
-
-    if (q.type === 'text') {
-        inputEl.innerHTML = `
-            <div class="text-row">
-                <input class="txt-in" id="txtIn" placeholder="${q.placeholder}" />
-                <button class="send-btn" onclick="handleText()">확인</button>
-            </div>
-        `;
-        const inp = document.getElementById('txtIn');
-        inp.focus();
-        inp.addEventListener('keydown', e => { if (e.key === 'Enter') handleText(); });
-    } else {
-        const opts = q.options.map((o, i) =>
-            `<button class="opt-btn" onclick="handleOpt('${escAttr(o)}')">${esc(o)}</button>`
-        ).join('');
-        inputEl.innerHTML = `
-            <div class="opts">
-                ${opts}
-                <div class="opt-or"><div></div><span>또는</span><div></div></div>
-                <div class="text-row">
-                    <input class="txt-in" id="txtIn" placeholder="직접 입력..." />
-                    <button class="send-btn" onclick="handleText()">전송</button>
-                </div>
-            </div>
-        `;
-        const inp = document.getElementById('txtIn');
-        if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') handleText(); });
-    }
-}
-
-function handleText() {
-    const el = document.getElementById('txtIn');
-    if (!el || !el.value.trim()) return;
-    handleAnswer(el.value.trim());
-}
-
-function handleOpt(val) { handleAnswer(val); }
-
-function handleAnswer(val) {
-    const q = FLOW[step];
-    data[q.key] = val;
-    addU(val);
-    inputEl.innerHTML = '';
-    step++;
-    updateProg();
-
-    if (step < TOTAL) {
-        showTyping();
-        setTimeout(() => {
-            removeTyping();
-            addC(fill(FLOW[step].text));
-            renderInput();
-        }, 800);
-    } else {
-        showTyping();
-        setTimeout(() => {
-            removeTyping();
-            showResult();
-        }, 1400);
-    }
-}
-
-// ── 결과 생성 ──
-function buildResult() {
-    const b = data.brand || '브랜드';
-    const prob = data.problem || '';
-    const goal = data.goal || '';
-    const rev = data.revenue || '';
-    const stage = data.stage || '';
-    const target = data.target || '';
-    const channel = data.channel || '';
-
-    // 강점 포인트
-    let strength = '';
-    if (stage.includes('3년')) strength = `${b}는 3년 이상 시장에서 살아남은 브랜드입니다. 이미 검증된 제품력과 고객층이 있다는 뜻입니다.`;
-    else if (stage.includes('1~3년')) strength = `${b}는 1~3년의 실전 경험을 갖춘 브랜드입니다. 초기 시행착오를 이미 거쳤다는 것은 큰 자산입니다.`;
-    else strength = `${b}는 지금 가장 중요한 '방향 설정'을 하는 시점에 있습니다. 지금 구조를 잘 잡으면 이후 성장이 훨씬 빠릅니다.`;
-
-    // 핵심 문제
-    let insight = '';
-    if (prob.includes('재구매')) {
-        insight = `진단 결과, **재구매 구조의 부재**가 핵심 병목입니다. 신규 고객을 계속 찾는 브랜드는 마케팅 비용이 매출을 잡아먹습니다. 고객이 스스로 돌아오는 **브랜드 경험 설계**가 필요합니다.`;
-    } else if (prob.includes('가격')) {
-        insight = `진단 결과, **포지셔닝 구조**가 문제입니다. 가격 경쟁에서 밀린다는 것은 고객이 "왜 이 브랜드여야 하는가"에 대한 답을 못 찾고 있다는 신호입니다. 가격이 아닌 **가치의 언어**가 필요합니다.`;
-    } else if (prob.includes('모르는')) {
-        insight = `진단 결과, **브랜드 아키텍처**가 불명확합니다. 고객이 브랜드를 모른다면, 마케팅보다 먼저 '우리가 누구인가'를 정의하는 작업이 필요합니다.`;
-    } else if (prob.includes('멈춘다')) {
-        insight = `진단 결과, **수익 구조의 자동화**가 핵심 과제입니다. 대표에게 의존하는 브랜드는 자산이 아닌 노동입니다. 시스템으로 굴러가는 구조 설계가 필요합니다.`;
-    } else {
-        insight = `진단 결과, **포지셔닝 재정의**가 필요합니다. 많은 브랜드가 실행은 열심히 하지만 구조적 결함을 방치합니다. 지금 이 시점에 방향을 잡으면 향후 성장이 달라집니다.`;
-    }
-
-    // 희망 메시지
-    let hope = '';
-    if (goal.includes('가격')) {
-        hope = `**${b}은 가격을 올릴 수 있는 브랜드입니다.** 포지셔닝만 정렬되면 동일한 제품이 지금보다 **30~50% 높은 가격**에도 팔립니다. CHAEUM이 덕화명란의 매출을 3.6배 키운 방식이 바로 이것입니다.`;
-    } else if (goal.includes('팬덤')) {
-        hope = `**${b}에는 팬덤이 될 고객이 있습니다.** 고객 경험을 구조화하면 한 번 온 고객이 스스로 돌아오고, 주변에 전파합니다. CHAEUM이 Therethehouse의 예약을 3개월 만에 꽉 채운 방식입니다.`;
-    } else if (goal.includes('구조')) {
-        hope = `**${b}는 대표 없이도 굴러갈 수 있습니다.** 수익 구조와 브랜드 시스템이 설계되면, 대표님은 비전에만 집중하면 됩니다. 이것이 CHAEUM이 설계하는 '브랜드 자산화'입니다.`;
-    } else {
-        hope = `**${b}에는 분명한 성장 가능성이 있습니다.** 구조적 결함 하나만 해결되면 지금보다 **매출이 2배 이상** 단단해질 수 있습니다. CHAEUM은 비슷한 상황의 브랜드를 여러 차례 재설계한 경험이 있습니다.`;
-    }
-
-    return `**${b} 브랜드 진단 완료**\n\n${strength}\n\n${insight}\n\n${hope}\n\n지금 딱 하나만 바꿔도 달라질 수 있습니다. 20분 무료 상담에서 구체적으로 이야기해보겠습니다.`;
-}
-
-function showResult() {
-    const text = buildResult();
-    addC(text, true);
-    inputEl.innerHTML = `
-        <div class="cta-wrap">
-            <p class="cta-note">진단이 완료됐습니다 · ${esc(data.email || '')}로 결과를 보내드립니다</p>
-            <a href="https://cal.com/chaeum" class="cta-main">20분 무료 상담 예약하기 →</a>
-            <button class="cta-sub" onclick="resetChat()">처음부터 다시 진단하기</button>
+      <div id="loading" class="loading">
+        <p>입력하신 내용을 바탕으로 구조를 분석하고 있습니다.</p>
+        <div class="loading-list">
+          <div class="loading-item"><span class="dot"></span><span>브랜드 포지셔닝 해석 중</span></div>
+          <div class="loading-item"><span class="dot" style="animation-delay:.25s"></span><span>전환 구조 가능성 분석 중</span></div>
+          <div class="loading-item"><span class="dot" style="animation-delay:.5s"></span><span>핵심 병목 정리 중</span></div>
         </div>
-    `;
-    scroll();
-}
+      </div>
+    </div>
 
-function resetChat() {
-    step = 0;
-    data = {};
-    msgEl.innerHTML = '';
-    inputEl.innerHTML = '';
-    updateProg();
-    setTimeout(() => {
-        addC(fill(FLOW[0].text));
-        renderInput();
-    }, 300);
-}
+    <div id="resultSection" class="card result">
+      <h2>브랜드 진단 결과</h2>
 
-function esc(s) {
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function escAttr(s) { return String(s||'').replace(/'/g,"\\'"); }
+      <div class="result-box" id="resultMessage"></div>
 
-// ── 시작 ──
-initProg();
-updateProg();
-setTimeout(() => {
-    addC(FLOW[0].text);
-    renderInput();
-}, 500);
-</script>
+      <div class="permission">
+        <div class="permission-title">더 자세한 구조 분석을 보시겠습니까?</div>
+        <div class="permission-text">
+          전체 리포트에서는 현재 브랜드가 어떤 구조 단계에 있고,
+          왜 막히는지, 무엇을 먼저 설계해야 하는지까지 정리해드립니다.
+        </div>
+        <div class="actions">
+          <button class="btn-primary" onclick="goReport()">전체 분석 리포트 보기</button>
+          <button class="btn-secondary" onclick="hideResult()">다시 입력하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <script>
+    function showError(message){
+      const el = document.getElementById('error');
+      el.textContent = message;
+      el.style.display = 'block';
+      clearTimeout(showError._timer);
+      showError._timer = setTimeout(() => {
+        el.style.display = 'none';
+      }, 2800);
+    }
+
+    function normalizeUrl(url){
+      if (!url) return '';
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        return 'https://' + url;
+      }
+      return url;
+    }
+
+    function isValidUrl(url){
+      if (!url) return true;
+      try{
+        new URL(normalizeUrl(url));
+        return true;
+      }catch{
+        return false;
+      }
+    }
+
+    function extractBrandName(url, brandDescription){
+      if (url) {
+        try{
+          const hostname = new URL(normalizeUrl(url)).hostname.replace('www.', '');
+          const name = hostname.split('.')[0];
+          return name.charAt(0).toUpperCase() + name.slice(1);
+        }catch{}
+      }
+      if (brandDescription) {
+        return '입력 브랜드';
+      }
+      return 'Brand';
+    }
+
+    function detectBottleneck(data){
+      const desc = (data.brandDescription || '').toLowerCase();
+      const product = (data.mainProduct || '').toLowerCase();
+      const target = (data.targetCustomer || '').toLowerCase();
+      const problem = data.mainProblem || '';
+
+      if (!product || product.length < 3) {
+        return {
+          key: 'product-planning',
+          label: '상품 기획 구조 부족',
+          summary: '현재 단계에서는 마케팅보다 먼저 무엇을 어떤 구조로 팔 것인지에 대한 상품 설계가 필요해 보입니다.'
+        };
+      }
+
+      if (!target || target.length < 3) {
+        return {
+          key: 'target-clarity',
+          label: '타깃 정의 부족',
+          summary: '현재 브랜드는 제품 설명은 있으나 누구를 위한 구조인지가 약해 전환 메시지가 흐려질 가능성이 큽니다.'
+        };
+      }
+
+      if (problem === 'traffic') {
+        return {
+          key: 'traffic-funnel',
+          label: '유입 이후 퍼널 구조 부족',
+          summary: '유입 자체보다 메타 → 랜딩 → 전환으로 이어지는 설계가 약해 보입니다.'
+        };
+      }
+
+      if (problem === 'conversion') {
+        return {
+          key: 'conversion-structure',
+          label: '전환 구조 부족',
+          summary: '지금 가장 큰 문제는 더 많은 노출이 아니라 구매로 이어지는 구조의 부재일 가능성이 높습니다.'
+        };
+      }
+
+      if (problem === 'messaging') {
+        return {
+          key: 'message-clarity',
+          label: '브랜드 메시지 선명도 부족',
+          summary: '브랜드가 무엇을 파는지는 보이지만 왜 이 브랜드여야 하는지가 약할 가능성이 큽니다.'
+        };
+      }
+
+      if (problem === 'positioning') {
+        return {
+          key: 'positioning',
+          label: '포지셔닝 구조 부족',
+          summary: '브랜드가 놓인 시장 좌표와 차별점이 명확하게 구조화되지 않았을 가능성이 큽니다.'
+        };
+      }
+
+      if (problem === 'growth') {
+        return {
+          key: 'growth-system',
+          label: '반복매출 구조 부족',
+          summary: '현재 구조는 판매는 가능해도 자동으로 돈이 흐르는 구조까지는 연결되지 않았을 가능성이 높습니다.'
+        };
+      }
+
+      return {
+        key: 'brand-funnel',
+        label: '브랜드 퍼널 구조 부재',
+        summary: '현재 브랜드는 제품은 존재하지만 유입 → 메시지 → 구매 → 반복매출의 흐름이 하나의 구조로 연결되어 있지 않습니다.'
+      };
+    }
+
+    function buildTalkMessage(data){
+      return `
+        <p><strong>현재 가장 큰 병목은 '${data.bottleneckLabel}'입니다.</strong></p>
+
+        <p>${data.shortSummary}</p>
+
+        <p>이 경우 보통 다음 문제가 발생합니다.</p>
+
+        <ul class="bullet-list">
+          <li>마케팅을 해도 매출이 안정적으로 쌓이지 않습니다.</li>
+          <li>대표자 의존도가 계속 높아집니다.</li>
+          <li>브랜드보다 상품 중심 판매로 흘러갈 가능성이 큽니다.</li>
+        </ul>
+
+        <p>
+          즉 문제는 단순한 디자인이나 홍보가 아니라
+          <strong>'돈이 흐르는 구조'</strong>입니다.
+        </p>
+
+        <p>
+          채움은 브랜드를 디자인하지 않습니다.<br>
+          <strong>제품 → 고객 → 구매 → 반복매출</strong>이 연결되는 구조를 설계합니다.
+        </p>
+      `;
+    }
+
+    function buildReportData(input, diagnosis){
+      const website = normalizeUrl(input.website);
+      const brandName = extractBrandName(website, input.brandDescription);
+
+      let recommendedAction = '브랜드 메시지와 오퍼 구조를 먼저 정리해야 합니다.';
+      let recommendedService = '브랜드 구조 설계';
+      let recommendedSystem = '채움 구조 설계 템플릿';
+
+      switch (diagnosis.key) {
+        case 'product-planning':
+          recommendedAction = '지금은 랜딩보다 먼저 무엇을 어떻게 팔 것인지 상품 구조부터 설계해야 합니다.';
+          recommendedService = '상품 기획 + 오퍼 구조 설계';
+          recommendedSystem = '채움 상품기획 시스템';
+          break;
+        case 'traffic-funnel':
+          recommendedAction = '메타 → 랜딩 → 전환 흐름으로 연결되는 퍼널 설계가 우선입니다.';
+          recommendedService = '메타 광고 퍼널 설계';
+          recommendedSystem = '채움 랜딩·퍼널 시스템';
+          break;
+        case 'conversion-structure':
+          recommendedAction = '유입을 늘리기보다 랜딩과 오퍼, CTA 구조를 먼저 바꿔야 합니다.';
+          recommendedService = '랜딩 + 전환 설계';
+          recommendedSystem = '채움 전환 구조 시스템';
+          break;
+        case 'message-clarity':
+          recommendedAction = '첫 화면에서 왜 이 브랜드인지 이해되도록 메시지 구조를 재정렬해야 합니다.';
+          recommendedService = '브랜드 메시지 설계';
+          recommendedSystem = '채움 메시지 설계 템플릿';
+          break;
+        case 'positioning':
+          recommendedAction = '경쟁 구도 안에서 이 브랜드의 좌표를 다시 정의해야 합니다.';
+          recommendedService = '포지셔닝 재설계';
+          recommendedSystem = '채움 포지셔닝 시스템';
+          break;
+        case 'growth-system':
+          recommendedAction = '일회성 판매를 반복매출 구조로 전환하는 시스템 설계가 필요합니다.';
+          recommendedService = '반복매출 구조 설계';
+          recommendedSystem = '채움 운영 시스템';
+          break;
+      }
+
+      return {
+        brandName,
+        website,
+        brandDescription: input.brandDescription || '',
+        targetCustomer: input.targetCustomer || '',
+        mainProduct: input.mainProduct || '',
+        mainProblem: input.mainProblem || '',
+        bottleneckKey: diagnosis.key,
+        bottleneckLabel: diagnosis.label,
+        shortSummary: diagnosis.summary,
+        reportSummary: `현재 브랜드는 제품 또는 서비스 자체보다, 그것이 어떻게 유입과 구매, 반복매출로 이어지는지가 구조화되지 않았을 가능성이 큽니다. 채움 관점에서 이 브랜드의 핵심 문제는 '${diagnosis.label}'로 해석됩니다.`,
+        structureAnalysis: `현재 구조는 제품 또는 서비스 설명은 존재하지만, 고객이 왜 이 브랜드를 선택해야 하는지와 어떤 경로로 구매해야 하는지가 하나의 설계로 연결되지 않았을 가능성이 높습니다. 즉 브랜드가 아니라 운영에 의존하는 상태일 수 있습니다.`,
+        futureRisk: `이 구조가 유지되면 광고 효율 저하, 대표자 의존 증가, 가격 경쟁 심화, 반복매출 부족으로 이어질 수 있습니다.`,
+        chaeumInsight: `채움은 브랜드를 예쁘게 만드는 회사가 아니라, 돈이 흐르는 구조를 만드는 회사입니다. 지금 단계에서 필요한 것은 더 많은 홍보보다 '${recommendedAction}'입니다.`,
+        recommendedAction,
+        recommendedService,
+        recommendedSystem,
+        timestamp: new Date().toISOString()
+      };
+    }
+
+    function mapProblemLabel(value){
+      const map = {
+        messaging: '브랜드 메시지가 약함',
+        traffic: '고객 유입이 부족함',
+        conversion: '전환율이 낮음',
+        positioning: '포지셔닝이 불명확함',
+        growth: '장기 성장 구조가 없음'
+      };
+      return map[value] || '-';
+    }
+
+    async function runDiagnosis(){
+      const runBtn = document.getElementById('runBtn');
+      const loading = document.getElementById('loading');
+      const resultSection = document.getElementById('resultSection');
+
+      const website = document.getElementById('website').value.trim();
+      const brandDescription = document.getElementById('brandDescription').value.trim();
+      const targetCustomer = document.getElementById('targetCustomer').value.trim();
+      const mainProduct = document.getElementById('mainProduct').value.trim();
+      const mainProblem = document.getElementById('mainProblem').value;
+
+      if (!brandDescription && !website) {
+        showError('웹사이트 또는 브랜드 설명 중 하나는 입력해주세요.');
+        return;
+      }
+
+      if (website && !isValidUrl(website)) {
+        showError('유효한 URL 형식이 아닙니다.');
+        return;
+      }
+
+      runBtn.disabled = true;
+      loading.style.display = 'block';
+      resultSection.style.display = 'none';
+
+      const input = {
+        website,
+        brandDescription,
+        targetCustomer,
+        mainProduct,
+        mainProblem,
+        mainProblemLabel: mapProblemLabel(mainProblem)
+      };
+
+      // 실제 GPT API 연결 시 이 부분을 fetch('/api/analyze', ...)로 교체하면 됩니다.
+      // 지금은 붙여넣어서 바로 보실 수 있도록 프론트에서 임시 진단 로직으로 처리합니다.
+      await new Promise(resolve => setTimeout(resolve, 1800));
+
+      const diagnosis = detectBottleneck(input);
+      const reportData = buildReportData(input, diagnosis);
+
+      localStorage.setItem('diagnosisData', JSON.stringify(reportData));
+
+      document.getElementById('resultMessage').innerHTML = buildTalkMessage(reportData);
+      resultSection.style.display = 'block';
+
+      loading.style.display = 'none';
+      runBtn.disabled = false;
+
+      resultSection.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+    function goReport(){
+      window.location.href = './report.html';
+    }
+
+    function hideResult(){
+      document.getElementById('resultSection').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>
