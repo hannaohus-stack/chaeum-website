@@ -11,7 +11,6 @@
       --bg:#4B4545;
       --bg2:#2a2625;
       --card:rgba(255,255,255,0.06);
-      --card-strong:rgba(255,255,255,0.08);
       --border:rgba(255,255,255,0.12);
       --text:#FFFDF7;
       --sub:rgba(255,255,255,0.68);
@@ -386,7 +385,7 @@
         positioning: '포지셔닝이 불명확함',
         growth: '장기 성장 구조가 없음'
       };
-      return map[value] || '-';
+      return map[value] || safeText(value, '-');
     }
 
     function formatDate(value){
