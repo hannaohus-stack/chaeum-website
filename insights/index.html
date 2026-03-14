@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -6,437 +7,116 @@
     <title>Insights | CHAEUM</title>
     <meta name="description" content="포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg: #4B4545;
             --white: #FFFDF7;
             --gray: #888888;
-            --light-gray: #666666;
             --border: rgba(255, 253, 247, 0.12);
             --panel: rgba(255, 255, 255, 0.02);
             --panel-hover: rgba(255, 255, 255, 0.05);
         }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background-color: var(--bg); color: var(--white); line-height: 1.6; letter-spacing: -0.3px; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+```
+    /* HEADER */
+    header { position: fixed; top: 0; left: 0; right: 0; background-color: rgba(75, 69, 69, 0.98); backdrop-filter: blur(10px); padding: 24px 48px; z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .header-wrapper { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 13px; letter-spacing: 2px; font-weight: 300; color: var(--white); opacity: 0.8; text-decoration: none; transition: opacity 0.3s ease; }
+    .logo:hover { opacity: 1; }
+    .nav-menu { display: flex; gap: 40px; list-style: none; align-items: center; }
+    .nav-menu a { font-size: 12px; letter-spacing: 1px; color: var(--white); opacity: 0.6; text-decoration: none; transition: opacity 0.3s ease; }
+    .nav-menu a:hover, .nav-menu a.active { opacity: 1; }
+    .btn-consult { background-color: var(--white); color: var(--bg); padding: 12px 28px; border: none; font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; font-weight: 400; }
+    .btn-consult:hover { opacity: 0.9; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background-color: var(--bg);
-            color: var(--white);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-        }
+    /* CONTAINER */
+    .container { max-width: 1200px; margin: 0 auto; padding: 140px 40px 100px 40px; }
+    .page-header { text-align: center; margin-bottom: 64px; }
+    .page-title { font-size: 13px; letter-spacing: 2px; color: var(--gray); margin-bottom: 24px; opacity: 0.7; }
+    .page-heading { font-size: 48px; font-weight: 300; line-height: 1.3; margin-bottom: 24px; }
+    .page-description { font-size: 16px; color: var(--gray); max-width: 760px; margin: 0 auto; line-height: 1.8; }
+    .divider { height: 1px; background-color: rgba(255, 255, 255, 0.1); margin: 56px 0; }
 
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(75, 69, 69, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 24px 48px;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    /* FEATURED POST */
+    .featured-post { border: 1px solid var(--border); background-color: var(--panel); border-radius: 2px; margin-bottom: 36px; transition: all 0.3s ease; overflow: hidden; }
+    .featured-post:hover { background-color: var(--panel-hover); border-color: rgba(255,255,255,0.24); }
+    .featured-image { width: 100%; height: 360px; overflow: hidden; background-color: #3a3535; }
+    .featured-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .featured-post:hover .featured-image img { transform: scale(1.02); }
+    .featured-image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+    .featured-body { padding: 40px; }
+    .featured-label { font-size: 11px; color: var(--gray); letter-spacing: 1.5px; margin-bottom: 16px; text-transform: uppercase; }
+    .featured-title { font-size: 34px; font-weight: 300; line-height: 1.35; margin-bottom: 16px; }
+    .featured-excerpt { font-size: 15px; color: var(--gray); line-height: 1.9; margin-bottom: 20px; max-width: 860px; }
+    .featured-meta { display: flex; gap: 16px; align-items: center; font-size: 12px; color: var(--gray); margin-bottom: 24px; }
+    .read-link { display: inline-block; font-size: 12px; letter-spacing: 1px; color: var(--white); text-decoration: none; border-bottom: 1px solid var(--white); padding-bottom: 4px; }
 
-        .header-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* BLOG GRID - 3열 */
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 56px; }
+    .card-link { display: block; text-decoration: none; color: inherit; }
+    .card-link:hover { color: inherit; }
+    .blog-card { border: 1px solid var(--border); border-radius: 2px; transition: all 0.3s ease; background-color: var(--panel); display: flex; flex-direction: column; overflow: hidden; }
+    .blog-card:hover { border-color: rgba(255, 255, 255, 0.28); background-color: var(--panel-hover); transform: translateY(-2px); }
 
-        .logo {
-            font-size: 13px;
-            letter-spacing: 2px;
-            font-weight: 300;
-            color: var(--white);
-            opacity: 0.8;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
+    /* 카드 이미지 */
+    .blog-card-image { width: 100%; height: 200px; overflow: hidden; background-color: #3a3535; flex-shrink: 0; }
+    .blog-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .blog-card:hover .blog-card-image img { transform: scale(1.03); }
+    .blog-card-image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; }
 
-        .logo:hover {
-            opacity: 1;
-        }
+    /* 카드 바디 */
+    .blog-card-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+    .blog-meta { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 14px; font-size: 11px; color: var(--gray); opacity: 0.85; }
+    .blog-category { letter-spacing: 1px; text-transform: uppercase; }
+    .blog-date { white-space: nowrap; }
+    .blog-title { font-size: 18px; font-weight: 300; line-height: 1.45; margin-bottom: 12px; color: var(--white); }
+    .blog-excerpt { font-size: 13px; color: var(--gray); line-height: 1.8; margin-bottom: 20px; flex: 1; }
 
-        .nav-menu {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-            align-items: center;
-        }
+    /* 상태 박스 */
+    .loading-box, .empty-box, .error-box { border: 1px solid var(--border); background-color: var(--panel); padding: 48px 32px; text-align: center; border-radius: 2px; margin-bottom: 48px; }
+    .loading-box h3, .empty-box h3, .error-box h3 { font-size: 24px; font-weight: 300; margin-bottom: 14px; }
+    .loading-box p, .empty-box p, .error-box p { font-size: 14px; color: var(--gray); line-height: 1.8; margin-bottom: 22px; }
 
-        .nav-menu a {
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            opacity: 0.6;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
+    /* BUTTONS */
+    .btn-link { display: inline-block; background-color: var(--white); color: var(--bg); padding: 12px 32px; text-decoration: none; border-radius: 2px; font-size: 12px; letter-spacing: 1px; transition: all 0.3s ease; }
+    .btn-link:hover { opacity: 0.9; }
+    .btn-secondary { background: transparent; color: var(--white); padding: 12px 32px; border: 1px solid var(--white); font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; border-radius: 2px; text-decoration: none; }
+    .btn-secondary:hover { background-color: rgba(255,255,255,0.08); }
 
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            opacity: 1;
-        }
+    /* CTA */
+    .cta-section-divider { border-top: 1px solid var(--border); padding: 70px 40px; text-align: center; }
+    .cta-section-divider h3 { font-size: 30px; font-weight: 300; margin-bottom: 24px; line-height: 1.4; }
+    .cta-actions { margin-top: 32px; display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
-        .btn-consult {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 12px 28px;
-            border: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            font-weight: 400;
-        }
+    /* FOOTER */
+    footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+    .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+    .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+    .footer-column ul { list-style: none; }
+    .footer-column a { color: rgba(255,253,247,0.55); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+    .footer-column a:hover { color: var(--white); }
+    .footer-column li { color: rgba(255,253,247,0.55); font-size: 13px; line-height: 2.2; }
+    .footer-bottom { max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,253,247,0.55); }
+    .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
 
-        .btn-consult:hover {
-            opacity: 0.9;
-        }
+    /* RESPONSIVE */
+    @media (max-width: 980px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 768px) {
+        .page-heading { font-size: 34px; }
+        .featured-title { font-size: 28px; }
+        header { padding: 20px 24px; }
+        .header-wrapper { flex-direction: column; gap: 16px; }
+        .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .container { padding: 120px 24px 60px 24px; }
+        .blog-grid { grid-template-columns: 1fr; }
+        .featured-image { height: 240px; }
+        .footer-content { grid-template-columns: 1fr 1fr; }
+    }
+</style>
+```
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 140px 40px 100px 40px;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 64px;
-        }
-
-        .page-title {
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: var(--gray);
-            margin-bottom: 24px;
-            opacity: 0.7;
-        }
-
-        .page-heading {
-            font-size: 48px;
-            font-weight: 300;
-            line-height: 1.3;
-            margin-bottom: 24px;
-        }
-
-        .page-description {
-            font-size: 16px;
-            color: var(--gray);
-            max-width: 760px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .divider {
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin: 56px 0;
-        }
-
-        .featured-post {
-            border: 1px solid var(--border);
-            background-color: var(--panel);
-            padding: 40px;
-            border-radius: 2px;
-            margin-bottom: 36px;
-            transition: all 0.3s ease;
-        }
-
-        .featured-post:hover {
-            background-color: var(--panel-hover);
-            border-color: rgba(255,255,255,0.24);
-        }
-
-        .featured-label {
-            font-size: 11px;
-            color: var(--gray);
-            letter-spacing: 1.5px;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-        }
-
-        .featured-title {
-            font-size: 34px;
-            font-weight: 300;
-            line-height: 1.35;
-            margin-bottom: 16px;
-        }
-
-        .featured-excerpt {
-            font-size: 15px;
-            color: var(--gray);
-            line-height: 1.9;
-            margin-bottom: 20px;
-            max-width: 860px;
-        }
-
-        .featured-meta {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 24px;
-        }
-
-        .read-link {
-            display: inline-block;
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            text-decoration: none;
-            border-bottom: 1px solid var(--white);
-            padding-bottom: 4px;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 28px;
-            margin-bottom: 56px;
-        }
-
-        .blog-card {
-            border: 1px solid var(--border);
-            padding: 28px;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            background-color: var(--panel);
-            display: flex;
-            flex-direction: column;
-            min-height: 280px;
-        }
-
-        .blog-card:hover {
-            border-color: rgba(255, 255, 255, 0.28);
-            background-color: var(--panel-hover);
-            transform: translateY(-2px);
-        }
-
-        .blog-meta {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 24px;
-            font-size: 11px;
-            color: var(--gray);
-            opacity: 0.85;
-        }
-
-        .blog-category {
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .blog-date {
-            white-space: nowrap;
-        }
-
-        .blog-title {
-            font-size: 20px;
-            font-weight: 300;
-            line-height: 1.45;
-            margin-bottom: 14px;
-            color: var(--white);
-        }
-
-        .blog-excerpt {
-            font-size: 13px;
-            color: var(--gray);
-            line-height: 1.8;
-            margin-bottom: 24px;
-            flex: 1;
-        }
-
-        .card-link {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .card-link:hover {
-            color: inherit;
-        }
-
-        .loading-box,
-        .empty-box,
-        .error-box {
-            border: 1px solid var(--border);
-            background-color: var(--panel);
-            padding: 48px 32px;
-            text-align: center;
-            border-radius: 2px;
-            margin-bottom: 48px;
-        }
-
-        .loading-box h3,
-        .empty-box h3,
-        .error-box h3 {
-            font-size: 24px;
-            font-weight: 300;
-            margin-bottom: 14px;
-        }
-
-        .loading-box p,
-        .empty-box p,
-        .error-box p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.8;
-            margin-bottom: 22px;
-        }
-
-        .btn-link {
-            display: inline-block;
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 12px 32px;
-            text-decoration: none;
-            border-radius: 2px;
-            font-size: 12px;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-link:hover {
-            opacity: 0.9;
-        }
-
-        .cta-section-divider {
-            border-top: 1px solid var(--border);
-            padding: 70px 40px 70px;
-            text-align: center;
-        }
-
-        .cta-box-removed {
-            margin-top: 64px;
-            border: 1px solid var(--border);
-            background-color: var(--panel);
-            padding: 44px 36px;
-            text-align: center;
-            border-radius: 2px;
-        }
-
-        .cta-box h3 {
-            font-size: 30px;
-            font-weight: 300;
-            margin-bottom: 24px;
-            line-height: 1.4;
-        }
-
-        .cta-box p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.9;
-            margin-bottom: 36px;
-        }
-
-        .cta-actions {
-            margin-top: 32px;
-            display: inline-flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            padding: 12px 32px;
-            border: 1px solid var(--white);
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            text-decoration: none;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255,255,255,0.08);
-        }
-
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 70px 40px 70px;
-            text-align: center;
-            margin-top: 80px;
-        }
-
-        footer p {
-            font-size: 11px;
-            color: var(--gray);
-            margin-bottom: 12px;
-        }
-
-        footer a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            margin: 0 16px;
-        }
-
-        footer a:hover {
-            color: var(--white);
-        }
-
-        @media (max-width: 980px) {
-            .blog-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-heading {
-                font-size: 34px;
-            }
-
-            .featured-title {
-                font-size: 28px;
-            }
-
-            header {
-                padding: 20px 24px;
-            }
-
-            .header-wrapper {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-            }
-
-            .container {
-                padding: 120px 24px 60px 24px;
-            }
-
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-box h3 {
-                font-size: 26px;
-            }
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -452,95 +132,108 @@
         </div>
     </header>
 
-    <div class="container">
-        <div class="page-header">
-            <div class="page-title">Insights</div>
-            <h1 class="page-heading">전략 인사이트</h1>
-            <p class="page-description">
-                포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.
-            </p>
-        </div>
+```
+<div class="container">
+    <div class="page-header">
+        <div class="page-title">Insights</div>
+        <h1 class="page-heading">전략 인사이트</h1>
+        <p class="page-description">
+            포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.
+        </p>
+    </div>
 
-        <div class="divider"></div>
+    <div class="divider"></div>
 
-        <div id="blogFeed">
-            <div class="loading-box">
-                <h3>인사이트를 불러오는 중입니다</h3>
-                <p>채움의 최신 인사이트를 가져오고 있습니다.</p>
-            </div>
-        </div>
-
-        <div class="cta-section-divider">
-            <h3>지금 당신의 브랜드를 진단해보세요</h3>
-            <p style="margin-top:20px; margin-bottom:36px;">
-                브랜드는 있는데 매출 구조가 없다면.<br>
-                대표가 자리를 비우면 브랜드도 멈춘다면.<br>
-                AI 무료 진단으로 3분 안에 확인해보세요.
-            </p>
-            <div class="cta-actions">
-                <a href="../diagnosis-talk.html" class="btn-link">AI 브랜드 진단</a>
-                <a href="https://cal.com/chaeum" target="_blank" class="btn-secondary">빠른 상담 예약</a>
-            </div>
+    <div id="blogFeed">
+        <div class="loading-box">
+            <h3>인사이트를 불러오는 중입니다</h3>
+            <p>채움의 최신 인사이트를 가져오고 있습니다.</p>
         </div>
     </div>
 
-    <footer style="padding: 60px 50px; border-top: 1px solid var(--border);">
-        <div style="max-width:1400px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:50px; margin-bottom:50px;">
-            <div>
-                <h3 style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:20px; opacity:0.5;">Services</h3>
-                <a href="../services.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">Self-OS</a>
-                <a href="../services.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">Architecture</a>
-                <a href="../services.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">Engineering</a>
-                <a href="../services.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">Management</a>
-            </div>
-            <div>
-                <h3 style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:20px; opacity:0.5;">Company</h3>
-                <a href="../about.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">About CHAEUM</a>
-                <a href="./index.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">Insights</a>
-                <a href="../portfolio.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">Case Studies</a>
-            </div>
-            <div>
-                <h3 style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:20px; opacity:0.5;">Contact</h3>
-                <a href="mailto:contact@chaeum.cloud" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">contact@chaeum.cloud</a>
-                <a href="../diagnosis-talk.html" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">AI 진단 받기</a>
-                <a href="https://cal.com/chaeum" style="color:rgba(255,253,247,0.55); text-decoration:none; font-size:13px; line-height:2.2; display:block;">상담 예약</a>
-            </div>
-            <div>
-                <h3 style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:20px; opacity:0.5;">Location</h3>
-                <span style="color:rgba(255,253,247,0.55); font-size:13px; line-height:2.2; display:block;">Seoul, Korea</span>
-                <span style="color:rgba(255,253,247,0.55); font-size:13px; line-height:2.2; display:block;">Seongdong-gu</span>
-            </div>
+    <div class="cta-section-divider">
+        <h3>지금 당신의 브랜드를 진단해보세요</h3>
+        <p style="margin-top:20px; margin-bottom:36px; color:var(--gray); font-size:14px; line-height:2;">
+            브랜드는 있는데 매출 구조가 없다면.<br>
+            대표가 자리를 비우면 브랜드도 멈춘다면.<br>
+            AI 무료 진단으로 3분 안에 확인해보세요.
+        </p>
+        <div class="cta-actions">
+            <a href="../diagnosis-talk.html" class="btn-link">AI 브랜드 진단</a>
+            <a href="https://cal.com/chaeum" target="_blank" class="btn-secondary">빠른 상담 예약</a>
         </div>
-        <div style="max-width:1400px; margin:0 auto; border-top:1px solid rgba(255,253,247,0.12); padding-top:30px; display:flex; justify-content:space-between; font-size:11px; color:rgba(255,253,247,0.55);">
-            <span style="font-size:13px; letter-spacing:2px; color:#FFFDF7; opacity:0.7;">CHAEUM</span>
-            <span>© 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="../services.html">Self-OS</a></li>
+                <li><a href="../services.html">Architecture</a></li>
+                <li><a href="../services.html">Engineering</a></li>
+                <li><a href="../services.html">Management</a></li>
+            </ul>
         </div>
-    </footer>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="../about.html">About CHAEUM</a></li>
+                <li><a href="./index.html">Insights</a></li>
+                <li><a href="../portfolio.html">Case Studies</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <ul>
+                <li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li>
+                <li><a href="../diagnosis-talk.html">AI 진단 받기</a></li>
+                <li><a href="https://cal.com/chaeum">상담 예약</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Location</h3>
+            <ul>
+                <li>Seoul, Korea</li>
+                <li>Seongdong-gu</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">CHAEUM</span>
+        <span>© 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</footer>
 
-    <script>
-        async function loadPosts() {
-            const container = document.getElementById('blogFeed');
+<script>
+    async function loadPosts() {
+        const container = document.getElementById('blogFeed');
+        try {
+            const response = await fetch('/insights/data/posts.json');
+            const posts = await response.json();
 
-            try {
-                const response = await fetch('/insights/data/posts.json');
-                const posts = await response.json();
-
-                if (!Array.isArray(posts) || posts.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-box">
-                            <h3>아직 등록된 글이 없습니다</h3>
-                            <p>곧 채움의 인사이트가 업데이트됩니다.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                const featured = posts[0];
-                const others = posts.slice(1);
-
+            if (!Array.isArray(posts) || posts.length === 0) {
                 container.innerHTML = `
-                    <a href="${featured.url}" class="card-link">
-                        <article class="featured-post">
+                    <div class="empty-box">
+                        <h3>아직 등록된 글이 없습니다</h3>
+                        <p>곧 채움의 인사이트가 업데이트됩니다.</p>
+                    </div>`;
+                return;
+            }
+
+            const featured = posts[0];
+            const others = posts.slice(1);
+
+            const featuredImageHtml = featured.image
+                ? `<div class="featured-image"><img src="${featured.image}" alt="${escapeHtml(featured.title)}" onerror="this.parentElement.innerHTML='<div class=\\"featured-image-placeholder\\">Image</div>'"></div>`
+                : '';
+
+            container.innerHTML = `
+                <a href="${featured.url}" class="card-link">
+                    <article class="featured-post">
+                        ${featuredImageHtml}
+                        <div class="featured-body">
                             <div class="featured-label">Featured Insight</div>
                             <div class="featured-meta">
                                 <span>${escapeHtml(featured.category || 'Insight')}</span>
@@ -549,14 +242,21 @@
                             <h2 class="featured-title">${escapeHtml(featured.title)}</h2>
                             <p class="featured-excerpt">${escapeHtml(featured.excerpt)}</p>
                             <span class="read-link">글 읽기</span>
-                        </article>
-                    </a>
+                        </div>
+                    </article>
+                </a>
 
-                    ${others.length > 0 ? `
-                        <div class="blog-grid">
-                            ${others.map(post => `
-                                <a href="${post.url}" class="card-link">
-                                    <article class="blog-card">
+                ${others.length > 0 ? `
+                    <div class="blog-grid">
+                        ${others.map(post => {
+                            const imgHtml = post.image
+                                ? `<div class="blog-card-image"><img src="${post.image}" alt="${escapeHtml(post.title)}" onerror="this.parentElement.innerHTML='<div class=\\"blog-card-image-placeholder\\">Image</div>'"></div>`
+                                : `<div class="blog-card-image"><div class="blog-card-image-placeholder">No Image</div></div>`;
+                            return `
+                            <a href="${post.url}" class="card-link">
+                                <article class="blog-card">
+                                    ${imgHtml}
+                                    <div class="blog-card-body">
                                         <div class="blog-meta">
                                             <span class="blog-category">${escapeHtml(post.category || 'Insight')}</span>
                                             <span class="blog-date">${escapeHtml(post.date || '')}</span>
@@ -564,33 +264,35 @@
                                         <h3 class="blog-title">${escapeHtml(post.title)}</h3>
                                         <p class="blog-excerpt">${escapeHtml(post.excerpt)}</p>
                                         <span class="read-link">글 읽기</span>
-                                    </article>
-                                </a>
-                            `).join('')}
-                        </div>
-                    ` : ''}
-                `;
-            } catch (error) {
-                console.error(error);
-                container.innerHTML = `
-                    <div class="error-box">
-                        <h3>글 목록을 불러오지 못했습니다</h3>
-                        <p>잠시 후 다시 시도해주세요.</p>
+                                    </div>
+                                </article>
+                            </a>`;
+                        }).join('')}
                     </div>
-                `;
-            }
+                ` : ''}
+            `;
+        } catch (error) {
+            console.error(error);
+            container.innerHTML = `
+                <div class="error-box">
+                    <h3>글 목록을 불러오지 못했습니다</h3>
+                    <p>잠시 후 다시 시도해주세요.</p>
+                </div>`;
         }
+    }
 
-        function escapeHtml(value) {
-            return String(value || '')
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
+    function escapeHtml(value) {
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
 
-        loadPosts();
-    </script>
+    loadPosts();
+</script>
+```
+
 </body>
 </html>
