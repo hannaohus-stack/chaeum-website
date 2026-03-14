@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>브랜드 진단 | CHAEUM</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%);
-            color: white;
-            min-height: 100vh;
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%); 
+            color: white; 
+            min-height: 100vh; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -66,8 +66,7 @@
         }
 
         input,
-        select,
-        textarea {
+        select {
             width: 100%;
             padding: 12px;
             background: rgba(255,255,255,0.08);
@@ -78,20 +77,12 @@
             font-family: inherit;
         }
 
-        textarea {
-            min-height: 92px;
-            resize: vertical;
-            line-height: 1.5;
-        }
-
-        input::placeholder,
-        textarea::placeholder {
+        input::placeholder {
             color: #666;
         }
 
         input:focus,
-        select:focus,
-        textarea:focus {
+        select:focus {
             outline: none;
             border-color: rgba(255,255,255,0.3);
             background: rgba(255,255,255,0.12);
@@ -275,7 +266,7 @@
     <div class="container">
         <div class="hero">
             <h1>브랜드 진단</h1>
-            <p class="subtitle">AI가 당신의 브랜드를<br />깊이 있게 분석합니다</p>
+            <p class="subtitle">AI가 당신의 브랜드를<br>깊이 있게 분석합니다</p>
         </div>
 
         <div id="error" class="error"></div>
@@ -286,70 +277,28 @@
                 <!-- 웹사이트 -->
                 <div class="form-group">
                     <label class="form-label">웹사이트 <span class="required">*</span></label>
-                    <input
+                    <input 
                         type="text"
                         id="website"
                         placeholder="https://example.com"
                         required
                     />
-                    <p class="hint">웹사이트 주소를 입력하세요. AI가 사이트 내용을 함께 분석합니다.</p>
+                    <p class="hint">웹사이트 주소를 입력하세요</p>
                 </div>
 
                 <!-- 이메일 -->
                 <div class="form-group">
                     <label class="form-label">이메일 <span class="required">*</span></label>
-                    <input
+                    <input 
                         type="email"
                         id="email"
                         placeholder="your@email.com"
                         required
                     />
-                    <p class="hint">리포트 수신용 이메일입니다.</p>
+                    <p class="hint">리포트 수신용</p>
                 </div>
 
-                <!-- 브랜드 설명 -->
-                <div class="form-group">
-                    <label class="form-label">브랜드 설명</label>
-                    <textarea
-                        id="brandDescription"
-                        placeholder="예: 프리미엄 홈카페 커피 브랜드"
-                    ></textarea>
-                    <p class="hint">당신의 브랜드를 한 문장 또는 짧은 설명으로 적어주세요.</p>
-                </div>
-
-                <!-- 주요 고객 -->
-                <div class="form-group">
-                    <label class="form-label">주요 고객</label>
-                    <input
-                        type="text"
-                        id="targetCustomer"
-                        placeholder="예: 30대 직장인 여성"
-                    />
-                    <p class="hint">누가 주요 고객인지 적어주세요. 모르면 비워도 됩니다.</p>
-                </div>
-
-                <!-- 대표 제품 / 서비스 -->
-                <div class="form-group">
-                    <label class="form-label">대표 제품 / 서비스</label>
-                    <input
-                        type="text"
-                        id="mainProduct"
-                        placeholder="예: 저당 그래놀라 / 브랜드 컨설팅"
-                    />
-                    <p class="hint">가장 대표적인 제품 또는 서비스를 적어주세요.</p>
-                </div>
-
-                <!-- 차별점 -->
-                <div class="form-group">
-                    <label class="form-label">경쟁 브랜드 대비 차별점</label>
-                    <textarea
-                        id="differentiation"
-                        placeholder="예: 유기농 원료만 사용하고, 패키지부터 경험 설계까지 프리미엄 홈카페 감성을 강조합니다."
-                    ></textarea>
-                    <p class="hint">경쟁 브랜드와 다른 점이 있다면 적어주세요. 모르면 비워도 됩니다.</p>
-                </div>
-
-                <!-- 가장 큰 고민 -->
+                <!-- 가장 큰 고민: 드롭다운 -->
                 <div class="form-group">
                     <label class="form-label">가장 큰 고민 <span class="required">*</span></label>
                     <select id="mainProblem" required>
@@ -360,10 +309,10 @@
                         <option value="positioning">포지셔닝이 불명확함</option>
                         <option value="growth">장기 성장 구조가 없음</option>
                     </select>
-                    <p class="hint">현재 가장 먼저 해결하고 싶은 문제를 선택하세요.</p>
+                    <p class="hint">현재 가장 먼저 해결하고 싶은 문제를 선택하세요</p>
                 </div>
 
-                <!-- 브랜드 상태 -->
+                <!-- 브랜드 상태: Yes / No -->
                 <div class="form-group">
                     <label class="form-label">현재 브랜드 상태 <span class="required">*</span></label>
 
@@ -371,11 +320,11 @@
                         <div class="question-title">핵심 고객이 명확하다</div>
                         <div class="yn-grid">
                             <label class="yn-option">
-                                <input type="radio" name="clearTarget" value="yes" required />
+                                <input type="radio" name="clearTarget" value="yes" required>
                                 <span>Yes</span>
                             </label>
                             <label class="yn-option">
-                                <input type="radio" name="clearTarget" value="no" />
+                                <input type="radio" name="clearTarget" value="no">
                                 <span>No</span>
                             </label>
                         </div>
@@ -385,11 +334,11 @@
                         <div class="question-title">대표 제품/서비스가 명확하다</div>
                         <div class="yn-grid">
                             <label class="yn-option">
-                                <input type="radio" name="clearOffer" value="yes" required />
+                                <input type="radio" name="clearOffer" value="yes" required>
                                 <span>Yes</span>
                             </label>
                             <label class="yn-option">
-                                <input type="radio" name="clearOffer" value="no" />
+                                <input type="radio" name="clearOffer" value="no">
                                 <span>No</span>
                             </label>
                         </div>
@@ -399,11 +348,11 @@
                         <div class="question-title">브랜드 메시지가 일관된다</div>
                         <div class="yn-grid">
                             <label class="yn-option">
-                                <input type="radio" name="clearMessage" value="yes" required />
+                                <input type="radio" name="clearMessage" value="yes" required>
                                 <span>Yes</span>
                             </label>
                             <label class="yn-option">
-                                <input type="radio" name="clearMessage" value="no" />
+                                <input type="radio" name="clearMessage" value="no">
                                 <span>No</span>
                             </label>
                         </div>
@@ -413,11 +362,11 @@
                         <div class="question-title">SNS/홈페이지가 문의 또는 구매로 연결된다</div>
                         <div class="yn-grid">
                             <label class="yn-option">
-                                <input type="radio" name="hasConversionPath" value="yes" required />
+                                <input type="radio" name="hasConversionPath" value="yes" required>
                                 <span>Yes</span>
                             </label>
                             <label class="yn-option">
-                                <input type="radio" name="hasConversionPath" value="no" />
+                                <input type="radio" name="hasConversionPath" value="no">
                                 <span>No</span>
                             </label>
                         </div>
@@ -427,20 +376,19 @@
                         <div class="question-title">재구매 또는 반복매출 구조가 있다</div>
                         <div class="yn-grid">
                             <label class="yn-option">
-                                <input type="radio" name="hasRetention" value="yes" required />
+                                <input type="radio" name="hasRetention" value="yes" required>
                                 <span>Yes</span>
                             </label>
                             <label class="yn-option">
-                                <input type="radio" name="hasRetention" value="no" />
+                                <input type="radio" name="hasRetention" value="no">
                                 <span>No</span>
                             </label>
                         </div>
                     </div>
 
-                    <p class="hint">각 문항마다 Yes 또는 No를 선택하세요.</p>
+                    <p class="hint">각 문항마다 Yes 또는 No를 선택하세요</p>
 
                     <div class="analyzing" id="analyzing">분석 중...</div>
-
                     <div class="analyzing-list" id="analyzingList">
                         <div class="analyzing-item">
                             <div class="spinner"></div>
@@ -472,7 +420,7 @@
         let analysisData = null;
         let isSubmitting = false;
 
-        websiteInput.addEventListener('focus', function () {
+        websiteInput.addEventListener('focus', function() {
             if (!this.value) {
                 this.value = 'https://';
                 this.setSelectionRange(8, 8);
@@ -486,10 +434,6 @@
 
             const website = document.getElementById('website').value.trim();
             const email = document.getElementById('email').value.trim();
-            const brandDescription = document.getElementById('brandDescription').value.trim();
-            const targetCustomer = document.getElementById('targetCustomer').value.trim();
-            const mainProduct = document.getElementById('mainProduct').value.trim();
-            const differentiation = document.getElementById('differentiation').value.trim();
             const mainProblem = document.getElementById('mainProblem').value;
 
             const brandSurvey = {
@@ -501,22 +445,22 @@
             };
 
             if (!website || !email) {
-                showError('웹사이트와 이메일을 입력해주세요.');
+                showError('웹사이트와 이메일을 입력해주세요');
                 return;
             }
 
             if (!mainProblem) {
-                showError('가장 큰 고민을 선택해주세요.');
+                showError('가장 큰 고민을 선택해주세요');
                 return;
             }
 
             if (Object.values(brandSurvey).some(v => !v)) {
-                showError('브랜드 상태 문항에 모두 답변해주세요.');
+                showError('브랜드 상태 문항에 모두 답변해주세요');
                 return;
             }
 
             if (!isValidUrl(website)) {
-                showError('유효한 URL을 입력해주세요.');
+                showError('유효한 URL을 입력해주세요');
                 return;
             }
 
@@ -526,24 +470,13 @@
                 isSubmitting = true;
                 setLoadingState(true);
 
-                analysisData = await analyzeWebsite(finalUrl, {
-                    mainProblem,
-                    brandDescription,
-                    targetCustomer,
-                    mainProduct,
-                    differentiation,
-                    brandSurvey
-                });
+                analysisData = await analyzeWebsite(finalUrl);
 
                 const finalData = {
                     ...analysisData,
                     website: finalUrl,
                     email,
                     mainProblem,
-                    brandDescription,
-                    targetCustomer,
-                    mainProduct,
-                    differentiation,
                     brandSurvey,
                     timestamp: new Date().toISOString()
                 };
@@ -563,17 +496,14 @@
             return document.querySelector(`input[name="${name}"]:checked`)?.value || '';
         }
 
-        async function analyzeWebsite(url, extraData = {}) {
+        async function analyzeWebsite(url) {
             try {
                 const response = await fetch('/api/analyze', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        url,
-                        ...extraData
-                    })
+                    body: JSON.stringify({ url })
                 });
 
                 const data = await response.json();
