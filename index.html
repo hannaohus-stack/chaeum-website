@@ -1,4 +1,7 @@
+cat > index.html
+
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -11,543 +14,772 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg: #4B4545;
-            --white: #FFFFFF;
-            --gray: #888888;
-            --light-gray: #666666;
-        }
+```
+    :root {
+        --bg: #4B4545;
+        --white: #FFFDF7;
+        --gray: #888888;
+        --light-gray: #666666;
+        --surface: #4B4545;
+        --border: rgba(255, 253, 247, 0.12);
+        --sub-text: rgba(255, 253, 247, 0.55);
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    html {
+        scroll-behavior: smooth;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background-color: var(--bg);
-            color: var(--white);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-        }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+        line-height: 1.6;
+        letter-spacing: -0.3px;
+    }
 
-        /* ===== HEADER ===== */
+    /* ===== HEADER ===== (원본 유지) */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(75, 69, 69, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 24px 48px;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .header-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 3px;
+        text-decoration: none;
+        color: var(--white);
+        opacity: 0.9;
+    }
+
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .nav-menu a {
+        text-decoration: none;
+        color: var(--white);
+        font-size: 12px;
+        letter-spacing: 1px;
+        opacity: 0.65;
+        transition: opacity 0.3s ease;
+        text-transform: uppercase;
+    }
+
+    .nav-menu a:hover {
+        opacity: 1;
+    }
+
+    .btn-consult {
+        background-color: var(--white);
+        color: var(--bg);
+        border: none;
+        padding: 10px 22px;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.3s ease;
+    }
+
+    .btn-consult:hover {
+        background-color: transparent;
+        color: var(--white);
+        outline: 1px solid var(--white);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+        margin-top: 80px;
+        padding: 140px 50px 100px;
+        background-color: var(--bg);
+        min-height: 650px;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .hero-tagline {
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--sub-text);
+        text-transform: uppercase;
+        margin-bottom: 32px;
+    }
+
+    .hero-title {
+        font-size: 54px;
+        line-height: 1.3;
+        color: var(--white);
+        margin-bottom: 40px;
+        font-weight: 300;
+        max-width: 900px;
+    }
+
+    .hero-title strong {
+        font-weight: 600;
+    }
+
+    .hero-subtitle {
+        font-size: 15px;
+        color: var(--sub-text);
+        line-height: 2;
+        max-width: 580px;
+        margin-bottom: 56px;
+    }
+
+    .hero-subtitle strong {
+        color: var(--white);
+        font-weight: 500;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 16px;
+    }
+
+    .btn-primary {
+        background-color: var(--white);
+        color: var(--bg);
+        padding: 15px 40px;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 1px;
+        border: 1px solid var(--white);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-family: inherit;
+        text-transform: uppercase;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+    .btn-primary:hover {
+        background-color: transparent;
+        color: var(--white);
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+        height: 1px;
+        background-color: var(--border);
+        margin: 0 50px;
+    }
+
+    /* ===== WHAT WE DO ===== */
+    .what-we-do {
+        padding: 100px 50px;
+        background-color: var(--surface);
+    }
+
+    .section-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .what-we-do-content {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 80px;
+    }
+
+    .what-we-do-nav {
+        font-size: 13px;
+        line-height: 2;
+    }
+
+    .what-we-do-nav button {
+        background: none;
+        border: none;
+        color: var(--sub-text);
+        cursor: pointer;
+        text-align: left;
+        width: 100%;
+        transition: color 0.3s ease;
+        font-size: 13px;
+        padding: 8px 0;
+        font-family: inherit;
+    }
+
+    .what-we-do-nav button:hover,
+    .what-we-do-nav button.active {
+        color: var(--white);
+        font-weight: 600;
+    }
+
+    .what-we-do-item {
+        display: none;
+    }
+
+    .what-we-do-item.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .what-we-do-item h3 {
+        font-size: 36px;
+        color: var(--white);
+        margin-bottom: 30px;
+        font-weight: 300;
+    }
+
+    .what-we-do-item p {
+        font-size: 14px;
+        color: var(--sub-text);
+        line-height: 1.8;
+        margin-bottom: 20px;
+        max-width: 600px;
+    }
+
+    .what-we-do-item p strong {
+        color: var(--white);
+    }
+
+    .what-we-do-item-cta {
+        margin-top: 40px;
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--white);
+        padding: 13px 34px;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 1px;
+        border: 1px solid rgba(255, 253, 247, 0.35);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-transform: uppercase;
+        display: inline-block;
+        font-family: inherit;
+    }
+
+    .btn-secondary:hover {
+        border-color: var(--white);
+        background-color: rgba(255, 253, 247, 0.05);
+    }
+
+    /* ===== CASES ===== */
+    .cases {
+        padding: 100px 50px;
+        background-color: var(--bg);
+    }
+
+    .cases-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .section-label {
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--sub-text);
+        text-transform: uppercase;
+        margin-bottom: 60px;
+    }
+
+    .cases-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background-color: var(--border);
+        margin-bottom: 50px;
+    }
+
+    .case-card {
+        padding: 50px;
+        background-color: var(--bg);
+        transition: background-color 0.3s ease;
+    }
+
+    .case-card:hover {
+        background-color: var(--surface);
+    }
+
+    .case-tag {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        color: var(--sub-text);
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    .case-title {
+        font-size: 26px;
+        font-weight: 300;
+        color: var(--white);
+        margin-bottom: 16px;
+    }
+
+    .case-metric {
+        font-size: 42px;
+        font-weight: 200;
+        color: var(--white);
+        margin-bottom: 20px;
+        letter-spacing: -1px;
+    }
+
+    .case-description {
+        font-size: 13px;
+        color: var(--sub-text);
+        line-height: 1.8;
+        margin-bottom: 28px;
+    }
+
+    .case-link {
+        font-size: 12px;
+        color: var(--white);
+        text-decoration: none;
+        letter-spacing: 1px;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+    }
+
+    .case-link:hover {
+        opacity: 1;
+    }
+
+    .cases-more {
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    /* ===== INSIGHTS ===== */
+    .insights {
+        padding: 100px 50px;
+        background-color: var(--surface);
+    }
+
+    .insights-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .insights-header {
+        margin-bottom: 60px;
+    }
+
+    .insights-title {
+        font-size: 42px;
+        color: var(--white);
+        margin-bottom: 16px;
+        font-weight: 300;
+    }
+
+    .insights-desc {
+        font-size: 14px;
+        color: var(--sub-text);
+        line-height: 1.8;
+    }
+
+    .insights-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background-color: var(--border);
+        margin-bottom: 50px;
+    }
+
+    .insight-card {
+        padding: 40px;
+        background-color: var(--surface);
+        transition: background-color 0.3s ease;
+    }
+
+    .insight-card:hover {
+        background-color: var(--bg);
+    }
+
+    .insight-date {
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: var(--sub-text);
+        margin-bottom: 14px;
+    }
+
+    .insight-title {
+        font-size: 18px;
+        color: var(--white);
+        margin-bottom: 14px;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+    .insight-excerpt {
+        font-size: 13px;
+        color: var(--sub-text);
+        line-height: 1.8;
+    }
+
+    .insights-more {
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    /* ===== CTA ===== */
+    .cta-section {
+        padding: 120px 50px;
+        background-color: var(--bg);
+        text-align: center;
+        border-top: 1px solid var(--border);
+    }
+
+    .cta-title {
+        font-size: 46px;
+        margin-bottom: 28px;
+        font-weight: 300;
+        color: var(--white);
+        line-height: 1.3;
+    }
+
+    .cta-subtitle {
+        font-size: 14px;
+        color: var(--sub-text);
+        margin-bottom: 56px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 2;
+    }
+
+    .btn-light {
+        background-color: var(--white);
+        color: var(--bg);
+        padding: 16px 48px;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 1px;
+        border: 1px solid var(--white);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-transform: uppercase;
+        display: inline-block;
+        font-weight: 500;
+    }
+
+    .btn-light:hover {
+        background-color: transparent;
+        color: var(--white);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+        padding: 60px 50px;
+        background-color: var(--surface);
+        border-top: 1px solid var(--border);
+    }
+
+    .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 50px;
+        margin-bottom: 50px;
+    }
+
+    .footer-column h3 {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        font-weight: 500;
+        color: var(--white);
+        opacity: 0.5;
+    }
+
+    .footer-column ul {
+        list-style: none;
+    }
+
+    .footer-column li {
+        color: var(--sub-text);
+        font-size: 13px;
+        line-height: 2.2;
+    }
+
+    .footer-column a {
+        color: var(--sub-text);
+        text-decoration: none;
+        font-size: 13px;
+        transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+        color: var(--white);
+    }
+
+    .footer-bottom {
+        max-width: 1400px;
+        margin: 0 auto;
+        border-top: 1px solid var(--border);
+        padding-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11px;
+        color: var(--sub-text);
+    }
+
+    .footer-logo {
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: var(--white);
+        opacity: 0.7;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(75, 69, 69, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 24px 48px;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 24px;
         }
 
         .header-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 13px;
-            letter-spacing: 2px;
-            font-weight: 300;
-            color: var(--white);
-            opacity: 0.8;
-            text-decoration: none;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo:hover {
-            opacity: 1;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .nav-menu {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-menu a {
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            opacity: 0.6;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            opacity: 1;
-        }
-
-        .btn-consult {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 12px 28px;
-            border: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            font-weight: 400;
-        }
-
-        .btn-consult:hover {
-            opacity: 0.9;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            margin-top: 80px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 40px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 300;
-            line-height: 1.3;
-            margin-bottom: 24px;
-            letter-spacing: -0.5px;
-        }
-
-        .hero .tagline {
-            font-size: 16px;
-            color: var(--gray);
-            margin-bottom: 48px;
-            max-width: 700px;
-            line-height: 1.8;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            gap: 16px;
             flex-wrap: wrap;
             justify-content: center;
+            gap: 20px;
         }
 
-        .btn-primary {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 16px 40px;
-            border: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            font-weight: 500;
+        .hero {
+            padding: 120px 24px 80px;
         }
 
-        .btn-primary:hover {
-            opacity: 0.9;
+        .hero-title {
+            font-size: 34px;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            padding: 16px 40px;
-            border: 1px solid var(--white);
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* ===== DIVIDER ===== */
-        .divider {
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin: 80px 0;
-        }
-
-        /* ===== SECTION ===== */
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 40px;
-        }
-
-        .section-title {
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: var(--gray);
-            margin-bottom: 60px;
-            opacity: 0.7;
-        }
-
-        /* ===== CASES ===== */
-        .cases-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        .case-card {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 40px;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        .case-card:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .case-tag {
-            font-size: 10px;
-            letter-spacing: 1.5px;
-            color: var(--gray);
-            margin-bottom: 12px;
-            opacity: 0.7;
-        }
-
-        .case-title {
-            font-size: 22px;
-            font-weight: 300;
-            margin-bottom: 12px;
-        }
-
-        .case-metric {
-            font-size: 36px;
-            font-weight: 300;
-            color: var(--white);
-            margin-bottom: 24px;
-        }
-
-        .case-description {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.9;
-            margin-bottom: 24px;
-        }
-
-        .case-link {
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            text-decoration: none;
-            border-bottom: 1px solid var(--white);
-            padding-bottom: 4px;
-            transition: opacity 0.3s ease;
-            display: inline-block;
-        }
-
-        .case-link:hover {
-            opacity: 0.7;
-        }
-
-        .case-link::after {
-            content: ' →';
-            margin-left: 8px;
-        }
-
-        .view-all-section {
-            text-align: center;
-            padding: 40px;
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 2px;
-        }
-
-        .view-all-section p {
-            font-size: 13px;
-            color: var(--gray);
-            margin-bottom: 16px;
-        }
-
-        .btn-view-all {
-            background: transparent;
-            color: var(--white);
-            padding: 12px 28px;
-            border: 1px solid var(--white);
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-view-all:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* ===== BLOG SECTION ===== */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        .blog-card {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 30px;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        .blog-card:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .blog-date {
-            font-size: 11px;
-            color: var(--gray);
-            margin-bottom: 12px;
-            opacity: 0.7;
-        }
-
-        .blog-title {
-            font-size: 16px;
-            font-weight: 400;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .blog-excerpt {
-            font-size: 13px;
-            color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 16px;
-        }
-
-        .blog-link {
-            font-size: 11px;
-            letter-spacing: 1px;
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .blog-link:hover {
-            color: var(--white);
-        }
-
-        /* ===== CTA SECTION ===== */
+        .what-we-do,
+        .cases,
+        .insights,
         .cta-section {
-            text-align: center;
-            padding: 80px 40px;
-            margin-top: 80px;
+            padding: 60px 24px;
         }
 
-        .cta-section h2 {
-            font-size: 36px;
-            font-weight: 300;
-            margin-bottom: 24px;
+        .what-we-do-content {
+            grid-template-columns: 1fr;
+            gap: 30px;
         }
 
-        .cta-section p {
-            font-size: 15px;
-            color: var(--gray);
-            margin-bottom: 48px;
-            line-height: 1.8;
+        .cases-grid,
+        .insights-grid {
+            grid-template-columns: 1fr;
         }
 
-        /* ===== FOOTER ===== */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 60px 40px;
-            text-align: center;
+        .footer-content {
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
 
-        footer p {
-            font-size: 11px;
-            color: var(--gray);
-            margin-bottom: 12px;
+        .divider {
+            margin: 0 24px;
         }
+    }
+</style>
+```
 
-        footer a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            margin: 0 16px;
-        }
-
-        footer a:hover {
-            color: var(--white);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .cases-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-            }
-
-            .btn-primary, .btn-secondary {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            header {
-                padding: 20px 24px;
-            }
-
-            .header-wrapper {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-            }
-
-            .section {
-                padding: 60px 24px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header>
-        <div class="header-wrapper">
-            <a href="./index.html" class="logo">CHAEUM</a>
-            <div class="nav-menu">
-                <a href="./services.html">Services</a>
-                <a href="./portfolio.html">Portfolio</a>
-                <a href="./insights/index.html">Blog</a>
-                <a href="./about.html">About</a>
-                <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
-            </div>
+
+```
+<!-- HEADER (원본 유지) -->
+<header>
+    <div class="header-wrapper">
+        <a href="./index.html" class="logo">CHAEUM</a>
+        <div class="nav-menu">
+            <a href="./services.html">Services</a>
+            <a href="./portfolio.html">Portfolio</a>
+            <a href="./insights/index.html">Blog</a>
+            <a href="./about.html">About</a>
+            <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- HERO -->
-    <section class="hero">
-        <h1>로고를 바꾸고, 패키지를 바꾸고, SNS를 바꿔도<br>정작 돈이 새는 <strong>구조</strong>는 그대로인 브랜드들이 있습니다.</h1>
-        <p class="tagline">CHAEUM은 예쁜 디자인을 약속하지 않습니다.<br>대표가 없어도 굴러가는 수익 구조, 고객이 떠나지 않는 브랜드 경험 —<br>당신의 브랜드가 스스로 가치를 증명하는 자산이 되도록 설계합니다.</p>
-        <div class="hero-cta">
-            <button class="btn-primary" onclick="window.location.href='./diagnosis-talk.html'">AI 고민 상담 (무료)</button>
-            <button class="btn-secondary" onclick="document.getElementById('cases').scrollIntoView()">성공 사례 보기</button>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-tagline">Brand Asset Strategy</div>
+        <h1 class="hero-title">
+            로고를 바꾸고, 패키지를 바꾸고, SNS를 바꿔도<br>
+            정작 돈이 새는 <strong>구조</strong>는 그대로인 브랜드들이 있습니다.
+        </h1>
+        <p class="hero-subtitle">
+            CHAEUM은 예쁜 디자인을 약속하지 않습니다.<br>
+            대표가 없어도 굴러가는 수익 구조, 고객이 떠나지 않는 브랜드 경험 —<br>
+            당신의 브랜드가 <strong>스스로 가치를 증명하는 자산</strong>이 되도록 설계합니다.
+        </p>
+        <div class="hero-buttons">
+            <a href="./diagnosis-talk.html" class="btn-primary">브랜드 구조 무료 진단받기</a>
         </div>
-    </section>
+    </div>
+</section>
 
-    <div class="divider"></div>
+<div class="divider"></div>
 
-    <!-- CASES -->
-    <section class="section" id="cases">
-        <div class="section-title">성공 사례</div>
-
+<!-- CASES -->
+<section class="cases" id="cases">
+    <div class="cases-container">
+        <div class="section-label">성공 사례</div>
         <div class="cases-grid">
             <div class="case-card">
                 <div class="case-tag">식음료 / 프리미엄 포지셔닝</div>
                 <h3 class="case-title">Deokhwa Myeongran</h3>
                 <div class="case-metric">+360%</div>
                 <p class="case-description">프리미엄 제품이지만 시장에서 가벼워 보이던 브랜드. 포지셔닝 재정의와 가격 구조 혁신으로 매출 3배 이상 증가했습니다.</p>
-                <a href="./case-deokhwa.html" class="case-link">자세히 보기</a>
+                <a href="./case-deokhwa.html" class="case-link">자세히 보기 →</a>
             </div>
-
             <div class="case-card">
                 <div class="case-tag">라이프스타일 / 경험 설계</div>
                 <h3 class="case-title">Therethehouse</h3>
                 <div class="case-metric">3개월 내<br>예약 포화</div>
                 <p class="case-description">좋은 경험이 있었지만 브랜드 신뢰도가 부족했던 곳. 고객 경험 설계를 통해 3개월 만에 예약이 가득 찼습니다.</p>
-                <a href="./case-therethehouse.html" class="case-link">자세히 보기</a>
+                <a href="./case-therethehouse.html" class="case-link">자세히 보기 →</a>
             </div>
         </div>
-
-        <div class="view-all-section">
-            <p>더 많은 성공 사례를 확인하세요</p>
-            <a href="./portfolio.html" class="btn-view-all">모든 사례 보기</a>
+        <div class="cases-more">
+            <a href="./portfolio.html" class="btn-secondary">모든 사례 보기</a>
         </div>
-    </section>
+    </div>
+</section>
 
-    <div class="divider"></div>
+<div class="divider"></div>
 
-    <!-- BLOG -->
-    <section class="section" id="blog">
-        <div class="section-title">인사이트</div>
-
-        <div class="blog-grid">
-            <div class="blog-card">
-                <div class="blog-date">2026. 02. 25</div>
-                <h3 class="blog-title">왜 좋은 제품이 팔리지 않을까</h3>
-                <p class="blog-excerpt">포지셔닝이 없으면, 아무리 좋은 제품도 시장에서 소음이 됩니다.</p>
-                <a href="#" class="blog-link">더 읽기 →</a>
+<!-- INSIGHTS -->
+<section class="insights" id="insights">
+    <div class="insights-container">
+        <div class="insights-header">
+            <h2 class="insights-title">Insights</h2>
+            <p class="insights-desc">포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.</p>
+        </div>
+        <div class="insights-grid">
+            <div class="insight-card">
+                <div class="insight-date">2026. 02. 25</div>
+                <h3 class="insight-title">왜 좋은 제품이 팔리지 않을까</h3>
+                <p class="insight-excerpt">포지셔닝이 없으면, 아무리 좋은 제품도 시장에서 소음이 됩니다.</p>
             </div>
-
-            <div class="blog-card">
-                <div class="blog-date">2026. 02. 20</div>
-                <h3 class="blog-title">고단가 브랜드의 전략</h3>
-                <p class="blog-excerpt">가격이 높을수록 고객이 보고 싶어하는 것은 결과가 아니라 논리입니다.</p>
-                <a href="#" class="blog-link">더 읽기 →</a>
+            <div class="insight-card">
+                <div class="insight-date">2026. 02. 20</div>
+                <h3 class="insight-title">고단가 브랜드의 전략</h3>
+                <p class="insight-excerpt">가격이 높을수록 고객이 보고 싶어하는 것은 결과가 아니라 논리입니다.</p>
             </div>
-
-            <div class="blog-card">
-                <div class="blog-date">2026. 02. 15</div>
-                <h3 class="blog-title">포지셔닝이란 무엇인가</h3>
-                <p class="blog-excerpt">포지셔닝은 고객의 마음에 당신의 브랜드를 어떻게 자리 잡히는가입니다.</p>
-                <a href="#" class="blog-link">더 읽기 →</a>
+            <div class="insight-card">
+                <div class="insight-date">2026. 02. 15</div>
+                <h3 class="insight-title">포지셔닝이란 무엇인가</h3>
+                <p class="insight-excerpt">포지셔닝은 고객의 마음에 당신의 브랜드를 어떻게 자리 잡히는가입니다.</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-date">2026. 03. 13</div>
+                <h3 class="insight-title">당신이 알고 있는 브랜딩은 틀렸다</h3>
+                <p class="insight-excerpt">로고와 타이포그래피는 브랜딩을 위한 유용한 도구일 뿐입니다. 비즈니스의 운명을 결정짓는 브랜딩의 진짜 실체는 따로 있습니다.</p>
             </div>
         </div>
-
-        <div style="text-align: center; margin-top: 60px;">
-            <p style="font-size: 12px; color: var(--gray); margin-bottom: 20px;">더 많은 인사이트를 보려면</p>
-            <a href="./blog.html" class="btn-view-all">전체 블로그 보기</a>
+        <div class="insights-more">
+            <a href="./insights/index.html" class="btn-secondary">전체 블로그 보기</a>
         </div>
-    </section>
+    </div>
+</section>
 
-    <div class="divider"></div>
+<!-- CTA -->
+<section class="cta-section">
+    <h2 class="cta-title">브랜드는 있는데<br>매출 구조가 없다면.</h2>
+    <p class="cta-subtitle">
+        재구매는 없고 할인만 반복된다면.<br>
+        대표가 자리를 비우면 브랜드도 멈춘다면.<br><br>
+        지금 당신의 브랜드에 무엇이 빠져 있는지, AI로 먼저 진단받아보세요.
+    </p>
+    <a href="./diagnosis-talk.html" class="btn-light">브랜드 구조 무료 진단받기</a>
+</section>
 
-    <!-- CTA SECTION -->
-    <section class="cta-section">
-        <h2>브랜드 성장의<br>다음 단계를 함께 만드세요</h2>
-        <p>좋은 제품인데 시장에서 제대로 인식받지 못하는 상황이라면,<br>AI 고민 상담으로 당신의 상황을 정확히 진단해보세요.</p>
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <button class="btn-primary" onclick="window.location.href='./diagnosis-talk.html'">AI 고민 상담 시작</button>
-            <button class="btn-secondary" onclick="window.location.href='https://cal.com/chaeum'">빠른 상담예약</button>
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="./services.html">포지셔닝 진단</a></li>
+                <li><a href="./services.html">브랜드 경험 설계</a></li>
+                <li><a href="./services.html">마케팅 전략</a></li>
+            </ul>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2026 CHAEUM</p>
-        <div>
-            <a href="./about.html">About</a>
-            <a href="./portfolio.html">Portfolio</a>
-            <a href="./insights/index.html" class="btn-view-all">전체 블로그 보기</a>
-            <a href="https://cal.com/chaeum" target="_blank">Schedule</a>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="./about.html">About CHAEUM</a></li>
+                <li><a href="./insights/index.html">Insights</a></li>
+                <li><a href="./portfolio.html">Case Studies</a></li>
+            </ul>
         </div>
-    </footer>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <ul>
+                <li><a href="mailto:hanna@chaeum.co">hanna@chaeum.co</a></li>
+                <li><a href="./diagnosis-talk.html">AI 진단 받기</a></li>
+                <li><a href="https://cal.com/chaeum">상담 예약</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Location</h3>
+            <ul>
+                <li>Seoul, Korea</li>
+                <li>Seongdong-gu</li>
+                <li>Republic of Korea</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">CHAEUM</span>
+        <span>&copy; 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</footer>
+
+<script>
+    // What We Do Navigation
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const items = document.querySelectorAll('.what-we-do-item');
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const itemNum = btn.getAttribute('data-item');
+            navBtns.forEach(b => b.classList.remove('active'));
+            items.forEach(item => item.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelector(`.what-we-do-item[data-item="${itemNum}"]`).classList.add('active');
+        });
+    });
+</script>
+```
+
 </body>
 </html>
