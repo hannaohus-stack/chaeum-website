@@ -5,297 +5,293 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>브랜드 진단 | CHAEUM</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    :root{
-      --bg:#4B4545;
-      --bg2:#2a2625;
-      --card:rgba(255,255,255,0.06);
-      --card-strong:rgba(255,255,255,0.08);
-      --border:rgba(255,255,255,0.12);
-      --text:#FFFDF7;
-      --sub:rgba(255,255,255,0.68);
-      --muted:rgba(255,255,255,0.42);
-      --accent:#ffffff;
-      --danger:#ff7b7b;
+    :root {
+      --bg: #4B4545;
+      --surface: #524c4c;
+      --white: #FFFDF7;
+      --sub: rgba(255,253,247,0.62);
+      --border: rgba(255,253,247,0.12);
+      --user-bg: #FFFDF7;
+      --user-color: #4B4545;
+      --ai-bg: rgba(255,255,255,0.06);
+      --danger: #ff7d7d;
     }
 
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:linear-gradient(135deg,var(--bg) 0%, var(--bg2) 100%);
-      color:var(--text);
-      min-height:100vh;
+    html, body {
+      height: 100%;
     }
 
-    .wrap{
-      max-width:760px;
-      margin:0 auto;
-      padding:32px 20px 60px;
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
     }
 
-    .hero{
-      text-align:center;
-      margin-bottom:28px;
+    .container {
+      max-width: 760px;
+      width: 100%;
+      margin: 0 auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
     }
 
-    .eyebrow{
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      font-weight:700;
-      margin-bottom:12px;
+    .hero {
+      flex-shrink: 0;
+      padding: 12px 4px 18px;
     }
 
-    h1{
-      font-size:44px;
-      line-height:1.08;
-      letter-spacing:-0.04em;
-      font-weight:300;
-      margin-bottom:10px;
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--sub);
+      margin-bottom: 10px;
+      font-weight: 700;
     }
 
-    .subtitle{
-      font-size:15px;
-      color:var(--sub);
-      line-height:1.7;
+    h1 {
+      font-size: 34px;
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
     }
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:28px;
+    .subtitle {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--white);
+      transition: width 0.25s ease;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: var(--sub);
+      min-width: 56px;
+      text-align: right;
+    }
+
+    .chat-shell {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
       backdrop-filter: blur(8px);
-      margin-bottom:18px;
     }
 
-    .section-title{
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      color:var(--muted);
-      font-weight:700;
-      margin-bottom:16px;
+    .chat-window {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 20px;
+      scroll-behavior: smooth;
     }
 
-    .form-group{
-      margin-bottom:18px;
+    .message {
+      display: flex;
+      margin-bottom: 14px;
     }
 
-    label{
-      display:block;
-      font-size:12px;
-      color:var(--muted);
-      font-weight:700;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      margin-bottom:8px;
+    .message.ai {
+      justify-content: flex-start;
     }
 
-    input, textarea, select{
-      width:100%;
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.08);
-      color:var(--text);
-      padding:14px;
-      border-radius:12px;
-      font-size:14px;
-      font-family:inherit;
-      outline:none;
+    .message.user {
+      justify-content: flex-end;
     }
 
-    textarea{
-      min-height:92px;
-      resize:vertical;
-      line-height:1.6;
+    .bubble {
+      max-width: 86%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.75;
+      white-space: pre-line;
+      word-break: break-word;
     }
 
-    input::placeholder, textarea::placeholder{
-      color:#8b8585;
+    .message.ai .bubble {
+      background: var(--ai-bg);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--white);
+      border-top-left-radius: 6px;
     }
 
-    input:focus, textarea:focus, select:focus{
-      border-color:rgba(255,255,255,0.28);
-      background:rgba(255,255,255,0.12);
+    .message.user .bubble {
+      background: var(--user-bg);
+      color: var(--user-color);
+      border-top-right-radius: 6px;
+      font-weight: 500;
     }
 
-    .hint{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.5;
+    .interaction-area {
+      flex-shrink: 0;
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.08);
     }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:8px;
+    .input-row {
+      display: flex;
+      gap: 10px;
     }
 
-    button{
-      appearance:none;
-      border:none;
-      border-radius:12px;
-      padding:14px 18px;
-      font-size:14px;
-      font-weight:700;
-      cursor:pointer;
-      transition:.18s ease;
+    .chat-input {
+      flex: 1;
+      padding: 14px 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      color: var(--white);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
     }
 
-    button:hover:not(:disabled){
-      transform:translateY(-1px);
+    .chat-input::placeholder {
+      color: rgba(255,255,255,0.35);
     }
 
-    button:disabled{
-      opacity:.5;
-      cursor:not-allowed;
+    .chat-input:focus {
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.12);
     }
 
-    .btn-primary{
-      background:var(--accent);
-      color:var(--bg);
-      min-width:180px;
+    .send-btn {
+      padding: 0 18px;
+      border: none;
+      background: var(--white);
+      color: #4B4545;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
     }
 
-    .btn-secondary{
-      background:rgba(255,255,255,0.08);
-      color:var(--text);
-      border:1px solid var(--border);
+    .send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
-    .error{
-      display:none;
-      margin-bottom:16px;
-      padding:12px 14px;
-      border-radius:12px;
-      color:#ffd6d6;
-      background:rgba(255,123,123,0.1);
-      border:1px solid rgba(255,123,123,0.24);
-      font-size:13px;
-      line-height:1.6;
+    .button-grid {
+      display: grid;
+      gap: 10px;
     }
 
-    .loading{
-      display:none;
-      margin-top:16px;
-      padding:16px;
-      border-radius:14px;
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.08);
+    .option-btn {
+      width: 100%;
+      padding: 14px 14px;
+      text-align: left;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      color: var(--white);
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.18s ease;
     }
 
-    .loading p{
-      font-size:13px;
-      color:var(--sub);
-      margin-bottom:10px;
+    .option-btn:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.24);
     }
 
-    .loading-list{
-      display:grid;
-      gap:8px;
+    .helper {
+      font-size: 12px;
+      color: var(--sub);
+      line-height: 1.6;
+      margin-top: 10px;
     }
 
-    .loading-item{
-      font-size:13px;
-      color:#d7f1ff;
-      display:flex;
-      align-items:center;
-      gap:8px;
+    .error {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 10px;
+      line-height: 1.5;
     }
 
-    .dot{
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:#7ed0ff;
-      animation:pulse 1.5s infinite;
+    .typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--ai-bg);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top-left-radius: 6px;
     }
 
-    @keyframes pulse{
-      0%,100%{opacity:.35}
-      50%{opacity:1}
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.75);
+      animation: blink 1.2s infinite;
     }
 
-    .result{
-      display:none;
+    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-2px); }
     }
 
-    .result h2{
-      font-size:30px;
-      font-weight:300;
-      letter-spacing:-0.03em;
-      margin-bottom:18px;
-    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 14px 12px;
+      }
 
-    .result-box{
-      padding:20px;
-      border-radius:16px;
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.08);
-      margin-bottom:16px;
-    }
+      h1 {
+        font-size: 30px;
+      }
 
-    .result-box p{
-      font-size:15px;
-      line-height:1.85;
-      color:var(--sub);
-      margin-bottom:14px;
-    }
+      .chat-window {
+        padding: 16px;
+      }
 
-    .result-box p:last-child{
-      margin-bottom:0;
-    }
+      .interaction-area {
+        padding: 12px;
+      }
 
-    .result-box strong{
-      color:var(--text);
-    }
-
-    .bullet-list{
-      margin:8px 0 14px 0;
-      padding-left:18px;
-    }
-
-    .bullet-list li{
-      color:var(--sub);
-      line-height:1.8;
-      margin-bottom:4px;
-      font-size:15px;
-    }
-
-    .permission{
-      padding:20px;
-      border-radius:16px;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.10);
-    }
-
-    .permission-title{
-      font-size:18px;
-      font-weight:700;
-      margin-bottom:10px;
-      letter-spacing:-0.02em;
-    }
-
-    .permission-text{
-      color:var(--sub);
-      font-size:14px;
-      line-height:1.8;
-      margin-bottom:14px;
-    }
-
-    @media (max-width:768px){
-      .wrap{ padding:24px 16px 48px; }
-      h1{ font-size:36px; }
-      .card{ padding:22px; }
-      .result h2{ font-size:26px; }
+      .bubble {
+        max-width: 92%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <div class="hero">
       <div class="eyebrow">CHAEUM / AI Diagnosis</div>
       <h1>브랜드 진단</h1>
@@ -303,412 +299,383 @@
         채움은 브랜드를 예쁘게 보지 않습니다.<br>
         돈이 흐르는 구조가 있는지 먼저 봅니다.
       </p>
-    </div>
 
-    <div id="error" class="error"></div>
-
-    <div class="card">
-      <div class="section-title">브랜드 정보 입력</div>
-
-      <div class="form-group">
-        <label for="website">웹사이트</label>
-        <input id="website" type="text" placeholder="https://example.com">
-        <p class="hint">웹사이트가 있다면 입력하세요. URL이 없더라도 아래 설명만으로 1차 진단은 가능합니다.</p>
-      </div>
-
-      <div class="form-group">
-        <label for="brandDescription">브랜드 설명</label>
-        <textarea id="brandDescription" placeholder="예: 프리미엄 말차를 현대적인 방식으로 제안하는 라이프스타일 티 브랜드"></textarea>
-        <p class="hint">무엇을 누구에게 어떤 방식으로 파는 브랜드인지 간단히 적어주세요.</p>
-      </div>
-
-      <div class="form-group">
-        <label for="targetCustomer">주요 고객</label>
-        <input id="targetCustomer" type="text" placeholder="예: 30대 여성 직장인 / 소규모 브랜드 창업자 / B2B 카페 운영자">
-      </div>
-
-      <div class="form-group">
-        <label for="mainProduct">대표 제품 / 서비스</label>
-        <input id="mainProduct" type="text" placeholder="예: 브랜드 컨설팅 / 말차 / 구독 상품 / 디지털 템플릿">
-      </div>
-
-      <div class="form-group">
-        <label for="mainProblem">현재 가장 큰 고민</label>
-        <select id="mainProblem">
-          <option value="">선택해주세요</option>
-          <option value="messaging">브랜드 메시지가 약함</option>
-          <option value="traffic">고객 유입이 부족함</option>
-          <option value="conversion">전환율이 낮음</option>
-          <option value="positioning">포지셔닝이 불명확함</option>
-          <option value="growth">장기 성장 구조가 없음</option>
-        </select>
-      </div>
-
-      <div class="actions">
-        <button id="runBtn" class="btn-primary" onclick="runDiagnosis()">AI 진단 시작</button>
-      </div>
-
-      <div id="loading" class="loading">
-        <p>입력하신 내용을 바탕으로 구조를 분석하고 있습니다.</p>
-        <div class="loading-list">
-          <div class="loading-item"><span class="dot"></span><span>브랜드 포지셔닝 해석 중</span></div>
-          <div class="loading-item"><span class="dot" style="animation-delay:.25s"></span><span>전환 구조 가능성 분석 중</span></div>
-          <div class="loading-item"><span class="dot" style="animation-delay:.5s"></span><span>핵심 병목 정리 중</span></div>
+      <div class="progress-wrap">
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
         </div>
+        <div id="progressText" class="progress-text">0 / 5</div>
       </div>
     </div>
 
-    <div id="resultSection" class="card result">
-      <h2>브랜드 진단 결과</h2>
+    <div class="chat-shell">
+      <div id="chatWindow" class="chat-window"></div>
 
-      <div class="result-box" id="resultMessage"></div>
+      <div class="interaction-area">
+        <div id="inputWrapper">
+          <div class="input-row">
+            <input id="chatInput" class="chat-input" type="text" placeholder="답변을 입력하세요" />
+            <button id="sendBtn" class="send-btn">전송</button>
+          </div>
+          <div id="helperText" class="helper"></div>
+          <div id="errorText" class="error"></div>
+        </div>
 
-      <div class="permission">
-        <div class="permission-title">더 자세한 구조 분석을 보시겠습니까?</div>
-        <div class="permission-text">
-          전체 리포트에서는 현재 브랜드가 어떤 구조 단계에 있고,
-          왜 막히는지, 무엇을 먼저 설계해야 하는지까지 정리해드립니다.
-        </div>
-        <div class="actions">
-          <button class="btn-primary" onclick="goReport()">전체 분석 리포트 보기</button>
-          <button class="btn-secondary" onclick="hideResult()">다시 입력하기</button>
-        </div>
+        <div id="buttonWrapper" class="button-grid" style="display:none;"></div>
       </div>
     </div>
   </div>
 
   <script>
-    function showError(message){
-      const el = document.getElementById('error');
-      el.textContent = message;
-      el.style.display = 'block';
-      clearTimeout(showError._timer);
-      showError._timer = setTimeout(() => {
-        el.style.display = 'none';
-      }, 2800);
+    const chatWindow = document.getElementById('chatWindow');
+    const inputWrapper = document.getElementById('inputWrapper');
+    const buttonWrapper = document.getElementById('buttonWrapper');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const helperText = document.getElementById('helperText');
+    const errorText = document.getElementById('errorText');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+
+    const steps = [
+      {
+        key: 'website',
+        msg: '먼저, 진단할 브랜드의 웹사이트 주소를 알려주세요.\n웹사이트가 없어도 괜찮습니다. 없으면 "없음"이라고 적어주세요.',
+        type: 'text',
+        placeholder: 'https://example.com 또는 없음',
+        helper: '웹사이트가 있다면 URL을, 없다면 없음이라고 적어주세요.'
+      },
+      {
+        key: 'brandDescription',
+        msg: '당신의 브랜드를 한 문장으로 설명해 주세요.',
+        type: 'text',
+        placeholder: '예: 프리미엄 말차를 현대적으로 제안하는 라이프스타일 티 브랜드',
+        helper: '무엇을 누구에게 어떤 방식으로 파는 브랜드인지 간단히 적어주세요.'
+      },
+      {
+        key: 'targetCustomer',
+        msg: '주요 고객은 어떤 사람들인가요?',
+        type: 'text_or_skip',
+        placeholder: '예: 30대 여성 직장인 / 소규모 브랜드 운영자',
+        helper: '모르면 “모르겠습니다” 버튼을 눌러도 됩니다.'
+      },
+      {
+        key: 'mainProduct',
+        msg: '대표 제품 또는 서비스는 무엇인가요?',
+        type: 'text_or_skip',
+        placeholder: '예: 브랜드 컨설팅 / 저당 그래놀라 / 말차 클래스',
+        helper: '현재 가장 대표적인 제품 또는 서비스를 적어주세요.'
+      },
+      {
+        key: 'mainProblem',
+        msg: '현재 브랜드의 가장 큰 고민은 무엇인가요?',
+        type: 'select',
+        options: [
+          { label: '브랜드 메시지가 약함', value: 'messaging' },
+          { label: '고객 유입이 부족함', value: 'traffic' },
+          { label: '전환율이 낮음', value: 'conversion' },
+          { label: '포지셔닝이 불명확함', value: 'positioning' },
+          { label: '장기 성장 구조가 없음', value: 'growth' }
+        ],
+        helper: '지금 가장 먼저 해결하고 싶은 문제를 선택하세요.'
+      }
+    ];
+
+    let currentStep = 0;
+    let userData = {};
+
+    function scrollToBottom() {
+      chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
-    function normalizeUrl(url){
-      if (!url) return '';
+    function renderMessage(sender, text, isHtml = false) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${sender}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble[isHtml ? 'innerHTML' : 'textContent'] = text;
+
+      msgDiv.appendChild(bubble);
+      chatWindow.appendChild(msgDiv);
+      scrollToBottom();
+    }
+
+    function renderUserMessage(text) {
+      renderMessage('user', text);
+    }
+
+    function showTyping() {
+      const wrap = document.createElement('div');
+      wrap.className = 'message ai';
+      wrap.id = 'typingRow';
+      wrap.innerHTML = `
+        <div class="typing">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+      `;
+      chatWindow.appendChild(wrap);
+      scrollToBottom();
+    }
+
+    function removeTyping() {
+      const typingRow = document.getElementById('typingRow');
+      if (typingRow) typingRow.remove();
+    }
+
+    function updateProgress() {
+      const total = steps.length;
+      const completed = Math.min(currentStep, total);
+      const percent = (completed / total) * 100;
+      progressFill.style.width = `${percent}%`;
+      progressText.textContent = `${completed} / ${total}`;
+    }
+
+    function clearError() {
+      errorText.textContent = '';
+    }
+
+    function setError(message) {
+      errorText.textContent = message;
+    }
+
+    function showInput(placeholder, helper, allowSkip = false) {
+      inputWrapper.style.display = 'block';
+      buttonWrapper.style.display = allowSkip ? 'grid' : 'none';
+      chatInput.value = '';
+      chatInput.placeholder = placeholder || '답변을 입력하세요';
+      helperText.textContent = helper || '';
+      clearError();
+
+      if (allowSkip) {
+        buttonWrapper.innerHTML = `<button class="option-btn" id="skipBtn">모르겠습니다</button>`;
+        document.getElementById('skipBtn').addEventListener('click', () => {
+          handleTextStep('모르겠습니다');
+        });
+      } else {
+        buttonWrapper.innerHTML = '';
+      }
+
+      setTimeout(() => chatInput.focus(), 50);
+    }
+
+    function showButtons(options, helper) {
+      inputWrapper.style.display = 'none';
+      buttonWrapper.style.display = 'grid';
+      helperText.textContent = helper || '';
+      clearError();
+
+      buttonWrapper.innerHTML = options.map(
+        opt => `<button class="option-btn" data-value="${opt.value}">${opt.label}</button>`
+      ).join('');
+
+      [...buttonWrapper.querySelectorAll('.option-btn')].forEach(btn => {
+        btn.addEventListener('click', () => {
+          const value = btn.getAttribute('data-value');
+          const label = btn.textContent;
+          handleSelectStep(value, label);
+        });
+      });
+    }
+
+    async function nextStep() {
+      updateProgress();
+
+      if (currentStep >= steps.length) {
+        await finishDiagnosis();
+        return;
+      }
+
+      const step = steps[currentStep];
+
+      showTyping();
+      await wait(450);
+      removeTyping();
+
+      renderMessage('ai', step.msg);
+
+      if (step.type === 'text') {
+        showInput(step.placeholder, step.helper, false);
+      } else if (step.type === 'text_or_skip') {
+        showInput(step.placeholder, step.helper, true);
+      } else if (step.type === 'select') {
+        showButtons(step.options, step.helper);
+      }
+    }
+
+    function wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function normalizeUrl(url) {
+      if (!url || url === '없음') return '';
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
         return 'https://' + url;
       }
       return url;
     }
 
-    function isValidUrl(url){
+    function isValidUrl(url) {
       if (!url) return true;
-      try{
+      try {
         new URL(normalizeUrl(url));
         return true;
-      }catch{
+      } catch {
         return false;
       }
     }
 
-    function extractBrandName(url, brandDescription){
-      if (url) {
-        try{
-          const hostname = new URL(normalizeUrl(url)).hostname.replace('www.', '');
-          const name = hostname.split('.')[0];
-          return name.charAt(0).toUpperCase() + name.slice(1);
-        }catch{}
+    function handleTextStep(value) {
+      clearError();
+      const step = steps[currentStep];
+      const trimmed = value.trim();
+
+      if (!trimmed) {
+        setError('답변을 입력해주세요.');
+        return;
       }
-      if (brandDescription) {
-        return '입력 브랜드';
+
+      if (step.key === 'website') {
+        const websiteValue = trimmed === '없음' ? '' : trimmed;
+        if (websiteValue && !isValidUrl(websiteValue)) {
+          setError('유효한 URL 형식이 아닙니다. 웹사이트가 없으면 "없음"이라고 입력해주세요.');
+          return;
+        }
+        userData[step.key] = normalizeUrl(websiteValue);
+      } else {
+        userData[step.key] = trimmed;
       }
-      return 'Brand';
+
+      renderUserMessage(trimmed);
+      currentStep += 1;
+      nextStep();
     }
 
-    function detectBottleneck(data){
-      const desc = (data.brandDescription || '').toLowerCase();
-      const product = (data.mainProduct || '').toLowerCase();
-      const target = (data.targetCustomer || '').toLowerCase();
-      const problem = data.mainProblem || '';
+    function handleSelectStep(value, label) {
+      clearError();
+      const step = steps[currentStep];
+      userData[step.key] = value;
+      userData[`${step.key}Label`] = label;
 
-      if (!product || product.length < 3) {
-        return {
-          key: 'product-planning',
-          label: '상품 기획 구조 부족',
-          summary: '현재 단계에서는 마케팅보다 먼저 무엇을 어떤 구조로 팔 것인지에 대한 상품 설계가 필요해 보입니다.'
-        };
-      }
-
-      if (!target || target.length < 3) {
-        return {
-          key: 'target-clarity',
-          label: '타깃 정의 부족',
-          summary: '현재 브랜드는 제품 설명은 있으나 누구를 위한 구조인지가 약해 전환 메시지가 흐려질 가능성이 큽니다.'
-        };
-      }
-
-      if (problem === 'traffic') {
-        return {
-          key: 'traffic-funnel',
-          label: '유입 이후 퍼널 구조 부족',
-          summary: '유입 자체보다 메타 → 랜딩 → 전환으로 이어지는 설계가 약해 보입니다.'
-        };
-      }
-
-      if (problem === 'conversion') {
-        return {
-          key: 'conversion-structure',
-          label: '전환 구조 부족',
-          summary: '지금 가장 큰 문제는 더 많은 노출이 아니라 구매로 이어지는 구조의 부재일 가능성이 높습니다.'
-        };
-      }
-
-      if (problem === 'messaging') {
-        return {
-          key: 'message-clarity',
-          label: '브랜드 메시지 선명도 부족',
-          summary: '브랜드가 무엇을 파는지는 보이지만 왜 이 브랜드여야 하는지가 약할 가능성이 큽니다.'
-        };
-      }
-
-      if (problem === 'positioning') {
-        return {
-          key: 'positioning',
-          label: '포지셔닝 구조 부족',
-          summary: '브랜드가 놓인 시장 좌표와 차별점이 명확하게 구조화되지 않았을 가능성이 큽니다.'
-        };
-      }
-
-      if (problem === 'growth') {
-        return {
-          key: 'growth-system',
-          label: '반복매출 구조 부족',
-          summary: '현재 구조는 판매는 가능해도 자동으로 돈이 흐르는 구조까지는 연결되지 않았을 가능성이 높습니다.'
-        };
-      }
-
-      return {
-        key: 'brand-funnel',
-        label: '브랜드 퍼널 구조 부재',
-        summary: '현재 브랜드는 제품은 존재하지만 유입 → 메시지 → 구매 → 반복매출의 흐름이 하나의 구조로 연결되어 있지 않습니다.'
-      };
+      renderUserMessage(label);
+      currentStep += 1;
+      nextStep();
     }
 
-    function buildTalkMessage(data){
+    function buildTalkResultHtml(data) {
       return `
-        <p><strong>현재 가장 큰 병목은 '${data.bottleneckLabel}'입니다.</strong></p>
-
-        <p>${data.shortSummary}</p>
-
-        <p>이 경우 보통 다음 문제가 발생합니다.</p>
-
-        <ul class="bullet-list">
-          <li>마케팅을 해도 매출이 안정적으로 쌓이지 않습니다.</li>
-          <li>대표자 의존도가 계속 높아집니다.</li>
-          <li>브랜드보다 상품 중심 판매로 흘러갈 가능성이 큽니다.</li>
-        </ul>
-
-        <p>
-          즉 문제는 단순한 디자인이나 홍보가 아니라
-          <strong>'돈이 흐르는 구조'</strong>입니다.
-        </p>
-
-        <p>
-          채움은 브랜드를 디자인하지 않습니다.<br>
-          <strong>제품 → 고객 → 구매 → 반복매출</strong>이 연결되는 구조를 설계합니다.
-        </p>
+        <strong>현재 가장 큰 병목은 '${escapeHtml(data.bottleneckLabel)}'입니다.</strong><br><br>
+        ${escapeHtml(data.shortSummary)}<br><br>
+        이 경우 보통 다음 문제가 발생합니다.<br><br>
+        • 마케팅을 해도 매출이 안정적으로 쌓이지 않습니다.<br>
+        • 대표자 의존도가 계속 높아집니다.<br>
+        • 브랜드보다 상품 중심 판매로 흘러갈 가능성이 큽니다.<br><br>
+        즉 문제는 단순한 디자인이나 홍보가 아니라 <strong>'돈이 흐르는 구조'</strong>입니다.<br><br>
+        채움은 브랜드를 디자인하지 않습니다.<br>
+        <strong>제품 → 고객 → 구매 → 반복매출</strong>이 연결되는 구조를 설계합니다.
       `;
     }
 
-    function buildReportData(input, diagnosis){
-      const website = normalizeUrl(input.website);
-      const brandName = extractBrandName(website, input.brandDescription);
-
-      let recommendedAction = '브랜드 메시지와 오퍼 구조를 먼저 정리해야 합니다.';
-      let recommendedService = '브랜드 구조 설계';
-      let recommendedSystem = '채움 구조 설계 템플릿';
-
-      switch (diagnosis.key) {
-        case 'product-planning':
-          recommendedAction = '지금은 랜딩보다 먼저 무엇을 어떻게 팔 것인지 상품 구조부터 설계해야 합니다.';
-          recommendedService = '상품 기획 + 오퍼 구조 설계';
-          recommendedSystem = '채움 상품기획 시스템';
-          break;
-        case 'traffic-funnel':
-          recommendedAction = '메타 → 랜딩 → 전환 흐름으로 연결되는 퍼널 설계가 우선입니다.';
-          recommendedService = '메타 광고 퍼널 설계';
-          recommendedSystem = '채움 랜딩·퍼널 시스템';
-          break;
-        case 'conversion-structure':
-          recommendedAction = '유입을 늘리기보다 랜딩과 오퍼, CTA 구조를 먼저 바꿔야 합니다.';
-          recommendedService = '랜딩 + 전환 설계';
-          recommendedSystem = '채움 전환 구조 시스템';
-          break;
-        case 'message-clarity':
-          recommendedAction = '첫 화면에서 왜 이 브랜드인지 이해되도록 메시지 구조를 재정렬해야 합니다.';
-          recommendedService = '브랜드 메시지 설계';
-          recommendedSystem = '채움 메시지 설계 템플릿';
-          break;
-        case 'positioning':
-          recommendedAction = '경쟁 구도 안에서 이 브랜드의 좌표를 다시 정의해야 합니다.';
-          recommendedService = '포지셔닝 재설계';
-          recommendedSystem = '채움 포지셔닝 시스템';
-          break;
-        case 'growth-system':
-          recommendedAction = '일회성 판매를 반복매출 구조로 전환하는 시스템 설계가 필요합니다.';
-          recommendedService = '반복매출 구조 설계';
-          recommendedSystem = '채움 운영 시스템';
-          break;
-      }
-
-      return {
-        brandName,
-        website,
-        brandDescription: input.brandDescription || '',
-        targetCustomer: input.targetCustomer || '',
-        mainProduct: input.mainProduct || '',
-        mainProblem: input.mainProblem || '',
-        bottleneckKey: diagnosis.key,
-        bottleneckLabel: diagnosis.label,
-        shortSummary: diagnosis.summary,
-        reportSummary: `현재 브랜드는 제품 또는 서비스 자체보다, 그것이 어떻게 유입과 구매, 반복매출로 이어지는지가 구조화되지 않았을 가능성이 큽니다. 채움 관점에서 이 브랜드의 핵심 문제는 '${diagnosis.label}'로 해석됩니다.`,
-        structureAnalysis: `현재 구조는 제품 또는 서비스 설명은 존재하지만, 고객이 왜 이 브랜드를 선택해야 하는지와 어떤 경로로 구매해야 하는지가 하나의 설계로 연결되지 않았을 가능성이 높습니다. 즉 브랜드가 아니라 운영에 의존하는 상태일 수 있습니다.`,
-        futureRisk: `이 구조가 유지되면 광고 효율 저하, 대표자 의존 증가, 가격 경쟁 심화, 반복매출 부족으로 이어질 수 있습니다.`,
-        chaeumInsight: `채움은 브랜드를 예쁘게 만드는 회사가 아니라, 돈이 흐르는 구조를 만드는 회사입니다. 지금 단계에서 필요한 것은 더 많은 홍보보다 '${recommendedAction}'입니다.`,
-        recommendedAction,
-        recommendedService,
-        recommendedSystem,
-        timestamp: new Date().toISOString()
-      };
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
     }
 
-    function mapProblemLabel(value){
-      const map = {
-        messaging: '브랜드 메시지가 약함',
-        traffic: '고객 유입이 부족함',
-        conversion: '전환율이 낮음',
-        positioning: '포지셔닝이 불명확함',
-        growth: '장기 성장 구조가 없음'
-      };
-      return map[value] || '-';
+    async function finishDiagnosis() {
+      progressFill.style.width = '100%';
+      progressText.textContent = `${steps.length} / ${steps.length}`;
+
+      inputWrapper.style.display = 'none';
+      buttonWrapper.style.display = 'none';
+      helperText.textContent = '';
+      clearError();
+
+      showTyping();
+      await wait(700);
+      removeTyping();
+      renderMessage('ai', '입력하신 내용을 바탕으로 구조를 정리하고 있습니다.');
+
+      showTyping();
+      await wait(1200);
+      removeTyping();
+
+      try {
+        const payload = {
+          website: userData.website || '',
+          brandDescription: userData.brandDescription || '',
+          targetCustomer: userData.targetCustomer || '',
+          mainProduct: userData.mainProduct || '',
+          mainProblem: userData.mainProblem || '',
+          mainProblemLabel: userData.mainProblemLabel || ''
+        };
+
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const reportData = await response.json();
+
+        if (!response.ok) {
+          throw new Error(reportData.error || '분석에 실패했습니다.');
+        }
+
+        localStorage.setItem('diagnosisData', JSON.stringify(reportData));
+
+        renderMessage('ai', buildTalkResultHtml(reportData), true);
+        renderMessage('ai', '이 브랜드에 맞는 더 자세한 구조 분석을 보시겠습니까?');
+
+        buttonWrapper.style.display = 'grid';
+        buttonWrapper.innerHTML = `
+          <button class="option-btn" id="viewReportBtn">전체 분석 리포트 보기</button>
+          <button class="option-btn" id="restartBtn">처음부터 다시 하기</button>
+        `;
+
+        document.getElementById('viewReportBtn').addEventListener('click', () => {
+          window.location.href = './report.html';
+        });
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+          localStorage.removeItem('diagnosisData');
+          location.reload();
+        });
+      } catch (error) {
+        console.error(error);
+        renderMessage('ai', '분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        buttonWrapper.style.display = 'grid';
+        buttonWrapper.innerHTML = `<button class="option-btn" id="restartBtn">처음부터 다시 하기</button>`;
+        document.getElementById('restartBtn').addEventListener('click', () => location.reload());
+      }
     }
 
-    async function runDiagnosis(){
-      const runBtn = document.getElementById('runBtn');
-      const loading = document.getElementById('loading');
-      const resultSection = document.getElementById('resultSection');
-
-      const website = document.getElementById('website').value.trim();
-      const brandDescription = document.getElementById('brandDescription').value.trim();
-      const targetCustomer = document.getElementById('targetCustomer').value.trim();
-      const mainProduct = document.getElementById('mainProduct').value.trim();
-      const mainProblem = document.getElementById('mainProblem').value;
-
-      if (!brandDescription && !website) {
-        showError('웹사이트 또는 브랜드 설명 중 하나는 입력해주세요.');
-        return;
+    sendBtn.addEventListener('click', () => {
+      const step = steps[currentStep];
+      if (!step) return;
+      if (step.type === 'text' || step.type === 'text_or_skip') {
+        handleTextStep(chatInput.value);
       }
-
-      if (website && !isValidUrl(website)) {
-        showError('유효한 URL 형식이 아닙니다.');
-        return;
-      }
-
-      runBtn.disabled = true;
-      loading.style.display = 'block';
-      resultSection.style.display = 'none';
-
-      const input = {
-        website,
-        brandDescription,
-        targetCustomer,
-        mainProduct,
-        mainProblem,
-        mainProblemLabel: mapProblemLabel(mainProblem)
-      };
-
-      // 실제 GPT API 연결 시 이 부분을 fetch('/api/analyze', ...)로 교체하면 됩니다.
-      // 지금은 붙여넣어서 바로 보실 수 있도록 프론트에서 임시 진단 로직으로 처리합니다.
-      await new Promise(resolve => setTimeout(resolve, 1800));
-
-      async function runDiagnosis(){
-  const runBtn = document.getElementById('runBtn');
-  const loading = document.getElementById('loading');
-  const resultSection = document.getElementById('resultSection');
-
-  const website = document.getElementById('website').value.trim();
-  const brandDescription = document.getElementById('brandDescription').value.trim();
-  const targetCustomer = document.getElementById('targetCustomer').value.trim();
-  const mainProduct = document.getElementById('mainProduct').value.trim();
-  const mainProblem = document.getElementById('mainProblem').value;
-
-  if (!brandDescription && !website) {
-    showError('웹사이트 또는 브랜드 설명 중 하나는 입력해주세요.');
-    return;
-  }
-
-  if (website && !isValidUrl(website)) {
-    showError('유효한 URL 형식이 아닙니다.');
-    return;
-  }
-
-  runBtn.disabled = true;
-  loading.style.display = 'block';
-  resultSection.style.display = 'none';
-
-  const input = {
-    website,
-    brandDescription,
-    targetCustomer,
-    mainProduct,
-    mainProblem,
-    mainProblemLabel: mapProblemLabel(mainProblem)
-  };
-
-  try {
-    const response = await fetch('/api/analyze', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(input)
     });
 
-    const reportData = await response.json();
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const step = steps[currentStep];
+        if (step && (step.type === 'text' || step.type === 'text_or_skip')) {
+          e.preventDefault();
+          handleTextStep(chatInput.value);
+        }
+      }
+    });
 
-    if (!response.ok) {
-      throw new Error(reportData.error || '분석에 실패했습니다.');
-    }
-
-    localStorage.setItem('diagnosisData', JSON.stringify(reportData));
-
-    document.getElementById('resultMessage').innerHTML = buildTalkMessage(reportData);
-    resultSection.style.display = 'block';
-    resultSection.scrollIntoView({ behavior:'smooth', block:'start' });
-
-  } catch (error) {
-    console.error(error);
-    showError('분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-  } finally {
-    loading.style.display = 'none';
-    runBtn.disabled = false;
-  }
-}
-      
-      localStorage.setItem('diagnosisData', JSON.stringify(reportData));
-
-      document.getElementById('resultMessage').innerHTML = buildTalkMessage(reportData);
-      resultSection.style.display = 'block';
-
-      loading.style.display = 'none';
-      runBtn.disabled = false;
-
-      resultSection.scrollIntoView({ behavior:'smooth', block:'start' });
-    }
-
-    function goReport(){
-      window.location.href = './report.html';
-    }
-
-    function hideResult(){
-      document.getElementById('resultSection').style.display = 'none';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    nextStep();
   </script>
 </body>
 </html>
