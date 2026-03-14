@@ -20,7 +20,6 @@ function extractBrandName(url = '', brandDescription = '') {
       return name.charAt(0).toUpperCase() + name.slice(1);
     } catch {}
   }
-
   if (brandDescription) return '입력 브랜드';
   return 'Brand';
 }
@@ -96,7 +95,7 @@ export default async function handler(req, res) {
   const prompt = `
 You are a senior brand strategist at CHAEUM.
 
-CHAEUM does NOT sell vague branding advice.
+CHAEUM does not sell vague branding advice.
 CHAEUM sells revenue structure:
 - brand structure
 - funnel structure
@@ -106,25 +105,16 @@ CHAEUM sells revenue structure:
 - website structure
 - repeat revenue structure
 
-Your job is to diagnose what structural bottleneck this brand has.
+Your task is to identify the most important structural bottleneck.
 
-Analyze the input below and determine:
-1. the single most important bottleneck
-2. why it is the real issue
-3. what structural work is needed first
-4. what CHAEUM should likely sell to this client
+You must think like a sharp consultant:
+- not generic
+- not soft
+- not motivational
+- not decorative branding
+- focus on what blocks money flow
 
-Important:
-- Be sharp, professional, and specific.
-- Do NOT sound generic.
-- Do NOT write like a motivational coach.
-- Focus on "money-flow structure", "brand funnel", "offer structure", "conversion structure".
-- If product planning is missing, say product planning is needed first.
-- If traffic exists but conversion is weak, say landing/conversion structure is needed.
-- If messaging is unclear, say positioning/message structure is needed.
-- If repeat revenue is weak, say repeat revenue structure is needed.
-
-Return ONLY valid JSON using this exact structure:
+Return ONLY valid JSON with this exact shape:
 
 {
   "bottleneckKey": "",
@@ -139,7 +129,14 @@ Return ONLY valid JSON using this exact structure:
   "recommendedSystem": ""
 }
 
-INPUT:
+Rules:
+- If product planning is the missing piece, say so clearly.
+- If conversion is weak, point to landing / offer / CTA / funnel.
+- If traffic is the issue, distinguish between true traffic problem and traffic-after-click structure problem.
+- If branding is weak, translate it into positioning/message structure.
+- Always recommend what CHAEUM should likely sell.
+
+INPUT
 Brand name: ${brandName}
 Website: ${website || '없음'}
 Brand description: ${brandDescription || '없음'}
@@ -154,41 +151,41 @@ Main problem selected by user: ${mainProblemLabel || '없음'}
       messages: [
         {
           role: 'system',
-          content: 'You are an expert in brand architecture, funnel strategy, and revenue structure design.'
+          content: 'You are an expert in brand architecture, offer design, funnel strategy, and revenue structure.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
-      temperature: 0.7
+      temperature: 0.6
     });
 
     const raw = completion.choices?.[0]?.message?.content || '';
     const cleaned = cleanJsonText(raw);
     const parsed = JSON.parse(cleaned);
 
-    const result = {
+    const fallback = fallbackReport(input);
+
+    return res.status(200).json({
       brandName,
       website,
       brandDescription,
       targetCustomer,
       mainProduct,
       mainProblem,
-      bottleneckKey: parsed.bottleneckKey || 'brand-funnel',
-      bottleneckLabel: parsed.bottleneckLabel || '브랜드 퍼널 구조 부재',
-      shortSummary: parsed.shortSummary || fallbackReport(input).shortSummary,
-      reportSummary: parsed.reportSummary || fallbackReport(input).reportSummary,
-      structureAnalysis: parsed.structureAnalysis || fallbackReport(input).structureAnalysis,
-      futureRisk: parsed.futureRisk || fallbackReport(input).futureRisk,
-      chaeumInsight: parsed.chaeumInsight || fallbackReport(input).chaeumInsight,
-      recommendedAction: parsed.recommendedAction || fallbackReport(input).recommendedAction,
-      recommendedService: parsed.recommendedService || fallbackReport(input).recommendedService,
-      recommendedSystem: parsed.recommendedSystem || fallbackReport(input).recommendedSystem,
+      bottleneckKey: parsed.bottleneckKey || fallback.bottleneckKey,
+      bottleneckLabel: parsed.bottleneckLabel || fallback.bottleneckLabel,
+      shortSummary: parsed.shortSummary || fallback.shortSummary,
+      reportSummary: parsed.reportSummary || fallback.reportSummary,
+      structureAnalysis: parsed.structureAnalysis || fallback.structureAnalysis,
+      futureRisk: parsed.futureRisk || fallback.futureRisk,
+      chaeumInsight: parsed.chaeumInsight || fallback.chaeumInsight,
+      recommendedAction: parsed.recommendedAction || fallback.recommendedAction,
+      recommendedService: parsed.recommendedService || fallback.recommendedService,
+      recommendedSystem: parsed.recommendedSystem || fallback.recommendedSystem,
       timestamp: new Date().toISOString()
-    };
-
-    return res.status(200).json(result);
+    });
   } catch (error) {
     console.error('Analyze API error:', error);
     return res.status(200).json(fallbackReport(input));
