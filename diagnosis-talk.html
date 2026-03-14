@@ -626,9 +626,70 @@
       // 지금은 붙여넣어서 바로 보실 수 있도록 프론트에서 임시 진단 로직으로 처리합니다.
       await new Promise(resolve => setTimeout(resolve, 1800));
 
-      const diagnosis = detectBottleneck(input);
-      const reportData = buildReportData(input, diagnosis);
+      async function runDiagnosis(){
+  const runBtn = document.getElementById('runBtn');
+  const loading = document.getElementById('loading');
+  const resultSection = document.getElementById('resultSection');
 
+  const website = document.getElementById('website').value.trim();
+  const brandDescription = document.getElementById('brandDescription').value.trim();
+  const targetCustomer = document.getElementById('targetCustomer').value.trim();
+  const mainProduct = document.getElementById('mainProduct').value.trim();
+  const mainProblem = document.getElementById('mainProblem').value;
+
+  if (!brandDescription && !website) {
+    showError('웹사이트 또는 브랜드 설명 중 하나는 입력해주세요.');
+    return;
+  }
+
+  if (website && !isValidUrl(website)) {
+    showError('유효한 URL 형식이 아닙니다.');
+    return;
+  }
+
+  runBtn.disabled = true;
+  loading.style.display = 'block';
+  resultSection.style.display = 'none';
+
+  const input = {
+    website,
+    brandDescription,
+    targetCustomer,
+    mainProduct,
+    mainProblem,
+    mainProblemLabel: mapProblemLabel(mainProblem)
+  };
+
+  try {
+    const response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(input)
+    });
+
+    const reportData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(reportData.error || '분석에 실패했습니다.');
+    }
+
+    localStorage.setItem('diagnosisData', JSON.stringify(reportData));
+
+    document.getElementById('resultMessage').innerHTML = buildTalkMessage(reportData);
+    resultSection.style.display = 'block';
+    resultSection.scrollIntoView({ behavior:'smooth', block:'start' });
+
+  } catch (error) {
+    console.error(error);
+    showError('분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+  } finally {
+    loading.style.display = 'none';
+    runBtn.disabled = false;
+  }
+}
+      
       localStorage.setItem('diagnosisData', JSON.stringify(reportData));
 
       document.getElementById('resultMessage').innerHTML = buildTalkMessage(reportData);
