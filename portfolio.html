@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +7,8 @@
     <title>Case Study | CHAEUM</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+```
     :root {
         --bg: #4B4545;
         --white: #FFFDF7;
@@ -194,9 +197,12 @@
         .footer-content { grid-template-columns: 1fr 1fr; }
     }
 </style>
+```
 
 </head>
 <body>
+
+```
 <header>
     <div class="header-wrapper">
         <a href="./index.html" class="logo">CHAEUM</a>
@@ -228,6 +234,8 @@
         <button class="filter-btn active" data-filter="all">모든 사례</button>
         <button class="filter-btn" data-filter="positioning">포지셔닝</button>
         <button class="filter-btn" data-filter="experience">경험 설계</button>
+        <button class="filter-btn" data-filter="channel">채널 확장</button>
+        <button class="filter-btn" data-filter="personal">개인 브랜드</button>
     </div>
 </div>
 
@@ -235,6 +243,14 @@
 <section class="cases-section">
     <div class="cases-inner">
         <div class="cases-grid">
+            <!-- Eath Library -->
+            <a href="#" class="case-card" data-category="positioning">
+                <div class="case-photo">
+                    <img src="./Image/eathlibrary-01.jpeg" alt="Eath Library"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="case-photo-placeholder" style="display:none;">
+                        <div class="case-photo-placeholder-text">Eath Library</div>
+                    </div>
 
             <!-- Deokhwa -->
             <a href="./case-deokhwa.html" class="case-card" data-category="positioning">
@@ -273,6 +289,60 @@
                     <p class="case-desc">
                         덕화명란의 30년 철학을 오프라인으로 체험하는 브랜드 쇼룸 설계.
                         브랜드 경험이 팬덤이 되고, 팬덤이 온라인 매출로 연결되는 구조.
+                    </p>
+                    <span class="case-link">자세히 보기 →</span>
+                </div>
+            </a>
+
+            <!-- Hong Shin Ae -->
+            <a href="#" class="case-card" data-category="personal">
+                <div class="case-photo">
+                    <img src="./Image/hongshinae-01.jpeg" alt="홍신애"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="case-photo-placeholder" style="display:none;">
+                        <div class="case-photo-placeholder-text">Hong Shin Ae</div>
+                    </div>
+                </div>
+                <div class="case-body">
+                    <div class="case-tag">푸드 · 개인 브랜드 상품화</div>
+                    <h2 class="case-title">홍신애</h2>
+                    <div class="case-metric">개인 → 브랜드<br>전환</div>
+                    <p class="case-desc">
+                        방송 활동의 유명 요리연구가의 개인 이미지를 밀키트 상품으로 전환.
+                        홈쇼핑 매회 100% 판매율, 프리미엄 밀키트 시장 상위 5% 달성.
+                    </p>
+                    <span class="case-link">자세히 보기 →</span>
+                </div>
+            </a>
+
+            <!-- The Butter Pantry -->
+            <a href="#" class="case-card" data-category="channel">
+                <div class="case-photo">
+                    <img src="./Image/butterpantry-01.jpeg" alt="The Butter Pantry"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="case-photo-placeholder" style="display:none;">
+                        <div class="case-photo-placeholder-text">The Butter Pantry</div>
+                    </div>
+                </div>
+                <div class="case-body">
+                    <div class="case-tag">푸드 · 채널 확장</div>
+                    <h2 class="case-title">The Butter Pantry</h2>
+                    <div class="case-metric">로컬 → 전국<br>채널 확장</div>
+                    <p class="case-desc">
+                        성수동 소규모 매장에서 시작한 프리미엄 버터 브랜드.
+                        개인사업 → 브랜드 기업으로 재정의 후 홈쇼핑 · 신세계마트 입점 성공.
+                    </p>
+                    <span class="case-link">자세히 보기 →</span>
+                </div>
+            </a>
+                </div>
+                <div class="case-body">
+                    <div class="case-tag">뷰티 · 럭셔리 × 대중화</div>
+                    <h2 class="case-title">Eath Library</h2>
+                    <div class="case-metric">럭셔리 × 대중화<br>동시 달성</div>
+                    <p class="case-desc">
+                        성분과 품질이 우수하지만 럭셔리 고객층에만 머물던 스킨케어 브랜드.
+                        카카오선물하기 입점과 쇼룸 개선으로 일반 소비자 유입 확대.
                     </p>
                     <span class="case-link">자세히 보기 →</span>
                 </div>
@@ -355,6 +425,7 @@
         });
     });
 </script>
+```
 
 </body>
 </html>
