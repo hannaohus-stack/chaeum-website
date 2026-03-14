@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eath Library | CHAEUM Case Study</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #4B4545; --white: #FFFDF7; --sub-text: rgba(255,253,247,0.55); --border: rgba(255,253,247,0.12); }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background-color: var(--bg); color: var(--white); line-height: 1.6; letter-spacing: -0.3px; }
+        header { position: fixed; top: 0; left: 0; right: 0; background-color: rgba(75,69,69,0.98); backdrop-filter: blur(10px); padding: 24px 48px; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .header-wrapper { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+        .nav-menu { display: flex; align-items: center; gap: 40px; }
+        .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+        .nav-menu a:hover { opacity: 1; }
+        .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+        .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+        .breadcrumb { margin-top: 80px; padding: 20px 50px; border-bottom: 1px solid var(--border); }
+        .breadcrumb-inner { max-width: 1400px; margin: 0 auto; font-size: 11px; letter-spacing: 1px; color: var(--sub-text); text-transform: uppercase; }
+        .breadcrumb a { color: var(--sub-text); text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: var(--white); }
+        .breadcrumb span { margin: 0 10px; opacity: 0.4; }
+        .hero { padding: 80px 50px; border-bottom: 1px solid var(--border); }
+        .hero-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+        .hero-tag { font-size: 11px; letter-spacing: 2px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 24px; }
+        .hero-title { font-size: 52px; font-weight: 300; line-height: 1.15; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 18px; color: var(--sub-text); line-height: 1.7; margin-bottom: 40px; }
+        .hero-metrics { display: flex; gap: 40px; flex-wrap: wrap; }
+        .metric-value { font-size: 32px; font-weight: 300; letter-spacing: -1px; margin-bottom: 6px; }
+        .metric-label { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase; }
+        .hero-overview { border: 1px solid var(--border); }
+        .hero-overview-item { display: flex; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .hero-overview-item:last-child { border-bottom: none; }
+        .overview-key { color: var(--sub-text); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+        .overview-val { color: var(--white); }
+        .slideshow-section { border-bottom: 1px solid var(--border); }
+        .slideshow-wrapper { position: relative; overflow: hidden; background-color: #3a3535; height: 560px; }
+        .slides { display: flex; transition: transform 0.5s ease; height: 100%; }
+        .slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: var(--sub-text); }
+        .slide-placeholder-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        .slide-placeholder-num { font-size: 48px; font-weight: 200; opacity: 0.3; }
+        .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 50px; background: linear-gradient(transparent, rgba(75,69,69,0.85)); font-size: 13px; color: var(--sub-text); }
+        .slideshow-controls { padding: 24px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .slide-dots { display: flex; gap: 10px; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--sub-text); cursor: pointer; transition: background-color 0.3s; }
+        .dot.active { background-color: var(--white); }
+        .slide-arrows { display: flex; gap: 12px; }
+        .arrow-btn { background: none; border: 1px solid var(--border); color: var(--white); width: 40px; height: 40px; cursor: pointer; font-size: 14px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .arrow-btn:hover { border-color: var(--white); }
+        .slide-counter { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); }
+        .section { padding: 80px 50px; border-bottom: 1px solid var(--border); }
+        .section-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 260px 1fr; gap: 80px; }
+        .section-label { font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text); text-transform: uppercase; padding-top: 6px; }
+        .section-title { font-size: 28px; font-weight: 300; margin-bottom: 24px; line-height: 1.4; }
+        .section-text { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 24px; max-width: 640px; }
+        .section-text strong { color: var(--white); font-weight: 500; }
+        .insight-block { border-left: 2px solid rgba(255,253,247,0.3); padding: 24px 28px; margin: 32px 0; max-width: 560px; }
+        .insight-label { font-size: 10px; letter-spacing: 2px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 10px; }
+        .insight-text { font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--white); }
+        .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); margin-top: 32px; }
+        .strategy-card { padding: 36px; background-color: var(--bg); }
+        .strategy-num { font-size: 10px; letter-spacing: 2px; color: var(--sub-text); margin-bottom: 14px; text-transform: uppercase; }
+        .strategy-title { font-size: 17px; font-weight: 400; margin-bottom: 12px; }
+        .strategy-desc { font-size: 13px; color: var(--sub-text); line-height: 1.9; }
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--border); margin-top: 32px; }
+        .result-card { padding: 40px 36px; background-color: var(--bg); }
+        .result-value { font-size: 40px; font-weight: 200; letter-spacing: -1px; margin-bottom: 10px; }
+        .result-label { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 12px; }
+        .result-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
+        .cta-section { padding: 100px 50px; text-align: center; }
+        .cta-title { font-size: 40px; font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
+        .cta-desc { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 48px; }
+        .btn-primary { background-color: var(--white); color: var(--bg); border: none; padding: 16px 48px; font-size: 12px; letter-spacing: 1px; cursor: pointer; font-family: inherit; text-transform: uppercase; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+        .btn-secondary-link { display: inline-block; margin-top: 16px; font-size: 12px; color: var(--sub-text); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+        .btn-secondary-link:hover { color: var(--white); }
+        footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+        .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+        .footer-column ul { list-style: none; }
+        .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+        .footer-column a:hover { color: var(--white); }
+        .footer-column li { color: var(--sub-text); font-size: 13px; line-height: 2.2; }
+        .footer-bottom { max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text); }
+        .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
+        @media (max-width: 1024px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } .strategy-grid, .results-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { header { padding: 20px 24px; } .header-wrapper { flex-direction: column; gap: 16px; } .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; } .breadcrumb, .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; } .hero-title { font-size: 36px; } .section-inner { grid-template-columns: 1fr; gap: 32px; } .slideshow-wrapper { height: 300px; } .footer-content { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Case Study</a>
+                <a href="./insights/index.html">Insight</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
+            </div>
+        </div>
+    </header>
+
+```
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="./portfolio.html">Case Study</a>
+        <span>→</span>
+        Eath Library
+    </div>
+</div>
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">뷰티 · 럭셔리 × 대중화</div>
+            <h1 class="hero-title">Eath<br>Library</h1>
+            <p class="hero-subtitle">럭셔리의 진입 장벽을 낮추면<br>시장이 넓어집니다.</p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">카카오</div>
+                    <div class="metric-label">선물하기 입점</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">쇼룸</div>
+                    <div class="metric-label">고객 유입 증가</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">럭셔리</div>
+                    <div class="metric-label">× 대중화 달성</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-overview">
+                <div class="hero-overview-item"><span class="overview-key">Client</span><span class="overview-val">Eath Library</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Category</span><span class="overview-val">뷰티 · 럭셔리 포지셔닝</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Scope</span><span class="overview-val">채널 전략 · 쇼룸 개선 · 진입가 설계</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Year</span><span class="overview-val">2019</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="slideshow-section">
+    <div class="slideshow-wrapper">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="./Image/eathlibrary-01.jpeg" alt="Eath Library" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">01</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">브랜드 — 성분과 품질로 완성된 럭셔리 스킨케어</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/eathlibrary-02.jpeg" alt="제품" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">02</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">제품 — 엄선된 성분으로 만들어진 프리미엄 스킨케어</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/eathlibrary-03.jpeg" alt="선물세트" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">03</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">선물세트 — 카카오선물하기 진입가 상품</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/eathlibrary-04.jpeg" alt="쇼룸" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">04</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">쇼룸 — 친화적으로 개선된 브랜드 공간</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/eathlibrary-05.jpeg" alt="결과" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">05</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">결과 — 럭셔리와 대중화의 성공적 결합</div>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <div class="slide-dots" id="dots"></div>
+        <div class="slide-counter" id="counter">1 / 5</div>
+        <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn">←</button>
+            <button class="arrow-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Problem</div>
+        <div class="section-content">
+            <h2 class="section-title">좋은 제품이<br>일부 고객에게만 닿고 있었습니다.</h2>
+            <p class="section-text">Eath Library는 성분과 품질 면에서 검증된 럭셔리 스킨케어 브랜드였습니다. 그러나 타겟이 럭셔리 고객층에만 집중되어 있어 브랜드가 성장하는 데 한계가 있었습니다. 좋은 제품이 더 많은 사람에게 닿지 못하고 있었습니다.</p>
+            <div class="insight-block">
+                <div class="insight-label">CHAEUM이 정의한 구조적 결함</div>
+                <div class="insight-text">"품질은 프리미엄이었지만,<br>진입 장벽이 너무 높아 시장이 닫혀 있었다."</div>
+            </div>
+            <p class="section-text">럭셔리 포지셔닝을 유지하면서도 더 많은 소비자가 브랜드를 경험할 수 있는 구조가 필요했습니다. 첫 경험의 진입 가격을 낮추면, 품질로 재구매를 이끌 수 있습니다.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Strategy</div>
+        <div class="section-content">
+            <h2 class="section-title">럭셔리의 가치는 유지하되<br>첫 경험의 문턱을 낮췄습니다.</h2>
+            <p class="section-text">CHAEUM은 Eath Library의 전략을 <strong>"럭셔리 × 대중화의 동시 달성"</strong>으로 설정했습니다. 브랜드의 프리미엄 이미지는 지키면서, 더 많은 소비자가 첫 경험을 할 수 있도록 진입 구조를 재설계했습니다.</p>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-num">01 · 진입가 설계</div>
+                    <div class="strategy-title">카카오선물하기 선물세트</div>
+                    <p class="strategy-desc">낮은 진입 가격의 선물세트를 카카오선물하기에 출시했습니다. "선물로 처음 받아본 브랜드"가 재구매로 이어지는 구조를 설계했습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">02 · 쇼룸 개선</div>
+                    <div class="strategy-title">진입 장벽을 낮춘 공간</div>
+                    <p class="strategy-desc">기존 럭셔리 중심의 쇼룸을 일반 소비자도 편안하게 경험할 수 있도록 개선했습니다. 브랜드의 철학을 직접 느끼는 접점을 확대했습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">03 · 오픈 행사</div>
+                    <div class="strategy-title">브랜드 경험 확산</div>
+                    <p class="strategy-desc">오픈 행사를 통해 새로운 고객층이 Eath Library를 직접 경험하게 했습니다. 경험한 고객이 자연스럽게 브랜드 앰배서더가 되도록 설계했습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">04 · 포지셔닝 유지</div>
+                    <div class="strategy-title">럭셔리 이미지 수호</div>
+                    <p class="strategy-desc">대중화를 추진하면서도 브랜드의 럭셔리 핵심 가치는 타협하지 않았습니다. 진입가 상품은 별도 라인으로 구성해 메인 라인의 프리미엄을 유지했습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Results</div>
+        <div class="section-content">
+            <h2 class="section-title">럭셔리와 대중화를<br>동시에 달성했습니다.</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value">카카오</div>
+                    <div class="result-label">선물하기 반응</div>
+                    <p class="result-desc">카카오선물하기 출시 후 긍정적인 반응. 선물로 접한 신규 고객의 재구매율이 높았습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">유입 증가</div>
+                    <div class="result-label">일반 소비자</div>
+                    <p class="result-desc">쇼룸 개선과 오픈 행사 이후 기존 럭셔리 고객 외 일반 소비자 유입이 유의미하게 증가했습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">성공적</div>
+                    <div class="result-label">럭셔리 × 대중화</div>
+                    <p class="result-desc">프리미엄 이미지를 지키면서 더 넓은 고객층을 확보하는 두 마리 토끼를 잡는 데 성공했습니다.</p>
+                </div>
+            </div>
+            <div class="insight-block" style="margin-top:40px;">
+                <div class="insight-label">정성적 변화</div>
+                <div class="insight-text">"비싸서 못 사던 브랜드"에서<br>"한번 써보고 싶은 프리미엄 브랜드"로<br>인식이 전환됐습니다.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <h2 class="cta-title">좋은 제품이 더 많은<br>사람에게 닿길 원한다면.</h2>
+    <p class="cta-desc">럭셔리와 대중화는 함께 갈 수 있습니다.<br>진입 구조를 재설계하면 됩니다.</p>
+    <a href="./diagnosis-talk.html" class="btn-primary">AI 무료 진단 시작</a><br>
+    <a href="./portfolio.html" class="btn-secondary-link">다른 사례 보기 →</a>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column"><h3>Services</h3><ul><li><a href="./services.html">Self-OS</a></li><li><a href="./services.html">Architecture</a></li><li><a href="./services.html">Engineering</a></li><li><a href="./services.html">Management</a></li></ul></div>
+        <div class="footer-column"><h3>Company</h3><ul><li><a href="./about.html">About CHAEUM</a></li><li><a href="./insights/index.html">Insights</a></li><li><a href="./portfolio.html">Case Studies</a></li></ul></div>
+        <div class="footer-column"><h3>Contact</h3><ul><li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li><li><a href="./diagnosis-talk.html">AI 진단 받기</a></li><li><a href="https://cal.com/chaeum">상담 예약</a></li></ul></div>
+        <div class="footer-column"><h3>Location</h3><ul><li>Seoul, Korea</li><li>Seongdong-gu</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span class="footer-logo">CHAEUM</span><span>&copy; 2026 CHAEUM. All rights reserved.</span></div>
+</footer>
+
+<script>
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current = 0;
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    }
+    function goTo(index) {
+        current = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+        counter.textContent = `${current + 1} / ${totalSlides}`;
+    }
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+    setInterval(() => goTo(current + 1), 5000);
+</script>
+```
+
+</body>
+</html>
