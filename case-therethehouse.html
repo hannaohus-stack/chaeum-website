@@ -1,503 +1,642 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Therethehouse | CHAEUM Portfolio</title>
+    <title>Therethehouse | CHAEUM Case Study</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --bg: #4B4545;
-            --white: #FFFFFF;
-            --gray: #888888;
-            --light-gray: #666666;
-        }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    :root {
+        --bg: #4B4545;
+        --white: #FFFDF7;
+        --sub-text: rgba(255, 253, 247, 0.55);
+        --border: rgba(255, 253, 247, 0.12);
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background-color: var(--bg);
-            color: var(--white);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-        }
+    html { scroll-behavior: smooth; }
 
-        /* ===== HEADER ===== */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(75, 69, 69, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 24px 48px;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+        line-height: 1.6;
+        letter-spacing: -0.3px;
+    }
 
-        .header-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* HEADER */
+    header {
+        position: fixed; top: 0; left: 0; right: 0;
+        background-color: rgba(75, 69, 69, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 24px 48px;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header-wrapper {
+        max-width: 1400px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+    .nav-menu { display: flex; align-items: center; gap: 40px; }
+    .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+    .nav-menu a:hover { opacity: 1; }
+    .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+    .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
 
-        .logo {
-            font-size: 13px;
-            letter-spacing: 2px;
-            font-weight: 300;
-            color: var(--white);
-            opacity: 0.8;
-            text-decoration: none;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
+    /* BREADCRUMB */
+    .breadcrumb {
+        margin-top: 80px;
+        padding: 20px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-inner {
+        max-width: 1400px; margin: 0 auto;
+        font-size: 11px; letter-spacing: 1px; color: var(--sub-text); text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--sub-text); text-decoration: none; transition: color 0.3s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb span { margin: 0 10px; opacity: 0.4; }
 
-        .logo:hover {
-            opacity: 1;
-        }
+    /* HERO */
+    .hero {
+        padding: 80px 50px 80px;
+        border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;
+    }
+    .hero-left {}
+    .hero-tag {
+        font-size: 11px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title {
+        font-size: 56px; font-weight: 300; line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-subtitle {
+        font-size: 18px; color: var(--sub-text); line-height: 1.7; margin-bottom: 40px;
+    }
+    .hero-metrics {
+        display: flex; gap: 40px;
+    }
+    .metric {}
+    .metric-value {
+        font-size: 32px; font-weight: 300; letter-spacing: -1px; margin-bottom: 6px;
+    }
+    .metric-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase;
+    }
 
-        .nav-menu {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-            align-items: center;
-        }
+    .hero-right {}
+    .hero-overview {
+        font-size: 14px; color: var(--sub-text); line-height: 2;
+        padding: 40px; border: 1px solid var(--border);
+    }
+    .hero-overview-item {
+        display: flex; justify-content: space-between; padding: 14px 0;
+        border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .hero-overview-item:last-child { border-bottom: none; }
+    .overview-key { color: var(--sub-text); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+    .overview-val { color: var(--white); }
 
-        .nav-menu a {
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            opacity: 0.6;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
+    /* SLIDESHOW */
+    .slideshow-section {
+        border-bottom: 1px solid var(--border);
+    }
+    .slideshow-wrapper {
+        position: relative; overflow: hidden; background-color: #3a3535;
+        height: 560px;
+    }
+    .slides {
+        display: flex; transition: transform 0.5s ease;
+        height: 100%;
+    }
+    .slide {
+        min-width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        position: relative;
+    }
+    .slide img {
+        width: 100%; height: 100%; object-fit: cover;
+    }
+    /* 이미지 없을 때 플레이스홀더 */
+    .slide-placeholder {
+        width: 100%; height: 100%;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 16px; color: var(--sub-text);
+    }
+    .slide-placeholder-label {
+        font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .slide-placeholder-num {
+        font-size: 48px; font-weight: 200; opacity: 0.3;
+    }
+    .slide-caption {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        padding: 20px 50px;
+        background: linear-gradient(transparent, rgba(75,69,69,0.85));
+        font-size: 13px; color: var(--sub-text);
+    }
 
-        .nav-menu a:hover {
-            opacity: 1;
-        }
+    /* Slideshow Controls */
+    .slideshow-controls {
+        padding: 24px 50px;
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid var(--border);
+    }
+    .slide-dots { display: flex; gap: 10px; }
+    .dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background-color: var(--sub-text); cursor: pointer; transition: background-color 0.3s;
+    }
+    .dot.active { background-color: var(--white); }
+    .slide-arrows { display: flex; gap: 12px; }
+    .arrow-btn {
+        background: none; border: 1px solid var(--border);
+        color: var(--white); width: 40px; height: 40px;
+        cursor: pointer; font-size: 14px; transition: all 0.3s;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .arrow-btn:hover { border-color: var(--white); }
+    .slide-counter {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text);
+    }
 
-        .btn-consult {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 12px 28px;
-            border: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            font-weight: 400;
-        }
+    /* CONTENT SECTIONS */
+    .section {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .section-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 260px 1fr; gap: 80px;
+    }
+    .section-label {
+        font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text);
+        text-transform: uppercase; padding-top: 6px;
+    }
+    .section-content {}
+    .section-title {
+        font-size: 28px; font-weight: 300; margin-bottom: 24px; line-height: 1.4;
+    }
+    .section-text {
+        font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 24px;
+        max-width: 640px;
+    }
+    .section-text strong { color: var(--white); font-weight: 500; }
 
-        .btn-consult:hover {
-            opacity: 0.9;
-        }
+    /* INSIGHT BLOCK */
+    .insight-block {
+        border-left: 2px solid rgba(255,253,247,0.3);
+        padding: 24px 28px;
+        margin: 32px 0;
+        max-width: 560px;
+    }
+    .insight-label {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 10px;
+    }
+    .insight-text {
+        font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--white);
+    }
 
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 140px 40px 80px 40px;
-        }
+    /* STRATEGY GRID */
+    .strategy-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .strategy-card {
+        padding: 36px; background-color: var(--bg);
+    }
+    .strategy-num {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        margin-bottom: 14px; text-transform: uppercase;
+    }
+    .strategy-title {
+        font-size: 17px; font-weight: 400; margin-bottom: 12px;
+    }
+    .strategy-desc {
+        font-size: 13px; color: var(--sub-text); line-height: 1.9;
+    }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 60px;
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            text-decoration: none;
-            border-bottom: 1px solid var(--white);
-            padding-bottom: 4px;
-            transition: opacity 0.3s ease;
-        }
+    /* RESULTS */
+    .results-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .result-card {
+        padding: 40px 36px; background-color: var(--bg);
+    }
+    .result-value {
+        font-size: 40px; font-weight: 200; letter-spacing: -1px; margin-bottom: 10px;
+    }
+    .result-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 12px;
+    }
+    .result-desc {
+        font-size: 13px; color: var(--sub-text); line-height: 1.8;
+    }
 
-        .back-link:hover {
-            opacity: 0.7;
-        }
+    /* CTA */
+    .cta-section {
+        padding: 100px 50px; text-align: center;
+    }
+    .cta-title {
+        font-size: 40px; font-weight: 300; line-height: 1.3; margin-bottom: 20px;
+    }
+    .cta-desc {
+        font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 48px;
+    }
+    .btn-primary {
+        background-color: var(--white); color: var(--bg);
+        border: none; padding: 16px 48px; font-size: 12px; letter-spacing: 1px;
+        cursor: pointer; font-family: inherit; text-transform: uppercase;
+        transition: all 0.3s; text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+    .btn-secondary-link {
+        display: inline-block; margin-top: 16px;
+        font-size: 12px; color: var(--sub-text); text-decoration: none;
+        letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s;
+    }
+    .btn-secondary-link:hover { color: var(--white); }
 
-        .back-link::before {
-            content: '← ';
-            margin-right: 8px;
-        }
+    /* FOOTER */
+    footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+    .footer-content {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px;
+    }
+    .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+    .footer-column ul { list-style: none; }
+    .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+    .footer-column a:hover { color: var(--white); }
+    .footer-column li { color: var(--sub-text); font-size: 13px; line-height: 2.2; }
+    .footer-bottom {
+        max-width: 1400px; margin: 0 auto;
+        border-top: 1px solid var(--border); padding-top: 30px;
+        display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text);
+    }
+    .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
 
-        .case-header {
-            margin-bottom: 60px;
-        }
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+        .strategy-grid, .results-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        header { padding: 20px 24px; }
+        .header-wrapper { flex-direction: column; gap: 16px; }
+        .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .breadcrumb, .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; }
+        .hero-title { font-size: 38px; }
+        .section-inner { grid-template-columns: 1fr; gap: 32px; }
+        .slideshow-wrapper { height: 300px; }
+        .slideshow-controls { padding: 20px 24px; }
+        .slide-caption { padding: 16px 24px; }
+        .hero-metrics { flex-wrap: wrap; gap: 24px; }
+        .footer-content { grid-template-columns: 1fr 1fr; }
+    }
+</style>
 
-        .case-tag {
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            color: var(--gray);
-            margin-bottom: 16px;
-            opacity: 0.7;
-        }
 
-        .case-title {
-            font-size: 48px;
-            font-weight: 300;
-            line-height: 1.3;
-            margin-bottom: 24px;
-        }
-
-        .case-metric {
-            font-size: 36px;
-            font-weight: 300;
-            color: var(--white);
-        }
-
-        /* ===== DIVIDER ===== */
-        .divider {
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin: 60px 0;
-        }
-
-        /* ===== SECTION ===== */
-        .case-section {
-            margin-bottom: 60px;
-        }
-
-        .case-section h2 {
-            font-size: 24px;
-            font-weight: 300;
-            margin-bottom: 24px;
-        }
-
-        .case-section p {
-            font-size: 15px;
-            color: var(--gray);
-            line-height: 2;
-            margin-bottom: 12px;
-        }
-
-        .case-section strong {
-            color: var(--white);
-        }
-
-        /* ===== METRICS GRID ===== */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .metric-box {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 24px;
-            border-radius: 2px;
-            text-align: center;
-        }
-
-        .metric-number {
-            font-size: 32px;
-            font-weight: 300;
-            color: var(--white);
-            margin-bottom: 12px;
-        }
-
-        .metric-label {
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--gray);
-        }
-
-        /* ===== TIMELINE ===== */
-        .timeline {
-            position: relative;
-            padding: 40px 0 40px 40px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .timeline-item {
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -45px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--white);
-        }
-
-        .timeline-title {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .timeline-description {
-            font-size: 13px;
-            color: var(--gray);
-            line-height: 1.8;
-        }
-
-        /* ===== CTA ===== */
-        .cta-box {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 48px;
-            border-radius: 2px;
-            text-align: center;
-            margin: 80px 0;
-        }
-
-        .cta-box h2 {
-            font-size: 28px;
-            font-weight: 300;
-            margin-bottom: 16px;
-        }
-
-        .cta-box p {
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 32px;
-            line-height: 1.8;
-        }
-
-        .btn-primary {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 14px 40px;
-            border: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            font-weight: 500;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 60px 40px;
-            text-align: center;
-            margin-top: 80px;
-        }
-
-        footer p {
-            font-size: 11px;
-            color: var(--gray);
-            margin-bottom: 12px;
-        }
-
-        footer a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            margin: 0 16px;
-        }
-
-        footer a:hover {
-            color: var(--white);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .case-title {
-                font-size: 32px;
-            }
-
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            header {
-                padding: 20px 24px;
-            }
-
-            .header-wrapper {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-            }
-
-            .container {
-                padding: 120px 24px 60px 24px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header>
-        <div class="header-wrapper">
-            <a href="./index.html" class="logo">CHAEUM</a>
-            <div class="nav-menu">
-                <a href="./services.html">Services</a>
-                <a href="./portfolio.html">Portfolio</a>
-                <a href="./index.html#blog">Blog</a>
-                <a href="./about.html">About</a>
-                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
-            </div>
-        </div>
-    </header>
 
-    <!-- MAIN CONTENT -->
-    <div class="container">
-        <a href="./portfolio.html" class="back-link">포트폴리오로 돌아가기</a>
 
-        <div class="case-header">
-            <div class="case-tag">라이프스타일 / 경험설계</div>
-            <h1 class="case-title">Therethehouse</h1>
-            <div class="case-metric">3개월 내 예약 포화</div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 1. 문제 정의 -->
-        <div class="case-section">
-            <h2>1. 문제 정의</h2>
-            <p><strong>상황:</strong> Therethehouse는 고급스러운 라이프스타일 경험을 제공하는 공간입니다. 실제로 방문한 고객들은 매우 만족했지만, 신규 고객 확보는 어려운 상황이었습니다.</p>
-            <p><strong>문제:</strong> 브랜드 신뢰도 부족. 좋은 경험이 있지만 "이곳이 무엇인지", "왜 가야 하는지"가 명확하지 않았습니다.</p>
-        </div>
-
-        <!-- 성과 지표 -->
-        <div class="metrics-grid">
-            <div class="metric-box">
-                <div class="metric-number">3개월</div>
-                <div class="metric-label">예약 포화</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-number">+82%</div>
-                <div class="metric-label">예약량 증가</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-number">92%</div>
-                <div class="metric-label">고객 만족도</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-number">4.8/5</div>
-                <div class="metric-label">온라인 평점</div>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 2. 전략 -->
-        <div class="case-section">
-            <h2>2. 전략</h2>
-            <p><strong>브랜드 명확화:</strong> "그냥 좋은 공간" → "치유와 성장의 경험"</p>
-            <p>우리는 Therethehouse의 본질인 "인생의 질을 높이는 경험"을 명확히 했습니다. 단순한 공간이 아니라 "당신의 일상에 변화를 주는 곳"이라는 포지셔닝을 전개했습니다.</p>
-            
-            <p style="margin-top: 24px;"><strong>고객 경험 설계:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
-                <li>• 예약부터 방문까지의 모든 터치포인트 최적화</li>
-                <li>• 고객 여정별 맞춤형 메시지</li>
-                <li>• SNS에서 실제 경험까지의 일관성</li>
-            </ul>
-
-            <p style="margin-top: 24px;"><strong>콘텐츠 전략:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
-                <li>• 고객 스토리와 변화 공유</li>
-                <li>• 공간과 경험의 가치 시각화</li>
-                <li>• 신뢰도 높은 후기 시스템</li>
-            </ul>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 3. 실행 -->
-        <div class="case-section">
-            <h2>3. 실행</h2>
-            <p>12주 동안 다음 4가지를 동시에 진행했습니다:</p>
-        </div>
-
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-title">Week 1-3: 경험 시스템화</div>
-                <div class="timeline-description">고객이 경험하는 모든 순간을 문서화하고 최적화. 웹사이트, 이메일, 안내 자료 통일.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-title">Week 4-6: SNS 콘텐츠</div>
-                <div class="timeline-description">실제 고객의 경험과 변화를 담은 콘텐츠 매주 배포. Instagram, YouTube 채널 운영.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-title">Week 7-9: 신뢰 구축</div>
-                <div class="timeline-description">고객 후기 시스템, 인증 커뮤니티, 재방문 프로그램 구축.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-title">Week 10-12: 확대 마케팅</div>
-                <div class="timeline-description">입소문과 추천이 일어나도록 설계된 마케팅 캠페인 진행.</div>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 4. 결과 -->
-        <div class="case-section">
-            <h2>4. 결과</h2>
-            <p><strong>정량적 성과:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9; margin-bottom: 24px;">
-                <li>• 3개월 만에 월 예약이 포화 상태</li>
-                <li>• 월 예약량 82% 증가</li>
-                <li>• 신규 고객 비율 65%로 증가</li>
-            </ul>
-
-            <p><strong>정성적 변화:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
-                <li>• "치유와 성장의 경험"으로 명확히 인식</li>
-                <li>• 고객들의 자발적인 추천 증가</li>
-                <li>• SNS 팔로워 300% 증가</li>
-                <li>• 우호적인 온라인 리뷰 누적</li>
-            </ul>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- CTA -->
-        <div class="cta-box">
-            <h2>좋은 경험이 있는데 고객이 모를 때?</h2>
-            <p>당신의 브랜드 경험을 제대로 알리는 전략이 필요합니다.<br>채움의 AI 고민 상담으로 시작해보세요.</p>
-            <button class="btn-primary" onclick="window.location.href='./diagnosis-talk.html'">무료 AI 진단 시작</button>
+<header>
+    <div class="header-wrapper">
+        <a href="../index.html" class="logo">CHAEUM</a>
+        <div class="nav-menu">
+            <a href="../services.html">Services</a>
+            <a href="../portfolio.html">Case Study</a>
+            <a href="../insights/index.html">Insight</a>
+            <a href="../about.html">About</a>
+            <button class="btn-consult" onclick="window.location.href='../diagnosis-talk.html'">AI 진단 받기</button>
         </div>
     </div>
+</header>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2026 CHAEUM</p>
-        <div>
-            <a href="./index.html">Home</a>
-            <a href="./portfolio.html">Portfolio</a>
-            <a href="./services.html">Services</a>
-            <a href="./about.html">About</a>
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="../portfolio.html">Case Study</a>
+        <span>→</span>
+        Therethehouse
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">라이프스타일 · 브랜드 경험 설계</div>
+            <h1 class="hero-title">Therethehouse</h1>
+            <p class="hero-subtitle">브랜드의 철학을,<br>공간으로 설계했습니다.</p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">3개월</div>
+                    <div class="metric-label">예약 포화</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">+82%</div>
+                    <div class="metric-label">예약량 증가</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">팬덤</div>
+                    <div class="metric-label">브랜드 락인</div>
+                </div>
+            </div>
         </div>
-    </footer>
+        <div class="hero-right">
+            <div class="hero-overview">
+                <div class="hero-overview-item">
+                    <span class="overview-key">Client</span>
+                    <span class="overview-val">덕화명란 · Therethehouse</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Category</span>
+                    <span class="overview-val">브랜드 쇼룸 · 경험 설계</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Scope</span>
+                    <span class="overview-val">공간 컨셉 · 고객 여정 · 락인 전략</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Period</span>
+                    <span class="overview-val">12주</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDESHOW -->
+<div class="slideshow-section">
+    <div class="slideshow-wrapper">
+        <div class="slides" id="slides">
+            <!-- 사진 1 -->
+            <div class="slide">
+                <img src="../Image/therethehouse-01.jpg" alt="Therethehouse 외관"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">01</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">외관 — 덕화명란의 30년 전통을 담은 공간</div>
+            </div>
+            <!-- 사진 2 -->
+            <div class="slide">
+                <img src="../Image/therethehouse-02.jpg" alt="Therethehouse 내부"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">02</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">내부 — 제조 철학을 공간 언어로</div>
+            </div>
+            <!-- 사진 3 -->
+            <div class="slide">
+                <img src="../Image/therethehouse-03.jpg" alt="브랜드 경험"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">03</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">브랜드 경험 — 직접 보고, 맛보고, 느끼는 공간</div>
+            </div>
+            <!-- 사진 4 -->
+            <div class="slide">
+                <img src="../Image/therethehouse-04.jpg" alt="제품 경험"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">04</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">제품 — 명란의 깊이를 오감으로 전달</div>
+            </div>
+            <!-- 사진 5 -->
+            <div class="slide">
+                <img src="../Image/therethehouse-05.jpg" alt="고객 경험"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">05</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">고객 경험 — 방문이 팬덤이 되는 설계</div>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <div class="slide-dots" id="dots"></div>
+        <div class="slide-counter" id="counter">1 / 5</div>
+        <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn">←</button>
+            <button class="arrow-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Problem</div>
+        <div class="section-content">
+            <h2 class="section-title">온라인만으로는<br>전달되지 않는 것이 있었습니다.</h2>
+            <p class="section-text">
+                덕화명란은 30년의 전통과 깊이 있는 제조 철학을 가진 브랜드입니다.
+                그러나 온라인 채널만으로는 그 진정성을 온전히 전달하는 데 한계가 있었습니다.
+                좋은 제품은 있었지만, 브랜드를 직접 느끼게 하는 접점이 없었습니다.
+            </p>
+            <div class="insight-block">
+                <div class="insight-label">CHAEUM이 정의한 구조적 결함</div>
+                <div class="insight-text">
+                    "브랜드 경험은 있었지만,<br>그것을 설계하는 구조가 없었다."
+                </div>
+            </div>
+            <p class="section-text">
+                소비자가 덕화명란의 철학과 장인 정신을 직접 체험할 수 있다면,
+                제품에 대한 신뢰는 구매 이전에 완성됩니다.
+                CHAEUM은 이 접점을 오프라인 브랜드 쇼룸으로 설계하기로 했습니다.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- STRATEGY -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Strategy</div>
+        <div class="section-content">
+            <h2 class="section-title">집의 형태로,<br>브랜드 스토리를 체험하게 했습니다.</h2>
+            <p class="section-text">
+                CHAEUM은 Therethehouse를 단순한 팝업이나 전시 공간이 아닌,
+                덕화명란의 <strong>30년 전통과 제조 철학을 오감으로 경험하는 브랜드 쇼룸</strong>으로 설계했습니다.
+                "집(House)"이라는 공간 언어를 통해 친밀함과 진정성을 동시에 전달했습니다.
+            </p>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-num">01 · 공간 컨셉</div>
+                    <div class="strategy-title">브랜드 스토리를 공간으로</div>
+                    <p class="strategy-desc">
+                        덕화명란의 역사, 원재료 이야기, 제조 철학을 공간의 동선과 오브제로 녹여냈습니다.
+                        방문객이 자연스럽게 브랜드의 깊이를 느낄 수 있도록 설계했습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">02 · 고객 여정</div>
+                    <div class="strategy-title">방문부터 구매까지 설계</div>
+                    <p class="strategy-desc">
+                        예약 → 방문 → 체험 → 온라인 재구매로 이어지는
+                        전체 고객 여정을 설계했습니다. 모든 터치포인트에서 브랜드 일관성을 유지했습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">03 · 팬덤 설계</div>
+                    <div class="strategy-title">진정성이 충성도가 되도록</div>
+                    <p class="strategy-desc">
+                        직접 경험한 고객이 브랜드의 팬이 되고, 자연스럽게 주변에 전파하는
+                        락인 구조를 설계했습니다. 경험이 곧 마케팅이 되는 시스템입니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">04 · 온라인 연결</div>
+                    <div class="strategy-title">오프라인이 온라인 매출로</div>
+                    <p class="strategy-desc">
+                        쇼룸 경험이 온라인 구매와 재구매로 자연스럽게 연결되는
+                        구조를 만들었습니다. 오프라인 방문이 온라인 매출의 트리거가 됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Results</div>
+        <div class="section-content">
+            <h2 class="section-title">경험이 숫자를 바꿨습니다.</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value">3개월</div>
+                    <div class="result-label">예약 포화</div>
+                    <p class="result-desc">오픈 후 3개월 내 예약이 완전히 찼습니다. 대기 명단이 생겼습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">+82%</div>
+                    <div class="result-label">예약량 증가</div>
+                    <p class="result-desc">입소문과 SNS 자발적 공유로 예약량이 지속적으로 증가했습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">락인</div>
+                    <div class="result-label">브랜드 팬덤</div>
+                    <p class="result-desc">방문 고객의 재구매율이 높아지고, 브랜드 충성 고객층이 형성되었습니다.</p>
+                </div>
+            </div>
+            <div class="insight-block" style="margin-top: 40px;">
+                <div class="insight-label">정성적 변화</div>
+                <div class="insight-text">
+                    덕화명란을 "그냥 명란 브랜드"가 아닌<br>
+                    "30년의 이야기가 있는 브랜드"로 인식하게 됐습니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2 class="cta-title">브랜드의 진정성을<br>고객이 직접 느끼게 하고 싶다면.</h2>
+    <p class="cta-desc">
+        좋은 제품과 스토리가 있다면, 그것을 경험으로 설계할 수 있습니다.<br>
+        CHAEUM과 함께 브랜드 경험을 구조화해보세요.
+    </p>
+    <a href="../diagnosis-talk.html" class="btn-primary">AI 무료 진단 시작</a><br>
+    <a href="../portfolio.html" class="btn-secondary-link">다른 사례 보기 →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="../services.html">Self-OS</a></li>
+                <li><a href="../services.html">Architecture</a></li>
+                <li><a href="../services.html">Engineering</a></li>
+                <li><a href="../services.html">Management</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="../about.html">About CHAEUM</a></li>
+                <li><a href="../insights/index.html">Insights</a></li>
+                <li><a href="../portfolio.html">Case Studies</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <ul>
+                <li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li>
+                <li><a href="../diagnosis-talk.html">AI 진단 받기</a></li>
+                <li><a href="https://cal.com/chaeum">상담 예약</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Location</h3>
+            <ul>
+                <li>Seoul, Korea</li>
+                <li>Seongdong-gu</li>
+                <li>Republic of Korea</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">CHAEUM</span>
+        <span>&copy; 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</footer>
+
+<script>
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current = 0;
+
+    // 도트 생성
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    }
+
+    function goTo(index) {
+        current = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+        counter.textContent = `${current + 1} / ${totalSlides}`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+
+    // 자동 슬라이드 (5초)
+    setInterval(() => goTo(current + 1), 5000);
+</script>
+
+
 </body>
 </html>
