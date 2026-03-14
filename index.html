@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
     :root {
         --bg: #4B4545;
         --white: #FFFDF7;
@@ -19,9 +21,11 @@
         --border: rgba(255, 253, 247, 0.12);
         --sub-text: rgba(255, 253, 247, 0.55);
     }
+
     html {
         scroll-behavior: smooth;
     }
+
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
         background-color: var(--bg);
@@ -29,6 +33,7 @@
         line-height: 1.6;
         letter-spacing: -0.3px;
     }
+
     /* ===== HEADER ===== (원본 유지) */
     header {
         position: fixed;
@@ -41,6 +46,7 @@
         z-index: 1000;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
+
     .header-wrapper {
         max-width: 1400px;
         margin: 0 auto;
@@ -48,6 +54,7 @@
         justify-content: space-between;
         align-items: center;
     }
+
     .logo {
         font-size: 14px;
         font-weight: 400;
@@ -56,11 +63,13 @@
         color: var(--white);
         opacity: 0.9;
     }
+
     .nav-menu {
         display: flex;
         align-items: center;
         gap: 40px;
     }
+
     .nav-menu a {
         text-decoration: none;
         color: var(--white);
@@ -70,9 +79,11 @@
         transition: opacity 0.3s ease;
         text-transform: uppercase;
     }
+
     .nav-menu a:hover {
         opacity: 1;
     }
+
     .btn-consult {
         background-color: var(--white);
         color: var(--bg);
@@ -84,11 +95,13 @@
         font-family: inherit;
         transition: all 0.3s ease;
     }
+
     .btn-consult:hover {
         background-color: transparent;
         color: var(--white);
         outline: 1px solid var(--white);
     }
+
     /* ===== HERO ===== */
     .hero {
         margin-top: 80px;
@@ -98,11 +111,13 @@
         display: flex;
         align-items: center;
     }
+
     .hero-content {
         max-width: 1400px;
         margin: 0 auto;
         width: 100%;
     }
+
     .hero-tagline {
         font-size: 11px;
         letter-spacing: 2.5px;
@@ -110,6 +125,7 @@
         text-transform: uppercase;
         margin-bottom: 32px;
     }
+
     .hero-title {
         font-size: 54px;
         line-height: 1.3;
@@ -118,9 +134,11 @@
         font-weight: 300;
         max-width: 900px;
     }
+
     .hero-title strong {
         font-weight: 600;
     }
+
     .hero-subtitle {
         font-size: 15px;
         color: var(--sub-text);
@@ -128,14 +146,17 @@
         max-width: 580px;
         margin-bottom: 56px;
     }
+
     .hero-subtitle strong {
         color: var(--white);
         font-weight: 500;
     }
+
     .hero-buttons {
         display: flex;
         gap: 16px;
     }
+
     .btn-primary {
         background-color: var(--white);
         color: var(--bg);
@@ -151,34 +172,41 @@
         font-weight: 500;
         display: inline-block;
     }
+
     .btn-primary:hover {
         background-color: transparent;
         color: var(--white);
     }
+
     /* ===== DIVIDER ===== */
     .divider {
         height: 1px;
         background-color: var(--border);
         margin: 0 50px;
     }
+
     /* ===== WHAT WE DO ===== */
     .what-we-do {
         padding: 100px 50px;
         background-color: var(--surface);
     }
+
     .section-container {
         max-width: 1400px;
         margin: 0 auto;
     }
+
     .what-we-do-content {
         display: grid;
         grid-template-columns: 260px 1fr;
         gap: 80px;
     }
+
     .what-we-do-nav {
         font-size: 13px;
         line-height: 2;
     }
+
     .what-we-do-nav button {
         background: none;
         border: none;
@@ -191,28 +219,34 @@
         padding: 8px 0;
         font-family: inherit;
     }
+
     .what-we-do-nav button:hover,
     .what-we-do-nav button.active {
         color: var(--white);
         font-weight: 600;
     }
+
     .what-we-do-item {
         display: none;
     }
+
     .what-we-do-item.active {
         display: block;
         animation: fadeIn 0.3s ease;
     }
+
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
     }
+
     .what-we-do-item h3 {
         font-size: 36px;
         color: var(--white);
         margin-bottom: 30px;
         font-weight: 300;
     }
+
     .what-we-do-item p {
         font-size: 14px;
         color: var(--sub-text);
@@ -220,12 +254,15 @@
         margin-bottom: 20px;
         max-width: 600px;
     }
+
     .what-we-do-item p strong {
         color: var(--white);
     }
+
     .what-we-do-item-cta {
         margin-top: 40px;
     }
+
     .btn-secondary {
         background-color: transparent;
         color: var(--white);
@@ -240,19 +277,23 @@
         display: inline-block;
         font-family: inherit;
     }
+
     .btn-secondary:hover {
         border-color: var(--white);
         background-color: rgba(255, 253, 247, 0.05);
     }
+
     /* ===== CASES ===== */
     .cases {
         padding: 100px 50px;
         background-color: var(--bg);
     }
+
     .cases-container {
         max-width: 1400px;
         margin: 0 auto;
     }
+
     .section-label {
         font-size: 11px;
         letter-spacing: 2.5px;
@@ -260,6 +301,7 @@
         text-transform: uppercase;
         margin-bottom: 60px;
     }
+
     .cases-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -267,40 +309,73 @@
         background-color: var(--border);
         margin-bottom: 50px;
     }
+
     .case-card {
-        padding: 50px;
         background-color: var(--bg);
         transition: background-color 0.3s ease;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        display: block;
     }
-    .case-card:hover {
-        background-color: var(--surface);
+
+    .case-card:hover { background-color: var(--surface); }
+
+    .case-photo {
+        width: 100%;
+        height: 260px;
+        overflow: hidden;
+        background-color: #3a3535;
     }
+
+    .case-photo img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .case-card:hover .case-photo img { transform: scale(1.03); }
+
+    .case-photo-placeholder {
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+        color: var(--sub-text);
+    }
+
+    .case-body { padding: 36px 40px 40px; }
+
     .case-tag {
         font-size: 11px;
         letter-spacing: 1.5px;
         color: var(--sub-text);
         text-transform: uppercase;
-        margin-bottom: 20px;
-    }
-    .case-title {
-        font-size: 26px;
-        font-weight: 300;
-        color: var(--white);
         margin-bottom: 16px;
     }
+
+    .case-title {
+        font-size: 24px;
+        font-weight: 300;
+        color: var(--white);
+        margin-bottom: 12px;
+    }
+
     .case-metric {
-        font-size: 42px;
+        font-size: 38px;
         font-weight: 200;
         color: var(--white);
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         letter-spacing: -1px;
+        line-height: 1.2;
     }
+
     .case-description {
         font-size: 13px;
         color: var(--sub-text);
         line-height: 1.8;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
     }
+
     .case-link {
         font-size: 12px;
         color: var(--white);
@@ -309,73 +384,112 @@
         opacity: 0.6;
         transition: opacity 0.3s ease;
     }
-    .case-link:hover {
-        opacity: 1;
-    }
+
+    .case-card:hover .case-link { opacity: 1; }
+
     .cases-more {
         text-align: center;
         padding-top: 20px;
     }
+
     /* ===== INSIGHTS ===== */
     .insights {
         padding: 100px 50px;
         background-color: var(--surface);
     }
+
     .insights-container {
         max-width: 1400px;
         margin: 0 auto;
     }
+
     .insights-header {
         margin-bottom: 60px;
     }
+
     .insights-title {
         font-size: 42px;
         color: var(--white);
         margin-bottom: 16px;
         font-weight: 300;
     }
+
     .insights-desc {
         font-size: 14px;
         color: var(--sub-text);
         line-height: 1.8;
     }
+
     .insights-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 1px;
         background-color: var(--border);
         margin-bottom: 50px;
     }
+
     .insight-card {
-        padding: 40px;
+        padding: 36px;
         background-color: var(--surface);
         transition: background-color 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        display: block;
     }
+
     .insight-card:hover {
         background-color: var(--bg);
     }
+
     .insight-date {
         font-size: 11px;
         letter-spacing: 1px;
         color: var(--sub-text);
         margin-bottom: 14px;
     }
+
+    .insight-category {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: var(--sub-text);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+
     .insight-title {
-        font-size: 18px;
+        font-size: 17px;
         color: var(--white);
-        margin-bottom: 14px;
+        margin-bottom: 12px;
         font-weight: 400;
         line-height: 1.5;
     }
+
     .insight-excerpt {
         font-size: 13px;
         color: var(--sub-text);
         line-height: 1.8;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
+
+    .insight-read {
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: var(--white);
+        opacity: 0.5;
+        transition: opacity 0.3s;
+    }
+
+    .insight-card:hover .insight-read { opacity: 1; }
+
     .insights-more {
         text-align: center;
         padding-top: 20px;
     }
+
     /* ===== CTA ===== */
     .cta-section {
         padding: 120px 50px;
@@ -383,6 +497,7 @@
         text-align: center;
         border-top: 1px solid var(--border);
     }
+
     .cta-title {
         font-size: 46px;
         margin-bottom: 28px;
@@ -390,6 +505,7 @@
         color: var(--white);
         line-height: 1.3;
     }
+
     .cta-subtitle {
         font-size: 14px;
         color: var(--sub-text);
@@ -399,6 +515,7 @@
         margin-right: auto;
         line-height: 2;
     }
+
     .btn-light {
         background-color: var(--white);
         color: var(--bg);
@@ -413,16 +530,19 @@
         display: inline-block;
         font-weight: 500;
     }
+
     .btn-light:hover {
         background-color: transparent;
         color: var(--white);
     }
+
     /* ===== FOOTER ===== */
     footer {
         padding: 60px 50px;
         background-color: var(--surface);
         border-top: 1px solid var(--border);
     }
+
     .footer-content {
         max-width: 1400px;
         margin: 0 auto;
@@ -431,6 +551,7 @@
         gap: 50px;
         margin-bottom: 50px;
     }
+
     .footer-column h3 {
         font-size: 11px;
         letter-spacing: 1.5px;
@@ -440,23 +561,28 @@
         color: var(--white);
         opacity: 0.5;
     }
+
     .footer-column ul {
         list-style: none;
     }
+
     .footer-column li {
         color: var(--sub-text);
         font-size: 13px;
         line-height: 2.2;
     }
+
     .footer-column a {
         color: var(--sub-text);
         text-decoration: none;
         font-size: 13px;
         transition: color 0.3s ease;
     }
+
     .footer-column a:hover {
         color: var(--white);
     }
+
     .footer-bottom {
         max-width: 1400px;
         margin: 0 auto;
@@ -468,55 +594,67 @@
         font-size: 11px;
         color: var(--sub-text);
     }
+
     .footer-logo {
         font-size: 13px;
         letter-spacing: 2px;
         color: var(--white);
         opacity: 0.7;
     }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
         header {
             padding: 20px 24px;
         }
+
         .header-wrapper {
             flex-direction: column;
             gap: 16px;
         }
+
         .nav-menu {
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
         }
+
         .hero {
             padding: 120px 24px 80px;
         }
+
         .hero-title {
             font-size: 34px;
         }
+
         .what-we-do,
         .cases,
         .insights,
         .cta-section {
             padding: 60px 24px;
         }
+
         .what-we-do-content {
             grid-template-columns: 1fr;
             gap: 30px;
         }
+
         .cases-grid,
         .insights-grid {
             grid-template-columns: 1fr;
         }
+
         .footer-content {
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
+
         .divider {
             margin: 0 24px;
         }
     }
 </style>
+
 </head>
 <body>
 <!-- HEADER (원본 유지) -->
@@ -525,20 +663,21 @@
         <a href="./index.html" class="logo">CHAEUM</a>
         <div class="nav-menu">
             <a href="./services.html">Services</a>
-            <a href="./portfolio.html">Case Study</a>
-            <a href="./insights/index.html">Insight</a>
+            <a href="./portfolio.html">Portfolio</a>
+            <a href="./insights/index.html">Blog</a>
             <a href="./about.html">About</a>
             <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
         </div>
     </div>
 </header>
+
 <!-- HERO -->
 <section class="hero">
     <div class="hero-content">
         <div class="hero-tagline">Brand Asset Strategy</div>
         <h1 class="hero-title">
-            
-            바꿔도 바꿔도,<br>돈이 새는 <strong>구조</strong>는 그대로입니다.
+            로고를 바꾸고, 패키지를 바꾸고, SNS를 바꿔도<br>
+            정작 돈이 새는 <strong>구조</strong>는 그대로인 브랜드들이 있습니다.
         </h1>
         <p class="hero-subtitle">
             CHAEUM은 예쁜 디자인을 약속하지 않습니다.<br>
@@ -550,33 +689,49 @@
         </div>
     </div>
 </section>
+
 <div class="divider"></div>
+
 <!-- CASES -->
 <section class="cases" id="cases">
     <div class="cases-container">
         <div class="section-label">성공 사례</div>
         <div class="cases-grid">
-            <div class="case-card">
-                <div class="case-tag">식음료 / 프리미엄 포지셔닝</div>
-                <h3 class="case-title">Deokhwa Myeongran</h3>
-                <div class="case-metric">+360%</div>
-                <p class="case-description">프리미엄 제품이지만 시장에서 가벼워 보이던 브랜드. 포지셔닝 재정의와 가격 구조 혁신으로 매출 3배 이상 증가했습니다.</p>
-                <a href="./case-deokhwa.html" class="case-link">자세히 보기 →</a>
-            </div>
-            <div class="case-card">
-                <div class="case-tag">라이프스타일 / 경험 설계</div>
-                <h3 class="case-title">Therethehouse</h3>
-                <div class="case-metric">3개월 내<br>예약 포화</div>
-                <p class="case-description">좋은 경험이 있었지만 브랜드 신뢰도가 부족했던 곳. 고객 경험 설계를 통해 3개월 만에 예약이 가득 찼습니다.</p>
-                <a href="./case-therethehouse.html" class="case-link">자세히 보기 →</a>
-            </div>
+            <a href="./case-deokhwa.html" class="case-card">
+                <div class="case-photo">
+                    <img src="./Image/deokhwa-01.jpeg" alt="덕화명란"
+                        onerror="this.style.display='none'">
+                </div>
+                <div class="case-body">
+                    <div class="case-tag">식음료 · 프리미엄 포지셔닝</div>
+                    <h3 class="case-title">Deokhwa Myeongran</h3>
+                    <div class="case-metric">+360%</div>
+                    <p class="case-description">30년 전통의 브랜드가 시장에서 제 가격을 받지 못하던 상황. 포지셔닝 재설계로 연매출 30억에서 110억으로.</p>
+                    <span class="case-link">자세히 보기 →</span>
+                </div>
+            </a>
+            <a href="./case-therethehouse.html" class="case-card">
+                <div class="case-photo">
+                    <img src="./Image/therethehouse-01.jpeg" alt="Therethehouse"
+                        onerror="this.style.display='none'">
+                </div>
+                <div class="case-body">
+                    <div class="case-tag">라이프스타일 · 브랜드 경험 설계</div>
+                    <h3 class="case-title">Therethehouse</h3>
+                    <div class="case-metric">3개월 내<br>예약 포화</div>
+                    <p class="case-description">덕화명란의 30년 철학을 오프라인으로 체험하는 브랜드 쇼룸 설계. 브랜드 경험이 팬덤이 되는 구조.</p>
+                    <span class="case-link">자세히 보기 →</span>
+                </div>
+            </a>
         </div>
         <div class="cases-more">
-            <a href="./portfolio.html" class="btn-secondary">모든 사례 보기</a>
+            <a href="./portfolio.html" class="btn-secondary">케이스 스터디 더보기</a>
         </div>
     </div>
 </section>
+
 <div class="divider"></div>
+
 <!-- INSIGHTS -->
 <section class="insights" id="insights">
     <div class="insights-container">
@@ -584,33 +739,43 @@
             <h2 class="insights-title">Insights</h2>
             <p class="insights-desc">포지셔닝부터 마케팅 퍼널까지, 브랜드 성장의 모든 단계에서 얻은 인사이트를 공유합니다.</p>
         </div>
-        <div class="insights-grid">
-            <div class="insight-card">
-                <div class="insight-date">2026. 02. 25</div>
-                <h3 class="insight-title">왜 좋은 제품이 팔리지 않을까</h3>
-                <p class="insight-excerpt">포지셔닝이 없으면, 아무리 좋은 제품도 시장에서 소음이 됩니다.</p>
-            </div>
-            <div class="insight-card">
-                <div class="insight-date">2026. 02. 20</div>
-                <h3 class="insight-title">고단가 브랜드의 전략</h3>
-                <p class="insight-excerpt">가격이 높을수록 고객이 보고 싶어하는 것은 결과가 아니라 논리입니다.</p>
-            </div>
-            <div class="insight-card">
-                <div class="insight-date">2026. 02. 15</div>
-                <h3 class="insight-title">포지셔닝이란 무엇인가</h3>
-                <p class="insight-excerpt">포지셔닝은 고객의 마음에 당신의 브랜드를 어떻게 자리 잡히는가입니다.</p>
-            </div>
-            <div class="insight-card">
+        <div class="insights-grid" id="insightsGrid">
+            <!-- 동적 로딩 -->
+            <a href="/insights/branding-is-not-a-logo.html" class="insight-card">
+                <div class="insight-category">Positioning</div>
                 <div class="insight-date">2026. 03. 13</div>
                 <h3 class="insight-title">당신이 알고 있는 브랜딩은 틀렸다</h3>
-                <p class="insight-excerpt">로고와 타이포그래피는 브랜딩을 위한 유용한 도구일 뿐입니다. 비즈니스의 운명을 결정짓는 브랜딩의 진짜 실체는 따로 있습니다.</p>
-            </div>
+                <p class="insight-excerpt">로고와 타이포그래피는 브랜딩을 위한 유용한 도구일 뿐입니다. 비즈니스의 운명을 결정짓는 브랜딩의 진짜 실체는 고객의 무의식에 있습니다.</p>
+                <span class="insight-read">글 읽기 →</span>
+            </a>
+            <a href="/insights/brand-ownership-customer.html" class="insight-card">
+                <div class="insight-category">Positioning</div>
+                <div class="insight-date">2026. 03. 13</div>
+                <h3 class="insight-title">브랜딩은 고객이 완성한다.</h3>
+                <p class="insight-excerpt">브랜드는 기업의 회의실이 아닌 고객의 무의식에서 완성됩니다. 브랜딩의 주권을 분석합니다.</p>
+                <span class="insight-read">글 읽기 →</span>
+            </a>
+            <a href="/insights/recto-brand-positioning-strategy.html" class="insight-card">
+                <div class="insight-category">Positioning</div>
+                <div class="insight-date">2026. 03. 12</div>
+                <h3 class="insight-title">로고가 사라진 자리, 실루엣으로 증명하는 브랜드의 격, RECTO</h3>
+                <p class="insight-excerpt">한남동의 정제된 콘크리트 너머, 로고 없는 실루엣만으로 존재감을 증명하는 렉토의 비즈니스 아키텍처.</p>
+                <span class="insight-read">글 읽기 →</span>
+            </a>
+            <a href="/insights/nonfiction.html" class="insight-card">
+                <div class="insight-category">Case Study</div>
+                <div class="insight-date">2026. 03. 12</div>
+                <h3 class="insight-title">향기로 설계된 사색의 순간, 논픽션이 만든 조용한 사치</h3>
+                <p class="insight-excerpt">화려한 장식 대신 향과 여백으로 감각을 설계한 브랜드, 논픽션은 일상 속 사적인 의식을 통해 새로운 사치를 제안한다.</p>
+                <span class="insight-read">글 읽기 →</span>
+            </a>
         </div>
         <div class="insights-more">
-            <a href="./insights/index.html" class="btn-secondary">전체 블로그 보기</a>
+            <a href="./insights/index.html" class="btn-secondary">인사이트 더보기</a>
         </div>
     </div>
 </section>
+
 <!-- CTA -->
 <section class="cta-section">
     <h2 class="cta-title">브랜드는 있는데<br>매출 구조가 없다면.</h2>
@@ -621,6 +786,7 @@
     </p>
     <a href="./diagnosis-talk.html" class="btn-light">브랜드 구조 무료 진단받기</a>
 </section>
+
 <!-- FOOTER -->
 <footer>
     <div class="footer-content">
@@ -643,7 +809,7 @@
         <div class="footer-column">
             <h3>Contact</h3>
             <ul>
-                <li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li>
+                <li><a href="mailto:hanna@chaeum.co">hanna@chaeum.co</a></li>
                 <li><a href="./diagnosis-talk.html">AI 진단 받기</a></li>
                 <li><a href="https://cal.com/chaeum">상담 예약</a></li>
             </ul>
@@ -662,10 +828,12 @@
         <span>&copy; 2026 CHAEUM. All rights reserved.</span>
     </div>
 </footer>
+
 <script>
     // What We Do Navigation
     const navBtns = document.querySelectorAll('.nav-btn');
     const items = document.querySelectorAll('.what-we-do-item');
+
     navBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const itemNum = btn.getAttribute('data-item');
@@ -676,5 +844,6 @@
         });
     });
 </script>
+
 </body>
 </html>
