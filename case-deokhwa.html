@@ -1,503 +1,590 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deokhwa Myeongran | CHAEUM Portfolio</title>
+    <title>Deokhwa Myeongran | CHAEUM Case Study</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --bg: #4B4545;
-            --white: #FFFFFF;
-            --gray: #888888;
-            --light-gray: #666666;
-        }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    :root {
+        --bg: #4B4545;
+        --white: #FFFDF7;
+        --sub-text: rgba(255, 253, 247, 0.55);
+        --border: rgba(255, 253, 247, 0.12);
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background-color: var(--bg);
-            color: var(--white);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-        }
+    html { scroll-behavior: smooth; }
 
-        /* ===== HEADER ===== */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(75, 69, 69, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 24px 48px;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+        line-height: 1.6;
+        letter-spacing: -0.3px;
+    }
 
-        .header-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* HEADER */
+    header {
+        position: fixed; top: 0; left: 0; right: 0;
+        background-color: rgba(75, 69, 69, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 24px 48px;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header-wrapper {
+        max-width: 1400px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+    .nav-menu { display: flex; align-items: center; gap: 40px; }
+    .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+    .nav-menu a:hover { opacity: 1; }
+    .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+    .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
 
-        .logo {
-            font-size: 13px;
-            letter-spacing: 2px;
-            font-weight: 300;
-            color: var(--white);
-            opacity: 0.8;
-            text-decoration: none;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
+    /* BREADCRUMB */
+    .breadcrumb {
+        margin-top: 80px;
+        padding: 20px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-inner {
+        max-width: 1400px; margin: 0 auto;
+        font-size: 11px; letter-spacing: 1px; color: var(--sub-text); text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--sub-text); text-decoration: none; transition: color 0.3s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb span { margin: 0 10px; opacity: 0.4; }
 
-        .logo:hover {
-            opacity: 1;
-        }
+    /* HERO */
+    .hero {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;
+    }
+    .hero-tag {
+        font-size: 11px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title {
+        font-size: 56px; font-weight: 300; line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-subtitle {
+        font-size: 18px; color: var(--sub-text); line-height: 1.7; margin-bottom: 40px;
+    }
+    .hero-metrics {
+        display: flex; gap: 40px;
+    }
+    .metric-value {
+        font-size: 32px; font-weight: 300; letter-spacing: -1px; margin-bottom: 6px;
+    }
+    .metric-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase;
+    }
+    .hero-overview {
+        border: 1px solid var(--border); padding: 0;
+    }
+    .hero-overview-item {
+        display: flex; justify-content: space-between; padding: 18px 28px;
+        border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .hero-overview-item:last-child { border-bottom: none; }
+    .overview-key { color: var(--sub-text); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+    .overview-val { color: var(--white); }
 
-        .nav-menu {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-            align-items: center;
-        }
+    /* SLIDESHOW */
+    .slideshow-section { border-bottom: 1px solid var(--border); }
+    .slideshow-wrapper {
+        position: relative; overflow: hidden; background-color: #3a3535; height: 560px;
+    }
+    .slides {
+        display: flex; transition: transform 0.5s ease; height: 100%;
+    }
+    .slide {
+        min-width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-placeholder {
+        width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; color: var(--sub-text);
+    }
+    .slide-placeholder-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+    .slide-placeholder-num { font-size: 48px; font-weight: 200; opacity: 0.3; }
+    .slide-caption {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        padding: 20px 50px;
+        background: linear-gradient(transparent, rgba(75,69,69,0.85));
+        font-size: 13px; color: var(--sub-text);
+    }
+    .slideshow-controls {
+        padding: 24px 50px;
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid var(--border);
+    }
+    .slide-dots { display: flex; gap: 10px; }
+    .dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background-color: var(--sub-text); cursor: pointer; transition: background-color 0.3s;
+    }
+    .dot.active { background-color: var(--white); }
+    .slide-arrows { display: flex; gap: 12px; }
+    .arrow-btn {
+        background: none; border: 1px solid var(--border);
+        color: var(--white); width: 40px; height: 40px;
+        cursor: pointer; font-size: 14px; transition: all 0.3s;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .arrow-btn:hover { border-color: var(--white); }
+    .slide-counter { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); }
 
-        .nav-menu a {
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            opacity: 0.6;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
+    /* SECTIONS */
+    .section {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .section-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 260px 1fr; gap: 80px;
+    }
+    .section-label {
+        font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text);
+        text-transform: uppercase; padding-top: 6px;
+    }
+    .section-title {
+        font-size: 28px; font-weight: 300; margin-bottom: 24px; line-height: 1.4;
+    }
+    .section-text {
+        font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 24px;
+        max-width: 640px;
+    }
+    .section-text strong { color: var(--white); font-weight: 500; }
 
-        .nav-menu a:hover {
-            opacity: 1;
-        }
+    .insight-block {
+        border-left: 2px solid rgba(255,253,247,0.3);
+        padding: 24px 28px; margin: 32px 0; max-width: 560px;
+    }
+    .insight-label {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 10px;
+    }
+    .insight-text {
+        font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--white);
+    }
 
-        .btn-consult {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 12px 28px;
-            border: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            font-weight: 400;
-        }
+    .strategy-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .strategy-card { padding: 36px; background-color: var(--bg); }
+    .strategy-num {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        margin-bottom: 14px; text-transform: uppercase;
+    }
+    .strategy-title { font-size: 17px; font-weight: 400; margin-bottom: 12px; }
+    .strategy-desc { font-size: 13px; color: var(--sub-text); line-height: 1.9; }
 
-        .btn-consult:hover {
-            opacity: 0.9;
-        }
+    .results-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .result-card { padding: 40px 36px; background-color: var(--bg); }
+    .result-value {
+        font-size: 40px; font-weight: 200; letter-spacing: -1px; margin-bottom: 10px;
+    }
+    .result-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 12px;
+    }
+    .result-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
 
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 140px 40px 80px 40px;
-        }
+    /* CTA */
+    .cta-section { padding: 100px 50px; text-align: center; }
+    .cta-title { font-size: 40px; font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
+    .cta-desc { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 48px; }
+    .btn-primary {
+        background-color: var(--white); color: var(--bg);
+        border: none; padding: 16px 48px; font-size: 12px; letter-spacing: 1px;
+        cursor: pointer; font-family: inherit; text-transform: uppercase;
+        transition: all 0.3s; text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+    .btn-secondary-link {
+        display: inline-block; margin-top: 16px;
+        font-size: 12px; color: var(--sub-text); text-decoration: none;
+        letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s;
+    }
+    .btn-secondary-link:hover { color: var(--white); }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 60px;
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--white);
-            text-decoration: none;
-            border-bottom: 1px solid var(--white);
-            padding-bottom: 4px;
-            transition: opacity 0.3s ease;
-        }
+    /* FOOTER */
+    footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+    .footer-content {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px;
+    }
+    .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+    .footer-column ul { list-style: none; }
+    .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+    .footer-column a:hover { color: var(--white); }
+    .footer-column li { color: var(--sub-text); font-size: 13px; line-height: 2.2; }
+    .footer-bottom {
+        max-width: 1400px; margin: 0 auto;
+        border-top: 1px solid var(--border); padding-top: 30px;
+        display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text);
+    }
+    .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
 
-        .back-link:hover {
-            opacity: 0.7;
-        }
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+        .strategy-grid, .results-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        header { padding: 20px 24px; }
+        .header-wrapper { flex-direction: column; gap: 16px; }
+        .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .breadcrumb, .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; }
+        .hero-title { font-size: 38px; }
+        .section-inner { grid-template-columns: 1fr; gap: 32px; }
+        .slideshow-wrapper { height: 300px; }
+        .slideshow-controls { padding: 20px 24px; }
+        .hero-metrics { flex-wrap: wrap; gap: 24px; }
+        .footer-content { grid-template-columns: 1fr 1fr; }
+    }
+</style>
 
-        .back-link::before {
-            content: '← ';
-            margin-right: 8px;
-        }
 
-        .case-header {
-            margin-bottom: 60px;
-        }
-
-        .case-tag {
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            color: var(--gray);
-            margin-bottom: 16px;
-            opacity: 0.7;
-        }
-
-        .case-title {
-            font-size: 48px;
-            font-weight: 300;
-            line-height: 1.3;
-            margin-bottom: 24px;
-        }
-
-        .case-metric {
-            font-size: 36px;
-            font-weight: 300;
-            color: var(--white);
-        }
-
-        /* ===== DIVIDER ===== */
-        .divider {
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin: 60px 0;
-        }
-
-        /* ===== SECTION ===== */
-        .case-section {
-            margin-bottom: 60px;
-        }
-
-        .case-section h2 {
-            font-size: 24px;
-            font-weight: 300;
-            margin-bottom: 24px;
-        }
-
-        .case-section p {
-            font-size: 15px;
-            color: var(--gray);
-            line-height: 2;
-            margin-bottom: 12px;
-        }
-
-        .case-section strong {
-            color: var(--white);
-        }
-
-        /* ===== METRICS GRID ===== */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .metric-box {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 24px;
-            border-radius: 2px;
-            text-align: center;
-        }
-
-        .metric-number {
-            font-size: 32px;
-            font-weight: 300;
-            color: var(--white);
-            margin-bottom: 12px;
-        }
-
-        .metric-label {
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--gray);
-        }
-
-        /* ===== TIMELINE ===== */
-        .timeline {
-            position: relative;
-            padding: 40px 0 40px 40px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .timeline-item {
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -45px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--white);
-        }
-
-        .timeline-title {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .timeline-description {
-            font-size: 13px;
-            color: var(--gray);
-            line-height: 1.8;
-        }
-
-        /* ===== CTA ===== */
-        .cta-box {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 48px;
-            border-radius: 2px;
-            text-align: center;
-            margin: 80px 0;
-        }
-
-        .cta-box h2 {
-            font-size: 28px;
-            font-weight: 300;
-            margin-bottom: 16px;
-        }
-
-        .cta-box p {
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 32px;
-            line-height: 1.8;
-        }
-
-        .btn-primary {
-            background-color: var(--white);
-            color: var(--bg);
-            padding: 14px 40px;
-            border: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-            font-weight: 500;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 60px 40px;
-            text-align: center;
-            margin-top: 80px;
-        }
-
-        footer p {
-            font-size: 11px;
-            color: var(--gray);
-            margin-bottom: 12px;
-        }
-
-        footer a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            margin: 0 16px;
-        }
-
-        footer a:hover {
-            color: var(--white);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .case-title {
-                font-size: 32px;
-            }
-
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            header {
-                padding: 20px 24px;
-            }
-
-            .header-wrapper {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-            }
-
-            .container {
-                padding: 120px 24px 60px 24px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header>
-        <div class="header-wrapper">
-            <a href="./index.html" class="logo">CHAEUM</a>
-            <div class="nav-menu">
-                <a href="./services.html">Services</a>
-                <a href="./portfolio.html">Portfolio</a>
-                <a href="./index.html#blog">Blog</a>
-                <a href="./about.html">About</a>
-                <button class="btn-consult" onclick="window.location.href='https://cal.com/chaeum'">상담신청</button>
-            </div>
-        </div>
-    </header>
 
-    <!-- MAIN CONTENT -->
-    <div class="container">
-        <a href="./portfolio.html" class="back-link">포트폴리오로 돌아가기</a>
 
-        <div class="case-header">
-            <div class="case-tag">식음료 / 프리미엄 포지셔닝</div>
-            <h1 class="case-title">Deokhwa Myeongran</h1>
-            <div class="case-metric">+360% 매출 증가</div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 1. 문제 정의 -->
-        <div class="case-section">
-            <h2>1. 문제 정의</h2>
-            <p><strong>상황:</strong> Deokhwa Myeongran은 고급 명란을 판매하는 프리미엄 브랜드였습니다. 제품의 품질은 우수했지만, 시장에서는 "비싼 일반 명란" 정도로 인식되고 있었습니다.</p>
-            <p><strong>문제:</strong> 포지셔닝의 부재로 인한 가격대 인식 저하. 고객들이 프리미엄 가격을 정당화할 이유를 찾지 못했습니다.</p>
-        </div>
-
-        <!-- 성과 지표 -->
-        <div class="metrics-grid">
-            <div class="metric-box">
-                <div class="metric-number">+360%</div>
-                <div class="metric-label">매출 증가</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-number">+35%</div>
-                <div class="metric-label">평균 주문액</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-number">78%</div>
-                <div class="metric-label">재구매율</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-number">4.9/5</div>
-                <div class="metric-label">고객 만족도</div>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 2. 전략 -->
-        <div class="case-section">
-            <h2>2. 전략</h2>
-            <p><strong>포지셔닝 전환:</strong> "비싼 명란" → "정직한 명란, 프리미엄 경험"</p>
-            <p>우리는 "정직성(Honesty)"을 핵심 가치로 설정했습니다. 높은 가격이 아니라 투명한 제조 과정과 엄격한 품질 관리가 프리미엄 가격을 정당화한다는 메시지를 전달했습니다.</p>
-            
-            <p style="margin-top: 24px;"><strong>타겟 세분화:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
-                <li>• 프리미엄 라이프스타일을 추구하는 3040대</li>
-                <li>• 제품의 출처와 과정을 중시하는 고객</li>
-                <li>• B2B 고급 음식점 및 카페</li>
-            </ul>
-
-            <p style="margin-top: 24px;"><strong>메시지 정렬:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
-                <li>• 제조 과정의 투명성 강조</li>
-                <li>• 엄격한 품질 기준 설명</li>
-                <li>• 고객 스토리 공유</li>
-            </ul>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 3. 실행 -->
-        <div class="case-section">
-            <h2>3. 실행</h2>
-            <p>8주 동안 다음 4가지를 진행했습니다:</p>
-        </div>
-
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-title">Week 1-2: 브랜드 재정의</div>
-                <div class="timeline-description">새로운 포지셔닝에 맞는 브랜드 아이덴티티 개발. 로고, 색상, 톤앤매너 통일.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-title">Week 3-4: 웹사이트 리뉴얼</div>
-                <div class="timeline-description">제조 과정과 품질 기준을 강조하는 새로운 웹사이트 구축. 투명성과 신뢰성 중심.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-title">Week 5-6: 콘텐츠 개발</div>
-                <div class="timeline-description">명란의 정직한 제조 과정을 보여주는 영상 및 블로그 콘텐츠 제작.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-title">Week 7-8: 마케팅 실행</div>
-                <div class="timeline-description">신규 포지셔닝을 반영한 SNS, 이메일, PR 캠페인 동시 진행.</div>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 4. 결과 -->
-        <div class="case-section">
-            <h2>4. 결과</h2>
-            <p><strong>정량적 성과:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9; margin-bottom: 24px;">
-                <li>• 월 매출 3배 이상 증가 (6개월 기준)</li>
-                <li>• 평균 주문액 35% 증가</li>
-                <li>• 재구매 고객 78%</li>
-            </ul>
-
-            <p><strong>정성적 변화:</strong></p>
-            <ul style="margin-left: 24px; margin-top: 12px; font-size: 14px; color: var(--gray); line-height: 1.9;">
-                <li>• "정직한 프리미엄 브랜드"로 명확히 인식</li>
-                <li>• 고객들이 자발적으로 추천</li>
-                <li>• B2B 협력 업체 증가</li>
-                <li>• 가격 인상 후에도 판매량 유지</li>
-            </ul>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- CTA -->
-        <div class="cta-box">
-            <h2>비슷한 고민을 하고 있으신가요?</h2>
-            <p>좋은 제품인데 시장에서 제대로 인식받지 못하는 상황이라면,<br>채움의 AI 고민 상담으로 정확한 진단을 받아보세요.</p>
-            <button class="btn-primary" onclick="window.location.href='./diagnosis-talk.html'">무료 AI 진단 시작</button>
+<header>
+    <div class="header-wrapper">
+        <a href="./index.html" class="logo">CHAEUM</a>
+        <div class="nav-menu">
+            <a href="./services.html">Services</a>
+            <a href="./portfolio.html">Case Study</a>
+            <a href="./insights/index.html">Insight</a>
+            <a href="./about.html">About</a>
+            <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
         </div>
     </div>
+</header>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2026 CHAEUM</p>
-        <div>
-            <a href="./index.html">Home</a>
-            <a href="./portfolio.html">Portfolio</a>
-            <a href="./services.html">Services</a>
-            <a href="./about.html">About</a>
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="./portfolio.html">Case Study</a>
+        <span>→</span>
+        Deokhwa Myeongran
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">식음료 · 프리미엄 포지셔닝</div>
+            <h1 class="hero-title">Deokhwa<br>Myeongran</h1>
+            <p class="hero-subtitle">30년 전통의 브랜드가<br>시장에서 제 가격을 받게 됐습니다.</p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">+360%</div>
+                    <div class="metric-label">매출 성장</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">30억→110억</div>
+                    <div class="metric-label">연매출</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">78%</div>
+                    <div class="metric-label">재구매율</div>
+                </div>
+            </div>
         </div>
-    </footer>
+        <div class="hero-right">
+            <div class="hero-overview">
+                <div class="hero-overview-item">
+                    <span class="overview-key">Client</span>
+                    <span class="overview-val">덕화명란</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Category</span>
+                    <span class="overview-val">식음료 · 프리미엄 포지셔닝</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Scope</span>
+                    <span class="overview-val">브랜드 아키텍처 · 가격 구조 재설계 · 마케팅</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Period</span>
+                    <span class="overview-val">8주</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDESHOW -->
+<div class="slideshow-section">
+    <div class="slideshow-wrapper">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="./Image/deokhwa-01.jpg" alt="덕화명란 브랜드"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">01</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">브랜드 — 30년 전통의 덕화명란</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/deokhwa-02.jpg" alt="덕화명란 제품"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">02</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">제품 — 엄격한 품질 기준으로 만들어진 프리미엄 명란</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/deokhwa-03.jpg" alt="덕화명란 포지셔닝"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">03</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">포지셔닝 — 프리미엄 가격을 정당화하는 브랜드 스토리</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/deokhwa-04.jpg" alt="덕화명란 패키지"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">04</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">패키지 — 프리미엄 아이덴티티를 담은 디자인</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/deokhwa-05.jpg" alt="덕화명란 결과"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">05</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">결과 — 30억에서 110억으로</div>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <div class="slide-dots" id="dots"></div>
+        <div class="slide-counter" id="counter">1 / 5</div>
+        <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn">←</button>
+            <button class="arrow-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Problem</div>
+        <div class="section-content">
+            <h2 class="section-title">좋은 제품인데,<br>시장은 알아보지 못했습니다.</h2>
+            <p class="section-text">
+                덕화명란은 30년의 역사와 엄격한 품질 기준을 가진 브랜드입니다.
+                그러나 시장에서는 "비싼 일반 명란" 정도로 인식되고 있었습니다.
+                프리미엄 가격에 걸맞은 이유를 고객이 찾지 못했습니다.
+            </p>
+            <div class="insight-block">
+                <div class="insight-label">CHAEUM이 정의한 구조적 결함</div>
+                <div class="insight-text">
+                    "제품의 품질은 프리미엄이었지만,<br>브랜드의 포지셔닝이 그것을 증명하지 못했다."
+                </div>
+            </div>
+            <p class="section-text">
+                가격을 낮추는 것이 해답이 아니었습니다.
+                30년의 전통, 정직한 제조 과정, 엄격한 품질 기준 —
+                이미 갖추고 있는 프리미엄의 근거를 시장에 제대로 전달하는 구조가 필요했습니다.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- STRATEGY -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Strategy</div>
+        <div class="section-content">
+            <h2 class="section-title">"비싼 명란"에서<br>"정직한 프리미엄"으로.</h2>
+            <p class="section-text">
+                CHAEUM은 덕화명란의 핵심 가치를 <strong>"정직성(Honesty)"</strong>으로 정의했습니다.
+                높은 가격이 아니라, 투명한 제조 과정과 30년의 신뢰가
+                프리미엄 가격을 정당화한다는 메시지를 구조화했습니다.
+            </p>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-num">01 · 포지셔닝</div>
+                    <div class="strategy-title">브랜드 아키텍처 재설계</div>
+                    <p class="strategy-desc">
+                        "비싼 명란"이 아닌 "30년이 증명하는 명란"으로 포지셔닝을 재정의했습니다.
+                        USP를 명확히 하고 타겟 고객의 구매 논리를 설계했습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">02 · 가격 구조</div>
+                    <div class="strategy-title">프리미엄 가격 정당화</div>
+                    <p class="strategy-desc">
+                        가격 인상이 아닌 가격 구조의 재설계입니다.
+                        고객이 스스로 "이 가격은 합리적이다"라고 느끼는 브랜드 논리를 구축했습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">03 · 콘텐츠</div>
+                    <div class="strategy-title">제조 철학의 시각화</div>
+                    <p class="strategy-desc">
+                        30년의 제조 과정과 원재료 기준을 콘텐츠로 풀어냈습니다.
+                        투명성이 신뢰가 되고, 신뢰가 재구매로 이어지는 구조입니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">04 · 타겟</div>
+                    <div class="strategy-title">고객 세분화 및 채널 정렬</div>
+                    <p class="strategy-desc">
+                        프리미엄 라이프스타일을 추구하는 3040과 B2B 고급 채널을
+                        핵심 타겟으로 정렬하고, 각 채널별 메시지를 최적화했습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Results</div>
+        <div class="section-content">
+            <h2 class="section-title">포지셔닝이 바뀌자<br>매출 구조가 바뀌었습니다.</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value">+360%</div>
+                    <div class="result-label">매출 성장</div>
+                    <p class="result-desc">연매출 30억에서 110억으로. 포지셔닝 재설계 이후 6개월 기준입니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">+35%</div>
+                    <div class="result-label">평균 주문액</div>
+                    <p class="result-desc">가격 인상 후에도 판매량이 유지되었습니다. 고객이 납득했기 때문입니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">78%</div>
+                    <div class="result-label">재구매율</div>
+                    <p class="result-desc">한 번 구매한 고객의 78%가 다시 돌아왔습니다. 브랜드 신뢰가 락인이 됐습니다.</p>
+                </div>
+            </div>
+            <div class="insight-block" style="margin-top: 40px;">
+                <div class="insight-label">정성적 변화</div>
+                <div class="insight-text">
+                    "비싼 명란"이 아닌<br>
+                    "30년이 증명하는 정직한 프리미엄 브랜드"로<br>
+                    시장에서 인식되기 시작했습니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2 class="cta-title">좋은 제품인데<br>시장이 알아보지 못한다면.</h2>
+    <p class="cta-desc">
+        문제는 제품이 아니라 포지셔닝 구조입니다.<br>
+        지금 AI 진단으로 당신 브랜드의 구조적 결함을 먼저 확인해보세요.
+    </p>
+    <a href="./diagnosis-talk.html" class="btn-primary">AI 무료 진단 시작</a><br>
+    <a href="./portfolio.html" class="btn-secondary-link">다른 사례 보기 →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="./services.html">Self-OS</a></li>
+                <li><a href="./services.html">Architecture</a></li>
+                <li><a href="./services.html">Engineering</a></li>
+                <li><a href="./services.html">Management</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="./about.html">About CHAEUM</a></li>
+                <li><a href="./insights/index.html">Insights</a></li>
+                <li><a href="./portfolio.html">Case Studies</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <ul>
+                <li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li>
+                <li><a href="./diagnosis-talk.html">AI 진단 받기</a></li>
+                <li><a href="https://cal.com/chaeum">상담 예약</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Location</h3>
+            <ul>
+                <li>Seoul, Korea</li>
+                <li>Seongdong-gu</li>
+                <li>Republic of Korea</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">CHAEUM</span>
+        <span>&copy; 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</footer>
+
+<script>
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current = 0;
+
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    }
+
+    function goTo(index) {
+        current = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+        counter.textContent = `${current + 1} / ${totalSlides}`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+    setInterval(() => goTo(current + 1), 5000);
+</script>
+
+
 </body>
 </html>
