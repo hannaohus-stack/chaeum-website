@@ -19,7 +19,6 @@
         html { scroll-behavior: smooth; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background-color: var(--bg); color: var(--white); line-height: 1.6; letter-spacing: -0.3px; }
 
-```
     /* HEADER */
     header { position: fixed; top: 0; left: 0; right: 0; background-color: rgba(75, 69, 69, 0.98); backdrop-filter: blur(10px); padding: 24px 48px; z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
     .header-wrapper { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
@@ -115,7 +114,6 @@
         .footer-content { grid-template-columns: 1fr 1fr; }
     }
 </style>
-```
 
 </head>
 <body>
@@ -131,8 +129,6 @@
             </div>
         </div>
     </header>
-
-```
 <div class="container">
     <div class="page-header">
         <div class="page-title">Insights</div>
@@ -226,8 +222,7 @@
             const others = posts.slice(1);
 
             const featuredImageHtml = featured.thumbnail
-                ? `<div class="featured-image"><img src="${featured.thumbnail}" alt="${escapeHtml(featured.title)}" onerror="this.parentElement.innerHTML='<div class=\\"featured-image-placeholder\\">Image</div>'"></div>`
-                : '';
+                ? `<div class="featured-image"><img src="${featured.thumbnail}" alt="${escapeHtml(featured.title)}" onerror="this.parentElement.innerHTML='<div class=\\"featured-image-placeholder\\">Image</div>'"></div>
 
             container.innerHTML = `
                 <a href="${featured.url}" class="card-link">
@@ -292,7 +287,6 @@
 
     loadPosts();
 </script>
-```
 
 </body>
 </html>
