@@ -225,8 +225,8 @@
             const featured = posts[0];
             const others = posts.slice(1);
 
-            const featuredImageHtml = featured.image
-                ? `<div class="featured-image"><img src="${featured.image}" alt="${escapeHtml(featured.title)}" onerror="this.parentElement.innerHTML='<div class=\\"featured-image-placeholder\\">Image</div>'"></div>`
+            const featuredImageHtml = featured.thumbnail
+                ? `<div class="featured-image"><img src="${featured.thumbnail}" alt="${escapeHtml(featured.title)}" onerror="this.parentElement.innerHTML='<div class=\\"featured-image-placeholder\\">Image</div>'"></div>`
                 : '';
 
             container.innerHTML = `
@@ -249,8 +249,8 @@
                 ${others.length > 0 ? `
                     <div class="blog-grid">
                         ${others.map(post => {
-                            const imgHtml = post.image
-                                ? `<div class="blog-card-image"><img src="${post.image}" alt="${escapeHtml(post.title)}" onerror="this.parentElement.innerHTML='<div class=\\"blog-card-image-placeholder\\">Image</div>'"></div>`
+                            const imgHtml = post.thumbnail
+                                ? `<div class="blog-card-image"><img src="${post.thumbnail}" alt="${escapeHtml(post.title)}" onerror="this.parentElement.innerHTML='<div class=\\"blog-card-image-placeholder\\">Image</div>'"></div>`
                                 : `<div class="blog-card-image"><div class="blog-card-image-placeholder">No Image</div></div>`;
                             return `
                             <a href="${post.url}" class="card-link">
