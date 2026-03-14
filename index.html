@@ -1,7 +1,4 @@
-cat > index.html
-
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -13,8 +10,6 @@ cat > index.html
             padding: 0;
             box-sizing: border-box;
         }
-
-
     :root {
         --bg: #4B4545;
         --white: #FFFDF7;
@@ -24,11 +19,9 @@ cat > index.html
         --border: rgba(255, 253, 247, 0.12);
         --sub-text: rgba(255, 253, 247, 0.55);
     }
-
     html {
         scroll-behavior: smooth;
     }
-
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
         background-color: var(--bg);
@@ -36,7 +29,6 @@ cat > index.html
         line-height: 1.6;
         letter-spacing: -0.3px;
     }
-
     /* ===== HEADER ===== (원본 유지) */
     header {
         position: fixed;
@@ -49,7 +41,6 @@ cat > index.html
         z-index: 1000;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-
     .header-wrapper {
         max-width: 1400px;
         margin: 0 auto;
@@ -57,7 +48,6 @@ cat > index.html
         justify-content: space-between;
         align-items: center;
     }
-
     .logo {
         font-size: 14px;
         font-weight: 400;
@@ -66,13 +56,11 @@ cat > index.html
         color: var(--white);
         opacity: 0.9;
     }
-
     .nav-menu {
         display: flex;
         align-items: center;
         gap: 40px;
     }
-
     .nav-menu a {
         text-decoration: none;
         color: var(--white);
@@ -82,11 +70,9 @@ cat > index.html
         transition: opacity 0.3s ease;
         text-transform: uppercase;
     }
-
     .nav-menu a:hover {
         opacity: 1;
     }
-
     .btn-consult {
         background-color: var(--white);
         color: var(--bg);
@@ -98,13 +84,11 @@ cat > index.html
         font-family: inherit;
         transition: all 0.3s ease;
     }
-
     .btn-consult:hover {
         background-color: transparent;
         color: var(--white);
         outline: 1px solid var(--white);
     }
-
     /* ===== HERO ===== */
     .hero {
         margin-top: 80px;
@@ -114,13 +98,11 @@ cat > index.html
         display: flex;
         align-items: center;
     }
-
     .hero-content {
         max-width: 1400px;
         margin: 0 auto;
         width: 100%;
     }
-
     .hero-tagline {
         font-size: 11px;
         letter-spacing: 2.5px;
@@ -128,7 +110,6 @@ cat > index.html
         text-transform: uppercase;
         margin-bottom: 32px;
     }
-
     .hero-title {
         font-size: 54px;
         line-height: 1.3;
@@ -137,11 +118,9 @@ cat > index.html
         font-weight: 300;
         max-width: 900px;
     }
-
     .hero-title strong {
         font-weight: 600;
     }
-
     .hero-subtitle {
         font-size: 15px;
         color: var(--sub-text);
@@ -149,17 +128,14 @@ cat > index.html
         max-width: 580px;
         margin-bottom: 56px;
     }
-
     .hero-subtitle strong {
         color: var(--white);
         font-weight: 500;
     }
-
     .hero-buttons {
         display: flex;
         gap: 16px;
     }
-
     .btn-primary {
         background-color: var(--white);
         color: var(--bg);
@@ -175,41 +151,34 @@ cat > index.html
         font-weight: 500;
         display: inline-block;
     }
-
     .btn-primary:hover {
         background-color: transparent;
         color: var(--white);
     }
-
     /* ===== DIVIDER ===== */
     .divider {
         height: 1px;
         background-color: var(--border);
         margin: 0 50px;
     }
-
     /* ===== WHAT WE DO ===== */
     .what-we-do {
         padding: 100px 50px;
         background-color: var(--surface);
     }
-
     .section-container {
         max-width: 1400px;
         margin: 0 auto;
     }
-
     .what-we-do-content {
         display: grid;
         grid-template-columns: 260px 1fr;
         gap: 80px;
     }
-
     .what-we-do-nav {
         font-size: 13px;
         line-height: 2;
     }
-
     .what-we-do-nav button {
         background: none;
         border: none;
@@ -222,34 +191,28 @@ cat > index.html
         padding: 8px 0;
         font-family: inherit;
     }
-
     .what-we-do-nav button:hover,
     .what-we-do-nav button.active {
         color: var(--white);
         font-weight: 600;
     }
-
     .what-we-do-item {
         display: none;
     }
-
     .what-we-do-item.active {
         display: block;
         animation: fadeIn 0.3s ease;
     }
-
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
     }
-
     .what-we-do-item h3 {
         font-size: 36px;
         color: var(--white);
         margin-bottom: 30px;
         font-weight: 300;
     }
-
     .what-we-do-item p {
         font-size: 14px;
         color: var(--sub-text);
@@ -257,15 +220,12 @@ cat > index.html
         margin-bottom: 20px;
         max-width: 600px;
     }
-
     .what-we-do-item p strong {
         color: var(--white);
     }
-
     .what-we-do-item-cta {
         margin-top: 40px;
     }
-
     .btn-secondary {
         background-color: transparent;
         color: var(--white);
@@ -280,23 +240,19 @@ cat > index.html
         display: inline-block;
         font-family: inherit;
     }
-
     .btn-secondary:hover {
         border-color: var(--white);
         background-color: rgba(255, 253, 247, 0.05);
     }
-
     /* ===== CASES ===== */
     .cases {
         padding: 100px 50px;
         background-color: var(--bg);
     }
-
     .cases-container {
         max-width: 1400px;
         margin: 0 auto;
     }
-
     .section-label {
         font-size: 11px;
         letter-spacing: 2.5px;
@@ -304,7 +260,6 @@ cat > index.html
         text-transform: uppercase;
         margin-bottom: 60px;
     }
-
     .cases-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -312,17 +267,14 @@ cat > index.html
         background-color: var(--border);
         margin-bottom: 50px;
     }
-
     .case-card {
         padding: 50px;
         background-color: var(--bg);
         transition: background-color 0.3s ease;
     }
-
     .case-card:hover {
         background-color: var(--surface);
     }
-
     .case-tag {
         font-size: 11px;
         letter-spacing: 1.5px;
@@ -330,14 +282,12 @@ cat > index.html
         text-transform: uppercase;
         margin-bottom: 20px;
     }
-
     .case-title {
         font-size: 26px;
         font-weight: 300;
         color: var(--white);
         margin-bottom: 16px;
     }
-
     .case-metric {
         font-size: 42px;
         font-weight: 200;
@@ -345,14 +295,12 @@ cat > index.html
         margin-bottom: 20px;
         letter-spacing: -1px;
     }
-
     .case-description {
         font-size: 13px;
         color: var(--sub-text);
         line-height: 1.8;
         margin-bottom: 28px;
     }
-
     .case-link {
         font-size: 12px;
         color: var(--white);
@@ -361,44 +309,36 @@ cat > index.html
         opacity: 0.6;
         transition: opacity 0.3s ease;
     }
-
     .case-link:hover {
         opacity: 1;
     }
-
     .cases-more {
         text-align: center;
         padding-top: 20px;
     }
-
     /* ===== INSIGHTS ===== */
     .insights {
         padding: 100px 50px;
         background-color: var(--surface);
     }
-
     .insights-container {
         max-width: 1400px;
         margin: 0 auto;
     }
-
     .insights-header {
         margin-bottom: 60px;
     }
-
     .insights-title {
         font-size: 42px;
         color: var(--white);
         margin-bottom: 16px;
         font-weight: 300;
     }
-
     .insights-desc {
         font-size: 14px;
         color: var(--sub-text);
         line-height: 1.8;
     }
-
     .insights-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -406,24 +346,20 @@ cat > index.html
         background-color: var(--border);
         margin-bottom: 50px;
     }
-
     .insight-card {
         padding: 40px;
         background-color: var(--surface);
         transition: background-color 0.3s ease;
     }
-
     .insight-card:hover {
         background-color: var(--bg);
     }
-
     .insight-date {
         font-size: 11px;
         letter-spacing: 1px;
         color: var(--sub-text);
         margin-bottom: 14px;
     }
-
     .insight-title {
         font-size: 18px;
         color: var(--white);
@@ -431,18 +367,15 @@ cat > index.html
         font-weight: 400;
         line-height: 1.5;
     }
-
     .insight-excerpt {
         font-size: 13px;
         color: var(--sub-text);
         line-height: 1.8;
     }
-
     .insights-more {
         text-align: center;
         padding-top: 20px;
     }
-
     /* ===== CTA ===== */
     .cta-section {
         padding: 120px 50px;
@@ -450,7 +383,6 @@ cat > index.html
         text-align: center;
         border-top: 1px solid var(--border);
     }
-
     .cta-title {
         font-size: 46px;
         margin-bottom: 28px;
@@ -458,7 +390,6 @@ cat > index.html
         color: var(--white);
         line-height: 1.3;
     }
-
     .cta-subtitle {
         font-size: 14px;
         color: var(--sub-text);
@@ -468,7 +399,6 @@ cat > index.html
         margin-right: auto;
         line-height: 2;
     }
-
     .btn-light {
         background-color: var(--white);
         color: var(--bg);
@@ -483,19 +413,16 @@ cat > index.html
         display: inline-block;
         font-weight: 500;
     }
-
     .btn-light:hover {
         background-color: transparent;
         color: var(--white);
     }
-
     /* ===== FOOTER ===== */
     footer {
         padding: 60px 50px;
         background-color: var(--surface);
         border-top: 1px solid var(--border);
     }
-
     .footer-content {
         max-width: 1400px;
         margin: 0 auto;
@@ -504,7 +431,6 @@ cat > index.html
         gap: 50px;
         margin-bottom: 50px;
     }
-
     .footer-column h3 {
         font-size: 11px;
         letter-spacing: 1.5px;
@@ -514,28 +440,23 @@ cat > index.html
         color: var(--white);
         opacity: 0.5;
     }
-
     .footer-column ul {
         list-style: none;
     }
-
     .footer-column li {
         color: var(--sub-text);
         font-size: 13px;
         line-height: 2.2;
     }
-
     .footer-column a {
         color: var(--sub-text);
         text-decoration: none;
         font-size: 13px;
         transition: color 0.3s ease;
     }
-
     .footer-column a:hover {
         color: var(--white);
     }
-
     .footer-bottom {
         max-width: 1400px;
         margin: 0 auto;
@@ -547,72 +468,57 @@ cat > index.html
         font-size: 11px;
         color: var(--sub-text);
     }
-
     .footer-logo {
         font-size: 13px;
         letter-spacing: 2px;
         color: var(--white);
         opacity: 0.7;
     }
-
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
         header {
             padding: 20px 24px;
         }
-
         .header-wrapper {
             flex-direction: column;
             gap: 16px;
         }
-
         .nav-menu {
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
         }
-
         .hero {
             padding: 120px 24px 80px;
         }
-
         .hero-title {
             font-size: 34px;
         }
-
         .what-we-do,
         .cases,
         .insights,
         .cta-section {
             padding: 60px 24px;
         }
-
         .what-we-do-content {
             grid-template-columns: 1fr;
             gap: 30px;
         }
-
         .cases-grid,
         .insights-grid {
             grid-template-columns: 1fr;
         }
-
         .footer-content {
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
-
         .divider {
             margin: 0 24px;
         }
     }
 </style>
-
-
 </head>
 <body>
-
-
 <!-- HEADER (원본 유지) -->
 <header>
     <div class="header-wrapper">
@@ -626,7 +532,6 @@ cat > index.html
         </div>
     </div>
 </header>
-
 <!-- HERO -->
 <section class="hero">
     <div class="hero-content">
@@ -645,9 +550,7 @@ cat > index.html
         </div>
     </div>
 </section>
-
 <div class="divider"></div>
-
 <!-- CASES -->
 <section class="cases" id="cases">
     <div class="cases-container">
@@ -673,9 +576,7 @@ cat > index.html
         </div>
     </div>
 </section>
-
 <div class="divider"></div>
-
 <!-- INSIGHTS -->
 <section class="insights" id="insights">
     <div class="insights-container">
@@ -710,7 +611,6 @@ cat > index.html
         </div>
     </div>
 </section>
-
 <!-- CTA -->
 <section class="cta-section">
     <h2 class="cta-title">브랜드는 있는데<br>매출 구조가 없다면.</h2>
@@ -721,7 +621,6 @@ cat > index.html
     </p>
     <a href="./diagnosis-talk.html" class="btn-light">브랜드 구조 무료 진단받기</a>
 </section>
-
 <!-- FOOTER -->
 <footer>
     <div class="footer-content">
@@ -763,12 +662,10 @@ cat > index.html
         <span>&copy; 2026 CHAEUM. All rights reserved.</span>
     </div>
 </footer>
-
 <script>
     // What We Do Navigation
     const navBtns = document.querySelectorAll('.nav-btn');
     const items = document.querySelectorAll('.what-we-do-item');
-
     navBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const itemNum = btn.getAttribute('data-item');
@@ -779,7 +676,5 @@ cat > index.html
         });
     });
 </script>
-
-
 </body>
 </html>
