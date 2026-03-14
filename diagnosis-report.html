@@ -1,620 +1,769 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>분석 리포트 | CHAEUM</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>브랜드 진단 리포트 | CHAEUM</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #fafafa;
-            color: #333;
-        }
+    :root {
+      --bg: #4B4545;
+      --bg2: #2a2625;
+      --card: rgba(255,255,255,0.06);
+      --card-strong: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --text: #FFFDF7;
+      --sub: rgba(255,255,255,0.68);
+      --muted: rgba(255,255,255,0.42);
+      --line: rgba(255,255,255,0.1);
+      --white: #ffffff;
+      --blue: #64C8FF;
+      --red: #FF7C7C;
+      --green: #9BE7B1;
+      --amber: #F0C674;
+    }
 
-        .container {
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 40px 20px 80px;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-        .header {
-            background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%);
-            color: white;
-            padding: 72px 40px;
-            border-radius: 16px;
-            margin-bottom: 36px;
-            text-align: center;
-        }
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
 
-        h1 {
-            font-size: 56px;
-            font-weight: 300;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-        }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
 
-        .subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-        }
+    .brand {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
 
-        .report-section {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            margin-bottom: 24px;
-            border: 1px solid #efefef;
-        }
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #4B4545;
-            margin-bottom: 22px;
-            padding-bottom: 14px;
-            border-bottom: 2px solid #f1f1f1;
-        }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      padding: 11px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
 
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 16px 24px;
-        }
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.12);
+    }
 
-        .summary-label {
-            color: #666;
-            font-weight: 600;
-            font-size: 14px;
-        }
+    .btn.primary {
+      background: var(--white);
+      color: var(--bg);
+      border-color: transparent;
+    }
 
-        .summary-value {
-            color: #333;
-            font-size: 14px;
-            line-height: 1.8;
-        }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
 
-        .summary-value a {
-            color: #4A9EFF;
-            text-decoration: none;
-        }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
 
-        .badge {
-            display: inline-block;
-            background: #f1f1f1;
-            color: #666;
-            padding: 8px 16px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: 700;
-        }
+    .hero-title {
+      font-size: 42px;
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
 
-        .score-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 14px;
-            margin-top: 10px;
-        }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--sub);
+      line-height: 1.7;
+      max-width: 760px;
+    }
 
-        .score-card {
-            background: linear-gradient(135deg, #f8f8f8 0%, #fcfcfc 100%);
-            border: 1px solid #ececec;
-            border-radius: 14px;
-            padding: 20px 16px;
-        }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
 
-        .score-label {
-            font-size: 12px;
-            color: #666;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 10px;
-            min-height: 34px;
-        }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
 
-        .score-value {
-            font-size: 34px;
-            line-height: 1;
-            font-weight: 300;
-            color: #2f2a2a;
-            margin-bottom: 8px;
-        }
+    .meta-item {
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-        .score-sub {
-            font-size: 11px;
-            color: #999;
-            line-height: 1.5;
-        }
+    .meta-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
 
-        .insight-box {
-            background: #f9f9f9;
-            border-left: 4px solid #4B4545;
-            border-radius: 8px;
-            padding: 18px;
-            font-size: 14px;
-            line-height: 1.8;
-            color: #333;
-        }
+    .meta-value {
+      font-size: 14px;
+      color: var(--white);
+      line-height: 1.5;
+      word-break: break-word;
+    }
 
-        .twocol-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+    .section {
+      margin-top: 20px;
+    }
 
-        .mini-card {
-            background: #fafafa;
-            border: 1px solid #ededed;
-            border-radius: 12px;
-            padding: 20px;
-        }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
 
-        .mini-card-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #666;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.2px;
-        }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
 
-        .mini-card-value {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.7;
-        }
+    .score-grid {
+      display: grid;
+      gap: 12px;
+    }
 
-        .funnel-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
+    .score-item {
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-        .funnel-card {
-            border: 1px solid #ededed;
-            background: #fbfbfb;
-            border-radius: 12px;
-            padding: 20px;
-        }
+    .score-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
 
-        .funnel-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: #666;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
+    .score-name {
+      font-size: 13px;
+      color: var(--sub);
+      font-weight: 600;
+    }
 
-        .funnel-text {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #333;
-        }
+    .score-value {
+      font-size: 15px;
+      color: var(--white);
+      font-weight: 700;
+    }
 
-        .lock-section {
-            position: relative;
-            overflow: hidden;
-        }
+    .bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
 
-        .lock-content {
-            filter: blur(7px);
-            opacity: 0.6;
-            pointer-events: none;
-            user-select: none;
-        }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffffff 0%, #cfcfcf 100%);
+      width: 0%;
+      transition: width 0.6s ease;
+    }
 
-        .lock-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(255,255,255,0.68);
-            backdrop-filter: blur(3px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            padding: 24px;
-        }
+    .highlight-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
 
-        .lock-icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+    .highlight-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
 
-        .lock-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #4B4545;
-            margin-bottom: 8px;
-        }
+    .highlight-value {
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+    }
 
-        .lock-desc {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.7;
-            margin-bottom: 18px;
-            max-width: 420px;
-        }
+    .highlight-desc {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.7;
+    }
 
-        .preview-list {
-            display: grid;
-            gap: 12px;
-        }
+    .quote {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(100, 200, 255, 0.07);
+      border: 1px solid rgba(100, 200, 255, 0.2);
+      color: #D9F3FF;
+      font-size: 14px;
+      line-height: 1.8;
+    }
 
-        .preview-item {
-            background: #fafafa;
-            border: 1px solid #ececec;
-            border-left: 4px solid #4B4545;
-            border-radius: 10px;
-            padding: 16px;
-        }
+    .text-block {
+      font-size: 15px;
+      color: var(--sub);
+      line-height: 1.85;
+      white-space: pre-line;
+    }
 
-        .preview-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #4B4545;
-            margin-bottom: 6px;
-        }
+    .funnel-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
 
-        .preview-desc {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.7;
-        }
+    .funnel-item {
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 168px;
+    }
 
-        .evidence-box {
-            background: #f7f7f7;
-            border-radius: 12px;
-            padding: 20px;
-            font-size: 13px;
-            line-height: 1.8;
-            color: #555;
-        }
+    .funnel-name {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
 
-        .evidence-box ul {
-            margin-left: 18px;
-            margin-top: 8px;
-        }
+    .funnel-text {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.7;
+      white-space: pre-line;
+    }
 
-        .evidence-box li {
-            margin-bottom: 6px;
-        }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
 
-        .cta-section {
-            background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%);
-            color: white;
-            padding: 42px;
-            border-radius: 16px;
-            text-align: center;
-            margin-top: 8px;
-        }
+    .info-item {
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-        .cta-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
+    .info-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
 
-        .cta-desc {
-            font-size: 15px;
-            line-height: 1.8;
-            opacity: 0.92;
-            margin-bottom: 18px;
-        }
+    .info-value {
+      font-size: 14px;
+      color: var(--white);
+      line-height: 1.7;
+      white-space: pre-line;
+      word-break: break-word;
+    }
 
-        .cta-points {
-            font-size: 13px;
-            line-height: 1.9;
-            opacity: 0.82;
-            margin-bottom: 28px;
-        }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #4B4545;
-            text-decoration: none;
-            border-radius: 10px;
-            padding: 14px 36px;
-            font-size: 14px;
-            font-weight: 700;
-            transition: all 0.2s ease;
-        }
+    .list-item {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.6;
+      padding-left: 14px;
+      position: relative;
+    }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(0,0,0,0.22);
-        }
+    .list-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--white);
+    }
 
-        .error {
-            background: #fff0f0;
-            border: 1px solid #ffd2d2;
-            color: #c33;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .footer-cta {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+    }
 
-        .error button {
-            background: #c33;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 12px;
-            font-weight: 700;
-        }
+    .cta-title {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
 
-        @media (max-width: 900px) {
-            h1 { font-size: 42px; }
-            .score-grid { grid-template-columns: 1fr 1fr; }
-            .twocol-grid { grid-template-columns: 1fr; }
-            .funnel-grid { grid-template-columns: 1fr; }
-            .summary-grid { grid-template-columns: 1fr; }
-        }
+    .cta-text {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.8;
+    }
 
-        @media (max-width: 640px) {
-            .container { padding: 20px 16px 60px; }
-            .header { padding: 48px 24px; }
-            .report-section { padding: 24px; }
-            .score-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 34px; }
-        }
-    </style>
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .empty-note {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .two-col,
+      .footer-cta {
+        grid-template-columns: 1fr;
+      }
+
+      .funnel-grid,
+      .info-grid,
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 34px;
+      }
+
+      .wrap {
+        padding: 24px 16px 48px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1 id="brandNameDisplay">브랜드 분석</h1>
-            <p class="subtitle">AI 자동 분석 리포트</p>
-        </div>
-
-        <div id="errorContainer"></div>
-        <div id="reportContainer"></div>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">CHAEUM / Brand Diagnosis Report</div>
+      <div class="top-actions">
+        <button class="btn" onclick="window.location.href='./diagnosis-talk.html'">다시 진단하기</button>
+        <button class="btn primary" onclick="window.print()">리포트 저장하기</button>
+      </div>
     </div>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            try {
-                const data = JSON.parse(localStorage.getItem('diagnosisData'));
+    <section class="hero">
+      <div class="card">
+        <div class="pill">AI Diagnosis Report</div>
+        <h1 class="hero-title"><span id="brandName">Brand</span> 브랜드 진단 결과</h1>
+        <p class="hero-sub" id="summary">
+          브랜드의 현재 구조를 바탕으로 핵심 병목을 분석했습니다.
+        </p>
+      </div>
 
-                if (!data) {
-                    showError('데이터를 찾을 수 없습니다. 다시 진단을 시작해주세요.');
-                    return;
-                }
+      <div class="card">
+        <div class="meta-grid">
+          <div class="meta-item">
+            <div class="meta-label">웹사이트</div>
+            <div class="meta-value" id="website">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">브랜드 단계</div>
+            <div class="meta-value" id="stage">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">서비스 유형</div>
+            <div class="meta-value" id="serviceType">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">진단 시각</div>
+            <div class="meta-value" id="timestamp">-</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                displayReport(data);
-            } catch (error) {
-                console.error('오류:', error);
-                showError('오류가 발생했습니다. 다시 진단해주세요.');
-            }
-        });
+    <section class="section two-col">
+      <div class="card">
+        <h2 class="section-title">구조 점수</h2>
+        <div class="score-grid">
+          <div class="score-item">
+            <div class="score-top">
+              <div class="score-name">브랜드 선명도</div>
+              <div class="score-value" id="scoreBrandClarity">0</div>
+            </div>
+            <div class="bar"><div class="bar-fill" id="barBrandClarity"></div></div>
+          </div>
 
-        function displayReport(data) {
-            const brandName = data.brandName || 'Brand';
-            const serviceType = formatServiceType(data.serviceType || 'other');
+          <div class="score-item">
+            <div class="score-top">
+              <div class="score-name">메시지 강도</div>
+              <div class="score-value" id="scoreMessageStrength">0</div>
+            </div>
+            <div class="bar"><div class="bar-fill" id="barMessageStrength"></div></div>
+          </div>
 
-            const scores = data.scores || {
-                brandClarity: 0,
-                messageStrength: 0,
-                trustStructure: 0,
-                conversionStructure: 0,
-                growthReadiness: 0
-            };
+          <div class="score-item">
+            <div class="score-top">
+              <div class="score-name">신뢰 구조</div>
+              <div class="score-value" id="scoreTrustStructure">0</div>
+            </div>
+            <div class="bar"><div class="bar-fill" id="barTrustStructure"></div></div>
+          </div>
 
-            const funnel = data.funnelDiagnosis || {};
-            const stage = data.stage || 'Early';
+          <div class="score-item">
+            <div class="score-top">
+              <div class="score-name">전환 구조</div>
+              <div class="score-value" id="scoreConversionStructure">0</div>
+            </div>
+            <div class="bar"><div class="bar-fill" id="barConversionStructure"></div></div>
+          </div>
 
-            document.getElementById('brandNameDisplay').textContent = brandName;
+          <div class="score-item">
+            <div class="score-top">
+              <div class="score-name">성장 준비도</div>
+              <div class="score-value" id="scoreGrowthReadiness">0</div>
+            </div>
+            <div class="bar"><div class="bar-fill" id="barGrowthReadiness"></div></div>
+          </div>
+        </div>
+      </div>
 
-            const reportHTML = `
-                <div class="report-section">
-                    <div class="section-title">브랜드 요약</div>
-                    <div class="summary-grid">
-                        <div class="summary-label">브랜드명</div>
-                        <div class="summary-value">${escapeHtml(brandName)}</div>
+      <div class="card highlight-card">
+        <div>
+          <div class="highlight-label">핵심 병목</div>
+          <div class="highlight-value" id="bottleneckLabel">분석 중</div>
+        </div>
 
-                        <div class="summary-label">웹사이트</div>
-                        <div class="summary-value">
-                            <a href="${escapeAttribute(data.website || '#')}" target="_blank" rel="noopener noreferrer">
-                                ${escapeHtml(data.website || '-')}
-                            </a>
-                        </div>
+        <div>
+          <div class="highlight-label">현재 가장 강한 자산</div>
+          <div class="highlight-desc" id="strongestAsset">확인 중</div>
+        </div>
 
-                        <div class="summary-label">서비스 유형</div>
-                        <div class="summary-value">
-                            <span class="badge">${escapeHtml(serviceType)}</span>
-                        </div>
+        <div class="quote" id="chaeumInsight">
+          채움 관점에서 브랜드 구조 정리가 우선 필요합니다.
+        </div>
+      </div>
+    </section>
 
-                        <div class="summary-label">브랜드 성장 단계</div>
-                        <div class="summary-value">
-                            <span class="badge">${escapeHtml(stage)}</span>
-                        </div>
-                    </div>
-                </div>
+    <section class="section">
+      <div class="card">
+        <h2 class="section-title">핵심 해석</h2>
+        <div class="text-block" id="summaryDetail">
+          분석 요약이 여기에 표시됩니다.
+        </div>
+      </div>
+    </section>
 
-                <div class="report-section">
-                    <div class="section-title">CHAEUM 전략 진단</div>
-                    <div class="score-grid">
-                        <div class="score-card">
-                            <div class="score-label">브랜드 선명도</div>
-                            <div class="score-value">${safeNumber(scores.brandClarity)}/100</div>
-                            <div class="score-sub">브랜드 방향성 명확도</div>
-                        </div>
-                        <div class="score-card">
-                            <div class="score-label">메시지 전달력</div>
-                            <div class="score-value">${safeNumber(scores.messageStrength)}/100</div>
-                            <div class="score-sub">고객 이해 가능성</div>
-                        </div>
-                        <div class="score-card">
-                            <div class="score-label">신뢰 설계</div>
-                            <div class="score-value">${safeNumber(scores.trustStructure)}/100</div>
-                            <div class="score-sub">설명 및 신뢰 자산</div>
-                        </div>
-                        <div class="score-card">
-                            <div class="score-label">전환 구조</div>
-                            <div class="score-value">${safeNumber(scores.conversionStructure)}/100</div>
-                            <div class="score-sub">행동 유도 설계</div>
-                        </div>
-                        <div class="score-card">
-                            <div class="score-label">성장 준비도</div>
-                            <div class="score-value">${safeNumber(scores.growthReadiness)}/100</div>
-                            <div class="score-sub">장기 운영 가능성</div>
-                        </div>
-                    </div>
-                </div>
+    <section class="section">
+      <h2 class="section-title">퍼널 진단</h2>
+      <div class="funnel-grid">
+        <div class="funnel-item">
+          <div class="funnel-name">Awareness</div>
+          <div class="funnel-text" id="funnelAwareness">-</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-name">Trust</div>
+          <div class="funnel-text" id="funnelTrust">-</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-name">Conversion</div>
+          <div class="funnel-text" id="funnelConversion">-</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-name">Key Issue</div>
+          <div class="funnel-text" id="funnelKeyIssue">-</div>
+        </div>
+      </div>
+    </section>
 
-                <div class="report-section">
-                    <div class="section-title">핵심 진단 요약</div>
-                    <div class="twocol-grid">
-                        <div class="mini-card">
-                            <div class="mini-card-title">현재 핵심 병목</div>
-                            <div class="mini-card-value">${escapeHtml(data.bottleneckLabel || '분석 중')}</div>
-                        </div>
-                        <div class="mini-card">
-                            <div class="mini-card-title">가장 강한 자산</div>
-                            <div class="mini-card-value">${escapeHtml(data.strongestAsset || '확인 중')}</div>
-                        </div>
-                    </div>
-                    <div style="height:16px;"></div>
-                    <div class="insight-box">${escapeHtml(data.summary || '브랜드 구조를 바탕으로 핵심 이슈를 분석했습니다.')}</div>
-                </div>
+    <section class="section">
+      <h2 class="section-title">입력된 브랜드 정보</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">가장 큰 고민</div>
+          <div class="info-value" id="mainProblem">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">브랜드 설명</div>
+          <div class="info-value" id="brandDescription">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">주요 고객</div>
+          <div class="info-value" id="targetCustomer">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">대표 제품 / 서비스</div>
+          <div class="info-value" id="mainProduct">-</div>
+        </div>
+        <div class="info-item" style="grid-column: 1 / -1;">
+          <div class="info-label">차별점</div>
+          <div class="info-value" id="differentiation">-</div>
+        </div>
+      </div>
+    </section>
 
-                <div class="report-section">
-                    <div class="section-title">CHAEUM Insight</div>
-                    <div class="insight-box">${escapeHtml(data.chaeumInsight || '채움 관점에서 브랜드 구조 정리가 우선 필요합니다.')}</div>
-                </div>
+    <section class="section">
+      <h2 class="section-title">브랜드 상태 체크</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">핵심 고객 명확성</div>
+          <div class="info-value" id="surveyClearTarget">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">대표 오퍼 명확성</div>
+          <div class="info-value" id="surveyClearOffer">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">메시지 일관성</div>
+          <div class="info-value" id="surveyClearMessage">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">전환 경로 존재</div>
+          <div class="info-value" id="surveyConversionPath">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">반복매출 구조</div>
+          <div class="info-value" id="surveyRetention">-</div>
+        </div>
+      </div>
+    </section>
 
-                <div class="report-section">
-                    <div class="section-title">브랜드 퍼널 진단</div>
-                    <div class="funnel-grid">
-                        <div class="funnel-card">
-                            <div class="funnel-title">Awareness</div>
-                            <div class="funnel-text">${escapeHtml(funnel.awareness || '-')}</div>
-                        </div>
-                        <div class="funnel-card">
-                            <div class="funnel-title">Trust</div>
-                            <div class="funnel-text">${escapeHtml(funnel.trust || '-')}</div>
-                        </div>
-                        <div class="funnel-card">
-                            <div class="funnel-title">Conversion</div>
-                            <div class="funnel-text">${escapeHtml(funnel.conversion || '-')}</div>
-                        </div>
-                    </div>
-                </div>
+    <section class="section">
+      <h2 class="section-title">웹사이트 추출 데이터</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Title</div>
+          <div class="info-value" id="extractedTitle">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">H1</div>
+          <div class="info-value" id="extractedH1">-</div>
+        </div>
+        <div class="info-item" style="grid-column: 1 / -1;">
+          <div class="info-label">Meta Description</div>
+          <div class="info-value" id="extractedMeta">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">H2 목록</div>
+          <div class="info-value list" id="extractedH2List"></div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">버튼 목록</div>
+          <div class="info-value list" id="extractedButtons"></div>
+        </div>
+      </div>
+    </section>
 
-                <div class="report-section lock-section">
-                    <div class="lock-content">
-                        <div class="section-title">전략 리포트 (상담 후 공개)</div>
-                        <div class="preview-list">
-                            <div class="preview-item">
-                                <div class="preview-title">브랜드 포지셔닝 재설계</div>
-                                <div class="preview-desc">경쟁 브랜드 대비 차별화 구조와 시장 내 해석 문장 재정의</div>
-                            </div>
-                            <div class="preview-item">
-                                <div class="preview-title">메시지 구조 개선</div>
-                                <div class="preview-desc">고객이 이해하는 한 문장 가치 제안과 메인 카피 구조 설계</div>
-                            </div>
-                            <div class="preview-item">
-                                <div class="preview-title">브랜드 퍼널 구조 설계</div>
-                                <div class="preview-desc">Traffic → Trust → Conversion 흐름을 다시 설계</div>
-                            </div>
-                            <div class="preview-item">
-                                <div class="preview-title">콘텐츠 방향 정리</div>
-                                <div class="preview-desc">브랜드 인지부터 문의/상담 전환까지 이어지는 콘텐츠 흐름 설계</div>
-                            </div>
-                        </div>
-                    </div>
+    <section class="footer-cta">
+      <div class="card">
+        <div class="cta-title">더 강한 브랜드 구조가 필요하다면</div>
+        <div class="cta-text">
+          이 리포트는 현재 병목을 빠르게 파악하기 위한 1차 진단입니다.
+          실제로는 포지셔닝, 메시지 구조, 오퍼 설계, 전환 흐름까지 함께 손봐야 비즈니스 구조가 강해집니다.
+        </div>
+      </div>
 
-                    <div class="lock-overlay">
-                        <div class="lock-icon">🔒</div>
-                        <div class="lock-title">전체 전략 리포트는 상담 후 공개됩니다</div>
-                        <div class="lock-desc">
-                            무료 진단은 핵심 병목까지만 공개됩니다.<br>
-                            전체 전략 리포트에서는 포지셔닝, 메시지, 퍼널, 콘텐츠 구조까지 구체적으로 제안합니다.
-                        </div>
-                        <a href="./consultation.html" class="cta-button">15분 무료 전략 상담 신청</a>
-                    </div>
-                </div>
+      <div class="card cta-actions">
+        <a class="btn primary" href="/contact">1:1 전략 상담 문의</a>
+        <button class="btn" onclick="window.location.href='./diagnosis-talk.html'">다시 진단하기</button>
+      </div>
+    </section>
+  </div>
 
-                <div class="report-section">
-                    <div class="section-title">분석 근거</div>
-                    <div class="evidence-box">
-                        <p>이 분석 결과는 웹사이트의 다음 요소를 기반으로 작성되었습니다:</p>
-                        <ul>
-                            <li><strong>Title:</strong> ${escapeHtml(data.extractedData?.title || '-')}</li>
-                            <li><strong>Meta Description:</strong> ${escapeHtml(data.extractedData?.metaDescription || '-')}</li>
-                            <li><strong>H1 Tag:</strong> ${escapeHtml(data.extractedData?.h1 || '-')}</li>
-                        </ul>
-                    </div>
-                </div>
+  <script>
+    const diagnosisData = JSON.parse(localStorage.getItem('diagnosisData') || '{}');
+    console.log('loaded diagnosisData:', diagnosisData);
 
-                <div class="cta-section">
-                    <div class="cta-title">15분 무료 전략 상담</div>
-                    <div class="cta-desc">
-                        AI 분석 결과를 기반으로,<br>
-                        전략가가 브랜드의 다음 성장 구조를 제안합니다.
-                    </div>
-                    <div class="cta-points">
-                        • 핵심 병목 우선순위 정리<br>
-                        • 포지셔닝 / 메시지 / 퍼널 구조 방향 제안<br>
-                        • 무료 진단 이후 실행 우선순위 안내
-                    </div>
-                    <a href="./consultation.html" class="cta-button">상담 신청하기</a>
-                </div>
-            `;
+    function safeText(value, fallback = '-') {
+      if (value === null || value === undefined) return fallback;
+      const str = String(value).trim();
+      return str ? str : fallback;
+    }
 
-            document.getElementById('reportContainer').innerHTML = reportHTML;
-        }
+    function safeNumber(value) {
+      const num = Number(value);
+      if (Number.isNaN(num)) return 0;
+      return Math.max(0, Math.min(100, Math.round(num)));
+    }
 
-        function formatServiceType(type) {
-            const map = {
-                'food-tech': 'Food Tech SaaS',
-                'saas': 'B2B SaaS',
-                'consulting': '컨설팅',
-                'lifestyle': '라이프스타일',
-                'ecommerce': '이커머스',
-                'design': '디자인',
-                'education': '교육',
-                'health': '헬스',
-                'fintech': '핀테크',
-                'food': '식품',
-                'other': '기타'
-            };
-            return map[type] || '기타';
-        }
+    function problemLabel(value) {
+      const map = {
+        messaging: '브랜드 메시지가 약함',
+        traffic: '고객 유입이 부족함',
+        conversion: '전환율이 낮음',
+        positioning: '포지셔닝이 불명확함',
+        growth: '장기 성장 구조가 없음'
+      };
+      return map[value] || safeText(value, '-');
+    }
 
-        function safeNumber(value) {
-            const num = Number(value);
-            if (Number.isNaN(num)) return 0;
-            return Math.max(0, Math.min(100, Math.round(num)));
-        }
+    function ynLabel(value) {
+      if (value === 'yes') return 'Yes';
+      if (value === 'no') return 'No';
+      return '-';
+    }
 
-        function escapeHtml(value) {
-            return String(value)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
+    function formatDate(isoString) {
+      if (!isoString) return '-';
+      const d = new Date(isoString);
+      if (Number.isNaN(d.getTime())) return safeText(isoString, '-');
+      return d.toLocaleString('ko-KR');
+    }
 
-        function escapeAttribute(value) {
-            return String(value).replace(/"/g, '&quot;');
-        }
+    function setText(id, value, fallback = '-') {
+      const el = document.getElementById(id);
+      if (el) el.textContent = safeText(value, fallback);
+    }
 
-        function showError(msg) {
-            const html = `
-                <div class="error">
-                    <p>${escapeHtml(msg)}</p>
-                    <button onclick="window.location.href='./diagnosis-talk.html'">다시 진단하기</button>
-                </div>
-            `;
-            document.getElementById('errorContainer').innerHTML = html;
-        }
-    </script>
+    function setHTMLList(id, items) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      if (!Array.isArray(items) || items.length === 0) {
+        el.innerHTML = '<div class="empty-note">추출된 데이터가 없습니다.</div>';
+        return;
+      }
+
+      el.innerHTML = items
+        .map(item => `<div class="list-item">${escapeHtml(String(item))}</div>`)
+        .join('');
+    }
+
+    function setScore(textId, barId, value) {
+      const score = safeNumber(value);
+      const textEl = document.getElementById(textId);
+      const barEl = document.getElementById(barId);
+
+      if (textEl) textEl.textContent = score;
+      if (barEl) barEl.style.width = `${score}%`;
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    const scores = diagnosisData.scores || {};
+    const funnel = diagnosisData.funnelDiagnosis || {};
+    const extracted = diagnosisData.extractedData || {};
+    const survey = diagnosisData.brandSurvey || {};
+
+    setText('brandName', diagnosisData.brandName, 'Brand');
+    setText('website', diagnosisData.website);
+    setText('stage', diagnosisData.stage, 'Early');
+    setText('serviceType', diagnosisData.serviceType, 'default');
+    setText('timestamp', formatDate(diagnosisData.timestamp));
+
+    setText('summary', diagnosisData.summary, '브랜드의 현재 구조를 바탕으로 핵심 병목을 분석했습니다.');
+    setText('summaryDetail', diagnosisData.summary, '분석 요약이 준비되지 않았습니다.');
+    setText('bottleneckLabel', diagnosisData.bottleneckLabel, '분석 중');
+    setText('strongestAsset', diagnosisData.strongestAsset, '확인 중');
+    setText('chaeumInsight', diagnosisData.chaeumInsight, '채움 관점에서 브랜드 구조 정리가 우선 필요합니다.');
+
+    setScore('scoreBrandClarity', 'barBrandClarity', scores.brandClarity);
+    setScore('scoreMessageStrength', 'barMessageStrength', scores.messageStrength);
+    setScore('scoreTrustStructure', 'barTrustStructure', scores.trustStructure);
+    setScore('scoreConversionStructure', 'barConversionStructure', scores.conversionStructure);
+    setScore('scoreGrowthReadiness', 'barGrowthReadiness', scores.growthReadiness);
+
+    setText('funnelAwareness', funnel.awareness, '분석 결과가 없습니다.');
+    setText('funnelTrust', funnel.trust, '분석 결과가 없습니다.');
+    setText('funnelConversion', funnel.conversion, '분석 결과가 없습니다.');
+    setText('funnelKeyIssue', funnel.keyIssue, '분석 결과가 없습니다.');
+
+    setText('mainProblem', problemLabel(diagnosisData.mainProblem));
+    setText('brandDescription', diagnosisData.brandDescription, '입력되지 않음');
+    setText('targetCustomer', diagnosisData.targetCustomer, '입력되지 않음');
+    setText('mainProduct', diagnosisData.mainProduct, '입력되지 않음');
+    setText('differentiation', diagnosisData.differentiation, '입력되지 않음');
+
+    setText('surveyClearTarget', ynLabel(survey.clearTarget));
+    setText('surveyClearOffer', ynLabel(survey.clearOffer));
+    setText('surveyClearMessage', ynLabel(survey.clearMessage));
+    setText('surveyConversionPath', ynLabel(survey.hasConversionPath));
+    setText('surveyRetention', ynLabel(survey.hasRetention));
+
+    setText('extractedTitle', extracted.title, '추출되지 않음');
+    setText('extractedH1', extracted.h1, '추출되지 않음');
+    setText('extractedMeta', extracted.metaDescription, '추출되지 않음');
+
+    setHTMLList('extractedH2List', extracted.h2List);
+    setHTMLList('extractedButtons', extracted.buttons);
+  </script>
 </body>
 </html>
