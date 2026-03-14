@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홍신애 | CHAEUM Case Study</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #4B4545; --white: #FFFDF7; --sub-text: rgba(255,253,247,0.55); --border: rgba(255,253,247,0.12); }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background-color: var(--bg); color: var(--white); line-height: 1.6; letter-spacing: -0.3px; }
+        header { position: fixed; top: 0; left: 0; right: 0; background-color: rgba(75,69,69,0.98); backdrop-filter: blur(10px); padding: 24px 48px; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .header-wrapper { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+        .nav-menu { display: flex; align-items: center; gap: 40px; }
+        .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+        .nav-menu a:hover { opacity: 1; }
+        .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+        .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+        .breadcrumb { margin-top: 80px; padding: 20px 50px; border-bottom: 1px solid var(--border); }
+        .breadcrumb-inner { max-width: 1400px; margin: 0 auto; font-size: 11px; letter-spacing: 1px; color: var(--sub-text); text-transform: uppercase; }
+        .breadcrumb a { color: var(--sub-text); text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: var(--white); }
+        .breadcrumb span { margin: 0 10px; opacity: 0.4; }
+        .hero { padding: 80px 50px; border-bottom: 1px solid var(--border); }
+        .hero-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+        .hero-tag { font-size: 11px; letter-spacing: 2px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 24px; }
+        .hero-title { font-size: 56px; font-weight: 300; line-height: 1.15; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 18px; color: var(--sub-text); line-height: 1.7; margin-bottom: 40px; }
+        .hero-metrics { display: flex; gap: 40px; flex-wrap: wrap; }
+        .metric-value { font-size: 32px; font-weight: 300; letter-spacing: -1px; margin-bottom: 6px; }
+        .metric-label { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase; }
+        .hero-overview { border: 1px solid var(--border); }
+        .hero-overview-item { display: flex; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .hero-overview-item:last-child { border-bottom: none; }
+        .overview-key { color: var(--sub-text); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+        .overview-val { color: var(--white); }
+        .slideshow-section { border-bottom: 1px solid var(--border); }
+        .slideshow-wrapper { position: relative; overflow: hidden; background-color: #3a3535; height: 560px; }
+        .slides { display: flex; transition: transform 0.5s ease; height: 100%; }
+        .slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: var(--sub-text); }
+        .slide-placeholder-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        .slide-placeholder-num { font-size: 48px; font-weight: 200; opacity: 0.3; }
+        .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 50px; background: linear-gradient(transparent, rgba(75,69,69,0.85)); font-size: 13px; color: var(--sub-text); }
+        .slideshow-controls { padding: 24px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .slide-dots { display: flex; gap: 10px; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--sub-text); cursor: pointer; transition: background-color 0.3s; }
+        .dot.active { background-color: var(--white); }
+        .slide-arrows { display: flex; gap: 12px; }
+        .arrow-btn { background: none; border: 1px solid var(--border); color: var(--white); width: 40px; height: 40px; cursor: pointer; font-size: 14px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .arrow-btn:hover { border-color: var(--white); }
+        .slide-counter { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); }
+        .section { padding: 80px 50px; border-bottom: 1px solid var(--border); }
+        .section-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 260px 1fr; gap: 80px; }
+        .section-label { font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text); text-transform: uppercase; padding-top: 6px; }
+        .section-title { font-size: 28px; font-weight: 300; margin-bottom: 24px; line-height: 1.4; }
+        .section-text { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 24px; max-width: 640px; }
+        .section-text strong { color: var(--white); font-weight: 500; }
+        .insight-block { border-left: 2px solid rgba(255,253,247,0.3); padding: 24px 28px; margin: 32px 0; max-width: 560px; }
+        .insight-label { font-size: 10px; letter-spacing: 2px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 10px; }
+        .insight-text { font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--white); }
+        .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); margin-top: 32px; }
+        .strategy-card { padding: 36px; background-color: var(--bg); }
+        .strategy-num { font-size: 10px; letter-spacing: 2px; color: var(--sub-text); margin-bottom: 14px; text-transform: uppercase; }
+        .strategy-title { font-size: 17px; font-weight: 400; margin-bottom: 12px; }
+        .strategy-desc { font-size: 13px; color: var(--sub-text); line-height: 1.9; }
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--border); margin-top: 32px; }
+        .result-card { padding: 40px 36px; background-color: var(--bg); }
+        .result-value { font-size: 40px; font-weight: 200; letter-spacing: -1px; margin-bottom: 10px; }
+        .result-label { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase; margin-bottom: 12px; }
+        .result-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
+        .cta-section { padding: 100px 50px; text-align: center; }
+        .cta-title { font-size: 40px; font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
+        .cta-desc { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 48px; }
+        .btn-primary { background-color: var(--white); color: var(--bg); border: none; padding: 16px 48px; font-size: 12px; letter-spacing: 1px; cursor: pointer; font-family: inherit; text-transform: uppercase; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+        .btn-secondary-link { display: inline-block; margin-top: 16px; font-size: 12px; color: var(--sub-text); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+        .btn-secondary-link:hover { color: var(--white); }
+        footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+        .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+        .footer-column ul { list-style: none; }
+        .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+        .footer-column a:hover { color: var(--white); }
+        .footer-column li { color: var(--sub-text); font-size: 13px; line-height: 2.2; }
+        .footer-bottom { max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border); padding-top: 30px; display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text); }
+        .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
+        @media (max-width: 1024px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; } .strategy-grid, .results-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { header { padding: 20px 24px; } .header-wrapper { flex-direction: column; gap: 16px; } .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; } .breadcrumb, .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; } .hero-title { font-size: 38px; } .section-inner { grid-template-columns: 1fr; gap: 32px; } .slideshow-wrapper { height: 300px; } .footer-content { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-wrapper">
+            <a href="./index.html" class="logo">CHAEUM</a>
+            <div class="nav-menu">
+                <a href="./services.html">Services</a>
+                <a href="./portfolio.html">Case Study</a>
+                <a href="./insights/index.html">Insight</a>
+                <a href="./about.html">About</a>
+                <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
+            </div>
+        </div>
+    </header>
+
+```
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="./portfolio.html">Case Study</a>
+        <span>→</span>
+        홍신애
+    </div>
+</div>
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">푸드 · 개인 브랜드 상품화</div>
+            <h1 class="hero-title">홍신애</h1>
+            <p class="hero-subtitle">개인의 신뢰가<br>브랜드가 됐습니다.</p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">100%</div>
+                    <div class="metric-label">홈쇼핑 판매율</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">60%+</div>
+                    <div class="metric-label">재구매율</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">Top 5%</div>
+                    <div class="metric-label">프리미엄 밀키트</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-overview">
+                <div class="hero-overview-item"><span class="overview-key">Client</span><span class="overview-val">홍신애</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Category</span><span class="overview-val">푸드 · 개인 브랜드 상품화</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Scope</span><span class="overview-val">개인 브랜딩 · 제품 전략 · 패키징</span></div>
+                <div class="hero-overview-item"><span class="overview-key">Year</span><span class="overview-val">2018</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="slideshow-section">
+    <div class="slideshow-wrapper">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="./Image/hongshinae-01.jpeg" alt="홍신애 브랜드" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">01</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">브랜드 — 요리연구가 홍신애의 철학을 담은 밀키트</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/hongshinae-02.jpeg" alt="홍신애 제품" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">02</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">제품 — 홍신애 티라미수 · 24시간 삼겹살 통구이</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/hongshinae-03.jpeg" alt="홍신애 패키징" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">03</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">패키징 — 따뜻함과 개인의 감각을 담은 디자인</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/hongshinae-04.jpeg" alt="홍신애 홈쇼핑" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">04</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">홈쇼핑 — 매회 100% 판매율 달성</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/hongshinae-05.jpeg" alt="홍신애 결과" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">05</div><div class="slide-placeholder-label">사진을 업로드해주세요</div></div>
+                <div class="slide-caption">결과 — 개인 브랜드에서 프리미엄 식품 브랜드로</div>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <div class="slide-dots" id="dots"></div>
+        <div class="slide-counter" id="counter">1 / 5</div>
+        <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn">←</button>
+            <button class="arrow-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Problem</div>
+        <div class="section-content">
+            <h2 class="section-title">TV에서 유명한 사람이<br>왜 제품은 안 팔렸을까.</h2>
+            <p class="section-text">홍신애는 방송에서 검증된 요리연구가였습니다. 그러나 밀키트 상품을 출시했을 때, 개인의 명성이 상품 구매로 자연스럽게 이어지지 않았습니다. 상품에서 홍신애의 철학과 개성이 보이지 않았기 때문입니다.</p>
+            <div class="insight-block">
+                <div class="insight-label">CHAEUM이 정의한 구조적 결함</div>
+                <div class="insight-text">"개인의 신뢰도는 있었지만,<br>그것을 상품으로 전달하는 구조가 없었다."</div>
+            </div>
+            <p class="section-text">일반 밀키트와 다른 점이 보이지 않으면, 프리미엄 가격을 납득할 이유가 없습니다. 홍신애만이 줄 수 있는 것 — 식재료 선택의 철학과 요리 관점 — 을 상품에 담는 것이 핵심이었습니다.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Strategy</div>
+        <div class="section-content">
+            <h2 class="section-title">"편한 요리"가 아닌<br>"홍신애의 식탁 철학"으로.</h2>
+            <p class="section-text">CHAEUM은 홍신애의 핵심 가치를 <strong>"식재료를 이해하는 사람의 선택"</strong>으로 정의했습니다. 단순한 밀키트가 아니라 건강하고 정직한 식탁의 대명사로 포지셔닝했습니다.</p>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-num">01 · 개인 브랜딩</div>
+                    <div class="strategy-title">철학을 상품으로</div>
+                    <p class="strategy-desc">홍신애의 식재료 선택 기준, 요리 철학, 건강에 대한 관점을 패키징과 커뮤니케이션에 직접 담았습니다. "왜 이 재료인가"가 명확해졌습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">02 · 패키징</div>
+                    <div class="strategy-title">따뜻함을 디자인으로</div>
+                    <p class="strategy-desc">손글씨 로고와 홍신애의 요리 팁이 담긴 패키징으로 개인의 감각을 상품에 옮겼습니다. "패키지가 너무 귀엽다"는 반응이 이어졌습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">03 · 채널 전략</div>
+                    <div class="strategy-title">TV 신뢰를 구매로</div>
+                    <p class="strategy-desc">홈쇼핑 직접 출연으로 개인의 신뢰도를 즉각적인 구매로 연결했습니다. 프리미엄 온라인 채널(G마켓, 쿠팡 등)과 병행해 접근성을 확보했습니다.</p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">04 · 제품 구성</div>
+                    <div class="strategy-title">레스토랑 경험을 집에서</div>
+                    <p class="strategy-desc">홍신애 티라미수(₩20,000), 24시간 삼겹살 통구이(₩45,000) — "레스토랑 음식을 집에서 먹는 경험"으로 포지셔닝했습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Results</div>
+        <div class="section-content">
+            <h2 class="section-title">개인의 이름이<br>브랜드가 됐습니다.</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value">100%</div>
+                    <div class="result-label">홈쇼핑 판매율</div>
+                    <p class="result-desc">TV쇼핑 출연 시 매회 완판. 홍신애의 직접 출연이 신뢰로 이어졌습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">Top 5%</div>
+                    <div class="result-label">프리미엄 밀키트</div>
+                    <p class="result-desc">프리미엄 밀키트 시장 상위 5% 매출. 가격 대비 가치를 고객이 납득했습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">60%+</div>
+                    <div class="result-label">재구매율</div>
+                    <p class="result-desc">첫 구매 고객의 60% 이상이 재구매. "홍신애니까 믿고 산다"는 반응이 정착됐습니다.</p>
+                </div>
+            </div>
+            <div class="insight-block" style="margin-top:40px;">
+                <div class="insight-label">정성적 변화</div>
+                <div class="insight-text">"유명 셰프의 밀키트"가 아닌<br>"홍신애가 제안하는 건강하고 정직한 식탁"으로<br>인식되기 시작했습니다.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <h2 class="cta-title">개인의 이름을<br>브랜드 자산으로 만들고 싶다면.</h2>
+    <p class="cta-desc">개인의 신뢰를 상품으로 연결하는 구조가 필요합니다.<br>CHAEUM과 함께 설계해보세요.</p>
+    <a href="./diagnosis-talk.html" class="btn-primary">AI 무료 진단 시작</a><br>
+    <a href="./portfolio.html" class="btn-secondary-link">다른 사례 보기 →</a>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column"><h3>Services</h3><ul><li><a href="./services.html">Self-OS</a></li><li><a href="./services.html">Architecture</a></li><li><a href="./services.html">Engineering</a></li><li><a href="./services.html">Management</a></li></ul></div>
+        <div class="footer-column"><h3>Company</h3><ul><li><a href="./about.html">About CHAEUM</a></li><li><a href="./insights/index.html">Insights</a></li><li><a href="./portfolio.html">Case Studies</a></li></ul></div>
+        <div class="footer-column"><h3>Contact</h3><ul><li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li><li><a href="./diagnosis-talk.html">AI 진단 받기</a></li><li><a href="https://cal.com/chaeum">상담 예약</a></li></ul></div>
+        <div class="footer-column"><h3>Location</h3><ul><li>Seoul, Korea</li><li>Seongdong-gu</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span class="footer-logo">CHAEUM</span><span>&copy; 2026 CHAEUM. All rights reserved.</span></div>
+</footer>
+
+<script>
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current = 0;
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    }
+    function goTo(index) {
+        current = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+        counter.textContent = `${current + 1} / ${totalSlides}`;
+    }
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+    setInterval(() => goTo(current + 1), 5000);
+</script>
+```
+
+</body>
+</html>
