@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -7,649 +8,505 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: linear-gradient(135deg, #4B4545 0%, #2a2625 100%); 
-            color: white; 
-            min-height: 100vh; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+```
+    :root {
+        --bg: #4B4545;
+        --white: #FFFDF7;
+        --sub-text: rgba(255, 253, 247, 0.55);
+        --border: rgba(255, 253, 247, 0.12);
+    }
 
-        .container {
-            max-width: 620px;
-            width: 100%;
-            padding: 40px 20px;
-        }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
 
-        .hero {
-            text-align: center;
-            margin-bottom: 42px;
-        }
+    /* HEADER */
+    .chat-header {
+        background-color: rgba(75, 69, 69, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+    }
 
-        h1 {
-            font-size: 44px;
-            font-weight: 300;
-            margin-bottom: 12px;
-        }
+    .header-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: var(--white);
+        opacity: 0.8;
+    }
 
-        .subtitle {
-            font-size: 14px;
-            color: #aaa;
-            line-height: 1.6;
-        }
+    .header-logo {
+        font-size: 13px;
+        letter-spacing: 2px;
+        font-weight: 300;
+        color: var(--white);
+        text-decoration: none;
+    }
 
-        .form-section {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 32px;
-        }
+    .header-label {
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: var(--sub-text);
+    }
 
-        .form-group {
-            margin-bottom: 24px;
-        }
+    .progress-bar {
+        margin-left: auto;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
 
-        label.form-label {
-            display: block;
-            font-size: 12px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
+    .progress-step {
+        width: 24px; height: 2px;
+        background: rgba(255, 253, 247, 0.2);
+        border-radius: 2px;
+        transition: background 0.4s;
+    }
 
-        .required {
-            color: #FF6464;
-        }
+    .progress-step.done { background: var(--white); }
 
-        input,
-        select {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 8px;
-            color: white;
-            font-size: 14px;
-            font-family: inherit;
-        }
+    /* MESSAGES */
+    .messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px 16px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 680px;
+        width: 100%;
+        margin: 0 auto;
+    }
 
-        input::placeholder {
-            color: #666;
-        }
+    .msg-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+    }
 
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.12);
-        }
+    .msg-row.user { flex-direction: row-reverse; }
 
-        select {
-            appearance: none;
-            -webkit-appearance: none;
-            background-image:
-                linear-gradient(45deg, transparent 50%, #aaa 50%),
-                linear-gradient(135deg, #aaa 50%, transparent 50%);
-            background-position:
-                calc(100% - 18px) calc(50% - 2px),
-                calc(100% - 12px) calc(50% - 2px);
-            background-size: 6px 6px, 6px 6px;
-            background-repeat: no-repeat;
-        }
+    .avatar {
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        background: rgba(255, 253, 247, 0.08);
+        border: 1px solid rgba(255, 253, 247, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 9px;
+        color: var(--white);
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
 
-        select option {
-            color: #222;
-        }
+    .bubble {
+        max-width: 76%;
+        padding: 13px 17px;
+        font-size: 14px;
+        line-height: 1.75;
+        white-space: pre-wrap;
+    }
 
-        .hint {
-            font-size: 11px;
-            color: #666;
-            margin-top: 6px;
-            line-height: 1.5;
-        }
+    .bubble.chaeum {
+        background: rgba(255, 253, 247, 0.06);
+        border: 1px solid rgba(255, 253, 247, 0.1);
+        border-radius: 4px 18px 18px 18px;
+        color: var(--white);
+    }
 
-        .question-card {
-            padding: 16px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
+    .bubble.user {
+        background: var(--white);
+        color: #4B4545;
+        border-radius: 18px 18px 4px 18px;
+    }
 
-        .question-title {
-            font-size: 13px;
-            color: #ddd;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
+    /* TYPING */
+    .typing-dots {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        padding: 14px 18px;
+        background: rgba(255, 253, 247, 0.06);
+        border: 1px solid rgba(255, 253, 247, 0.1);
+        border-radius: 4px 18px 18px 18px;
+    }
 
-        .yn-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+    .dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 253, 247, 0.5);
+        animation: bounce 1.2s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
 
-        .yn-option input[type="radio"] {
-            display: none;
-        }
+    @keyframes bounce {
+        0%, 60%, 100% { transform: translateY(0); }
+        30% { transform: translateY(-5px); }
+    }
 
-        .yn-option span {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            text-align: center;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 8px;
-            color: #cfcfcf;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
+    /* INPUT AREA */
+    .input-area {
+        padding: 12px 16px 28px;
+        max-width: 680px;
+        width: 100%;
+        margin: 0 auto;
+        flex-shrink: 0;
+    }
 
-        .yn-option input[type="radio"]:checked + span {
-            background: rgba(255,255,255,0.18);
-            border-color: rgba(255,255,255,0.4);
-            color: white;
-            font-weight: 600;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
-        }
+    .options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
-        .yn-option span:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.2);
-        }
+    .option-btn {
+        background: rgba(255, 253, 247, 0.05);
+        border: 1px solid rgba(255, 253, 247, 0.15);
+        color: var(--white);
+        padding: 13px 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 13px;
+        text-align: left;
+        letter-spacing: 0.3px;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
 
-        .analyzing {
-            font-size: 11px;
-            color: #64C8FF;
-            margin-top: 6px;
-            display: none;
-        }
+    .option-btn:hover {
+        background: rgba(255, 253, 247, 0.1);
+        border-color: rgba(255, 253, 247, 0.35);
+    }
 
-        .analyzing-list {
-            display: none;
-            background: rgba(100, 200, 255, 0.05);
-            border: 1px solid rgba(100, 200, 255, 0.2);
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 12px;
-            font-size: 12px;
-        }
+    .text-input-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
 
-        .analyzing-list.active {
-            display: block;
-        }
+    .text-input {
+        flex: 1;
+        background: rgba(255, 253, 247, 0.05);
+        border: 1px solid rgba(255, 253, 247, 0.15);
+        color: var(--white);
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        outline: none;
+        font-family: inherit;
+    }
 
-        .analyzing-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            color: #64C8FF;
-        }
+    .text-input::placeholder { color: var(--sub-text); }
 
-        .analyzing-item:last-child {
-            margin-bottom: 0;
-        }
+    .send-btn {
+        background: var(--white);
+        color: #4B4545;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: inherit;
+        transition: opacity 0.2s;
+    }
 
-        .spinner {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #64C8FF;
-            margin-right: 8px;
-            animation: pulse 1.5s infinite;
-        }
+    .send-btn:hover { opacity: 0.85; }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
+    /* CTA */
+    .cta-box {
+        background: rgba(255, 253, 247, 0.05);
+        border: 1px solid rgba(255, 253, 247, 0.15);
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 
-        .error {
-            background: rgba(255, 107, 107, 0.1);
-            color: #FF6B6B;
-            padding: 10px;
-            border-radius: 4px;
-            display: none;
-            font-size: 12px;
-            margin-bottom: 20px;
-            border-left: 4px solid #FF6B6B;
-        }
+    .cta-label {
+        color: var(--sub-text);
+        font-size: 12px;
+        text-align: center;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            background: white;
-            color: #4B4545;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 8px;
-        }
+    .cta-primary {
+        display: block;
+        background: var(--white);
+        color: #4B4545;
+        padding: 16px;
+        border-radius: 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: opacity 0.2s;
+    }
 
-        button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+    .cta-primary:hover { opacity: 0.85; }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+    .cta-reset {
+        background: transparent;
+        border: 1px solid rgba(255, 253, 247, 0.2);
+        color: var(--sub-text);
+        padding: 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 13px;
+        font-family: inherit;
+        transition: all 0.2s;
+    }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 28px 16px;
-            }
+    .cta-reset:hover {
+        border-color: rgba(255, 253, 247, 0.4);
+        color: var(--white);
+    }
 
-            h1 {
-                font-size: 36px;
-            }
+    /* Scrollbar */
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-track { background: transparent; }
+    .messages::-webkit-scrollbar-thumb { background: rgba(255,253,247,0.15); border-radius: 2px; }
 
-            .form-section {
-                padding: 24px;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+        .bubble { max-width: 85%; font-size: 13px; }
+        .option-btn { font-size: 12px; padding: 12px 16px; }
+    }
+</style>
+```
+
 </head>
 <body>
-    <div class="container">
-        <div class="hero">
-            <h1>브랜드 진단</h1>
-            <p class="subtitle">AI가 당신의 브랜드를<br>깊이 있게 분석합니다</p>
-        </div>
 
-        <div id="error" class="error"></div>
+```
+<!-- HEADER -->
+<div class="chat-header">
+    <div class="header-dot"></div>
+    <a href="./index.html" class="header-logo">CHAEUM</a>
+    <span class="header-label">브랜드 진단</span>
+    <div class="progress-bar" id="progressBar"></div>
+</div>
 
-        <form id="diagnosisForm">
-            <div class="form-section">
+<!-- MESSAGES -->
+<div class="messages" id="messages"></div>
 
-                <!-- 웹사이트 -->
-                <div class="form-group">
-                    <label class="form-label">웹사이트 <span class="required">*</span></label>
-                    <input 
-                        type="text"
-                        id="website"
-                        placeholder="https://example.com"
-                        required
-                    />
-                    <p class="hint">웹사이트 주소를 입력하세요</p>
-                </div>
+<!-- INPUT AREA -->
+<div class="input-area" id="inputArea"></div>
 
-                <!-- 이메일 -->
-                <div class="form-group">
-                    <label class="form-label">이메일 <span class="required">*</span></label>
-                    <input 
-                        type="email"
-                        id="email"
-                        placeholder="your@email.com"
-                        required
-                    />
-                    <p class="hint">리포트 수신용</p>
-                </div>
+<script>
+    const QUESTIONS = [
+        {
+            text: "안녕하세요. CHAEUM 브랜드 진단입니다.\n\n먼저 브랜드 업종을 알려주세요.",
+            options: ["식음료 / 푸드", "뷰티 / 스킨케어", "라이프스타일", "패션 / 의류", "서비스업", "기타"]
+        },
+        {
+            text: "현재 브랜드 운영 단계는 어디에 해당하나요?",
+            options: ["아직 런칭 전", "런칭 후 1년 미만", "1~3년 운영 중", "3년 이상"]
+        },
+        {
+            text: "현재 가장 큰 고민은 무엇인가요?",
+            options: [
+                "매출이 정체되어 있다",
+                "재구매가 없고 신규 고객만 찾는다",
+                "브랜드가 뭔지 모르겠다",
+                "가격 경쟁에서 밀린다",
+                "대표 없이는 브랜드가 멈춘다"
+            ]
+        },
+        {
+            text: "월 매출 규모는 어느 정도인가요?\n(편하게 선택해주세요, 정확하지 않아도 됩니다)",
+            options: ["아직 매출 없음", "100만원 미만", "100~500만원", "500만~1500만원", "1500만원 이상"]
+        },
+        {
+            text: "마지막으로, 지금 가장 원하는 것은 무엇인가요?",
+            options: [
+                "브랜드 방향을 명확히 잡고 싶다",
+                "매출 구조를 바꾸고 싶다",
+                "전문가의 시각으로 검토받고 싶다",
+                "경쟁 브랜드와 차별화하고 싶다"
+            ]
+        }
+    ];
 
-                <!-- 가장 큰 고민: 드롭다운 -->
-                <div class="form-group">
-                    <label class="form-label">가장 큰 고민 <span class="required">*</span></label>
-                    <select id="mainProblem" required>
-                        <option value="">선택해주세요</option>
-                        <option value="messaging">브랜드 메시지가 약함</option>
-                        <option value="traffic">고객 유입이 부족함</option>
-                        <option value="conversion">전환율이 낮음</option>
-                        <option value="positioning">포지셔닝이 불명확함</option>
-                        <option value="growth">장기 성장 구조가 없음</option>
-                    </select>
-                    <p class="hint">현재 가장 먼저 해결하고 싶은 문제를 선택하세요</p>
-                </div>
+    let step = 0;
+    let answers = [];
+    const messagesEl = document.getElementById('messages');
+    const inputArea = document.getElementById('inputArea');
+    const progressBar = document.getElementById('progressBar');
 
-                <!-- 브랜드 상태: Yes / No -->
-                <div class="form-group">
-                    <label class="form-label">현재 브랜드 상태 <span class="required">*</span></label>
+    // 진행 바 초기화
+    function initProgress() {
+        progressBar.innerHTML = '';
+        QUESTIONS.forEach((_, i) => {
+            const div = document.createElement('div');
+            div.className = 'progress-step' + (i < step ? ' done' : '');
+            div.id = `progress-${i}`;
+            progressBar.appendChild(div);
+        });
+    }
 
-                    <div class="question-card">
-                        <div class="question-title">핵심 고객이 명확하다</div>
-                        <div class="yn-grid">
-                            <label class="yn-option">
-                                <input type="radio" name="clearTarget" value="yes" required>
-                                <span>Yes</span>
-                            </label>
-                            <label class="yn-option">
-                                <input type="radio" name="clearTarget" value="no">
-                                <span>No</span>
-                            </label>
-                        </div>
-                    </div>
+    function updateProgress() {
+        QUESTIONS.forEach((_, i) => {
+            const el = document.getElementById(`progress-${i}`);
+            if (el) el.className = 'progress-step' + (i < step ? ' done' : '');
+        });
+    }
 
-                    <div class="question-card">
-                        <div class="question-title">대표 제품/서비스가 명확하다</div>
-                        <div class="yn-grid">
-                            <label class="yn-option">
-                                <input type="radio" name="clearOffer" value="yes" required>
-                                <span>Yes</span>
-                            </label>
-                            <label class="yn-option">
-                                <input type="radio" name="clearOffer" value="no">
-                                <span>No</span>
-                            </label>
-                        </div>
-                    </div>
+    function scrollBottom() {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
 
-                    <div class="question-card">
-                        <div class="question-title">브랜드 메시지가 일관된다</div>
-                        <div class="yn-grid">
-                            <label class="yn-option">
-                                <input type="radio" name="clearMessage" value="yes" required>
-                                <span>Yes</span>
-                            </label>
-                            <label class="yn-option">
-                                <input type="radio" name="clearMessage" value="no">
-                                <span>No</span>
-                            </label>
-                        </div>
-                    </div>
+    function addUserBubble(text) {
+        const row = document.createElement('div');
+        row.className = 'msg-row user';
+        row.innerHTML = `<div class="bubble user">${escapeHtml(text)}</div>`;
+        messagesEl.appendChild(row);
+        scrollBottom();
+    }
 
-                    <div class="question-card">
-                        <div class="question-title">SNS/홈페이지가 문의 또는 구매로 연결된다</div>
-                        <div class="yn-grid">
-                            <label class="yn-option">
-                                <input type="radio" name="hasConversionPath" value="yes" required>
-                                <span>Yes</span>
-                            </label>
-                            <label class="yn-option">
-                                <input type="radio" name="hasConversionPath" value="no">
-                                <span>No</span>
-                            </label>
-                        </div>
-                    </div>
+    function addChaeumBubble(text) {
+        const row = document.createElement('div');
+        row.className = 'msg-row';
+        const formatted = escapeHtml(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        row.innerHTML = `
+            <div class="avatar">C</div>
+            <div class="bubble chaeum">${formatted}</div>
+        `;
+        messagesEl.appendChild(row);
+        scrollBottom();
+    }
 
-                    <div class="question-card">
-                        <div class="question-title">재구매 또는 반복매출 구조가 있다</div>
-                        <div class="yn-grid">
-                            <label class="yn-option">
-                                <input type="radio" name="hasRetention" value="yes" required>
-                                <span>Yes</span>
-                            </label>
-                            <label class="yn-option">
-                                <input type="radio" name="hasRetention" value="no">
-                                <span>No</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <p class="hint">각 문항마다 Yes 또는 No를 선택하세요</p>
-
-                    <div class="analyzing" id="analyzing">분석 중...</div>
-                    <div class="analyzing-list" id="analyzingList">
-                        <div class="analyzing-item">
-                            <div class="spinner"></div>
-                            <span>브랜드 메시지 분석 중</span>
-                        </div>
-                        <div class="analyzing-item">
-                            <div class="spinner" style="animation-delay: 0.3s;"></div>
-                            <span>포지셔닝 구조 분석 중</span>
-                        </div>
-                        <div class="analyzing-item">
-                            <div class="spinner" style="animation-delay: 0.6s;"></div>
-                            <span>고객 행동 흐름 분석 중</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" id="submitBtn">분석 시작</button>
+    function showTyping() {
+        const row = document.createElement('div');
+        row.className = 'msg-row';
+        row.id = 'typing';
+        row.innerHTML = `
+            <div class="avatar">C</div>
+            <div class="typing-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
-        </form>
-    </div>
+        `;
+        messagesEl.appendChild(row);
+        scrollBottom();
+    }
 
-    <script>
-        const websiteInput = document.getElementById('website');
-        const form = document.getElementById('diagnosisForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const analyzingEl = document.getElementById('analyzing');
-        const analyzingListEl = document.getElementById('analyzingList');
+    function removeTyping() {
+        const el = document.getElementById('typing');
+        if (el) el.remove();
+    }
 
-        let analysisData = null;
-        let isSubmitting = false;
+    function showOptions(options) {
+        inputArea.innerHTML = `
+            <div class="options" id="optionsList">
+                ${options.map((opt, i) => `
+                    <button class="option-btn" onclick="handleOption('${escapeAttr(opt)}')">${escapeHtml(opt)}</button>
+                `).join('')}
+                <div class="text-input-row">
+                    <input class="text-input" id="textInput" placeholder="직접 입력..." onkeydown="if(event.key==='Enter') sendText()" />
+                    <button class="send-btn" onclick="sendText()">전송</button>
+                </div>
+            </div>
+        `;
+    }
 
-        websiteInput.addEventListener('focus', function() {
-            if (!this.value) {
-                this.value = 'https://';
-                this.setSelectionRange(8, 8);
-            }
-        });
+    function showCTA() {
+        inputArea.innerHTML = `
+            <div class="cta-box">
+                <p class="cta-label">진단이 완료됐습니다</p>
+                <a href="https://cal.com/chaeum" class="cta-primary">20분 무료 상담 예약하기 →</a>
+                <button class="cta-reset" onclick="resetChat()">처음부터 다시 진단하기</button>
+            </div>
+        `;
+    }
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    function clearInput() {
+        inputArea.innerHTML = '';
+    }
 
-            if (isSubmitting) return;
+    function handleOption(option) {
+        answers.push(option);
+        addUserBubble(option);
+        clearInput();
 
-            const website = document.getElementById('website').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const mainProblem = document.getElementById('mainProblem').value;
+        step++;
+        updateProgress();
 
-            const brandSurvey = {
-                clearTarget: getRadioValue('clearTarget'),
-                clearOffer: getRadioValue('clearOffer'),
-                clearMessage: getRadioValue('clearMessage'),
-                hasConversionPath: getRadioValue('hasConversionPath'),
-                hasRetention: getRadioValue('hasRetention')
-            };
-
-            if (!website || !email) {
-                showError('웹사이트와 이메일을 입력해주세요');
-                return;
-            }
-
-            if (!mainProblem) {
-                showError('가장 큰 고민을 선택해주세요');
-                return;
-            }
-
-            if (Object.values(brandSurvey).some(v => !v)) {
-                showError('브랜드 상태 문항에 모두 답변해주세요');
-                return;
-            }
-
-            if (!isValidUrl(website)) {
-                showError('유효한 URL을 입력해주세요');
-                return;
-            }
-
-            const finalUrl = normalizeUrl(website);
-
-            try {
-                isSubmitting = true;
-                setLoadingState(true);
-
-                analysisData = await analyzeWebsite(finalUrl);
-
-                const finalData = {
-                    ...analysisData,
-                    website: finalUrl,
-                    email,
-                    mainProblem,
-                    brandSurvey,
-                    timestamp: new Date().toISOString()
-                };
-
-                localStorage.setItem('diagnosisData', JSON.stringify(finalData));
-                window.location.href = './diagnosis-report.html';
-            } catch (error) {
-                console.error('제출 오류:', error);
-                showError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
-            } finally {
-                isSubmitting = false;
-                setLoadingState(false);
-            }
-        });
-
-        function getRadioValue(name) {
-            return document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+        if (step < QUESTIONS.length) {
+            showTyping();
+            setTimeout(() => {
+                removeTyping();
+                addChaeumBubble(QUESTIONS[step].text);
+                showOptions(QUESTIONS[step].options);
+            }, 900);
+        } else {
+            showTyping();
+            setTimeout(() => {
+                removeTyping();
+                const issue = answers[2] || '';
+                const goal = answers[4] || '';
+                const resultText = `진단 결과를 정리했습니다.\n\n"${issue}" 상태의 브랜드에서 "${goal}"를 원하신다면, 이는 단순한 실행 문제가 아닌 **포지셔닝 구조**의 문제일 가능성이 높습니다.\n\nCHAEUM은 비슷한 상황의 브랜드를 여러 차례 진단하고 재설계한 경험이 있습니다.\n\n20분 무료 상담을 통해 구체적인 방향을 함께 찾아볼 수 있습니다.`;
+                addChaeumBubble(resultText);
+                showCTA();
+            }, 1200);
         }
+    }
 
-        async function analyzeWebsite(url) {
-            try {
-                const response = await fetch('/api/analyze', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ url })
-                });
+    function sendText() {
+        const input = document.getElementById('textInput');
+        if (!input || !input.value.trim()) return;
+        handleOption(input.value.trim());
+    }
 
-                const data = await response.json();
+    function resetChat() {
+        step = 0;
+        answers = [];
+        messagesEl.innerHTML = '';
+        inputArea.innerHTML = '';
+        updateProgress();
+        setTimeout(() => {
+            addChaeumBubble(QUESTIONS[0].text);
+            showOptions(QUESTIONS[0].options);
+        }, 400);
+    }
 
-                if (!response.ok) {
-                    return buildFallbackAnalysisData(url, {
-                        detail: data.detail || data.error || '웹사이트 분석에 실패했습니다.'
-                    });
-                }
+    function escapeHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/\n/g, '<br>');
+    }
 
-                return {
-                    brandName: data.brandName || extractBrandName(url),
-                    website: data.website || url,
-                    serviceType: data.serviceType || 'default',
-                    stage: data.stage || 'Early',
-                    scores: normalizeScores(data.scores),
-                    bottleneck: data.bottleneck || 'brandClarity',
-                    bottleneckLabel: data.bottleneckLabel || '브랜드 선명도 부족',
-                    strongestAsset: data.strongestAsset || '기초 구조',
-                    summary: data.summary || '브랜드의 현재 구조를 바탕으로 핵심 병목을 분석했습니다.',
-                    chaeumInsight: data.chaeumInsight || '채움 관점에서 브랜드 구조 정리가 우선 필요합니다.',
-                    funnelDiagnosis: normalizeFunnelDiagnosis(data.funnelDiagnosis),
-                    extractedData: normalizeExtractedData(data.extractedData),
-                    timestamp: new Date().toISOString()
-                };
-            } catch (error) {
-                console.error('API 호출 오류:', error);
-                return buildFallbackAnalysisData(url, {
-                    detail: '네트워크 오류가 발생했습니다.'
-                });
-            }
-        }
+    function escapeAttr(str) {
+        return String(str || '').replace(/'/g, "\\'");
+    }
 
-        function buildFallbackAnalysisData(url, options = {}) {
-            return {
-                brandName: extractBrandName(url),
-                website: url,
-                serviceType: 'default',
-                stage: 'Early',
-                scores: {
-                    brandClarity: 0,
-                    messageStrength: 0,
-                    trustStructure: 0,
-                    conversionStructure: 0,
-                    growthReadiness: 0
-                },
-                bottleneck: 'brandClarity',
-                bottleneckLabel: '분석 불가',
-                strongestAsset: '확인 불가',
-                summary: options.detail || '기술적 문제로 분석을 완료하지 못했습니다.',
-                chaeumInsight: '현재는 자동 분석 결과를 불러오지 못했습니다. 상담을 통해 수동 진단이 가능합니다.',
-                funnelDiagnosis: {
-                    awareness: '분석 불가',
-                    trust: '분석 불가',
-                    conversion: '분석 불가',
-                    keyIssue: '분석 불가'
-                },
-                extractedData: {
-                    title: '',
-                    metaDescription: '',
-                    h1: '',
-                    h2List: [],
-                    buttons: []
-                },
-                timestamp: new Date().toISOString()
-            };
-        }
+    // 초기화
+    initProgress();
+    setTimeout(() => {
+        addChaeumBubble(QUESTIONS[0].text);
+        showOptions(QUESTIONS[0].options);
+    }, 400);
+</script>
+```
 
-        function normalizeScores(scores = {}) {
-            return {
-                brandClarity: safeNumber(scores.brandClarity),
-                messageStrength: safeNumber(scores.messageStrength),
-                trustStructure: safeNumber(scores.trustStructure),
-                conversionStructure: safeNumber(scores.conversionStructure),
-                growthReadiness: safeNumber(scores.growthReadiness)
-            };
-        }
-
-        function normalizeFunnelDiagnosis(funnel = {}) {
-            return {
-                awareness: funnel.awareness || '분석 결과가 없습니다.',
-                trust: funnel.trust || '분석 결과가 없습니다.',
-                conversion: funnel.conversion || '분석 결과가 없습니다.',
-                keyIssue: funnel.keyIssue || '분석 결과가 없습니다.'
-            };
-        }
-
-        function normalizeExtractedData(data = {}) {
-            return {
-                title: data.title || '',
-                metaDescription: data.metaDescription || '',
-                h1: data.h1 || '',
-                h2List: Array.isArray(data.h2List) ? data.h2List : [],
-                buttons: Array.isArray(data.buttons) ? data.buttons : []
-            };
-        }
-
-        function safeNumber(value) {
-            const num = Number(value);
-            if (Number.isNaN(num)) return 0;
-            return Math.max(0, Math.min(100, Math.round(num)));
-        }
-
-        function normalizeUrl(url) {
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                return 'https://' + url;
-            }
-            return url;
-        }
-
-        function extractBrandName(url) {
-            try {
-                const domain = new URL(normalizeUrl(url)).hostname.replace('www.', '');
-                const name = domain.split('.')[0];
-                return name.charAt(0).toUpperCase() + name.slice(1);
-            } catch {
-                return 'Brand';
-            }
-        }
-
-        function isValidUrl(url) {
-            try {
-                new URL(normalizeUrl(url));
-                return true;
-            } catch {
-                return false;
-            }
-        }
-
-        function setLoadingState(isLoading) {
-            submitBtn.disabled = isLoading;
-            submitBtn.textContent = isLoading ? '분석 중...' : '분석 시작';
-            analyzingEl.style.display = isLoading ? 'block' : 'none';
-            analyzingListEl.classList.toggle('active', isLoading);
-        }
-
-        function showError(msg) {
-            const el = document.getElementById('error');
-            el.textContent = msg;
-            el.style.display = 'block';
-
-            clearTimeout(showError._timer);
-            showError._timer = setTimeout(() => {
-                el.style.display = 'none';
-            }, 3000);
-        }
-    </script>
 </body>
 </html>
