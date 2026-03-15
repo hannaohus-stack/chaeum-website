@@ -460,7 +460,49 @@ async function advance() {
     }
 }
 
-// ── 결과 ──
+// ── Supabase 설정 ──
+const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlvb3Nka2tpZW54YXR1cG93Z3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNzgzNjUsImV4cCI6MjA4Nzc1NDM2NX0.V2S9r9-aUkd2DTtgTYznP9E9jPNJOLvCZHyUzB-xLKM';
+
+async function saveToCRM(d, recommendedService) {
+
+    const revenueScore = {
+        'zero': 10, 'under100': 20, '100to500': 40,
+        '500to1500': 70, 'over1500': 90
+    };
+
+    const payload = {
+        source: 'ai-diagnosis',
+        revenue_scale: d.revenue || '',
+        recommended_service: recommendedService || '',
+        status: 'new',
+        lead_score: revenueScore[d.revenue] || 10,
+        notes: JSON.stringify({
+            name: d.name || '',
+            email: d.email || '',
+            problem: d.problem || '',
+            problemLabel: d.problemLabel || '',
+            capacity: d.capacity || '',
+            capacityLabel: d.capacityLabel || '',
+            submitted_at: new Date().toISOString()
+        })
+    };
+
+    try {
+        await fetch(`${SUPABASE_URL}/rest/v1/diagnosis_submissions`, {
+            method: 'POST',
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+        });
+    } catch (err) {
+        console.warn('CRM 저장 실패 (무시):', err);
+    }
+}
 function buildResult(d) {
     const prob = d.problem, rev = d.revenue, cap = d.capacity;
 
@@ -515,6 +557,15 @@ async function showResult() {
     rmTyping();
 
     const r = buildResult(data);
+
+    // 추천 서비스 텍스트 추출
+    const recommendedService = r.isLow && r.isSelf
+        ? 'Self-OS'
+        : r.isLow ? 'Brand Architecture'
+        : 'Funnel Engineering';
+
+    // CRM 저장 (백그라운드)
+    saveToCRM(data, recommendedService);
     const name = data.name ? `${data.name.split(' ')[0]}님, ` : '';
 
     addMsg('ai', `${name}${r.empathy}\n\n${r.cause}`, true);
