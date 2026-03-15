@@ -474,20 +474,38 @@ async function saveToCRM(d, recommendedService, resultText) {
         '500to1500': 70, 'over1500': 90
     };
 
+    // CRM 필드 매핑
+    const problemLabelKo = {
+        stagnant:   '열심히 하는데 매출이 안 오른다',
+        no_repeat:  '한 번 사고 다시 안 돌아온다',
+        unclear:    '고객이 우리 브랜드가 뭔지 모르는 것 같다',
+        price:      '가격을 올리면 고객이 떠날 것 같다',
+        dependent:  '나 없이는 브랜드가 안 돌아간다',
+    };
+    const capacityLabelKo = {
+        self:      '방향만 잡히면 내가 직접 할 수 있다',
+        partial:   '방향은 알겠는데 실행이 막막하다',
+        outsource: '전문가가 대신 해줬으면 한다',
+    };
+
+    const problemText = problemLabelKo[d.problem] || d.problem || '';
+    const capacityText = capacityLabelKo[d.capacity] || d.capacity || '';
+
     const payload = {
         name:               d.name             || '',
         email:              d.email            || '',
+        brand_name:         d.name             || '',
         revenue_scale:      revenueMap[d.revenue] || d.revenue || '',
-        source:             'ai-diagnosis',
+        source:             'ai_diagnosis',
         lead_score:         scoreMap[d.revenue] || 10,
         recommended_service: recommendedService || '',
         status:             'new',
-        diagnosis:          JSON.stringify({
-            problem:      d.problem      || '',
-            problemLabel: d.problemLabel || '',
-            capacity:     d.capacity     || '',
-            capacityLabel:d.capacityLabel|| '',
-        }),
+        consultation:       problemText,
+        diagnosis:          [
+            '고민: ' + problemText,
+            '실행여력: ' + capacityText,
+            '추천 서비스: ' + (recommendedService || '')
+        ].join('\n'),
         notes:              resultText || '',
         timestamp:          new Date().toISOString()
     };
