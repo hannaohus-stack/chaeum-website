@@ -429,7 +429,48 @@ function esc(s) {
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function buildResultHtml(data) {
+const problemMap = {
+    messaging: '브랜드 메시지가 약함',
+    traffic: '고객 유입이 부족함',
+    conversion: '전환율이 낮음',
+    positioning: '포지셔닝이 불명확함',
+    growth: '장기 성장 구조가 없음'
+};
+
+function fallbackReport(input) {
+    const prob = input.mainProblem || '';
+    const desc = input.brandDescription || '';
+
+    const bottleneckMap = {
+        messaging: { label: '브랜드 메시지 구조 부재', summary: '현재 브랜드는 무엇을 파는지는 보이지만, 왜 이 브랜드여야 하는지가 고객에게 전달되지 않고 있을 가능성이 높습니다. 메시지가 약하면 마케팅 비용이 아무리 늘어도 전환으로 이어지지 않습니다.' },
+        traffic: { label: '퍼널 유입 구조 부재', summary: '고객 유입이 부족한 경우, 단순히 광고를 늘리는 것보다 유입 → 관심 → 구매로 이어지는 퍼널 구조를 먼저 설계해야 합니다. 구조 없는 광고는 밑 빠진 독에 물 붓기입니다.' },
+        conversion: { label: '전환 구조 부재', summary: '방문자가 있어도 구매로 이어지지 않는다면, 랜딩 구조·오퍼 설계·CTA 흐름 중 하나 이상이 막혀 있습니다. 트래픽 문제가 아닌 구조의 문제입니다.' },
+        positioning: { label: '포지셔닝 불명확', summary: '브랜드가 어디에 서야 하는지 정의되지 않으면, 마케팅도 제품도 방향을 잃습니다. 포지셔닝은 모든 실행의 기반입니다.' },
+        growth: { label: '장기 수익 구조 부재', summary: '일회성 구매에 의존하는 브랜드는 대표의 노동력에 종속됩니다. 반복매출과 팬덤으로 이어지는 구조 설계가 필요합니다.' }
+    };
+
+    const bt = bottleneckMap[prob] || { label: '브랜드 퍼널 구조 부재', summary: '제품 또는 서비스 자체보다, 유입과 구매, 반복매출로 어떻게 연결되는지가 충분히 구조화되지 않았을 가능성이 큽니다.' };
+
+    return {
+        brandName: '입력 브랜드',
+        website: input.website || '',
+        brandDescription: input.brandDescription || '',
+        targetCustomer: input.targetCustomer || '',
+        mainProduct: input.mainProduct || '',
+        mainProblem: prob,
+        bottleneckKey: prob || 'brand-funnel',
+        bottleneckLabel: bt.label,
+        shortSummary: bt.summary,
+        reportSummary: `이 브랜드는 ${desc ? '"' + desc + '"의 방향성은 보이지만, ' : ''}돈이 흐르는 구조로 연결되는 설계가 아직 약할 가능성이 있습니다.`,
+        structureAnalysis: '현재 구조는 브랜드 메시지, 오퍼, 랜딩, 전환 흐름이 하나의 시스템으로 연결되어 있지 않을 수 있습니다. 이 경우 브랜드가 아니라 운영과 대표자 개인 역량에 의존하게 됩니다.',
+        futureRisk: '이 구조가 유지되면 광고 효율 저하, 가격 경쟁, 반복매출 부족, 대표자 의존 증가로 이어질 수 있습니다.',
+        chaeumInsight: '채움은 브랜드를 예쁘게 만드는 회사가 아닙니다. 제품 → 고객 → 구매 → 반복매출로 이어지는 구조를 설계합니다.',
+        recommendedAction: '지금 단계에서는 더 많은 마케팅보다 브랜드 메시지와 퍼널 구조를 먼저 정리해야 합니다.',
+        recommendedService: '브랜드 아키텍처 설계 (Level 1)',
+        recommendedSystem: '채움 Self-OS 시스템',
+        timestamp: new Date().toISOString()
+    };
+}
     return `<strong>현재 가장 큰 병목은 '${esc(data.bottleneckLabel)}'입니다.</strong><br><br>${esc(data.shortSummary)}<br><br>이 경우 보통 다음 문제가 발생합니다.<br><br>• 마케팅을 해도 매출이 안정적으로 쌓이지 않습니다.<br>• 대표자 의존도가 계속 높아집니다.<br>• 브랜드보다 상품 중심 판매로 흘러갈 가능성이 큽니다.<br><br>즉 문제는 단순한 디자인이나 홍보가 아니라 <strong>'돈이 흐르는 구조'</strong>입니다.<br><br>채움은 브랜드를 디자인하지 않습니다.<br><strong>제품 → 고객 → 구매 → 반복매출</strong>이 연결되는 구조를 설계합니다.`;
 }
 
@@ -447,50 +488,49 @@ async function finishDiagnosis() {
     await wait(1400);
     removeTyping();
 
-    try {
-        const payload = {
-            website: userData.website || '',
-            brandDescription: userData.brandDescription || '',
-            targetCustomer: userData.targetCustomer || '',
-            mainProduct: userData.mainProduct || '',
-            mainProblem: userData.mainProblem || '',
-            mainProblemLabel: userData.mainProblemLabel || ''
-        };
+    const payload = {
+        website: userData.website || '',
+        brandDescription: userData.brandDescription || '',
+        targetCustomer: userData.targetCustomer || '',
+        mainProduct: userData.mainProduct || '',
+        mainProblem: userData.mainProblem || '',
+        mainProblemLabel: userData.mainProblemLabel || ''
+    };
 
+    let reportData = null;
+
+    try {
         const res = await fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-
-        const reportData = await res.json();
-        if (!res.ok) throw new Error(reportData.error || '분석에 실패했습니다.');
-
-        localStorage.setItem('diagnosisData', JSON.stringify(reportData));
-
-        addMsg('ai', buildResultHtml(reportData), true);
-
-        await wait(400);
-        addMsg('ai', '이 브랜드에 맞는 더 자세한 구조 분석을 보시겠습니까?');
-
-        buttonWrapper.style.display = 'grid';
-        buttonWrapper.innerHTML = `
-            <button class="opt-btn" id="viewReportBtn">📋 전체 분석 리포트 보기</button>
-            <button class="opt-btn" id="consultBtn">📅 20분 무료 상담 예약하기</button>
-            <button class="opt-btn" id="restartBtn" style="opacity:0.6;">처음부터 다시 하기</button>
-        `;
-        document.getElementById('viewReportBtn').onclick = () => window.location.href = './diagnosis-report.html';
-        document.getElementById('consultBtn').onclick = () => window.open('https://cal.com/chaeum', '_blank');
-        document.getElementById('restartBtn').onclick = () => { localStorage.removeItem('diagnosisData'); location.reload(); };
-
+        const json = await res.json();
+        if (res.ok && json && json.bottleneckLabel) {
+            reportData = json;
+        } else {
+            reportData = fallbackReport(payload);
+        }
     } catch (err) {
-        console.error(err);
-        removeTyping();
-        addMsg('ai', '분석 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-        buttonWrapper.style.display = 'grid';
-        buttonWrapper.innerHTML = `<button class="opt-btn" id="restartBtn">처음부터 다시 하기</button>`;
-        document.getElementById('restartBtn').onclick = () => location.reload();
+        console.warn('API unavailable, using fallback:', err);
+        reportData = fallbackReport(payload);
     }
+
+    localStorage.setItem('diagnosisData', JSON.stringify(reportData));
+    addMsg('ai', buildResultHtml(reportData), true);
+
+    await wait(400);
+    addMsg('ai', '이 브랜드에 맞는 더 자세한 구조 분석을 보시겠습니까?');
+
+    buttonWrapper.style.display = 'grid';
+    buttonWrapper.innerHTML = `
+        <button class="opt-btn" id="viewReportBtn">📋 전체 분석 리포트 보기</button>
+        <button class="opt-btn" id="consultBtn">📅 20분 무료 상담 예약하기</button>
+        <button class="opt-btn" id="restartBtn" style="opacity:0.6;">처음부터 다시 하기</button>
+    `;
+    document.getElementById('viewReportBtn').onclick = () => window.location.href = './diagnosis-report.html';
+    document.getElementById('consultBtn').onclick = () => window.open('https://cal.com/chaeum', '_blank');
+    document.getElementById('restartBtn').onclick = () => { localStorage.removeItem('diagnosisData'); location.reload(); };
 }
 
 sendBtn.addEventListener('click', () => {
