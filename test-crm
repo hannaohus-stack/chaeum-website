@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CRM 연결 테스트</title>
+<style>
+body { font-family: monospace; background: #111; color: #eee; padding: 30px; }
+button { background: #D8C36A; color: #111; border: none; padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 6px; margin: 8px 4px; }
+.log { margin-top: 20px; background: #1a1a1a; border: 1px solid #333; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 12px; min-height: 100px; }
+.ok { color: #73E2A7; }
+.err { color: #FF8E8E; }
+.info { color: #89B4FF; }
+</style>
+</head>
+<body>
+<h2 style="color:#D8C36A;">CHAEUM CRM 연결 테스트</h2>
+<p style="color:#999; font-size:13px;">아래 버튼을 순서대로 눌러주세요.</p>
+
+<button onclick="testFetch()">1. Supabase 연결 확인</button>
+<button onclick="testInsert()">2. 데이터 저장 테스트</button>
+<button onclick="testSelect()">3. 저장된 데이터 확인</button>
+<button onclick="clearLog()">로그 지우기</button>
+
+<div class="log" id="log">버튼을 눌러 테스트 시작...</div>
+
+<script>
+const URL  = 'https://ioosdkkienxatupowgxi.supabase.co';
+const KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlvb3Nka2tpZW54YXR1cG93Z3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNzgzNjUsImV4cCI6MjA4Nzc1NDM2NX0.V2S9r9-aUkd2DTtgTYznP9E9jPNJOLvCZHyUzB-xLKM';
+const logEl = document.getElementById('log');
+
+function log(msg, type='info') {
+    const line = document.createElement('div');
+    line.className = type;
+    line.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+    logEl.appendChild(line);
+    logEl.scrollTop = logEl.scrollHeight;
+}
+function clearLog() { logEl.innerHTML = ''; }
+
+async function testFetch() {
+    log('Supabase 서버 연결 시도...', 'info');
+    try {
+        const res = await fetch(URL + '/rest/v1/', {
+            headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY }
+        });
+        log('응답 status: ' + res.status, res.ok ? 'ok' : 'err');
+        const text = await res.text();
+        log('응답 내용: ' + text.slice(0, 200), 'info');
+    } catch(e) {
+        log('연결 오류: ' + e.message, 'err');
+    }
+}
+
+async function testInsert() {
+    log('diagnosis_submissions 테이블에 테스트 데이터 저장 시도...', 'info');
+    const payload = {
+        name: '테스트유저',
+        email: 'test@test.com',
+        brand_name: '테스트브랜드',
+        revenue_scale: '100M-500M',
+        source: 'ai_diagnosis',
+        lead_score: 40,
+        recommended_service: 'Brand Architecture',
+        status: 'new',
+        consultation: '테스트 고민',
+        diagnosis: '테스트 진단',
+        notes: 'CRM 연결 테스트'
+    };
+    log('보내는 데이터: ' + JSON.stringify(payload, null, 2), 'info');
+    try {
+        const res = await fetch(URL + '/rest/v1/diagnosis_submissions', {
+            method: 'POST',
+            headers: {
+                'apikey': KEY,
+                'Authorization': 'Bearer ' + KEY,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify(payload)
+        });
+        const text = await res.text();
+        if (res.ok) {
+            log('✅ 저장 성공! 응답: ' + text, 'ok');
+        } else {
+            log('❌ 저장 실패 (status ' + res.status + ')', 'err');
+            log('에러 내용: ' + text, 'err');
+            if (res.status === 401) log('→ API 키 문제', 'err');
+            if (res.status === 403) log('→ RLS 정책 차단 — Supabase에서 INSERT 정책 추가 필요', 'err');
+            if (res.status === 404) log('→ 테이블을 찾을 수 없음', 'err');
+            if (res.status === 422) log('→ 컬럼명 불일치', 'err');
+        }
+    } catch(e) {
+        log('❌ fetch 오류: ' + e.message, 'err');
+    }
+}
+
+async function testSelect() {
+    log('저장된 데이터 조회 시도...', 'info');
+    try {
+        const res = await fetch(URL + '/rest/v1/diagnosis_submissions?select=id,name,email,status&order=id.desc&limit=5', {
+            headers: {
+                'apikey': KEY,
+                'Authorization': 'Bearer ' + KEY
+            }
+        });
+        const text = await res.text();
+        if (res.ok) {
+            log('✅ 조회 성공: ' + text, 'ok');
+        } else {
+            log('❌ 조회 실패 (status ' + res.status + '): ' + text, 'err');
+        }
+    } catch(e) {
+        log('❌ 조회 오류: ' + e.message, 'err');
+    }
+}
+</script>
+
+</body>
+</html>
