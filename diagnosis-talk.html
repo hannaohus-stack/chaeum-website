@@ -464,43 +464,51 @@ async function advance() {
 const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlvb3Nka2tpZW54YXR1cG93Z3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNzgzNjUsImV4cCI6MjA4Nzc1NDM2NX0.V2S9r9-aUkd2DTtgTYznP9E9jPNJOLvCZHyUzB-xLKM';
 
-async function saveToCRM(d, recommendedService) {
-
-    const revenueScore = {
+async function saveToCRM(d, recommendedService, resultText) {
+    const revenueMap = {
+        'zero': '0', 'under100': '0-100M',
+        '100to500': '100M-500M', '500to1500': '500M-1.5B', 'over1500': '1.5B+'
+    };
+    const scoreMap = {
         'zero': 10, 'under100': 20, '100to500': 40,
         '500to1500': 70, 'over1500': 90
     };
 
     const payload = {
-        source: 'ai-diagnosis',
-        revenue_scale: d.revenue || '',
+        name:               d.name             || '',
+        email:              d.email            || '',
+        revenue_scale:      revenueMap[d.revenue] || d.revenue || '',
+        source:             'ai-diagnosis',
+        lead_score:         scoreMap[d.revenue] || 10,
         recommended_service: recommendedService || '',
-        status: 'new',
-        lead_score: revenueScore[d.revenue] || 10,
-        notes: JSON.stringify({
-            name: d.name || '',
-            email: d.email || '',
-            problem: d.problem || '',
+        status:             'new',
+        diagnosis:          JSON.stringify({
+            problem:      d.problem      || '',
             problemLabel: d.problemLabel || '',
-            capacity: d.capacity || '',
-            capacityLabel: d.capacityLabel || '',
-            submitted_at: new Date().toISOString()
-        })
+            capacity:     d.capacity     || '',
+            capacityLabel:d.capacityLabel|| '',
+        }),
+        notes:              resultText || '',
+        timestamp:          new Date().toISOString()
     };
 
     try {
-        await fetch(`${SUPABASE_URL}/rest/v1/diagnosis_submissions`, {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/diagnosis_submissions`, {
             method: 'POST',
             headers: {
-                'apikey': SUPABASE_ANON_KEY,
+                'apikey':        SUPABASE_ANON_KEY,
                 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                'Content-Type': 'application/json',
-                'Prefer': 'return=minimal'
+                'Content-Type':  'application/json',
+                'Prefer':        'return=minimal'
             },
             body: JSON.stringify(payload)
         });
+        if (!res.ok) {
+            const err = await res.text();
+            console.warn('CRM 저장 실패:', res.status, err);
+        }
     } catch (err) {
-        console.warn('CRM 저장 실패 (무시):', err);
+        console.warn('CRM 저장 오류 (무시):', err);
     }
 }
 function buildResult(d) {
@@ -565,7 +573,8 @@ async function showResult() {
         : 'Funnel Engineering';
 
     // CRM 저장 (백그라운드)
-    saveToCRM(data, recommendedService);
+    const resultSummary = `고민: ${data.problemLabel||data.problem||''} / 매출: ${data.revenue||''} / 실행여력: ${data.capacityLabel||data.capacity||''}`;
+    saveToCRM(data, recommendedService, resultSummary);
     const name = data.name ? `${data.name.split(' ')[0]}님, ` : '';
 
     addMsg('ai', `${name}${r.empathy}\n\n${r.cause}`, true);
