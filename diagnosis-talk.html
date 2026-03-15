@@ -478,8 +478,8 @@ async function saveToCRM(d, recommendedService) {
         outsource: '전문가가 대신 해줬으면 한다',
     };
     const revenueMap = {
-        zero: '0', under100: '0-100M',
-        '100to500': '100M-500M', '500to1500': '500M-1.5B', over1500: '1.5B+'
+        zero: '0원', under100: '100만원 미만',
+        '100to500': '100-500만원', '500to1500': '500-1500만원', over1500: '1500만원 이상'
     };
     const scoreMap = {
         zero: 10, under100: 20, '100to500': 40, '500to1500': 70, over1500: 90
@@ -488,19 +488,22 @@ async function saveToCRM(d, recommendedService) {
     const problemText  = problemLabels[d.problem]   || d.problem   || '';
     const capacityText = capacityLabels[d.capacity] || d.capacity  || '';
 
+    // timestamp 제외 — Supabase가 자동 생성
     const row = {
-        name:                d.name  || '',
+        name:                d.name  || '미입력',
         email:               d.email || '',
-        brand_name:          d.name  || '',
+        brand_name:          d.name  || '미입력',
         revenue_scale:       revenueMap[d.revenue] || d.revenue || '',
         source:              'ai_diagnosis',
         lead_score:          scoreMap[d.revenue] || 10,
         recommended_service: recommendedService || '',
         status:              'new',
         consultation:        problemText,
-        diagnosis:           '고민: ' + problemText + '\n실행여력: ' + capacityText + '\n추천: ' + recommendedService,
-        notes:               '진단경로: AI 자동진단 | 고민=' + problemText + ' | 매출=' + (d.revenue||'') + ' | 실행=' + capacityText
+        diagnosis:           '고민: ' + problemText + '\n실행여력: ' + capacityText,
+        notes:               'AI 진단 | ' + problemText
     };
+
+    alert('CRM 저장 시도:\n' + JSON.stringify(row, null, 2));
 
     try {
         const res = await fetch(SUPABASE_URL + '/rest/v1/diagnosis_submissions', {
@@ -514,24 +517,9 @@ async function saveToCRM(d, recommendedService) {
             body: JSON.stringify(row)
         });
         const body = await res.text();
-        if (res.ok) {
-            console.log('[CRM] 저장 성공', body);
-        } else {
-            console.error('[CRM] 저장 실패 ' + res.status + ':', body);
-            // 화면에 에러 표시 (디버그용)
-            const dbg = document.createElement('div');
-            dbg.style.cssText = 'position:fixed;bottom:60px;left:10px;right:10px;background:#500;color:#fff;padding:10px;font-size:11px;z-index:9999;border-radius:6px;word-break:break-all;';
-            dbg.textContent = 'CRM 오류 ' + res.status + ': ' + body;
-            document.body.appendChild(dbg);
-            setTimeout(() => dbg.remove(), 8000);
-        }
+        alert('응답 ' + res.status + ':\n' + body.slice(0, 300));
     } catch (err) {
-        console.error('[CRM] fetch 오류:', err);
-        const dbg = document.createElement('div');
-        dbg.style.cssText = 'position:fixed;bottom:60px;left:10px;right:10px;background:#500;color:#fff;padding:10px;font-size:11px;z-index:9999;border-radius:6px;';
-        dbg.textContent = 'CRM 연결 오류: ' + err.message;
-        document.body.appendChild(dbg);
-        setTimeout(() => dbg.remove(), 8000);
+        alert('fetch 오류: ' + err.message);
     }
 }
 function buildResult(d) {
