@@ -500,10 +500,9 @@ async function saveToCRM(d, recommendedService) {
         status:              'new',
         consultation:        problemText,
         diagnosis:           '고민: ' + problemText + '\n실행여력: ' + capacityText,
-        notes:               'AI 진단 | ' + problemText
+        notes:               'AI 진단 | ' + problemText,
+        created_at:          new Date().toISOString()
     };
-
-    alert('CRM 저장 시도:\n' + JSON.stringify(row, null, 2));
 
     try {
         const res = await fetch(SUPABASE_URL + '/rest/v1/diagnosis_submissions', {
@@ -517,7 +516,11 @@ async function saveToCRM(d, recommendedService) {
             body: JSON.stringify(row)
         });
         const body = await res.text();
-        alert('응답 ' + res.status + ':\n' + body.slice(0, 300));
+        if (res.ok) {
+            console.log('[CRM] 저장 성공 id=' + JSON.parse(body)[0]?.id);
+        } else {
+            console.error('[CRM] 저장 실패 ' + res.status + ':', body);
+        }
     } catch (err) {
         alert('fetch 오류: ' + err.message);
     }
