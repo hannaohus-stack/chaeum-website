@@ -464,69 +464,74 @@ async function advance() {
 const SUPABASE_URL = 'https://ioosdkkienxatupowgxi.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlvb3Nka2tpZW54YXR1cG93Z3hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNzgzNjUsImV4cCI6MjA4Nzc1NDM2NX0.V2S9r9-aUkd2DTtgTYznP9E9jPNJOLvCZHyUzB-xLKM';
 
-async function saveToCRM(d, recommendedService, resultText) {
-    const revenueMap = {
-        'zero': '0', 'under100': '0-100M',
-        '100to500': '100M-500M', '500to1500': '500M-1.5B', 'over1500': '1.5B+'
-    };
-    const scoreMap = {
-        'zero': 10, 'under100': 20, '100to500': 40,
-        '500to1500': 70, 'over1500': 90
-    };
-
-    // CRM 필드 매핑
-    const problemLabelKo = {
+async function saveToCRM(d, recommendedService) {
+    const problemLabels = {
         stagnant:   '열심히 하는데 매출이 안 오른다',
         no_repeat:  '한 번 사고 다시 안 돌아온다',
         unclear:    '고객이 우리 브랜드가 뭔지 모르는 것 같다',
         price:      '가격을 올리면 고객이 떠날 것 같다',
         dependent:  '나 없이는 브랜드가 안 돌아간다',
     };
-    const capacityLabelKo = {
+    const capacityLabels = {
         self:      '방향만 잡히면 내가 직접 할 수 있다',
         partial:   '방향은 알겠는데 실행이 막막하다',
         outsource: '전문가가 대신 해줬으면 한다',
     };
+    const revenueMap = {
+        zero: '0', under100: '0-100M',
+        '100to500': '100M-500M', '500to1500': '500M-1.5B', over1500: '1.5B+'
+    };
+    const scoreMap = {
+        zero: 10, under100: 20, '100to500': 40, '500to1500': 70, over1500: 90
+    };
 
-    const problemText = problemLabelKo[d.problem] || d.problem || '';
-    const capacityText = capacityLabelKo[d.capacity] || d.capacity || '';
+    const problemText  = problemLabels[d.problem]   || d.problem   || '';
+    const capacityText = capacityLabels[d.capacity] || d.capacity  || '';
 
-    const payload = {
-        name:               d.name             || '',
-        email:              d.email            || '',
-        brand_name:         d.name             || '',
-        revenue_scale:      revenueMap[d.revenue] || d.revenue || '',
-        source:             'ai_diagnosis',
-        lead_score:         scoreMap[d.revenue] || 10,
+    const row = {
+        name:                d.name  || '',
+        email:               d.email || '',
+        brand_name:          d.name  || '',
+        revenue_scale:       revenueMap[d.revenue] || d.revenue || '',
+        source:              'ai_diagnosis',
+        lead_score:          scoreMap[d.revenue] || 10,
         recommended_service: recommendedService || '',
-        status:             'new',
-        consultation:       problemText,
-        diagnosis:          [
-            '고민: ' + problemText,
-            '실행여력: ' + capacityText,
-            '추천 서비스: ' + (recommendedService || '')
-        ].join('\n'),
-        notes:              resultText || '',
-        timestamp:          new Date().toISOString()
+        status:              'new',
+        consultation:        problemText,
+        diagnosis:           '고민: ' + problemText + '\n실행여력: ' + capacityText + '\n추천: ' + recommendedService,
+        notes:               '진단경로: AI 자동진단 | 고민=' + problemText + ' | 매출=' + (d.revenue||'') + ' | 실행=' + capacityText
     };
 
     try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/diagnosis_submissions`, {
-            method: 'POST',
+        const res = await fetch(SUPABASE_URL + '/rest/v1/diagnosis_submissions', {
+            method:  'POST',
             headers: {
                 'apikey':        SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
                 'Content-Type':  'application/json',
-                'Prefer':        'return=minimal'
+                'Prefer':        'return=representation'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(row)
         });
-        if (!res.ok) {
-            const err = await res.text();
-            console.warn('CRM 저장 실패:', res.status, err);
+        const body = await res.text();
+        if (res.ok) {
+            console.log('[CRM] 저장 성공', body);
+        } else {
+            console.error('[CRM] 저장 실패 ' + res.status + ':', body);
+            // 화면에 에러 표시 (디버그용)
+            const dbg = document.createElement('div');
+            dbg.style.cssText = 'position:fixed;bottom:60px;left:10px;right:10px;background:#500;color:#fff;padding:10px;font-size:11px;z-index:9999;border-radius:6px;word-break:break-all;';
+            dbg.textContent = 'CRM 오류 ' + res.status + ': ' + body;
+            document.body.appendChild(dbg);
+            setTimeout(() => dbg.remove(), 8000);
         }
     } catch (err) {
-        console.warn('CRM 저장 오류 (무시):', err);
+        console.error('[CRM] fetch 오류:', err);
+        const dbg = document.createElement('div');
+        dbg.style.cssText = 'position:fixed;bottom:60px;left:10px;right:10px;background:#500;color:#fff;padding:10px;font-size:11px;z-index:9999;border-radius:6px;';
+        dbg.textContent = 'CRM 연결 오류: ' + err.message;
+        document.body.appendChild(dbg);
+        setTimeout(() => dbg.remove(), 8000);
     }
 }
 function buildResult(d) {
@@ -590,9 +595,8 @@ async function showResult() {
         : r.isLow ? 'Brand Architecture'
         : 'Funnel Engineering';
 
-    // CRM 저장 (백그라운드)
-    const resultSummary = `고민: ${data.problemLabel||data.problem||''} / 매출: ${data.revenue||''} / 실행여력: ${data.capacityLabel||data.capacity||''}`;
-    saveToCRM(data, recommendedService, resultSummary);
+    // CRM 저장
+    saveToCRM(data, recommendedService);
     const name = data.name ? `${data.name.split(' ')[0]}님, ` : '';
 
     addMsg('ai', `${name}${r.empathy}\n\n${r.cause}`, true);
