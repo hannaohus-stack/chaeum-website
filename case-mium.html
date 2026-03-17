@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIUM | CHAEUM Case Study</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+    :root {
+        --bg: #4B4545;
+        --white: #FFFDF7;
+        --sub-text: rgba(255, 253, 247, 0.55);
+        --border: rgba(255, 253, 247, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+        line-height: 1.6;
+        letter-spacing: -0.3px;
+    }
+
+    /* HEADER */
+    header {
+        position: fixed; top: 0; left: 0; right: 0;
+        background-color: rgba(75, 69, 69, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 24px 48px;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header-wrapper {
+        max-width: 1400px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+    .nav-menu { display: flex; align-items: center; gap: 40px; }
+    .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+    .nav-menu a:hover { opacity: 1; }
+    .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+    .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+        margin-top: 80px;
+        padding: 20px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-inner {
+        max-width: 1400px; margin: 0 auto;
+        font-size: 11px; letter-spacing: 1px; color: var(--sub-text); text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--sub-text); text-decoration: none; transition: color 0.3s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb span { margin: 0 10px; opacity: 0.4; }
+
+    /* HERO */
+    .hero {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;
+    }
+    .hero-tag {
+        font-size: 11px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title {
+        font-size: 56px; font-weight: 300; line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-subtitle {
+        font-size: 18px; color: var(--sub-text); line-height: 1.7; margin-bottom: 40px;
+    }
+    .hero-metrics {
+        display: flex; gap: 40px;
+    }
+    .metric-value {
+        font-size: 32px; font-weight: 300; letter-spacing: -1px; margin-bottom: 6px;
+    }
+    .metric-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase;
+    }
+    .hero-overview {
+        border: 1px solid var(--border); padding: 0;
+    }
+    .hero-overview-item {
+        display: flex; justify-content: space-between; padding: 18px 28px;
+        border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .hero-overview-item:last-child { border-bottom: none; }
+    .overview-key { color: var(--sub-text); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+    .overview-val { color: var(--white); }
+
+    /* SLIDESHOW */
+    .slideshow-section { border-bottom: 1px solid var(--border); }
+    .slideshow-wrapper {
+        position: relative; overflow: hidden; background-color: #3a3535; height: 560px;
+    }
+    .slides {
+        display: flex; transition: transform 0.5s ease; height: 100%;
+    }
+    .slide {
+        min-width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-placeholder {
+        width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; color: var(--sub-text);
+    }
+    .slide-placeholder-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+    .slide-placeholder-num { font-size: 48px; font-weight: 200; opacity: 0.3; }
+    .slide-caption {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        padding: 20px 50px;
+        background: linear-gradient(transparent, rgba(75,69,69,0.85));
+        font-size: 13px; color: var(--sub-text);
+    }
+    .slideshow-controls {
+        padding: 24px 50px;
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid var(--border);
+    }
+    .slide-dots { display: flex; gap: 10px; }
+    .dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background-color: var(--sub-text); cursor: pointer; transition: background-color 0.3s;
+    }
+    .dot.active { background-color: var(--white); }
+    .slide-arrows { display: flex; gap: 12px; }
+    .arrow-btn {
+        background: none; border: 1px solid var(--border);
+        color: var(--white); width: 40px; height: 40px;
+        cursor: pointer; font-size: 14px; transition: all 0.3s;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .arrow-btn:hover { border-color: var(--white); }
+    .slide-counter { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); }
+
+    /* SECTIONS */
+    .section {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .section-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 260px 1fr; gap: 80px;
+    }
+    .section-label {
+        font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text);
+        text-transform: uppercase; padding-top: 6px;
+    }
+    .section-title {
+        font-size: 28px; font-weight: 300; margin-bottom: 24px; line-height: 1.4;
+    }
+    .section-text {
+        font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 24px;
+        max-width: 640px;
+    }
+    .section-text strong { color: var(--white); font-weight: 500; }
+
+    .insight-block {
+        border-left: 2px solid rgba(255,253,247,0.3);
+        padding: 24px 28px; margin: 32px 0; max-width: 560px;
+    }
+    .insight-label {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 10px;
+    }
+    .insight-text {
+        font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--white);
+    }
+
+    .strategy-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .strategy-card { padding: 36px; background-color: var(--bg); }
+    .strategy-num {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        margin-bottom: 14px; text-transform: uppercase;
+    }
+    .strategy-title { font-size: 17px; font-weight: 400; margin-bottom: 12px; }
+    .strategy-desc { font-size: 13px; color: var(--sub-text); line-height: 1.9; }
+
+    .results-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .result-card { padding: 40px 36px; background-color: var(--bg); }
+    .result-value {
+        font-size: 40px; font-weight: 200; letter-spacing: -1px; margin-bottom: 10px;
+    }
+    .result-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 12px;
+    }
+    .result-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
+
+    /* CTA */
+    .cta-section { padding: 100px 50px; text-align: center; }
+    .cta-title { font-size: 40px; font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
+    .cta-desc { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 48px; }
+    .btn-primary {
+        background-color: var(--white); color: var(--bg);
+        border: none; padding: 16px 48px; font-size: 12px; letter-spacing: 1px;
+        cursor: pointer; font-family: inherit; text-transform: uppercase;
+        transition: all 0.3s; text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+    .btn-secondary-link {
+        display: inline-block; margin-top: 16px;
+        font-size: 12px; color: var(--sub-text); text-decoration: none;
+        letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s;
+    }
+    .btn-secondary-link:hover { color: var(--white); }
+
+    /* FOOTER */
+    footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+    .footer-content {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px;
+    }
+    .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+    .footer-column ul { list-style: none; }
+    .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+    .footer-column a:hover { color: var(--white); }
+    .footer-column li { color: var(--sub-text); font-size: 13px; line-height: 2.2; }
+    .footer-bottom {
+        max-width: 1400px; margin: 0 auto;
+        border-top: 1px solid var(--border); padding-top: 30px;
+        display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text);
+    }
+    .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+        .strategy-grid, .results-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        header { padding: 20px 24px; }
+        .header-wrapper { flex-direction: column; gap: 16px; }
+        .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .breadcrumb, .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; }
+        .hero-title { font-size: 38px; }
+        .section-inner { grid-template-columns: 1fr; gap: 32px; }
+        .slideshow-wrapper { height: 300px; }
+        .slideshow-controls { padding: 20px 24px; }
+        .hero-metrics { flex-wrap: wrap; gap: 24px; }
+        .footer-content { grid-template-columns: 1fr 1fr; }
+    }
+</style>
+
+
+</head>
+<body>
+
+
+<header>
+    <div class="header-wrapper">
+        <a href="./index.html" class="logo">CHAEUM</a>
+        <div class="nav-menu">
+            <a href="./services.html">Services</a>
+            <a href="./portfolio.html">Case Study</a>
+            <a href="./insights/index.html">Insight</a>
+            <a href="./about.html">About</a>
+            <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
+        </div>
+    </div>
+</header>
+
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="./portfolio.html">Case Study</a>
+        <span>→</span>
+        MIUM
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">프리미엄 식품 · 선물시장 포지셔닝</div>
+            <h1 class="hero-title">MIUM</h1>
+            <p class="hero-subtitle">일상 식품이 아닌,<br>보내고 싶은 프리미엄 선물로 포지셔닝했습니다.</p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">5개월</div>
+                    <div class="metric-label">프로젝트 기간</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">Gift Market</div>
+                    <div class="metric-label">시장 재포지셔닝</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">Premium</div>
+                    <div class="metric-label">상품 구조 재설계</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-overview">
+                <div class="hero-overview-item">
+                    <span class="overview-key">Client</span>
+                    <span class="overview-val">MIUM</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Category</span>
+                    <span class="overview-val">프리미엄 식품 · 선물시장 포지셔닝</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Scope</span>
+                    <span class="overview-val">상품기획 및 제작 · 포지셔닝 전략 · 커뮤니케이션 전략</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Period</span>
+                    <span class="overview-val">5개월</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDESHOW -->
+<div class="slideshow-section">
+    <div class="slideshow-wrapper">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="./Image/mium-01.jpg" alt="MIUM 브랜드"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">01</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">브랜드 — 프리미엄 미역국 브랜드 MIUM</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/mium-02.jpg" alt="MIUM 제품"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">02</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">제품 — 선물 시장을 고려해 기획된 프리미엄 미역국</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/mium-03.jpg" alt="MIUM 포지셔닝"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">03</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">포지셔닝 — 일상 식품이 아닌 보내고 싶은 선물로의 전환</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/mium-04.jpg" alt="MIUM 패키지"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">04</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">패키지 — 프리미엄 선물 경험에 맞춰 정렬된 상품 구성</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/mium-05.jpg" alt="MIUM 결과"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">05</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">결과 — 새로운 해석과 입소문이 만들어낸 선물 브랜드 인식</div>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <div class="slide-dots" id="dots"></div>
+        <div class="slide-counter" id="counter">1 / 5</div>
+        <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn">←</button>
+            <button class="arrow-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Problem</div>
+        <div class="section-content">
+            <h2 class="section-title">프리미엄 식품이었지만,<br>구매 이유와 선물 명분이 약했습니다.</h2>
+            <p class="section-text">
+                MIUM은 프리미엄 미역국 상품으로서 충분한 가능성을 가지고 있었습니다.
+                그러나 시장에서는 단순히 "조금 더 좋은 미역국" 정도로 받아들여질 위험이 있었습니다.
+                제품의 품질만으로는 왜 이 상품을 선택해야 하는지, 왜 선물해야 하는지에 대한 이유가 선명하지 않았습니다.
+            </p>
+            <div class="insight-block">
+                <div class="insight-label">CHAEUM이 정의한 구조적 결함</div>
+                <div class="insight-text">
+                    "프리미엄은 있었지만,<br>누구에게 어떤 이유로 보내야 하는지가 설계되어 있지 않았다."
+                </div>
+            </div>
+            <p class="section-text">
+                따라서 필요한 것은 단순한 고급화가 아니었습니다.
+                프리미엄 산모실, 산모, 생일선물, 감사선물과 같은 구체적인 맥락 안에서
+                MIUM이 선택될 수 있도록 브랜드의 구매 명분과 선물 명분을 다시 설계하는 일이었습니다.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- STRATEGY -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Strategy</div>
+        <div class="section-content">
+            <h2 class="section-title">"프리미엄 식품"에서<br>"보내고 싶은 프리미엄 선물"로.</h2>
+            <p class="section-text">
+                CHAEUM은 MIUM을 단순한 프리미엄 미역 상품이 아니라
+                <strong>소중한 사람을 위한 선물형 브랜드</strong>로 재정의했습니다.
+                제품 기획, 포지셔닝, 커뮤니케이션을 하나의 구조로 연결해
+                고객이 선물할 이유를 자연스럽게 이해하도록 설계했습니다.
+            </p>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-num">01 · 포지셔닝</div>
+                    <div class="strategy-title">시장 해석의 전환</div>
+                    <p class="strategy-desc">
+                        일반 프리미엄 식품이 아니라 산모, 프리미엄 산모실, 생일, 감사의 순간에
+                        선택되는 프리미엄 미역국으로 브랜드의 쓰임을 재정의했습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">02 · 상품 구조</div>
+                    <div class="strategy-title">선물 시장에 맞는 상품 기획</div>
+                    <p class="strategy-desc">
+                        선물용 구매가 자연스럽게 일어날 수 있도록
+                        상품 개발과 구성 방향을 재설계했습니다.
+                        제품 자체가 하나의 배려와 의미로 읽히도록 구조를 잡았습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">03 · 커뮤니케이션</div>
+                    <div class="strategy-title">신뢰와 정성의 메시지 구조화</div>
+                    <p class="strategy-desc">
+                        믿을 수 있는 원료, 정성 어린 해석, 세심한 기획 의도를
+                        커뮤니케이션 언어로 정리했습니다.
+                        제품의 품질이 아닌 '보내는 이유'가 먼저 전달되도록 만들었습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">04 · 타겟</div>
+                    <div class="strategy-title">구매 맥락 중심 타겟 정렬</div>
+                    <p class="strategy-desc">
+                        프리미엄 산모실, 산모, 생일 및 감사 선물 수요층에 맞춰
+                        고객의 구매 상황과 감정선에 브랜드 메시지를 정렬했습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Results</div>
+        <div class="section-content">
+            <h2 class="section-title">상품이 아니라 의미를 설계하자,<br>선물 브랜드로 기억되기 시작했습니다.</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value">Reframed</div>
+                    <div class="result-label">제품 해석의 변화</div>
+                    <p class="result-desc">미역국을 단순 식품이 아닌, 새로운 방식으로 해석한 프리미엄 브랜드로 받아들여지기 시작했습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">Giftable</div>
+                    <div class="result-label">선물 명분 확보</div>
+                    <p class="result-desc">산모, 생일, 감사의 순간에 어울리는 제품으로 인식되며 선물용 구매 이유가 보다 명확해졌습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">Trusted</div>
+                    <div class="result-label">입소문과 신뢰</div>
+                    <p class="result-desc">소중한 분을 위한 센스 있는 선물이라는 평가와 함께, 믿을 수 있는 브랜드로 입소문이 나기 시작했습니다.</p>
+                </div>
+            </div>
+            <div class="insight-block" style="margin-top: 40px;">
+                <div class="insight-label">고객 반응</div>
+                <div class="insight-text">
+                    "미역국의 새로운 해석이라는 평과 함께,<br>
+                    소중한 분을 위한 센스 있는 선물로<br>
+                    입소문이 나고 있습니다."
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2 class="cta-title">좋은 상품인데<br>왜 선택받는지 약하다면.</h2>
+    <p class="cta-desc">
+        문제는 품질이 아니라 구매 명분의 구조일 수 있습니다.<br>
+        지금 AI 진단으로 당신 브랜드의 포지셔닝 결함을 먼저 확인해보세요.
+    </p>
+    <a href="./diagnosis-talk.html" class="btn-primary">AI 무료 진단 시작</a><br>
+    <a href="./portfolio.html" class="btn-secondary-link">다른 사례 보기 →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="./services.html">Self-OS</a></li>
+                <li><a href="./services.html">Architecture</a></li>
+                <li><a href="./services.html">Engineering</a></li>
+                <li><a href="./services.html">Management</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="./about.html">About CHAEUM</a></li>
+                <li><a href="./insights/index.html">Insights</a></li>
+                <li><a href="./portfolio.html">Case Studies</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <ul>
+                <li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li>
+                <li><a href="./diagnosis-talk.html">AI 진단 받기</a></li>
+                <li><a href="https://cal.com/chaeum">상담 예약</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Location</h3>
+            <ul>
+                <li>Seoul, Korea</li>
+                <li>Seongdong-gu</li>
+                <li>Republic of Korea</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">CHAEUM</span>
+        <span>&copy; 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</footer>
+
+<script>
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current = 0;
+
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    }
+
+    function goTo(index) {
+        current = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+        counter.textContent = `${current + 1} / ${totalSlides}`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+    setInterval(() => goTo(current + 1), 5000);
+</script>
+
+
+</body>
+</html>
