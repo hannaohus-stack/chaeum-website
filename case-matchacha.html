@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATCHACHA | CHAEUM Case Study</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+    :root {
+        --bg: #4B4545;
+        --white: #FFFDF7;
+        --sub-text: rgba(255, 253, 247, 0.55);
+        --border: rgba(255, 253, 247, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+        line-height: 1.6;
+        letter-spacing: -0.3px;
+    }
+
+    /* HEADER */
+    header {
+        position: fixed; top: 0; left: 0; right: 0;
+        background-color: rgba(75, 69, 69, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 24px 48px;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .header-wrapper {
+        max-width: 1400px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 14px; font-weight: 400; letter-spacing: 3px; text-decoration: none; color: var(--white); opacity: 0.9; }
+    .nav-menu { display: flex; align-items: center; gap: 40px; }
+    .nav-menu a { text-decoration: none; color: var(--white); font-size: 12px; letter-spacing: 1px; opacity: 0.65; transition: opacity 0.3s; text-transform: uppercase; }
+    .nav-menu a:hover { opacity: 1; }
+    .btn-consult { background-color: var(--white); color: var(--bg); border: none; padding: 10px 22px; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; font-family: inherit; transition: all 0.3s; }
+    .btn-consult:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+        margin-top: 80px;
+        padding: 20px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb-inner {
+        max-width: 1400px; margin: 0 auto;
+        font-size: 11px; letter-spacing: 1px; color: var(--sub-text); text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--sub-text); text-decoration: none; transition: color 0.3s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb span { margin: 0 10px; opacity: 0.4; }
+
+    /* HERO */
+    .hero {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;
+    }
+    .hero-tag {
+        font-size: 11px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title {
+        font-size: 56px; font-weight: 300; line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-subtitle {
+        font-size: 18px; color: var(--sub-text); line-height: 1.7; margin-bottom: 40px;
+    }
+    .hero-metrics {
+        display: flex; gap: 40px;
+    }
+    .metric-value {
+        font-size: 32px; font-weight: 300; letter-spacing: -1px; margin-bottom: 6px;
+    }
+    .metric-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); text-transform: uppercase;
+    }
+    .hero-overview {
+        border: 1px solid var(--border); padding: 0;
+    }
+    .hero-overview-item {
+        display: flex; justify-content: space-between; padding: 18px 28px;
+        border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .hero-overview-item:last-child { border-bottom: none; }
+    .overview-key { color: var(--sub-text); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+    .overview-val { color: var(--white); }
+
+    /* SLIDESHOW */
+    .slideshow-section { border-bottom: 1px solid var(--border); }
+    .slideshow-wrapper {
+        position: relative; overflow: hidden; background-color: #3a3535; height: 560px;
+    }
+    .slides {
+        display: flex; transition: transform 0.5s ease; height: 100%;
+    }
+    .slide {
+        min-width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-placeholder {
+        width: 100%; height: 100%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; color: var(--sub-text);
+    }
+    .slide-placeholder-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+    .slide-placeholder-num { font-size: 48px; font-weight: 200; opacity: 0.3; }
+    .slide-caption {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        padding: 20px 50px;
+        background: linear-gradient(transparent, rgba(75,69,69,0.85));
+        font-size: 13px; color: var(--sub-text);
+    }
+    .slideshow-controls {
+        padding: 24px 50px;
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid var(--border);
+    }
+    .slide-dots { display: flex; gap: 10px; }
+    .dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background-color: var(--sub-text); cursor: pointer; transition: background-color 0.3s;
+    }
+    .dot.active { background-color: var(--white); }
+    .slide-arrows { display: flex; gap: 12px; }
+    .arrow-btn {
+        background: none; border: 1px solid var(--border);
+        color: var(--white); width: 40px; height: 40px;
+        cursor: pointer; font-size: 14px; transition: all 0.3s;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .arrow-btn:hover { border-color: var(--white); }
+    .slide-counter { font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text); }
+
+    /* SECTIONS */
+    .section {
+        padding: 80px 50px;
+        border-bottom: 1px solid var(--border);
+    }
+    .section-inner {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 260px 1fr; gap: 80px;
+    }
+    .section-label {
+        font-size: 11px; letter-spacing: 2.5px; color: var(--sub-text);
+        text-transform: uppercase; padding-top: 6px;
+    }
+    .section-title {
+        font-size: 28px; font-weight: 300; margin-bottom: 24px; line-height: 1.4;
+    }
+    .section-text {
+        font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 24px;
+        max-width: 640px;
+    }
+    .section-text strong { color: var(--white); font-weight: 500; }
+
+    .insight-block {
+        border-left: 2px solid rgba(255,253,247,0.3);
+        padding: 24px 28px; margin: 32px 0; max-width: 560px;
+    }
+    .insight-label {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 10px;
+    }
+    .insight-text {
+        font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--white);
+    }
+
+    .strategy-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .strategy-card { padding: 36px; background-color: var(--bg); }
+    .strategy-num {
+        font-size: 10px; letter-spacing: 2px; color: var(--sub-text);
+        margin-bottom: 14px; text-transform: uppercase;
+    }
+    .strategy-title { font-size: 17px; font-weight: 400; margin-bottom: 12px; }
+    .strategy-desc { font-size: 13px; color: var(--sub-text); line-height: 1.9; }
+
+    .results-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+        background-color: var(--border); margin-top: 32px;
+    }
+    .result-card { padding: 40px 36px; background-color: var(--bg); }
+    .result-value {
+        font-size: 40px; font-weight: 200; letter-spacing: -1px; margin-bottom: 10px;
+    }
+    .result-label {
+        font-size: 11px; letter-spacing: 1.5px; color: var(--sub-text);
+        text-transform: uppercase; margin-bottom: 12px;
+    }
+    .result-desc { font-size: 13px; color: var(--sub-text); line-height: 1.8; }
+
+    /* CTA */
+    .cta-section { padding: 100px 50px; text-align: center; }
+    .cta-title { font-size: 40px; font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
+    .cta-desc { font-size: 14px; color: var(--sub-text); line-height: 2; margin-bottom: 48px; }
+    .btn-primary {
+        background-color: var(--white); color: var(--bg);
+        border: none; padding: 16px 48px; font-size: 12px; letter-spacing: 1px;
+        cursor: pointer; font-family: inherit; text-transform: uppercase;
+        transition: all 0.3s; text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background-color: transparent; color: var(--white); outline: 1px solid var(--white); }
+    .btn-secondary-link {
+        display: inline-block; margin-top: 16px;
+        font-size: 12px; color: var(--sub-text); text-decoration: none;
+        letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s;
+    }
+    .btn-secondary-link:hover { color: var(--white); }
+
+    /* FOOTER */
+    footer { padding: 60px 50px; border-top: 1px solid var(--border); }
+    .footer-content {
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px;
+    }
+    .footer-column h3 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; opacity: 0.5; }
+    .footer-column ul { list-style: none; }
+    .footer-column a { color: var(--sub-text); text-decoration: none; font-size: 13px; line-height: 2.2; display: block; transition: color 0.3s; }
+    .footer-column a:hover { color: var(--white); }
+    .footer-column li { color: var(--sub-text); font-size: 13px; line-height: 2.2; }
+    .footer-bottom {
+        max-width: 1400px; margin: 0 auto;
+        border-top: 1px solid var(--border); padding-top: 30px;
+        display: flex; justify-content: space-between; font-size: 11px; color: var(--sub-text);
+    }
+    .footer-logo { font-size: 13px; letter-spacing: 2px; color: var(--white); opacity: 0.7; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+        .strategy-grid, .results-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        header { padding: 20px 24px; }
+        .header-wrapper { flex-direction: column; gap: 16px; }
+        .nav-menu { flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .breadcrumb, .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; }
+        .hero-title { font-size: 38px; }
+        .section-inner { grid-template-columns: 1fr; gap: 32px; }
+        .slideshow-wrapper { height: 300px; }
+        .slideshow-controls { padding: 20px 24px; }
+        .hero-metrics { flex-wrap: wrap; gap: 24px; }
+        .footer-content { grid-template-columns: 1fr 1fr; }
+    }
+</style>
+
+
+</head>
+<body>
+
+
+<header>
+    <div class="header-wrapper">
+        <a href="./index.html" class="logo">CHAEUM</a>
+        <div class="nav-menu">
+            <a href="./services.html">Services</a>
+            <a href="./portfolio.html">Case Study</a>
+            <a href="./insights/index.html">Insight</a>
+            <a href="./about.html">About</a>
+            <button class="btn-consult" onclick="window.location.href='./diagnosis-talk.html'">AI 진단 받기</button>
+        </div>
+    </div>
+</header>
+
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="./portfolio.html">Case Study</a>
+        <span>→</span>
+        MATCHACHA
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <div class="hero-tag">웰니스 티 브랜드 · 티 세레모니 경험 설계</div>
+            <h1 class="hero-title">MATCHACHA</h1>
+            <p class="hero-subtitle">정적인 전통 차 문화를 넘어,<br>일상에서 향유하는 감각적 티 세레모니로 재해석했습니다.</p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">3개월</div>
+                    <div class="metric-label">프로젝트 기간</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">Tea Ceremony</div>
+                    <div class="metric-label">경험 구조 재설계</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">Reframed</div>
+                    <div class="metric-label">문화의 현대적 재해석</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-overview">
+                <div class="hero-overview-item">
+                    <span class="overview-key">Client</span>
+                    <span class="overview-val">MATCHACHA</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Category</span>
+                    <span class="overview-val">웰니스 티 브랜드 · 티 세레모니 경험 설계</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Scope</span>
+                    <span class="overview-val">브랜드 전략 · 티 바 경험 재설계</span>
+                </div>
+                <div class="hero-overview-item">
+                    <span class="overview-key">Period</span>
+                    <span class="overview-val">3개월</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDESHOW -->
+<div class="slideshow-section">
+    <div class="slideshow-wrapper">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <img src="./Image/matchacha-01.png" alt="MATCHACHA 브랜드"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">01</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">브랜드 — MATCHACHA의 모던 티 바 정체성</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/matchacha-02.png" alt="MATCHACHA 공간"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">02</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">공간 — 전통을 현대적 감각으로 해석한 티 바 경험</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/matchacha-03.png" alt="MATCHACHA 티 코스"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">03</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">경험 — 티 세레모니를 대중적인 티 코스로 재구성</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/matchacha-04.png" alt="MATCHACHA 제품"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">04</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">제품 — 경험이 제품 구매와 브랜드 팬덤으로 연결되는 구조</div>
+            </div>
+            <div class="slide">
+                <img src="./Image/matchacha-05.png" alt="MATCHACHA 결과"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="slide-placeholder" style="display:none;">
+                    <div class="slide-placeholder-num">05</div>
+                    <div class="slide-placeholder-label">사진을 업로드해주세요</div>
+                </div>
+                <div class="slide-caption">결과 — 인식 변화, 팬덤 형성, 재방문과 제품 펀딩으로 이어진 브랜드 전환</div>
+            </div>
+        </div>
+    </div>
+    <div class="slideshow-controls">
+        <div class="slide-dots" id="dots"></div>
+        <div class="slide-counter" id="counter">1 / 5</div>
+        <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn">←</button>
+            <button class="arrow-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Problem</div>
+        <div class="section-content">
+            <h2 class="section-title">전통 차 문화의 가치는 있었지만,<br>대중이 일상에서 즐길 이유는 약했습니다.</h2>
+            <p class="section-text">
+                한국의 전통 차 문화는 깊이와 미학을 가지고 있지만,
+                대중에게는 여전히 정적이고 어렵고, 특별한 순간에만 향유하는 문화로 남아 있었습니다.
+                좋은 차와 좋은 공간만으로는 브랜드가 반복적으로 선택되는 이유가 되기 어려웠습니다.
+            </p>
+            <div class="insight-block">
+                <div class="insight-label">CHAEUM이 정의한 구조적 결함</div>
+                <div class="insight-text">
+                    "문화는 있었지만,<br>현대 소비자가 반복적으로 찾을 경험 구조가 부족했다."
+                </div>
+            </div>
+            <p class="section-text">
+                그래서 필요한 것은 단순한 전통의 보존이 아니었습니다.
+                전통 차 문화를 현대적 미학으로 재해석하고,
+                사람들이 일상에서 자연스럽게 즐길 수 있는 감각적 티 세레모니의 구조를 새롭게 제시하는 일이었습니다.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- STRATEGY -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Strategy</div>
+        <div class="section-content">
+            <h2 class="section-title">"전통 차 문화"에서<br>"감각적 티 세레모니 브랜드"로.</h2>
+            <p class="section-text">
+                CHAEUM은 MATCHACHA를 단순한 티 바가 아니라
+                <strong>현대인이 일상에서 향유할 수 있는 웰니스 리추얼 브랜드</strong>로 재정의했습니다.
+                전통의 상징을 그대로 답습하는 대신, 문화의 본질을 경험 중심으로 번역해
+                더 넓은 대중이 진입할 수 있는 브랜드 구조를 설계했습니다.
+            </p>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-num">01 · 포지셔닝</div>
+                    <div class="strategy-title">전통 문화의 현대적 재해석</div>
+                    <p class="strategy-desc">
+                        전통 차 문화를 과거의 관습으로 두지 않고,
+                        현대 소비자가 감각적으로 받아들일 수 있는 모던 티 바 브랜드로 재포지셔닝했습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">02 · 구조</div>
+                    <div class="strategy-title">티 세레모니의 티 코스화</div>
+                    <p class="strategy-desc">
+                        추상적이거나 낯설게 느껴질 수 있는 세레모니 경험을
+                        보다 대중적이고 명확한 티 코스 형태로 재구성해 진입 장벽을 낮췄습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">03 · 경험/콘텐츠</div>
+                    <div class="strategy-title">리추얼로 설계된 브랜드 경험</div>
+                    <p class="strategy-desc">
+                        음료를 판매하는 공간이 아니라,
+                        머무르고 체험하고 기억하게 되는 리추얼형 브랜드 경험으로 설계해
+                        브랜드 인식이 깊어지도록 만들었습니다.
+                    </p>
+                </div>
+                <div class="strategy-card">
+                    <div class="strategy-num">04 · 타겟</div>
+                    <div class="strategy-title">감도 높은 대중을 위한 정렬</div>
+                    <p class="strategy-desc">
+                        새로운 웰니스 경험을 찾는 소비자와
+                        현대적 미학, 문화적 감도를 중시하는 고객층에 맞춰
+                        브랜드 메시지와 경험 방식을 정렬했습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Results</div>
+        <div class="section-content">
+            <h2 class="section-title">문화가 경험으로 번역되자,<br>브랜드는 더 넓은 대중에게 닿기 시작했습니다.</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-value">Shift</div>
+                    <div class="result-label">인식 변화</div>
+                    <p class="result-desc">정적인 전통 차 문화가 아니라, 현대적이고 감각적인 티 세레모니 브랜드로 인식되기 시작했습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">Fandom</div>
+                    <div class="result-label">팬덤과 재방문</div>
+                    <p class="result-desc">단순 방문을 넘어 다시 찾고 싶어지는 브랜드 경험이 형성되며, 팬덤과 재방문 흐름이 만들어졌습니다.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-value">Funding</div>
+                    <div class="result-label">제품 확장 가능성</div>
+                    <p class="result-desc">브랜드 경험이 제품에 대한 신뢰로 이어지며, 제품 펀딩과 확장 가능성까지 연결되는 기반이 마련됐습니다.</p>
+                </div>
+            </div>
+            <div class="insight-block" style="margin-top: 40px;">
+                <div class="insight-label">정성적 변화</div>
+                <div class="insight-text">
+                    "정적인 전통 차 문화가 아닌,<br>
+                    일상에서 향유하는 감각적 티 세레모니의 기준"으로<br>
+                    인식되기 시작했습니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2 class="cta-title">좋은 문화가 있는데<br>대중이 들어오지 않는다면.</h2>
+    <p class="cta-desc">
+        문제는 가치가 아니라 번역 방식일 수 있습니다.<br>
+        지금 AI 진단으로 당신 브랜드의 경험 구조를 먼저 점검해보세요.
+    </p>
+    <a href="./diagnosis-talk.html" class="btn-primary">AI 무료 진단 시작</a><br>
+    <a href="./portfolio.html" class="btn-secondary-link">다른 사례 보기 →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="./services.html">Self-OS</a></li>
+                <li><a href="./services.html">Architecture</a></li>
+                <li><a href="./services.html">Engineering</a></li>
+                <li><a href="./services.html">Management</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li><a href="./about.html">About CHAEUM</a></li>
+                <li><a href="./insights/index.html">Insights</a></li>
+                <li><a href="./portfolio.html">Case Studies</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <ul>
+                <li><a href="mailto:contact@chaeum.cloud">contact@chaeum.cloud</a></li>
+                <li><a href="./diagnosis-talk.html">AI 진단 받기</a></li>
+                <li><a href="https://cal.com/chaeum">상담 예약</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Location</h3>
+            <ul>
+                <li>Seoul, Korea</li>
+                <li>Seongdong-gu</li>
+                <li>Republic of Korea</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-logo">CHAEUM</span>
+        <span>&copy; 2026 CHAEUM. All rights reserved.</span>
+    </div>
+</footer>
+
+<script>
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    const dotsContainer = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current = 0;
+
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    }
+
+    function goTo(index) {
+        current = (index + totalSlides) % totalSlides;
+        slides.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+        counter.textContent = `${current + 1} / ${totalSlides}`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+    setInterval(() => goTo(current + 1), 5000);
+</script>
+
+
+</body>
+</html>
