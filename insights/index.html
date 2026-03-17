@@ -206,8 +206,14 @@
 <script>
     async function loadPosts() {
         const container = document.getElementById('blogFeed');
+
         try {
-            const response = await fetch('/insights/data/posts.json');
+            const version = Date.now();
+
+            const response = await fetch(`/insights/data/posts.json?v=${version}`, {
+                cache: 'no-store'
+            });
+
             const posts = await response.json();
 
             if (!Array.isArray(posts) || posts.length === 0) {
@@ -219,11 +225,14 @@
                 return;
             }
 
-            const featured = posts[0];
-            const others = posts.slice(1);
+            // featured 처리 (없으면 첫 번째)
+            const featured = posts.find(post => post.featured) || posts[0];
+            const others = posts.filter(post => post.slug !== featured.slug);
 
             const featuredImageHtml = featured.thumbnail
-                ? `<div class="featured-image"><img src="${featured.thumbnail}" alt="${escapeHtml(featured.title)}" onerror="this.style.display='none'"></div>`
+                ? `<div class="featured-image">
+                        <img src="${featured.thumbnail}?v=${version}" alt="${escapeHtml(featured.title)}" onerror="this.style.display='none'">
+                   </div>`
                 : '';
 
             container.innerHTML = `
@@ -247,8 +256,13 @@
                     <div class="blog-grid">
                         ${others.map(post => {
                             const imgHtml = post.thumbnail
-                                ? `<div class="blog-card-image"><img src="${post.thumbnail}" alt="${escapeHtml(post.title)}" onerror="this.style.display='none'"></div>`
-                                : `<div class="blog-card-image"><div class="blog-card-image-placeholder">No Image</div></div>`;
+                                ? `<div class="blog-card-image">
+                                        <img src="${post.thumbnail}?v=${version}" alt="${escapeHtml(post.title)}" onerror="this.style.display='none'">
+                                   </div>`
+                                : `<div class="blog-card-image">
+                                        <div class="blog-card-image-placeholder">No Image</div>
+                                   </div>`;
+
                             return `
                             <a href="${post.url}" class="card-link">
                                 <article class="blog-card">
@@ -289,6 +303,5 @@
 
     loadPosts();
 </script>
-
 </body>
 </html>
