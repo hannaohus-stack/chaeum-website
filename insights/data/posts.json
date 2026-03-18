@@ -1,5 +1,15 @@
 [
   {
+    "slug": "brand-structure-vs-ad-performance",
+    "url": "/insights/brand-structure-vs-ad-performance.html",
+    "title": "광고를 끄는 순간, 당신의 브랜드는 살아남을 수 있는가",
+    "date": "2026. 03. 18",
+    "category": "Positioning",
+    "excerpt": "광고는 고객을 데려오는 힘이 있지만, 고객을 머물게 하는 것은 브랜드의 구조입니다. 알고리즘이 만드는 매출의 함정에서 벗어나, 광고 없이도 작동하는 '인식의 자산'을 설계하는 법.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773796130023-IMG-1271.jpeg",
+    "featured": false
+  },
+  {
     "slug": "brand-structure-vs-visual-branding",
     "url": "/insights/brand-structure-vs-visual-branding.html",
     "title": "로고를 바꿨는데 왜 매출은 제자리걸음일까",
@@ -40,16 +50,6 @@
     "featured": false
   },
   {
-    "slug": "brand-is-completed",
-    "url": "/insights/brand-is-completed.html",
-    "title": "브랜드는 어디에서 완성되는가: 기업이 아닌 고객의 머릿속에서",
-    "date": "2026. 03. 12",
-    "category": "Positioning",
-    "excerpt": "브랜드는 기업이 설계하지만, 완성하는 것은 고객이다. 메시지와 경험이라는 재료가 고객의 해석을 통해 비로소 하나의 평판으로 굳어진다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773305488879-IMG-1060.jpeg",
-    "featured": false
-  },
-  {
     "slug": "nonfiction",
     "url": "/insights/nonfiction.html",
     "title": "향기로 설계된 사색의 순간, 논픽션이 만든 조용한 사치",
@@ -67,6 +67,16 @@
     "category": "Positioning",
     "excerpt": "로고는 브랜드를 상징하는 유용한 도구일 뿐, 실제 브랜드는 고객의 머리와 가슴 속에 남겨진 ‘직관적인 감정(Gut feeling)’의 결과물입니다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304821133-IMG-1029.jpeg",
+    "featured": false
+  },
+  {
+    "slug": "brand-is-completed",
+    "url": "/insights/brand-is-completed.html",
+    "title": "브랜드는 어디에서 완성되는가: 기업이 아닌 고객의 머릿속에서",
+    "date": "2026. 03. 12",
+    "category": "Positioning",
+    "excerpt": "브랜드는 기업이 설계하지만, 완성하는 것은 고객이다. 메시지와 경험이라는 재료가 고객의 해석을 통해 비로소 하나의 평판으로 굳어진다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773305488879-IMG-1060.jpeg",
     "featured": false
   }
 ]
