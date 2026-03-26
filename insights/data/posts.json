@@ -1,5 +1,15 @@
 [
   {
+    "slug": "seed-probiotics-pricing-authority",
+    "url": "/insights/seed-probiotics-pricing-authority.html",
+    "title": "왜 시드(Seed.)는 2배 더 비싼데도 ‘문의 폭주’를 기록했나",
+    "date": "2026. 03. 26",
+    "category": "Positioning",
+    "excerpt": "가격을 올렸는데 문의가 늘어나는 현상, 이 역설의 중심에는 브랜드의 ‘권위(Authority)’가 있습니다. 미국의 프리미엄 유산균 시드(Seed.)가 설계한 인식의 아키텍처.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774533050671-Seed-DS-01-Daily-Synbiotic-A-new-standard-in-probiotics-.jpeg",
+    "featured": false
+  },
+  {
     "slug": "roas-paradox-performance-vs-brand-structure",
     "url": "/insights/roas-paradox-performance-vs-brand-structure.html",
     "title": "높은 광고 효율이 당신의 브랜드를 파괴하고 있지는 않은가",
@@ -80,13 +90,13 @@
     "featured": false
   },
   {
-    "slug": "what-is-branding",
-    "url": "/insights/what-is-branding.html",
-    "title": "로고라는 환상을 넘어, 고객의 심장에 닿는 브랜딩의 본질",
+    "slug": "brand-is-completed",
+    "url": "/insights/brand-is-completed.html",
+    "title": "브랜드는 어디에서 완성되는가: 기업이 아닌 고객의 머릿속에서",
     "date": "2026. 03. 12",
     "category": "Positioning",
-    "excerpt": "로고는 브랜드를 상징하는 유용한 도구일 뿐, 실제 브랜드는 고객의 머리와 가슴 속에 남겨진 ‘직관적인 감정(Gut feeling)’의 결과물입니다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304821133-IMG-1029.jpeg",
+    "excerpt": "브랜드는 기업이 설계하지만, 완성하는 것은 고객이다. 메시지와 경험이라는 재료가 고객의 해석을 통해 비로소 하나의 평판으로 굳어진다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773305488879-IMG-1060.jpeg",
     "featured": false
   },
   {
