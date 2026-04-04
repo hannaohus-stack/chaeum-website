@@ -1,5 +1,25 @@
 [
   {
+    "slug": "visual-vs-business-structure",
+    "url": "/insights/visual-vs-business-structure.html",
+    "title": "감도 높은 비주얼이 ‘수익’을 책임지지 않는 이유",
+    "date": "2026. 04. 03",
+    "category": "Strategy",
+    "excerpt": "로고와 사진, 웹사이트 감도에 막대한 자본을 투자해도 수익이 남지 않는다면? 브랜딩의 함정에 빠진 수많은 기업이 간과하는 '인식 설계'의 본질을 분석합니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775280483902-Frame-41.jpg",
+    "featured": false
+  },
+  {
+    "slug": "seed-probiotics-pricing-authority",
+    "url": "/insights/seed-probiotics-pricing-authority.html",
+    "title": "왜 시드(Seed.)는 2배 더 비싼데도 ‘문의 폭주’를 기록했나",
+    "date": "2026. 03. 26",
+    "category": "Positioning",
+    "excerpt": "가격을 올렸는데 문의가 늘어나는 현상, 이 역설의 중심에는 브랜드의 ‘권위(Authority)’가 있습니다. 미국의 프리미엄 유산균 시드(Seed.)가 설계한 인식의 아키텍처.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774533050671-Seed-DS-01-Daily-Synbiotic-A-new-standard-in-probiotics-.jpeg",
+    "featured": false
+  },
+  {
     "slug": "roas-paradox-performance-vs-brand-structure",
     "url": "/insights/roas-paradox-performance-vs-brand-structure.html",
     "title": "높은 광고 효율이 당신의 브랜드를 파괴하고 있지는 않은가",
@@ -17,16 +37,6 @@
     "category": "Positioning",
     "excerpt": "단종 위기의 텀블러가 1조 원 매출의 아이콘이 된 비결은 로고 변경이 아니었습니다. 고객의 머릿속에서 ‘투박한 장비’를 ‘세련된 생존 템’으로 바꾼 인식 설계의 승리였습니다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774493601155-stanley.jpg",
-    "featured": false
-  },
-  {
-    "slug": "seed-probiotics-pricing-authority",
-    "url": "/insights/seed-probiotics-pricing-authority.html",
-    "title": "왜 시드(Seed.)는 2배 더 비싼데도 ‘문의 폭주’를 기록했나",
-    "date": "2026. 03. 26",
-    "category": "Positioning",
-    "excerpt": "가격을 올렸는데 문의가 늘어나는 현상, 이 역설의 중심에는 브랜드의 ‘권위(Authority)’가 있습니다. 미국의 프리미엄 유산균 시드(Seed.)가 설계한 인식의 아키텍처.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774533050671-Seed-DS-01-Daily-Synbiotic-A-new-standard-in-probiotics-.jpeg",
     "featured": false
   },
   {
