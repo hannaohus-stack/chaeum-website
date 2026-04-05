@@ -1,5 +1,15 @@
 [
   {
+    "slug": "clean-as-a-habit",
+    "url": "/insights/clean-as-a-habit.html",
+    "title": "Clean as a Habit  쿼시가 청소 용품을 ‘인테리어 오브제’로 격상시킨 비결",
+    "date": "2026. 04. 05",
+    "category": "Strategy",
+    "excerpt": "숨기고 싶은 청소 도구에서 보여주고 싶은 오브제로. 쿼시(Quash)는 어떻게 지루한 노동을 세련된 습관으로 치환했을까요? '가심비'를 공략한 프리미엄 매스티지 전략을 분석합니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775366245353-Screenshot-2026-04-04-at-3.19.46-PM.png",
+    "featured": false
+  },
+  {
     "slug": "onfiction-vs-aesop",
     "url": "/insights/onfiction-vs-aesop.html",
     "title": "Aesop이 장악한 프리미엄 시장에서 논픽션이 점유율을 가져온 비결",
@@ -30,16 +40,6 @@
     "featured": false
   },
   {
-    "slug": "roas-paradox-performance-vs-brand-structure",
-    "url": "/insights/roas-paradox-performance-vs-brand-structure.html",
-    "title": "높은 광고 효율이 당신의 브랜드를 파괴하고 있지는 않은가",
-    "date": "2026. 03. 26",
-    "category": "Positioning",
-    "excerpt": "ROAS 5.0의 숫자 뒤에 숨겨진 불편한 진실. 광고는 판매를 만들지만 브랜드의 구조를 만들지는 않습니다. 광고를 끄는 순간 멈추는 매출이 아닌, 고객의 신뢰로 지탱되는 진짜 자산을 설계하는 법.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774509961491----1-.jpeg",
-    "featured": false
-  },
-  {
     "slug": "stanley-repositioning-case-study",
     "url": "/insights/stanley-repositioning-case-study.html",
     "title": "110년 된 스탠리를 심폐소생시킨 ‘인식의 재설계’",
@@ -47,6 +47,16 @@
     "category": "Positioning",
     "excerpt": "단종 위기의 텀블러가 1조 원 매출의 아이콘이 된 비결은 로고 변경이 아니었습니다. 고객의 머릿속에서 ‘투박한 장비’를 ‘세련된 생존 템’으로 바꾼 인식 설계의 승리였습니다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774493601155-stanley.jpg",
+    "featured": false
+  },
+  {
+    "slug": "roas-paradox-performance-vs-brand-structure",
+    "url": "/insights/roas-paradox-performance-vs-brand-structure.html",
+    "title": "높은 광고 효율이 당신의 브랜드를 파괴하고 있지는 않은가",
+    "date": "2026. 03. 26",
+    "category": "Positioning",
+    "excerpt": "ROAS 5.0의 숫자 뒤에 숨겨진 불편한 진실. 광고는 판매를 만들지만 브랜드의 구조를 만들지는 않습니다. 광고를 끄는 순간 멈추는 매출이 아닌, 고객의 신뢰로 지탱되는 진짜 자산을 설계하는 법.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774509961491----1-.jpeg",
     "featured": false
   },
   {
@@ -80,16 +90,6 @@
     "featured": false
   },
   {
-    "slug": "brand-ownership-customer",
-    "url": "/insights/brand-ownership-customer.html",
-    "title": "브랜딩은 고객이 완성한다.",
-    "date": "2026. 03. 13",
-    "category": "Positioning",
-    "excerpt": "브랜드는 기업의 회의실이 아닌 고객의 무의식에서 완성됩니다. 마티 뉴마이어가 정의한 ‘직관적인 감정’을 통해 브랜딩의 주권을 분석합니다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773387351135-IMG-1077.jpeg",
-    "featured": false
-  },
-  {
     "slug": "branding-is-not-a-logo",
     "url": "/insights/branding-is-not-a-logo.html",
     "title": "당신이 알고 있는 브랜딩은 틀렸다",
@@ -100,13 +100,13 @@
     "featured": false
   },
   {
-    "slug": "recto-brand-positioning-strategy",
-    "url": "/insights/recto-brand-positioning-strategy.html",
-    "title": "로고가 사라진 자리, 실루엣으로 증명하는 브랜드의 격(格), RECTO",
-    "date": "2026. 03. 12",
+    "slug": "brand-ownership-customer",
+    "url": "/insights/brand-ownership-customer.html",
+    "title": "브랜딩은 고객이 완성한다.",
+    "date": "2026. 03. 13",
     "category": "Positioning",
-    "excerpt": "한남동의 정제된 콘크리트 너머, 로고 없는 실루엣만으로 존재감을 증명하는 렉토(RECTO)의 비즈니스 아키텍처.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773284405764-IMG-1043.jpeg",
+    "excerpt": "브랜드는 기업의 회의실이 아닌 고객의 무의식에서 완성됩니다. 마티 뉴마이어가 정의한 ‘직관적인 감정’을 통해 브랜딩의 주권을 분석합니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773387351135-IMG-1077.jpeg",
     "featured": false
   },
   {
@@ -127,6 +127,16 @@
     "category": "Case Study",
     "excerpt": "화려한 장식 대신 향과 여백으로 감각을 설계한 브랜드, 논픽션은 일상 속 사적인 의식을 통해 새로운 사치를 제안한다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304414545-IMG-1057.png",
+    "featured": false
+  },
+  {
+    "slug": "recto-brand-positioning-strategy",
+    "url": "/insights/recto-brand-positioning-strategy.html",
+    "title": "로고가 사라진 자리, 실루엣으로 증명하는 브랜드의 격(格), RECTO",
+    "date": "2026. 03. 12",
+    "category": "Positioning",
+    "excerpt": "한남동의 정제된 콘크리트 너머, 로고 없는 실루엣만으로 존재감을 증명하는 렉토(RECTO)의 비즈니스 아키텍처.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773284405764-IMG-1043.jpeg",
     "featured": false
   }
 ]
