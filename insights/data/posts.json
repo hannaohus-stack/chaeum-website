@@ -1,5 +1,15 @@
 [
   {
+    "slug": "rational-price-increase-strategy",
+    "url": "/insights/rational-price-increase-strategy.html",
+    "title": "최저가 전쟁에서 벗어나는 합리적 가격 인상",
+    "date": "2026. 04. 06",
+    "category": "Funnel",
+    "excerpt": " 가격을 낮출수록 브랜드의 체력은 고갈됩니다. 고객이 기꺼이 지갑을 열게 만드는 '가치 스택'과 '인식 설계'를 통해, 최저가 경쟁이 없는 독보적인 좌표를 설정하는 법.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775477066870-0d6b16168f3d0541a0f22e982cbbd24a.jpg",
+    "featured": false
+  },
+  {
     "slug": "clean-as-a-habit",
     "url": "/insights/clean-as-a-habit.html",
     "title": "Clean as a Habit  쿼시가 청소 용품을 ‘인테리어 오브제’로 격상시킨 비결",
@@ -90,16 +100,6 @@
     "featured": false
   },
   {
-    "slug": "branding-is-not-a-logo",
-    "url": "/insights/branding-is-not-a-logo.html",
-    "title": "당신이 알고 있는 브랜딩은 틀렸다",
-    "date": "2026. 03. 13",
-    "category": "Positioning",
-    "excerpt": "로고와 타이포그래피는 브랜딩을 위한 유용한 도구일 뿐입니다. 비즈니스의 운명을 결정짓는 브랜딩의 진짜 실체는 고객의 무의식 속에 남겨진 ‘직관적인 감정’에 있습니다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773386552258-IMG-1076.jpeg",
-    "featured": false
-  },
-  {
     "slug": "brand-ownership-customer",
     "url": "/insights/brand-ownership-customer.html",
     "title": "브랜딩은 고객이 완성한다.",
@@ -107,6 +107,16 @@
     "category": "Positioning",
     "excerpt": "브랜드는 기업의 회의실이 아닌 고객의 무의식에서 완성됩니다. 마티 뉴마이어가 정의한 ‘직관적인 감정’을 통해 브랜딩의 주권을 분석합니다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773387351135-IMG-1077.jpeg",
+    "featured": false
+  },
+  {
+    "slug": "branding-is-not-a-logo",
+    "url": "/insights/branding-is-not-a-logo.html",
+    "title": "당신이 알고 있는 브랜딩은 틀렸다",
+    "date": "2026. 03. 13",
+    "category": "Positioning",
+    "excerpt": "로고와 타이포그래피는 브랜딩을 위한 유용한 도구일 뿐입니다. 비즈니스의 운명을 결정짓는 브랜딩의 진짜 실체는 고객의 무의식 속에 남겨진 ‘직관적인 감정’에 있습니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773386552258-IMG-1076.jpeg",
     "featured": false
   },
   {
