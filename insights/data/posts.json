@@ -30,16 +30,6 @@
     "featured": false
   },
   {
-    "slug": "organic-inflow-positioning-strategy",
-    "url": "/insights/organic-inflow-positioning-strategy.html",
-    "title": "광고비는 줄이고 유입은 늘리는 본질적인 포지셔닝 노하우",
-    "date": "2026. 04. 03",
-    "category": "Strategy",
-    "excerpt": "퍼포먼스 마케팅의 시대가 저물고 있습니다. 광고비라는 연료 없이도 고객을 끌어당기는 강력한 자석, '본질적 포지셔닝'을 설계하여 유입의 질과 전환율을 동시에 잡는 법.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775536512097-2bef0cf4e659dfefd3994a376ae9bea2.jpg",
-    "featured": false
-  },
-  {
     "slug": "visual-vs-business-structure",
     "url": "/insights/visual-vs-business-structure.html",
     "title": "감도 높은 비주얼이 ‘수익’을 책임지지 않는 이유",
@@ -50,6 +40,16 @@
     "featured": false
   },
   {
+    "slug": "organic-inflow-positioning-strategy",
+    "url": "/insights/organic-inflow-positioning-strategy.html",
+    "title": "광고비는 줄이고 유입은 늘리는 본질적인 포지셔닝 노하우",
+    "date": "2026. 04. 03",
+    "category": "Strategy",
+    "excerpt": "퍼포먼스 마케팅의 시대가 저물고 있습니다. 광고비라는 연료 없이도 고객을 끌어당기는 강력한 자석, '본질적 포지셔닝'을 설계하여 유입의 질과 전환율을 동시에 잡는 법.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775536512097-2bef0cf4e659dfefd3994a376ae9bea2.jpg",
+    "featured": false
+  },
+  {
     "slug": "lightweight-ai-automation-system",
     "url": "/insights/lightweight-ai-automation-system.html",
     "title": "1인 브랜드처럼 가볍게 AI 기반 운영 자동화 구축",
@@ -57,6 +57,16 @@
     "category": "Strategy",
     "excerpt": "조직의 규모가 성장을 가로막지 않도록. AI를 활용해 고객의 인식을 설계하고, 가치 스택을 쌓아 스스로 굴러가는 가벼운 운영 시스템을 구축하는 법.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775535935776-924a4b343f4d59219c1e09de1e6eb654.jpg",
+    "featured": false
+  },
+  {
+    "slug": "crm-fandom-build-strategy",
+    "url": "/insights/crm-fandom-build-strategy.html",
+    "title": "팔리는 제품을 넘어 팬덤이 쌓이는 CRM 설계법",
+    "date": "2026. 03. 30",
+    "category": "Strategy",
+    "excerpt": "결제 완료 페이지는 퍼널의 끝이 아닌 시작입니다. 재구매 할인 쿠폰을 넘어, 고객의 무의식 속에 브랜드의 철학을 이식하고 강력한 팬덤을 구축하는 관계 설계법을 분석합니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775536754658-74004c86adbe4a006dcd934f380d26e7.jpg",
     "featured": false
   },
   {
