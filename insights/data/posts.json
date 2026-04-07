@@ -40,6 +40,16 @@
     "featured": false
   },
   {
+    "slug": "lightweight-ai-automation-system",
+    "url": "/insights/lightweight-ai-automation-system.html",
+    "title": "1인 브랜드처럼 가볍게 AI 기반 운영 자동화 구축",
+    "date": "2026. 04. 01",
+    "category": "Strategy",
+    "excerpt": "조직의 규모가 성장을 가로막지 않도록. AI를 활용해 고객의 인식을 설계하고, 가치 스택을 쌓아 스스로 굴러가는 가벼운 운영 시스템을 구축하는 법.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1775535935776-924a4b343f4d59219c1e09de1e6eb654.jpg",
+    "featured": false
+  },
+  {
     "slug": "seed-probiotics-pricing-authority",
     "url": "/insights/seed-probiotics-pricing-authority.html",
     "title": "왜 시드(Seed.)는 2배 더 비싼데도 ‘문의 폭주’를 기록했나",
@@ -50,16 +60,6 @@
     "featured": false
   },
   {
-    "slug": "stanley-repositioning-case-study",
-    "url": "/insights/stanley-repositioning-case-study.html",
-    "title": "110년 된 스탠리를 심폐소생시킨 ‘인식의 재설계’",
-    "date": "2026. 03. 26",
-    "category": "Positioning",
-    "excerpt": "단종 위기의 텀블러가 1조 원 매출의 아이콘이 된 비결은 로고 변경이 아니었습니다. 고객의 머릿속에서 ‘투박한 장비’를 ‘세련된 생존 템’으로 바꾼 인식 설계의 승리였습니다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774493601155-stanley.jpg",
-    "featured": false
-  },
-  {
     "slug": "roas-paradox-performance-vs-brand-structure",
     "url": "/insights/roas-paradox-performance-vs-brand-structure.html",
     "title": "높은 광고 효율이 당신의 브랜드를 파괴하고 있지는 않은가",
@@ -67,6 +67,16 @@
     "category": "Positioning",
     "excerpt": "ROAS 5.0의 숫자 뒤에 숨겨진 불편한 진실. 광고는 판매를 만들지만 브랜드의 구조를 만들지는 않습니다. 광고를 끄는 순간 멈추는 매출이 아닌, 고객의 신뢰로 지탱되는 진짜 자산을 설계하는 법.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774509961491----1-.jpeg",
+    "featured": false
+  },
+  {
+    "slug": "stanley-repositioning-case-study",
+    "url": "/insights/stanley-repositioning-case-study.html",
+    "title": "110년 된 스탠리를 심폐소생시킨 ‘인식의 재설계’",
+    "date": "2026. 03. 26",
+    "category": "Positioning",
+    "excerpt": "단종 위기의 텀블러가 1조 원 매출의 아이콘이 된 비결은 로고 변경이 아니었습니다. 고객의 머릿속에서 ‘투박한 장비’를 ‘세련된 생존 템’으로 바꾼 인식 설계의 승리였습니다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1774493601155-stanley.jpg",
     "featured": false
   },
   {
@@ -120,16 +130,6 @@
     "featured": false
   },
   {
-    "slug": "brand-is-completed",
-    "url": "/insights/brand-is-completed.html",
-    "title": "브랜드는 어디에서 완성되는가: 기업이 아닌 고객의 머릿속에서",
-    "date": "2026. 03. 12",
-    "category": "Positioning",
-    "excerpt": "브랜드는 기업이 설계하지만, 완성하는 것은 고객이다. 메시지와 경험이라는 재료가 고객의 해석을 통해 비로소 하나의 평판으로 굳어진다.",
-    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773305488879-IMG-1060.jpeg",
-    "featured": false
-  },
-  {
     "slug": "nonfiction",
     "url": "/insights/nonfiction.html",
     "title": "향기로 설계된 사색의 순간, 논픽션이 만든 조용한 사치",
@@ -137,6 +137,16 @@
     "category": "Case Study",
     "excerpt": "화려한 장식 대신 향과 여백으로 감각을 설계한 브랜드, 논픽션은 일상 속 사적인 의식을 통해 새로운 사치를 제안한다.",
     "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773304414545-IMG-1057.png",
+    "featured": false
+  },
+  {
+    "slug": "brand-is-completed",
+    "url": "/insights/brand-is-completed.html",
+    "title": "브랜드는 어디에서 완성되는가: 기업이 아닌 고객의 머릿속에서",
+    "date": "2026. 03. 12",
+    "category": "Positioning",
+    "excerpt": "브랜드는 기업이 설계하지만, 완성하는 것은 고객이다. 메시지와 경험이라는 재료가 고객의 해석을 통해 비로소 하나의 평판으로 굳어진다.",
+    "thumbnail": "https://ioosdkkienxatupowgxi.supabase.co/storage/v1/object/public/blog-images/blog-images/1773305488879-IMG-1060.jpeg",
     "featured": false
   },
   {
