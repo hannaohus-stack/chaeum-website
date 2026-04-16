@@ -92,9 +92,10 @@ nav.scrolled .nav-links a:hover { color: var(--ink); }
   background-position: center;
 }
 .hero-bg::before {
-  background:
-    radial-gradient(ellipse 60% 50% at 65% 20%, rgba(180,145,100,0.08) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 60% at 10% 85%, rgba(15,8,4,0.18) 0%, transparent 50%);
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: none;
 }
 .hero-bg::after {
   content: ''; position: absolute; inset: 0; opacity: 0.03;
