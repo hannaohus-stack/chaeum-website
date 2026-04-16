@@ -92,10 +92,9 @@ nav.scrolled .nav-links a:hover { color: var(--ink); }
   background-position: center;
 }
 .hero-bg::before {
-  content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 65% 20%, rgba(180,145,100,0.22) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 60% at 10% 85%, rgba(15,8,4,0.45) 0%, transparent 50%);
+    radial-gradient(ellipse 60% 50% at 65% 20%, rgba(180,145,100,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 10% 85%, rgba(15,8,4,0.18) 0%, transparent 50%);
 }
 .hero-bg::after {
   content: ''; position: absolute; inset: 0; opacity: 0.03;
@@ -103,9 +102,7 @@ nav.scrolled .nav-links a:hover { color: var(--ink); }
   mix-blend-mode: overlay;
 }
 .hero-vignette {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
-  background: linear-gradient(to top, rgba(20,12,8,0.55) 0%, transparent 100%);
-  pointer-events: none;
+  display: none;
 }
 .hero-content {
   position: relative; z-index: 2;
