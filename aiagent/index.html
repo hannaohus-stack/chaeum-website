@@ -273,16 +273,13 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
    INSIGHTS PAGE
 ══════════════════════════════ */
 .insights-page { margin-top: 64px; min-height: 100vh; }
-.insights-hero { padding: 96px 96px 72px; border-bottom: 1px solid var(--border-strong); }
-.insights-eyebrow {
-  display: block; font-family: 'Noto Sans KR', sans-serif; font-size: 10px;
-  letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm-grey); margin-bottom: 16px;
-}
+.insights-hero { padding: 96px 96px 72px; }
+.insights-eyebrow { display: none; }
 .insights-headline {
   font-family: 'Baskervville', serif; font-size: clamp(52px, 7vw, 84px);
-  font-weight: 400; line-height: 0.92; color: var(--ink); letter-spacing: -0.02em;
+  font-weight: 400; line-height: 0.92; color: var(--charcoal); letter-spacing: -0.02em;
 }
-.insights-headline span { display: block; color: var(--charcoal-light); }
+.insights-headline span { display: block; color: var(--charcoal); }
 
 /* Category filter */
 .cat-filter {
@@ -334,13 +331,10 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
 .about-intro {
   padding: 140px 96px 140px; border-bottom: 1px solid var(--border);
 }
-.about-eyebrow {
-  display: block; font-family: 'Noto Sans KR', sans-serif; font-size: 10px;
-  letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm-grey); margin-bottom: 48px;
-}
+.about-eyebrow { display: none; }
 .about-kr-text {
   font-family: 'Noto Sans KR', sans-serif; font-weight: 400;
-  font-size: clamp(20px, 2.4vw, 30px); line-height: 2.1;
+  font-size: clamp(20px, 2.4vw, 30px); line-height: 1.75;
   color: var(--ink); margin-bottom: 64px; letter-spacing: -0.01em;
 }
 .about-en-text {
@@ -365,16 +359,15 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
 
 /* Team */
 .about-team { padding: 100px 96px; border-bottom: 1px solid var(--border); }
-.team-intro {
-  font-family: 'Noto Sans KR', sans-serif; font-weight: 300;
-  font-size: 15px; line-height: 1.75; color: var(--charcoal-light);
-  max-width: 480px; margin-bottom: 64px;
+.team-title {
+  font-family: 'Baskervville', serif; font-size: 40px; font-weight: 400;
+  color: var(--charcoal); margin-bottom: 64px; letter-spacing: -0.01em;
 }
-.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 32px; }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 24px; }
 .team-member {}
 .team-img {
-  width: 100%; aspect-ratio: 3/4;
-  background: var(--off-white-dark); margin-bottom: 20px;
+  width: 100%; aspect-ratio: 4/3;
+  background: var(--off-white-dark); margin-bottom: 16px;
   position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
 }
 .team-img-label {
@@ -382,7 +375,7 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-grey);
 }
 .team-name {
-  font-family: 'Baskervville', serif; font-size: 19px; font-weight: 400;
+  font-family: 'Baskervville', serif; font-size: 18px; font-weight: 400;
   color: var(--ink); margin-bottom: 4px;
 }
 .team-role {
@@ -470,50 +463,6 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
     </div>
   </section>
 
-  <section class="section-agents">
-    <div class="agents-header">
-      <div>
-        <p class="agents-eyebrow">System Architecture</p>
-        <h2 class="agents-title">Four Agents. One System.</h2>
-      </div>
-      <div class="agents-count">04</div>
-    </div>
-    <div class="agents-grid">
-      <div class="agent-card">
-        <span class="agent-num">01</span>
-        <h3 class="agent-name">Noa</h3>
-        <p class="agent-role">Brand System Architect</p>
-        <div class="agent-divider"></div>
-        <p class="agent-desc">브랜드 전체 구조를 설계하고 AI Brand OS를 구축한다. 모든 결과물의 일관성을 유지하는 기준점.</p>
-        <p class="agent-def">브랜드를 운영하는 "AI 시스템"을 만든다.</p>
-      </div>
-      <div class="agent-card">
-        <span class="agent-num">02</span>
-        <h3 class="agent-name">Leo</h3>
-        <p class="agent-role">Sales Flow Architect</p>
-        <div class="agent-divider"></div>
-        <p class="agent-desc">광고에서 랜딩, CTA까지 전환의 흐름을 설계한다. 퍼널 최적화와 구매 전환 요소를 구조화.</p>
-        <p class="agent-def">고객이 "사게 만드는 구조"를 만든다.</p>
-      </div>
-      <div class="agent-card">
-        <span class="agent-num">03</span>
-        <h3 class="agent-name">Rhea</h3>
-        <p class="agent-role">Visual System Director</p>
-        <div class="agent-divider"></div>
-        <p class="agent-desc">브랜드 비주얼 시스템을 설계하고 일관된 이미지 구조를 구축한다. 신뢰는 보이는 것에서 시작된다.</p>
-        <p class="agent-def">브랜드가 "신뢰되게 보이도록" 만든다.</p>
-      </div>
-      <div class="agent-card">
-        <span class="agent-num">04</span>
-        <h3 class="agent-name">Mina</h3>
-        <p class="agent-role">Retention System Designer</p>
-        <div class="agent-divider"></div>
-        <p class="agent-desc">고객 행동 기반의 메시지와 재접촉 타이밍을 설계한다. 반복 구매는 관계의 구조에서 나온다.</p>
-        <p class="agent-def">고객이 "다시 사게 만드는 구조"를 만든다.</p>
-      </div>
-    </div>
-  </section>
-
   <footer>
     <div class="footer-main">
       <p class="footer-philosophy">
@@ -572,7 +521,6 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
 <div id="page-insights" class="page">
   <div class="insights-page">
     <div class="insights-hero">
-      <span class="insights-eyebrow">Knowledge / Archive</span>
       <h1 class="insights-headline">Learn<br><span>Insights</span></h1>
     </div>
 
@@ -622,10 +570,55 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
       </div>
     </div>
   </div>
-  <div class="insights-footer">
-    <span class="footer-copy">© 2025 chaeum</span>
-    <span class="footer-copy">Built to stand alone.</span>
-  </div>
+  <footer>
+    <div class="footer-main">
+      <p class="footer-philosophy">
+        우리는 브랜드의 본질이 시스템으로 치환되어, 외부의 도움 없이도 스스로 숨 쉬고 성장하는 '완전한 자율'의 상태를 지향합니다.
+      </p>
+      <div class="footer-nav-cols">
+        <div>
+          <p class="footer-col-title">Navigate</p>
+          <ul class="footer-col-links">
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('about')">About us</a></li>
+            <li><a onclick="showPage('insights')">Insights</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Services</p>
+          <ul class="footer-col-links">
+            <li><a href="#">AOB</a></li>
+            <li><a href="#">AI Workshop</a></li>
+            <li><a href="#">Full Consulting</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Contact</p>
+          <ul class="footer-col-links">
+            <li><a href="mailto:hello@chaeum.kr">hello@chaeum.kr</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-social-col">
+        <a href="#" title="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="color:var(--charcoal-light)">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="#" title="Behance">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color:var(--charcoal-light)">
+            <path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029H23.726zm-7.686-3h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988H0V5.021h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zM3 11h3.584c2.508 0 2.796-3-.312-3H3v3zm3.391 3H3v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 chaeum</span>
+      <span class="footer-logo-sm" onclick="showPage('home')">chaeum</span>
+    </div>
+  </footer>
 </div>
 
 <!-- ══════════ ABOUT ══════════ -->
@@ -633,13 +626,7 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
   <div class="about-page">
 
     <div class="about-intro">
-      <span class="about-eyebrow">About chaeum</span>
-      <p class="about-kr-text">
-        유입을 설계하고 流, 시각적 신뢰를 구축하며 視,<br>
-        매출의 구조를 만들고 販, 고객과 다시 만나는 일 結.<br>
-        브랜드가 시장에서 살아남기 위해 반복하는 모든 과정은<br>
-        외부의 기술이 아닌 브랜드 내부의 단단한 지능이 되어야 합니다.
-      </p>
+      <p class="about-kr-text">유입을 설계하고 流, 시각적 신뢰를 구축하며 視, 매출의 구조를 만들고 販, 고객과 다시 만나는 일 結. 브랜드가 시장에서 살아남기 위해 반복하는 모든 과정은 외부의 기술이 아닌 브랜드 내부의 단단한 지능이 되어야 합니다.</p>
       <p class="about-en-text">
         Every process a brand repeats to survive in the market must become a solid intelligence within the brand itself, not an external technology. chaeum does not focus on the outputs of agencies. We pursue a state of complete autonomy in which brands breathe and grow on their own, and we install systems where philosophy and function are in balance.
       </p>
@@ -662,7 +649,7 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
 
     <div class="about-team">
       <span class="about-section-eyebrow">Team</span>
-      <p class="team-intro">시스템을 설계하는 사람들.<br>각자의 역할로, 하나의 구조를 만든다.</p>
+      <h2 class="team-title">시스템을 설계하는 사람들.</h2>
       <div class="team-grid">
         <div class="team-member">
           <div class="team-img"><span class="team-img-label">Image</span></div>
@@ -678,6 +665,11 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
           <div class="team-img"><span class="team-img-label">Image</span></div>
           <p class="team-name">Name</p>
           <p class="team-role">Visual Director</p>
+        </div>
+        <div class="team-member">
+          <div class="team-img"><span class="team-img-label">Image</span></div>
+          <p class="team-name">Name</p>
+          <p class="team-role">Growth Designer</p>
         </div>
       </div>
     </div>
@@ -699,6 +691,7 @@ footer { background: var(--off-white); border-top: 1px solid var(--border); }
           <p class="footer-col-title">Navigate</p>
           <ul class="footer-col-links">
             <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('about')">About us</a></li>
             <li><a onclick="showPage('insights')">Insights</a></li>
           </ul>
         </div>
