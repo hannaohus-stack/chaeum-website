@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAEUM — AI Brand Agent System</title>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #F2F1EC;
+    --ink: #4B4545;
+    --ink-alpha60: rgba(75,69,69,0.6);
+    --ink-alpha30: rgba(75,69,69,0.3);
+    --ink-alpha12: rgba(75,69,69,0.12);
+    --font: 'Pretendard Variable', Pretendard, sans-serif;
+    --white: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    font-weight: 300;
+    background: var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    height: 100vh; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .hero-img {
+    position: absolute; inset: 0;
+  }
+  .hero-img-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #3a3535 0%, #4B4545 40%, #2e2a2a 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img-label {
+    font-size: 0.65rem; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.2); text-transform: uppercase;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(75,69,69,0.75) 0%, rgba(75,69,69,0.1) 55%, transparent 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 2.5rem 3.5rem;
+  }
+  .hero-tag {
+    font-size: 0.58rem; letter-spacing: 0.16em;
+    color: rgba(242,241,236,0.5); text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .hero-title {
+    font-size: clamp(3.2rem, 7vw, 6.5rem); line-height: 1.05;
+    font-weight: 200; color: var(--bg); letter-spacing: -0.01em;
+  }
+  .hero-scroll {
+    position: absolute; right: 2.5rem; bottom: 3.5rem; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    font-size: 0.52rem; letter-spacing: 0.14em;
+    color: rgba(242,241,236,0.4); text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 0.5px; height: 40px; background: rgba(242,241,236,0.25);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { transform: scaleY(1); opacity: 0.4; }
+    50% { transform: scaleY(0.5); opacity: 0.8; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 2.5rem;
+    background: rgba(242,241,236,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .nav-logo {
+    font-family: var(--font); font-weight: 300;
+    font-size: 0.85rem; letter-spacing: 0.18em;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+  .nav-links a {
+    font-family: var(--font);
+    font-size: 0.6rem; letter-spacing: 0.12em;
+    color: var(--ink-alpha60); text-decoration: none; text-transform: uppercase; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    color: var(--bg) !important;
+    background: var(--ink); padding: 0.48rem 1.1rem;
+  }
+
+-direction: column; align-items: center; gap: 0.6rem;
+    font-family: var(--font); font-size: 0.52rem;
+    letter-spacing: 0.14em; color: rgba(242,241,236,0.4); text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 0.5px; height: 40px; background: rgba(242,241,236,0.25);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { transform: scaleY(1); opacity: 0.4; }
+    50% { transform: scaleY(0.5); opacity: 0.8; }
+  }
+
+  /* ── DECLARATION ── */
+  .declaration {
+    padding: 5rem 2.5rem;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+    display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;
+  }
+  .decl-label {
+    font-family: var(--font); font-size: 0.58rem;
+    letter-spacing: 0.14em; color: var(--ink-alpha60); text-transform: uppercase;
+    padding-top: 0.4rem;
+  }
+  .decl-text {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.45;
+    color: var(--ink);
+  }
+
+  /* ── GRID HEADER ── */
+  .grid-header {
+    padding: 3rem 2.5rem 1.5rem;
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .grid-header-left {
+    font-family: var(--font); font-size: 0.6rem;
+    letter-spacing: 0.14em; color: var(--ink); text-transform: uppercase;
+  }
+  .grid-header-right {
+    font-family: var(--font); font-size: 0.56rem;
+    letter-spacing: 0.1em; color: var(--ink-alpha60); text-transform: uppercase;
+    text-decoration: none; border-bottom: 0.5px solid var(--ink-alpha30);
+    padding-bottom: 1px; transition: color 0.3s;
+  }
+  .grid-header-right:hover { color: var(--ink); }
+
+  /* ── PORTFOLIO GRID ── */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 0;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .p-item {
+    position: relative; overflow: hidden; cursor: pointer;
+    border-right: 0.5px solid var(--ink-alpha12);
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .p-item:last-child { border-right: none; }
+  .p-item.large { grid-row: span 2; border-bottom: none; }
+  .p-item-img {
+    width: 100%; height: 100%; min-height: 280px;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.6s ease;
+  }
+  .p-item:hover .p-item-img { transform: scale(1.03); }
+  .p-item.large .p-item-img { min-height: 560px; }
+  .p-img-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.6s ease;
+  }
+  .bg1 { background: linear-gradient(135deg, #3a3535 0%, #5a5252 100%); }
+  .bg2 { background: linear-gradient(135deg, #4a4444 0%, #2e2a2a 100%); }
+  .bg3 { background: linear-gradient(135deg, #524e4e 0%, #3d3939 100%); }
+  .bg4 { background: linear-gradient(135deg, #2e2a2a 0%, #4B4545 100%); }
+  .bg5 { background: linear-gradient(135deg, #3d3939 0%, #524e4e 100%); }
+  .p-img-placeholder {
+    position: relative; z-index: 1;
+    font-family: var(--font); font-size: 0.55rem;
+    letter-spacing: 0.12em; color: rgba(242,241,236,0.2); text-transform: uppercase;
+  }
+  .p-item-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(to top, rgba(75,69,69,0.82) 0%, transparent 50%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.5rem;
+    opacity: 1;
+  }
+  .p-item-tag {
+    font-family: var(--font); font-size: 0.52rem;
+    letter-spacing: 0.1em; color: rgba(242,241,236,0.55);
+    text-transform: uppercase; margin-bottom: 0.4rem;
+  }
+  .p-item-title {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: 1.1rem; line-height: 1.3; color: var(--bg);
+  }
+  .p-item.large .p-item-title { font-size: 1.6rem; }
+  .p-item-desc {
+    font-size: 0.68rem; color: rgba(242,241,236,0.6);
+    line-height: 1.65; margin-top: 0.4rem;
+  }
+
+  /* ── AGENTS ── */
+  .agents-section {
+    padding: 5rem 2.5rem;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .agents-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+  .agents-title {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--ink);
+  }
+  .agents-sub {
+    font-family: var(--font); font-size: 0.58rem;
+    letter-spacing: 0.1em; color: var(--ink-alpha60); text-transform: uppercase;
+  }
+  .agents-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+    border: 0.5px solid var(--ink-alpha12);
+  }
+  .agent-card {
+    padding: 2.2rem 1.8rem;
+    border-right: 0.5px solid var(--ink-alpha12);
+    transition: background 0.35s;
+  }
+  .agent-card:last-child { border-right: none; }
+  .agent-card:hover { background: rgba(75,69,69,0.04); }
+  .agent-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--ink-alpha12);
+    border: 0.5px solid var(--ink-alpha30);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.4rem; overflow: hidden;
+    font-family: var(--font); font-size: 0.52rem;
+    letter-spacing: 0.06em; color: var(--ink-alpha60);
+  }
+  .agent-num {
+    font-family: var(--font); font-size: 0.56rem;
+    letter-spacing: 0.1em; color: var(--ink-alpha30); margin-bottom: 0.5rem;
+  }
+  .agent-name {
+    font-family: 'Syne', sans-serif; font-size: 1.4rem;
+    font-weight: 400; color: var(--ink); margin-bottom: 0.25rem;
+  }
+  .agent-role {
+    font-family: var(--font); font-size: 0.55rem;
+    letter-spacing: 0.08em; color: var(--ink-alpha60);
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .agent-divider { width: 20px; height: 0.5px; background: var(--ink-alpha30); margin-bottom: 1rem; }
+  .agent-desc { font-size: 0.7rem; line-height: 1.85; color: var(--ink-alpha60); }
+
+  /* ── ACADEMY ── */
+  .academy-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .academy-left {
+    padding: 6rem 2.5rem;
+    border-right: 0.5px solid var(--ink-alpha12);
+    background: var(--ink);
+  }
+  .academy-tag {
+    font-family: var(--font); font-size: 0.58rem;
+    letter-spacing: 0.16em; color: rgba(242,241,236,0.4);
+    text-transform: uppercase; margin-bottom: 2rem;
+  }
+  .academy-title {
+    font-family: 'Syne', sans-serif; font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.2;
+    color: var(--bg); margin-bottom: 1.8rem;
+  }
+  .academy-body {
+    font-size: 0.75rem; line-height: 2; color: rgba(242,241,236,0.45);
+    max-width: 360px; margin-bottom: 3rem;
+  }
+  .btn-light {
+    font-family: var(--font); font-size: 0.6rem; letter-spacing: 0.12em;
+    color: var(--ink); background: var(--bg); padding: 0.85rem 1.8rem;
+    text-decoration: none; text-transform: uppercase; display: inline-block; transition: opacity 0.3s;
+  }
+  .btn-light:hover { opacity: 0.8; }
+  .academy-right { padding: 6rem 2.5rem; }
+  .academy-series-title {
+    font-family: var(--font); font-size: 0.58rem;
+    letter-spacing: 0.14em; color: var(--ink-alpha60);
+    text-transform: uppercase; margin-bottom: 2rem;
+  }
+  .series-item {
+    padding: 1.3rem 0; border-bottom: 0.5px solid var(--ink-alpha12);
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .series-item:first-of-type { border-top: 0.5px solid var(--ink-alpha12); }
+  .s-lbl {
+    font-family: var(--font); font-size: 0.52rem;
+    letter-spacing: 0.1em; color: var(--ink-alpha60); text-transform: uppercase; margin-bottom: 0.3rem;
+  }
+  .s-name { font-size: 0.76rem; color: var(--ink); line-height: 1.5; }
+  .s-badge {
+    font-family: var(--font); font-size: 0.5rem;
+    letter-spacing: 0.08em; padding: 3px 9px; text-transform: uppercase;
+    white-space: nowrap; flex-shrink: 0;
+    border: 0.5px solid var(--ink-alpha30); color: var(--ink-alpha60);
+  }
+  .s-badge.locked { border-color: var(--ink); color: var(--ink); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3.5rem 2.5rem;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem;
+    border-top: 0.5px solid var(--ink-alpha12);
+  }
+  .footer-logo {
+    font-family: var(--font); font-weight: 300;
+    font-size: 0.85rem; letter-spacing: 0.18em; color: var(--ink); margin-bottom: 0.8rem;
+  }
+  .footer-tagline { font-size: 0.68rem; color: var(--ink-alpha60); line-height: 1.8; }
+  .footer-col-title {
+    font-family: var(--font); font-size: 0.55rem;
+    letter-spacing: 0.12em; color: var(--ink-alpha60); text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 0.55rem; }
+  .footer-links a {
+    font-size: 0.7rem; color: var(--ink-alpha60); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-bottom {
+    grid-column: 1/-1; border-top: 0.5px solid var(--ink-alpha12); padding-top: 1.8rem;
+    font-family: var(--font); font-size: 0.55rem; color: var(--ink-alpha30);
+    display: flex; justify-content: space-between;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .declaration { grid-template-columns: 1fr; gap: 1rem; padding: 3.5rem 1.5rem; }
+    .grid-header { padding: 2rem 1.5rem 1.2rem; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .p-item.large { grid-row: auto; }
+    .p-item { border-right: none; }
+    .p-item-img { min-height: 260px; }
+    .p-item.large .p-item-img { min-height: 360px; }
+    .agents-section { padding: 3.5rem 1.5rem; }
+    .agents-grid { grid-template-columns: 1fr 1fr; }
+    .agent-card { border-bottom: 0.5px solid var(--ink-alpha12); }
+    .academy-section { grid-template-columns: 1fr; }
+    .academy-left { padding: 4rem 1.5rem 3rem; border-right: none; border-bottom: 0.5px solid var(--ink-alpha12); }
+    .academy-right { padding: 3rem 1.5rem; }
+    footer { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
+    .hero-title { font-size: clamp(2.8rem, 10vw, 4rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">CHAEUM</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#system">System</a>
+    <a href="https://chaeum.cloud/academy">Academy</a>
+    <a href="#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-img">
+    <div class="hero-img-placeholder">
+      <span class="hero-img-label">Hero image / video</span>
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">AI Brand Agent System — chaeum.cloud</p>
+    <h1 class="hero-title">
+      브랜드를<br>운영하는 지능
+    </h1>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</div>
+
+<!-- DECLARATION -->
+<div class="declaration">
+  <span class="decl-label">About</span>
+  <p class="decl-text">
+    콘텐츠가 아니라 구조를 설계합니다.<br>
+    사람이 아니라 시스템이 운영합니다.<br>
+    감각이 아니라 매출로 연결됩니다.
+  </p>
+</div>
+
+<!-- PORTFOLIO -->
+<div id="work">
+  <div class="grid-header">
+    <span class="grid-header-left">Selected Work</span>
+    <a href="#contact" class="grid-header-right">전체 보기</a>
+  </div>
+  <div class="portfolio-grid">
+    <div class="p-item large">
+      <div class="p-item-img">
+        <div class="p-img-bg bg1"></div>
+        <span class="p-img-placeholder">Image</span>
+      </div>
+      <div class="p-item-overlay">
+        <span class="p-item-tag">Brand OS</span>
+        <div class="p-item-title">1인 뷰티 브랜드<br>전체 시스템 구축</div>
+        <div class="p-item-desc">콘텐츠 제작 시간 70% 절감 — 월 매출 2.3배 성장</div>
+      </div>
+    </div>
+    <div class="p-item">
+      <div class="p-item-img">
+        <div class="p-img-bg bg2"></div>
+        <span class="p-img-placeholder">Image</span>
+      </div>
+      <div class="p-item-overlay">
+        <span class="p-item-tag">Sales Flow</span>
+        <div class="p-item-title">컨설팅사 퍼널 자동화</div>
+        <div class="p-item-desc">문의 전환율 34% 향상</div>
+      </div>
+    </div>
+    <div class="p-item">
+      <div class="p-item-img">
+        <div class="p-img-bg bg3"></div>
+        <span class="p-img-placeholder">Image</span>
+      </div>
+      <div class="p-item-overlay">
+        <span class="p-item-tag">Visual System</span>
+        <div class="p-item-title">라이프스타일 브랜드</div>
+        <div class="p-item-desc">비주얼 일관성 확보</div>
+      </div>
+    </div>
+    <div class="p-item">
+      <div class="p-item-img">
+        <div class="p-img-bg bg4"></div>
+        <span class="p-img-placeholder">Image</span>
+      </div>
+      <div class="p-item-overlay">
+        <span class="p-item-tag">Retention</span>
+        <div class="p-item-title">이커머스 재구매 시스템</div>
+        <div class="p-item-desc">재구매율 2.1배 상승</div>
+      </div>
+    </div>
+    <div class="p-item" style="border-right:none">
+      <div class="p-item-img">
+        <div class="p-img-bg bg5"></div>
+        <span class="p-img-placeholder">Image</span>
+      </div>
+      <div class="p-item-overlay">
+        <span class="p-item-tag">Brand OS</span>
+        <div class="p-item-title">스타트업 브랜드 런칭</div>
+        <div class="p-item-desc">런칭 3개월 — 팔로워 1만 달성</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENTS -->
+<div class="agents-section" id="system">
+  <div class="agents-top">
+    <h2 class="agents-title">4 Agent System</h2>
+    <span class="agents-sub">유입 — 구매 — 신뢰 — 재구매</span>
+  </div>
+  <div class="agents-grid">
+    <div class="agent-card">
+      <div class="agent-avatar">Photo</div>
+      <div class="agent-num">01</div>
+      <div class="agent-name">Noa</div>
+      <div class="agent-role">Brand System Architect</div>
+      <div class="agent-divider"></div>
+      <div class="agent-desc">브랜드 전체 구조를 설계하고 AI Brand OS를 구축합니다. 모든 결과물의 일관성을 유지하는 중심축입니다.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-avatar">Photo</div>
+      <div class="agent-num">02</div>
+      <div class="agent-name">Leo</div>
+      <div class="agent-role">Sales Flow Architect</div>
+      <div class="agent-divider"></div>
+      <div class="agent-desc">광고에서 랜딩, CTA까지 고객이 구매로 이어지는 흐름을 설계합니다. 매출이 발생하는 구조를 만듭니다.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-avatar">Photo</div>
+      <div class="agent-num">03</div>
+      <div class="agent-name">Rhea</div>
+      <div class="agent-role">Visual System Director</div>
+      <div class="agent-divider"></div>
+      <div class="agent-desc">브랜드가 신뢰되게 보이도록 일관된 비주얼 시스템을 설계합니다. 이미지 생성부터 레이아웃까지 관리합니다.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-avatar">Photo</div>
+      <div class="agent-num">04</div>
+      <div class="agent-name">Mina</div>
+      <div class="agent-role">Retention System Designer</div>
+      <div class="agent-divider"></div>
+      <div class="agent-desc">고객이 다시 사게 만드는 구조를 설계합니다. 행동 기반 메시지와 재접촉 타이밍으로 반복 구매를 만듭니다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ACADEMY -->
+<div class="academy-section" id="contact">
+  <div class="academy-left">
+    <p class="academy-tag">Chaeum Academy</p>
+    <h2 class="academy-title">
+      당신의 브랜드는<br>지금 당신 없이<br>돌아가고 있나요?
+    </h2>
+    <p class="academy-body">
+      Is your brand running without you?<br><br>
+      Foundation부터 시작해 Brand OS까지.<br>
+      채움이 설계한 커리큘럼으로 AI 브랜드 시스템을 직접 구축해보세요.
+    </p>
+    <a href="https://chaeum.cloud/academy" class="btn-light">Academy 입장하기</a>
+  </div>
+  <div class="academy-right">
+    <p class="academy-series-title">Curriculum</p>
+    <div class="series-item">
+      <div>
+        <div class="s-lbl">Foundation Series</div>
+        <div class="s-name">Claude 설치부터 MCP 연결까지 — 4개 세션</div>
+      </div>
+      <span class="s-badge">무료</span>
+    </div>
+    <div class="series-item">
+      <div>
+        <div class="s-lbl">System Series</div>
+        <div class="s-name">브랜드 말투 이식 · 콘텐츠 자동화 · AI 상담봇</div>
+      </div>
+      <span class="s-badge">무료</span>
+    </div>
+    <div class="series-item">
+      <div>
+        <div class="s-lbl">System Series — Locked</div>
+        <div class="s-name">매출 흐름 · 비주얼 시스템 · Brand OS 이식</div>
+      </div>
+      <span class="s-badge locked">클라이언트 전용</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">CHAEUM</div>
+    <div class="footer-tagline">
+      브랜드를 운영하는 지능.<br>
+      The intelligence that runs your brand.<br><br>
+      chaeum.cloud
+    </div>
+  </div>
+  <div>
+    <div class="footer-col-title">Navigate</div>
+    <div class="footer-links">
+      <a href="#work">Work</a>
+      <a href="#system">System</a>
+      <a href="https://chaeum.cloud/academy">Academy</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div>
+    <div class="footer-col-title">Connect</div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Newsletter</a>
+      <a href="https://chaeum.cloud">chaeum.cloud</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 CHAEUM. All rights reserved.</span>
+    <span>chaeum.cloud</span>
+  </div>
+</footer>
+
+</body>
+</html>
