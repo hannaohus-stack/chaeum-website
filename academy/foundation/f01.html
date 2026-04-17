@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-01 — Claude AI란 무엇인가 | CHAEUM Academy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #F2F1EC;
+    --ink: #4B4545;
+    --ink-alpha60: rgba(75,69,69,0.6);
+    --ink-alpha30: rgba(75,69,69,0.3);
+    --ink-alpha12: rgba(75,69,69,0.12);
+    --ink-alpha06: rgba(75,69,69,0.06);
+    --font: 'Pretendard Variable', Pretendard, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font); font-weight: 300;
+    background: var(--bg); color: var(--ink); overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 2.5rem;
+    background: rgba(242,241,236,0.92); backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .nav-left { display: flex; align-items: center; gap: 0.6rem; }
+  .nav-logo {
+    font-size: 0.82rem; letter-spacing: 0.18em; font-weight: 400;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-sep { color: var(--ink-alpha30); font-size: 0.7rem; }
+  .nav-crumb {
+    font-size: 0.65rem; color: var(--ink); text-decoration: none;
+    letter-spacing: 0.06em; transition: color 0.3s;
+  }
+  .nav-crumb:hover { color: var(--ink); }
+  .nav-crumb.current { color: var(--ink); cursor: default; }
+  .nav-right {
+    font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink-alpha30); text-transform: uppercase;
+  }
+
+  /* LAYOUT */
+  .page {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+    padding-top: 5rem;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    border-right: 0.5px solid var(--ink-alpha12);
+    padding: 3rem 1.5rem;
+    position: sticky; top: 5rem; height: calc(100vh - 5rem);
+    overflow-y: auto;
+  }
+  .sidebar-series {
+    font-size: 0.52rem; letter-spacing: 0.14em; color: var(--ink-alpha30);
+    text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .sidebar-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.55rem 0.7rem; margin-bottom: 0.2rem;
+    font-size: 0.7rem; color: var(--ink);
+    text-decoration: none; border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .sidebar-item:hover { background: var(--ink-alpha06); color: var(--ink); }
+  .sidebar-item.active {
+    background: var(--ink); color: var(--bg);
+  }
+  .sidebar-num {
+    font-size: 0.5rem; letter-spacing: 0.08em;
+    opacity: 0.5; min-width: 28px;
+  }
+  .sidebar-divider {
+    height: 0.5px; background: var(--ink-alpha12);
+    margin: 1.2rem 0;
+  }
+  .sidebar-locked {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.55rem 0.7rem; margin-bottom: 0.2rem;
+    font-size: 0.7rem; color: var(--ink-alpha30);
+    cursor: default;
+  }
+
+  /* CONTENT */
+  .content {
+    padding: 3.5rem 4rem 6rem;
+    max-width: 780px;
+  }
+
+  /* SESSION HEADER */
+  .session-tag {
+    font-size: 0.55rem; letter-spacing: 0.16em; color: var(--ink-alpha30);
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .session-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 300;
+    color: var(--ink); line-height: 1.2; margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .session-meta {
+    display: flex; gap: 1.5rem; align-items: center;
+    padding-bottom: 2.5rem; border-bottom: 0.5px solid var(--ink-alpha12);
+    margin-bottom: 3rem;
+  }
+  .meta-item {
+    font-size: 0.62rem; color: var(--ink); letter-spacing: 0.06em;
+  }
+  .meta-dot { color: var(--ink-alpha30); }
+
+  /* BODY TEXT */
+  .body-text { color: var(--ink) !important;
+    font-size: 0.88rem; line-height: 2; color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .body-text strong { font-weight: 400; color: var(--ink); }
+
+  /* SECTION */
+  .doc-section { margin-bottom: 3.5rem; }
+  .doc-section-num {
+    font-size: 0.55rem; letter-spacing: 0.14em; color: var(--ink-alpha30);
+    text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .doc-section-title {
+    font-size: 1.1rem; font-weight: 400; color: var(--ink);
+    margin-bottom: 1.2rem; padding-bottom: 0.8rem;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+
+  /* CARD BLOCK */
+  .card-block {
+    border: 0.5px solid var(--ink-alpha12);
+    margin-bottom: 0.7rem; overflow: hidden;
+  }
+  .card-block-header {
+    padding: 1rem 1.4rem;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+    background: var(--ink-alpha06);
+    font-size: 0.72rem; font-weight: 400; color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .card-block-body {
+    padding: 1.1rem 1.4rem;
+    font-size: 0.8rem; line-height: 1.9; color: var(--ink);
+  }
+
+  /* CONCLUSION BOX */
+  .conclusion {
+    border: 0.5px solid var(--ink);
+    padding: 1.5rem 1.8rem;
+    margin: 2.5rem 0;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .conclusion-label {
+    font-size: 0.52rem; letter-spacing: 0.12em; color: var(--ink);
+    text-transform: uppercase; white-space: nowrap; padding-top: 3px;
+    min-width: 48px;
+  }
+  .conclusion-text {
+    font-size: 0.85rem; font-weight: 400; color: var(--ink); line-height: 1.7;
+  }
+
+  /* COMPARE TABLE */
+  .compare-table {
+    width: 100%; border: 0.5px solid var(--ink-alpha12);
+    border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.78rem;
+  }
+  .compare-table th {
+    padding: 0.8rem 1.2rem; text-align: left;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+    border-right: 0.5px solid var(--ink-alpha12);
+    font-size: 0.58rem; letter-spacing: 0.1em; color: var(--ink);
+    text-transform: uppercase; font-weight: 400;
+    background: var(--ink-alpha06);
+  }
+  .compare-table th:last-child { border-right: none; }
+  .compare-table td {
+    padding: 0.9rem 1.2rem; line-height: 1.7; color: var(--ink);
+    border-bottom: 0.5px solid var(--ink-alpha12);
+    border-right: 0.5px solid var(--ink-alpha12); vertical-align: top;
+  }
+  .compare-table td:last-child { border-right: none; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td strong { font-weight: 400; color: var(--ink); }
+
+  /* REFERENCE */
+  .reference-section { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--ink-alpha12); }
+  .reference-title {
+    font-size: 0.55rem; letter-spacing: 0.14em; color: var(--ink-alpha30);
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .reference-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .reference-list li { font-size: 0.7rem; color: var(--ink); }
+  .reference-list a { color: var(--ink); text-decoration: none; border-bottom: 0.5px solid var(--ink-alpha30); }
+  .reference-list a:hover { color: var(--ink); }
+
+  /* NAV BETWEEN SESSIONS */
+  .session-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--ink-alpha12);
+  }
+  .session-nav a {
+    font-size: 0.65rem; color: var(--ink); text-decoration: none;
+    letter-spacing: 0.06em; transition: color 0.3s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .session-nav a:hover { color: var(--ink); }
+  .session-nav-label { font-size: 0.52rem; letter-spacing: 0.1em; color: var(--ink-alpha30); text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+
+  @media (max-width: 900px) {
+    .page { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .content { padding: 2.5rem 1.5rem 5rem; }
+    nav { padding: 1.2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="https://chaeum.cloud" class="nav-logo">CHAEUM</a>
+    <span class="nav-sep">/</span>
+    <a href="https://chaeum.cloud/academy" class="nav-crumb">Academy</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-crumb current">F-01</span>
+  </div>
+  <div class="nav-right">Foundation Series</div>
+</nav>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-series">Foundation Series</div>
+    <a href="./f01.html" class="sidebar-item active">
+      <span class="sidebar-num">F-01</span> Claude AI란 무엇인가
+    </a>
+    <a href="./f02.html" class="sidebar-item">
+      <span class="sidebar-num">F-02</span> Claude 설치 및 세팅
+    </a>
+    <a href="./f03.html" class="sidebar-item">
+      <span class="sidebar-num">F-03</span> MCP 연결 방법
+    </a>
+    <a href="./f04.html" class="sidebar-item">
+      <span class="sidebar-num">F-04</span> AI Tools 전체 지도
+    </a>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-series">System Series</div>
+    <a href="../system/s01.html" class="sidebar-item">
+      <span class="sidebar-num">S-01</span> 브랜드 말투 이식
+    </a>
+    <a href="../system/s02.html" class="sidebar-item">
+      <span class="sidebar-num">S-02</span> 콘텐츠 30분 설계
+    </a>
+    <a href="../system/s03.html" class="sidebar-item">
+      <span class="sidebar-num">S-03</span> AI 상담봇 만들기
+    </a>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-series">Locked</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-04</span> 매출 흐름 자동화</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-05</span> 비주얼 시스템</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-06</span> 재구매 구조</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-07</span> Brand OS 이식</div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <div class="session-tag">Foundation Series — F-01</div>
+    <h1 class="session-title">Claude AI란 무엇인가</h1>
+    <div class="session-meta">
+      <span class="meta-item">읽는 시간 약 10분</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">무료 공개</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">다음 세션 → F-02 Claude 설치 및 세팅</span>
+    </div>
+
+    <p class="body-text">
+      AI를 배우기 전에 먼저 물어봐야 할 질문이 있습니다. <strong>"어떤 AI를 써야 하는가?"</strong><br><br>
+      ChatGPT, Gemini, Claude — 모두 "AI"라고 불리지만 작동 방식과 철학이 다릅니다. 채움이 Claude를 브랜드 운영의 핵심 도구로 선택한 이유가 있습니다. 이 세션에서는 Claude가 무엇인지, 그리고 왜 브랜드 운영에 가장 적합한지 설명합니다.
+    </p>
+
+    <!-- 1.1 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.1</div>
+      <div class="doc-section-title">Claude는 Anthropic이 만든 AI입니다</div>
+      <p class="body-text">
+        Claude는 OpenAI 출신 연구자들이 설립한 <strong>Anthropic</strong>이 만든 AI 언어 모델입니다. 2023년 처음 출시된 이후 빠르게 발전하고 있으며, 현재 Claude 3.5, Claude 4 시리즈까지 나와 있습니다.
+      </p>
+      <p class="body-text">
+        Anthropic은 AI 안전성 연구에 집중하는 회사입니다. 단순히 "더 똑똑한 AI"를 만드는 것이 아니라, <strong>신뢰할 수 있고 예측 가능한 방식으로 작동하는 AI</strong>를 목표로 합니다. 이 철학이 Claude를 브랜드 운영 도구로 쓸 때 중요한 이유가 됩니다.
+      </p>
+    </div>
+
+    <!-- 1.2 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.2</div>
+      <div class="doc-section-title">다른 AI와 무엇이 다른가</div>
+      <p class="body-text">
+        세 가지 주요 AI의 특징을 비교해봅니다. 어느 것이 "더 좋다"는 게 아니라, 각각이 잘하는 영역이 다릅니다.
+      </p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>Claude</th>
+            <th>ChatGPT</th>
+            <th>Gemini</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>강점</strong></td>
+            <td>긴 문서 이해, 일관된 톤, 구조적 사고</td>
+            <td>범용성, 플러그인 생태계, 이미지 생성</td>
+            <td>실시간 검색, Google 연동, 최신 정보</td>
+          </tr>
+          <tr>
+            <td><strong>브랜드 운영</strong></td>
+            <td>브랜드 가이드라인 학습 후 일관성 유지에 탁월</td>
+            <td>다양한 툴 연동에 유리</td>
+            <td>시장 분석, 트렌드 리서치에 유리</td>
+          </tr>
+          <tr>
+            <td><strong>Projects 기능</strong></td>
+            <td>브랜드 문서를 지속적으로 기억</td>
+            <td>GPTs로 유사 구현 가능</td>
+            <td>Gems로 유사 구현 가능</td>
+          </tr>
+          <tr>
+            <td><strong>컨텍스트 창</strong></td>
+            <td>200K 토큰 (매우 긴 문서 처리 가능)</td>
+            <td>128K 토큰</td>
+            <td>1M 토큰 (Gemini 1.5)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="body-text">
+        채움이 Claude를 선택한 핵심 이유는 하나입니다. <strong>브랜드 가이드라인을 한 번 학습시키면, 이후 모든 결과물에서 일관된 톤과 방향을 유지한다는 것.</strong> 이것이 브랜드 운영에서 가장 중요한 능력입니다.
+      </p>
+    </div>
+
+    <!-- 1.3 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.3</div>
+      <div class="doc-section-title">Claude Projects — 브랜드의 두뇌</div>
+      <p class="body-text">
+        Claude의 가장 강력한 기능은 <strong>Projects</strong>입니다. 일반 AI 대화는 창을 닫으면 모든 것을 잊어버립니다. 하지만 Projects는 내가 올려둔 문서와 지시사항을 계속 기억합니다.
+      </p>
+      <div class="card-block">
+        <div class="card-block-header">브랜드 운영에서 Projects를 쓰면</div>
+        <div class="card-block-body">
+          BRAND.md 파일 하나를 Projects에 올려두면, 이후 모든 대화에서 Claude는 그 브랜드의 철학, 말투, 금지 표현을 자동으로 적용합니다. 매번 "우리 브랜드는 이렇습니다"라고 설명할 필요가 없습니다.
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">실제 활용 예시</div>
+        <div class="card-block-body">
+          Projects에 브랜드 가이드라인, 제품 설명서, 타겟 고객 페르소나를 올려두고 — "이번 주 인스타그램 캡션 3개 작성해줘"라고만 입력해도 브랜드 결에 맞는 결과물이 나옵니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.4 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.4</div>
+      <div class="doc-section-title">Claude를 쓰면 실제로 무엇이 달라지는가</div>
+      <p class="body-text">
+        기술 설명보다 중요한 것은 실제 변화입니다. Claude를 브랜드 운영에 도입한 후 달라지는 것들을 정리했습니다.
+      </p>
+      <div class="card-block">
+        <div class="card-block-header">콘텐츠 제작 방식의 변화</div>
+        <div class="card-block-body">
+          매번 "어떻게 쓸까"를 고민하는 대신, 구조를 한 번 만들어두고 Claude가 채웁니다. 30분이면 한 달치 인스타그램 캡션 초안이 완성됩니다. 당신은 검토하고 승인하는 역할로 바뀝니다.
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">브랜드 일관성의 변화</div>
+        <div class="card-block-body">
+          사람이 쓰면 컨디션에 따라 브랜드 말투가 흔들립니다. Claude는 항상 같은 기준으로 결과물을 냅니다. 브랜드가 성장해도, 팀원이 바뀌어도 톤이 유지됩니다.
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">시간 구조의 변화</div>
+        <div class="card-block-body">
+          운영에 쏟던 시간이 전략으로 이동합니다. 콘텐츠 작성, 응대, 리포트 작성을 Claude가 맡으면 — 당신은 다음 분기 방향을 생각할 여유가 생깁니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.5 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.5</div>
+      <div class="doc-section-title">Claude가 못하는 것도 알아야 합니다</div>
+      <p class="body-text">
+        Claude를 과신하면 오히려 브랜드에 해가 됩니다. 솔직하게 말하면:
+      </p>
+      <div class="card-block">
+        <div class="card-block-header">실시간 정보가 필요할 때</div>
+        <div class="card-block-body">
+          Claude는 학습 데이터 이후의 최신 정보를 모릅니다. 오늘의 트렌드, 최신 뉴스, 실시간 경쟁사 동향이 필요하다면 Gemini나 Perplexity를 함께 써야 합니다.
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">이미지 생성이 필요할 때</div>
+        <div class="card-block-body">
+          Claude는 텍스트 기반 AI입니다. 이미지를 직접 생성하지 못합니다. 비주얼 결과물은 Midjourney, Flux, Kling 같은 이미지 생성 AI와 함께 사용해야 합니다. Claude가 프롬프트를 작성하고, 이미지 AI가 생성하는 방식으로 연결됩니다.
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">판단이 필요한 의사결정</div>
+        <div class="card-block-body">
+          Claude는 구조를 설계하고 초안을 만듭니다. 하지만 최종 판단 — 어느 방향으로 브랜드를 가져갈지, 어떤 캠페인을 할지 — 은 사람이 해야 합니다. Claude는 도구이지 대표가 아닙니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- CONCLUSION -->
+    <div class="conclusion">
+      <span class="conclusion-label">결론</span>
+      <p class="conclusion-text">
+        Claude는 브랜드의 언어를 학습하고, 그 언어로 일관되게 운영하는 AI입니다.<br>
+        다음 세션에서는 Claude를 실제로 설치하고, 브랜드 운영을 위한 기본 환경을 세팅합니다.
+      </p>
+    </div>
+
+    <!-- REFERENCE -->
+    <div class="reference-section">
+      <div class="reference-title">참고 출처</div>
+      <ul class="reference-list">
+        <li><a href="https://www.anthropic.com" target="_blank">Anthropic 공식 홈페이지</a></li>
+        <li><a href="https://claude.ai" target="_blank">Claude.ai</a></li>
+        <li><a href="https://docs.anthropic.com" target="_blank">Anthropic 공식 문서</a></li>
+      </ul>
+    </div>
+
+    <!-- SESSION NAV -->
+    <div class="session-nav">
+      <div>
+        <a href="../index.html">
+          <span class="session-nav-label">이전</span>
+          ← Academy 메인으로
+        </a>
+      </div>
+      <div style="text-align:right">
+        <a href="./f02.html">
+          <span class="session-nav-label">다음 세션</span>
+          F-02 Claude 설치 및 기본 세팅 →
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

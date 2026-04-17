@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAEUM Academy — 브랜드를 운영하는 지능</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #F2F1EC;
+    --ink: #4B4545;
+    --ink-alpha60: rgba(75,69,69,0.6);
+    --ink-alpha30: rgba(75,69,69,0.3);
+    --ink-alpha12: rgba(75,69,69,0.12);
+    --font: 'Pretendard Variable', Pretendard, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font); font-weight: 300;
+    background: var(--bg); color: var(--ink); overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 2.5rem;
+    background: rgba(242,241,236,0.9); backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .nav-left { display: flex; align-items: center; gap: 0.6rem; }
+  .nav-logo {
+    font-family: var(--font); font-weight: 400;
+    font-size: 0.82rem; letter-spacing: 0.18em;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-sep { color: var(--ink-alpha30); font-size: 0.7rem; }
+  .nav-current {
+    font-size: 0.72rem; letter-spacing: 0.1em;
+    color: var(--ink-alpha60); text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.62rem; letter-spacing: 0.1em;
+    color: var(--ink-alpha60); text-decoration: none; text-transform: uppercase; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    color: var(--bg) !important; background: var(--ink); padding: 0.45rem 1rem;
+  }
+
+  /* HERO */
+  .academy-hero {
+    padding: 9rem 2.5rem 5rem;
+    border-bottom: 0.5px solid var(--ink-alpha12);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
+  }
+  .hero-tag {
+    font-size: 0.58rem; letter-spacing: 0.16em;
+    color: var(--ink-alpha60); text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 200;
+    line-height: 1.1; color: var(--ink); letter-spacing: -0.01em;
+  }
+  .hero-right { padding-bottom: 0.4rem; }
+  .hero-desc {
+    font-size: 0.8rem; line-height: 2; color: var(--ink-alpha60);
+    margin-bottom: 2.5rem; max-width: 400px;
+  }
+  .hero-stats { display: flex; gap: 2.5rem; }
+  .stat-num {
+    font-size: 1.6rem; font-weight: 200; color: var(--ink);
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.6rem; letter-spacing: 0.1em;
+    color: var(--ink-alpha60); text-transform: uppercase; margin-top: 0.4rem;
+  }
+
+  /* SERIES HEADER */
+  .series-header {
+    padding: 2.5rem 2.5rem 0;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .series-title {
+    font-size: 0.58rem; letter-spacing: 0.16em;
+    color: var(--ink); text-transform: uppercase;
+  }
+  .series-count { font-size: 0.58rem; color: var(--ink-alpha30); letter-spacing: 0.08em; }
+
+  /* FOUNDATION GRID */
+  .foundation-section { padding: 1.5rem 2.5rem 5rem; }
+  .foundation-label {
+    font-size: 0.55rem; letter-spacing: 0.14em; color: var(--ink-alpha60);
+    text-transform: uppercase; padding: 1.2rem 0; border-bottom: 0.5px solid var(--ink-alpha12);
+    margin-bottom: 0;
+  }
+  .session-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+    border: 0.5px solid var(--ink-alpha12); border-top: none;
+  }
+  .session-card {
+    padding: 2rem 1.8rem; border-right: 0.5px solid var(--ink-alpha12);
+    text-decoration: none; color: var(--ink);
+    transition: background 0.3s; display: block; position: relative;
+  }
+  .session-card:last-child { border-right: none; }
+  .session-card:hover { background: rgba(75,69,69,0.04); }
+  .session-card.locked { cursor: default; }
+  .session-card.locked:hover { background: transparent; }
+  .session-num {
+    font-size: 0.55rem; letter-spacing: 0.1em; color: var(--ink-alpha30);
+    text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .session-icon {
+    width: 32px; height: 32px; margin-bottom: 1.2rem;
+    border: 0.5px solid var(--ink-alpha12); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; color: var(--ink-alpha60);
+  }
+  .session-name {
+    font-size: 0.88rem; font-weight: 400; color: var(--ink);
+    line-height: 1.4; margin-bottom: 0.5rem;
+  }
+  .session-desc {
+    font-size: 0.68rem; line-height: 1.8; color: var(--ink-alpha60);
+    margin-bottom: 1.5rem;
+  }
+  .session-badge {
+    font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 9px; border: 0.5px solid var(--ink-alpha30); color: var(--ink-alpha60);
+    display: inline-block;
+  }
+  .session-badge.free { border-color: var(--ink-alpha30); color: var(--ink-alpha60); }
+  .session-badge.locked-badge { border-color: var(--ink); color: var(--ink); }
+  .session-arrow {
+    position: absolute; bottom: 2rem; right: 1.8rem;
+    font-size: 0.7rem; color: var(--ink-alpha30); transition: color 0.3s, transform 0.3s;
+  }
+  .session-card:hover .session-arrow { color: var(--ink); transform: translateX(3px); }
+
+  /* SYSTEM SECTION */
+  .system-section { padding: 0 2.5rem 5rem; }
+  .system-free { margin-bottom: 0; }
+
+  /* LOCKED GATE */
+  .locked-section {
+    margin: 0 2.5rem 5rem;
+    border: 0.5px solid var(--ink-alpha12);
+    background: var(--ink); position: relative; overflow: hidden;
+  }
+  .locked-header {
+    padding: 2.5rem; border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .locked-label {
+    font-size: 0.55rem; letter-spacing: 0.14em; color: rgba(242,241,236,0.4); text-transform: uppercase;
+  }
+  .locked-badge-main {
+    font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 12px; border: 0.5px solid rgba(242,241,236,0.25); color: rgba(242,241,236,0.4);
+  }
+  .locked-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+  }
+  .locked-card {
+    padding: 2rem 1.8rem; border-right: 0.5px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .locked-card:last-child { border-right: none; }
+  .locked-num { font-size: 0.55rem; letter-spacing: 0.1em; color: rgba(242,241,236,0.2); margin-bottom: 1.2rem; }
+  .locked-name {
+    font-size: 0.88rem; font-weight: 400; color: rgba(242,241,236,0.5);
+    line-height: 1.4; margin-bottom: 0.5rem;
+  }
+  .locked-desc { font-size: 0.68rem; line-height: 1.8; color: rgba(242,241,236,0.25); }
+  .lock-icon {
+    position: absolute; top: 2rem; right: 1.8rem;
+    font-size: 0.7rem; color: rgba(242,241,236,0.2);
+  }
+  .locked-cta {
+    padding: 2.5rem; border-top: 0.5px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .locked-cta-text {
+    font-size: 0.75rem; color: rgba(242,241,236,0.45); line-height: 1.7;
+  }
+  .btn-light {
+    font-family: var(--font); font-size: 0.6rem; letter-spacing: 0.12em;
+    color: var(--ink); background: var(--bg); padding: 0.8rem 1.8rem;
+    text-decoration: none; text-transform: uppercase; display: inline-block;
+    transition: opacity 0.3s; white-space: nowrap; margin-left: 2rem;
+  }
+  .btn-light:hover { opacity: 0.8; }
+
+  /* SYSTEM FREE CARDS — list style */
+  .system-list {
+    border: 0.5px solid var(--ink-alpha12); border-top: none;
+  }
+  .system-row {
+    display: grid; grid-template-columns: 60px 1fr auto;
+    align-items: center; gap: 1.5rem;
+    padding: 1.5rem 1.8rem; border-bottom: 0.5px solid var(--ink-alpha12);
+    text-decoration: none; color: var(--ink); transition: background 0.3s;
+  }
+  .system-row:last-child { border-bottom: none; }
+  .system-row:hover { background: rgba(75,69,69,0.04); }
+  .system-row.locked-row { cursor: default; }
+  .system-row.locked-row:hover { background: transparent; }
+  .row-num {
+    font-size: 0.55rem; letter-spacing: 0.1em; color: var(--ink-alpha30); text-transform: uppercase;
+  }
+  .row-info {}
+  .row-name { font-size: 0.85rem; font-weight: 400; color: var(--ink); margin-bottom: 0.2rem; }
+  .row-desc { font-size: 0.67rem; color: var(--ink-alpha60); line-height: 1.6; }
+  .row-right { display: flex; align-items: center; gap: 1rem; }
+  .row-badge {
+    font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 9px; border: 0.5px solid var(--ink-alpha30); color: var(--ink-alpha60);
+    white-space: nowrap;
+  }
+  .row-arrow { font-size: 0.7rem; color: var(--ink-alpha30); transition: all 0.3s; }
+  .system-row:hover .row-arrow { color: var(--ink); transform: translateX(3px); }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 2.5rem;
+    border-top: 0.5px solid var(--ink-alpha12);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-size: 0.82rem; letter-spacing: 0.18em; font-weight: 400; color: var(--ink);
+    text-decoration: none;
+  }
+  .footer-right {
+    font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink-alpha30);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .academy-hero { grid-template-columns: 1fr; gap: 2rem; padding: 7rem 1.5rem 3.5rem; }
+    .session-grid { grid-template-columns: 1fr 1fr; }
+    .session-card { border-bottom: 0.5px solid var(--ink-alpha12); }
+    .locked-grid { grid-template-columns: 1fr 1fr; }
+    .locked-card { border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+    .locked-cta { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .btn-light { margin-left: 0; }
+    .foundation-section, .system-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .locked-section { margin-left: 1.5rem; margin-right: 1.5rem; }
+    .series-header { padding-left: 1.5rem; padding-right: 1.5rem; }
+    footer { padding: 2.5rem 1.5rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="https://chaeum.cloud" class="nav-logo">CHAEUM</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Academy</span>
+  </div>
+  <div class="nav-links">
+    <a href="#foundation">Foundation</a>
+    <a href="#system">System</a>
+    <a href="https://chaeum.cloud#contact" class="nav-cta">서비스 문의</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="academy-hero">
+  <div class="hero-left">
+    <p class="hero-tag">Chaeum Academy — chaeum.cloud/academy</p>
+    <h1 class="hero-title">
+      당신의 브랜드는<br>지금 당신 없이<br>돌아가고 있나요?
+    </h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-desc">
+      AI가 궁금한 게 아니라, 브랜드 운영의 한계를 느끼는 분들을 위한 커리큘럼입니다.<br><br>
+      Foundation부터 시작해 Brand OS까지. 채움이 직접 설계한 시스템을 단계별로 배우고 내 브랜드에 이식해보세요.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">11</div>
+        <div class="stat-label">Total Sessions</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Free Sessions</div>
+      </div>
+      <div>
+        <div class="stat-num">7</div>
+        <div class="stat-label">System Sessions</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOUNDATION -->
+<div id="foundation">
+  <div class="series-header">
+    <span class="series-title">Foundation Series</span>
+    <span class="series-count">F-01 — F-04</span>
+  </div>
+  <div class="foundation-section">
+    <div class="foundation-label">AI가 처음인 분을 위한 기초 — 전체 무료 공개</div>
+    <div class="session-grid">
+      <a href="./foundation/f01.html" class="session-card">
+        <div class="session-num">F — 01</div>
+        <div class="session-name">Claude AI란 무엇인가</div>
+        <div class="session-desc">Claude가 다른 AI와 어떻게 다른지, 브랜드 운영에 왜 가장 적합한지 알아봅니다.</div>
+        <span class="session-badge free">무료</span>
+        <span class="session-arrow">→</span>
+      </a>
+      <a href="./foundation/f02.html" class="session-card">
+        <div class="session-num">F — 02</div>
+        <div class="session-name">Claude 설치 및 기본 세팅</div>
+        <div class="session-desc">Claude.ai 가입부터 Projects 설정까지. 브랜드 운영을 위한 기초 환경을 구성합니다.</div>
+        <span class="session-badge free">무료</span>
+        <span class="session-arrow">→</span>
+      </a>
+      <a href="./foundation/f03.html" class="session-card">
+        <div class="session-num">F — 03</div>
+        <div class="session-name">MCP 연결 방법</div>
+        <div class="session-desc">Claude가 외부 도구와 연결되는 법. Notion, Google Drive 연동으로 브랜드 DB를 구축합니다.</div>
+        <span class="session-badge free">무료</span>
+        <span class="session-arrow">→</span>
+      </a>
+      <a href="./foundation/f04.html" class="session-card">
+        <div class="session-num">F — 04</div>
+        <div class="session-name">AI Tools 전체 지도</div>
+        <div class="session-desc">Claude, Gemini, GPT, 이미지 생성 AI까지. 어떤 툴이 무엇을 하는지 한눈에 파악합니다.</div>
+        <span class="session-badge free">무료</span>
+        <span class="session-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- SYSTEM FREE -->
+<div id="system">
+  <div class="series-header">
+    <span class="series-title">System Series</span>
+    <span class="series-count">S-01 — S-07</span>
+  </div>
+  <div class="system-section system-free">
+    <div class="foundation-label">브랜드를 시스템으로 운영하는 법 — S-01~03 무료</div>
+    <div class="system-list">
+      <a href="./system/s01.html" class="system-row">
+        <div class="row-num">S — 01</div>
+        <div class="row-info">
+          <div class="row-name">AI에게 내 브랜드 말투 이식하기</div>
+          <div class="row-desc">BRAND.md 파일로 Claude에게 브랜드 철학과 언어를 학습시키는 법</div>
+        </div>
+        <div class="row-right">
+          <span class="row-badge">무료</span>
+          <span class="row-arrow">→</span>
+        </div>
+      </a>
+      <a href="./system/s02.html" class="system-row">
+        <div class="row-num">S — 02</div>
+        <div class="row-info">
+          <div class="row-name">한 달치 콘텐츠 30분에 설계하기</div>
+          <div class="row-desc">AI로 인스타그램 캡션, 뉴스레터, 블로그 포스트를 한 번에 설계하는 구조</div>
+        </div>
+        <div class="row-right">
+          <span class="row-badge">무료</span>
+          <span class="row-arrow">→</span>
+        </div>
+      </a>
+      <a href="./system/s03.html" class="system-row">
+        <div class="row-num">S — 03</div>
+        <div class="row-info">
+          <div class="row-name">AI 상담봇 오늘 안에 만들기</div>
+          <div class="row-desc">브랜드 톤으로 말하고 예약까지 연결하는 자동 응대 시스템 구축</div>
+        </div>
+        <div class="row-right">
+          <span class="row-badge">무료</span>
+          <span class="row-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- SYSTEM LOCKED -->
+<div class="locked-section">
+  <div class="locked-header">
+    <span class="locked-label">System Series — Locked / S-04 — S-07</span>
+    <span class="locked-badge-main">클라이언트 · 유료 커뮤니티 전용</span>
+  </div>
+  <div class="locked-grid">
+    <div class="locked-card">
+      <div class="locked-num">S — 04</div>
+      <div class="locked-name">매출 흐름 자동화 설계</div>
+      <div class="locked-desc">광고에서 랜딩, CTA까지 구매 흐름을 자동화하는 Leo 시스템</div>
+      <span class="lock-icon">⊘</span>
+    </div>
+    <div class="locked-card">
+      <div class="locked-num">S — 05</div>
+      <div class="locked-name">브랜드 비주얼 시스템 구축</div>
+      <div class="locked-desc">일관된 이미지와 레이아웃을 자동 생성하는 Rhea 시스템</div>
+      <span class="lock-icon">⊘</span>
+    </div>
+    <div class="locked-card">
+      <div class="locked-num">S — 06</div>
+      <div class="locked-name">재구매 구조 설계하기</div>
+      <div class="locked-desc">고객 행동 기반 메시지로 반복 구매를 만드는 Mina 시스템</div>
+      <span class="lock-icon">⊘</span>
+    </div>
+    <div class="locked-card">
+      <div class="locked-num">S — 07</div>
+      <div class="locked-name">Brand OS 전체 이식</div>
+      <div class="locked-desc">Noa가 설계한 전체 구조를 내 브랜드에 완전히 이식하는 최종 단계</div>
+      <span class="lock-icon">⊘</span>
+    </div>
+  </div>
+  <div class="locked-cta">
+    <p class="locked-cta-text">
+      클라이언트 또는 유료 커뮤니티 등록자만 접근할 수 있습니다.<br>
+      채움의 Brand OS를 내 브랜드에 이식하고 싶다면 서비스 문의로 시작하세요.
+    </p>
+    <a href="https://chaeum.cloud#contact" class="btn-light">서비스 문의하기</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://chaeum.cloud" class="footer-logo">CHAEUM</a>
+  <span class="footer-right">© 2025 CHAEUM. chaeum.cloud</span>
+</footer>
+
+</body>
+</html>
