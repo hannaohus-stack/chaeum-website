@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-04 — Claude 작업 구조를 이해하는 기본 개념 | CHAEUM Academy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root{--bg:#F2F1EC;--ink:#4B4545;--ink-alpha60:rgba(75,69,69,0.6);--ink-alpha30:rgba(75,69,69,0.3);--ink-alpha12:rgba(75,69,69,0.12);--ink-alpha06:rgba(75,69,69,0.06);--font:'Pretendard Variable',Pretendard,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--font);font-weight:300;background:var(--bg);color:var(--ink);overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2.5rem;background:rgba(242,241,236,0.92);backdrop-filter:blur(14px);border-bottom:0.5px solid var(--ink-alpha12);}
+  .nav-left{display:flex;align-items:center;gap:0.6rem;}
+  .nav-logo{font-size:0.95rem;letter-spacing:0.18em;font-weight:400;color:var(--ink);text-decoration:none;}
+  .nav-sep{color:var(--ink-alpha30);font-size:0.7rem;}
+  .nav-crumb{font-size:0.65rem;color:var(--ink-alpha60);text-decoration:none;letter-spacing:0.06em;transition:color 0.3s;}
+  .nav-crumb:hover{color:var(--ink);}
+  .nav-crumb.current{color:var(--ink);cursor:default;}
+  .nav-right{font-size:0.6rem;letter-spacing:0.1em;color:var(--ink-alpha30);text-transform:uppercase;}
+  .page{display:grid;grid-template-columns:220px 1fr;min-height:100vh;padding-top:5rem;}
+  .sidebar{border-right:0.5px solid var(--ink-alpha12);padding:3rem 1.5rem;position:sticky;top:5rem;height:calc(100vh - 5rem);overflow-y:auto;}
+  .sidebar-series{font-size:0.52rem;letter-spacing:0.14em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:1.2rem;}
+  .sidebar-item{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.7rem;margin-bottom:0.2rem;font-size:0.7rem;color:var(--ink-alpha60);text-decoration:none;border-radius:2px;transition:background 0.2s,color 0.2s;}
+  .sidebar-item:hover{background:var(--ink-alpha06);color:var(--ink);}
+  .sidebar-item.active{background:var(--ink);color:var(--bg);}
+  .sidebar-num{font-size:0.5rem;letter-spacing:0.08em;opacity:0.5;min-width:28px;}
+  .sidebar-divider{height:0.5px;background:var(--ink-alpha12);margin:1.2rem 0;}
+  .sidebar-locked{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.7rem;margin-bottom:0.2rem;font-size:0.7rem;color:var(--ink-alpha30);cursor:default;}
+  .content{padding:3.5rem 4rem 6rem;max-width:780px;}
+  .session-tag{font-size:0.55rem;letter-spacing:0.16em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:1rem;}
+  .session-title{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.01em;}
+  .session-meta{display:flex;gap:1.5rem;align-items:center;padding-bottom:2.5rem;border-bottom:0.5px solid var(--ink-alpha12);margin-bottom:3rem;}
+  .meta-item{font-size:0.62rem;color:var(--ink-alpha60);letter-spacing:0.06em;}
+  .meta-dot{color:var(--ink-alpha30);}
+  .body-text{font-size:0.88rem;line-height:2;color:var(--ink);margin-bottom:1.5rem;}
+  .body-text strong{font-weight:400;}
+  .doc-section{margin-bottom:3.5rem;}
+  .doc-section-num{font-size:0.55rem;letter-spacing:0.14em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:0.6rem;}
+  .doc-section-title{font-size:1.25rem;font-weight:400;color:var(--ink);margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:0.5px solid var(--ink-alpha12);}
+  .card-block{border:0.5px solid var(--ink-alpha12);margin-bottom:0.7rem;overflow:hidden;}
+  .card-block-header{padding:1rem 1.4rem;border-bottom:0.5px solid var(--ink-alpha12);background:var(--ink-alpha06);font-size:0.72rem;font-weight:400;color:var(--ink);}
+  .card-block-body{padding:1.1rem 1.4rem;font-size:0.95rem;line-height:1.9;color:var(--ink);}
+
+  /* FLOW DIAGRAM */
+  .flow-diagram{display:flex;align-items:center;gap:0;margin:1.5rem 0;flex-wrap:wrap;}
+  .flow-box{border:0.5px solid var(--ink-alpha12);padding:0.8rem 1.2rem;text-align:center;}
+  .flow-box-label{font-size:0.5rem;letter-spacing:0.1em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:0.3rem;}
+  .flow-box-name{font-size:0.92rem;font-weight:400;color:var(--ink);}
+  .flow-box.active{background:var(--ink);}
+  .flow-box.active .flow-box-label{color:rgba(242,241,236,0.4);}
+  .flow-box.active .flow-box-name{color:var(--bg);}
+  .flow-sep{font-size:0.7rem;color:var(--ink-alpha30);padding:0 0.5rem;}
+
+  /* COMPARE */
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:0.5px solid var(--ink-alpha12);margin-bottom:1.5rem;}
+  .compare-header{padding:0.7rem 1.2rem;background:var(--ink-alpha06);border-bottom:0.5px solid var(--ink-alpha12);font-size:0.55rem;letter-spacing:0.1em;color:var(--ink-alpha60);text-transform:uppercase;border-right:0.5px solid var(--ink-alpha12);}
+  .compare-header:last-child{border-right:none;}
+  .compare-cell{padding:0.9rem 1.2rem;font-size:0.92rem;line-height:1.75;color:var(--ink);border-right:0.5px solid var(--ink-alpha12);border-bottom:0.5px solid var(--ink-alpha12);}
+  .compare-cell:last-child{border-right:none;}
+  .compare-row:last-child .compare-cell{border-bottom:none;}
+  .compare-row{display:contents;}
+
+  /* CONTEXT LAYERS */
+  .context-layer{border:0.5px solid var(--ink-alpha12);padding:1rem 1.4rem;margin-bottom:0.5rem;display:flex;align-items:flex-start;gap:1rem;}
+  .layer-num{font-size:0.58rem;letter-spacing:0.1em;color:var(--ink-alpha30);text-transform:uppercase;white-space:nowrap;min-width:52px;padding-top:2px;}
+  .layer-content{}
+  .layer-title{font-size:0.8rem;font-weight:400;color:var(--ink);margin-bottom:0.3rem;}
+  .layer-desc{font-size:0.72rem;line-height:1.75;color:var(--ink-alpha60);}
+  .layer-example{font-size:0.68rem;color:var(--ink-alpha30);margin-top:0.4rem;padding-top:0.4rem;border-top:0.5px solid var(--ink-alpha12);}
+
+  /* CAN / CANNOT */
+  .ability-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;}
+  .ability-card{border:0.5px solid var(--ink-alpha12);padding:1.2rem;}
+  .ability-label{font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+  .ability-label.can{color:var(--ink);}
+  .ability-label.cannot{color:var(--ink-alpha30);}
+  .ability-item{font-size:0.75rem;line-height:1.9;color:var(--ink);padding-left:0.8rem;position:relative;}
+  .ability-item::before{content:'';position:absolute;left:0;top:0.7rem;width:4px;height:4px;border-radius:50%;}
+  .ability-item.can-item::before{background:var(--ink);}
+  .ability-item.cannot-item::before{background:var(--ink-alpha30);}
+
+  .conclusion{border:0.5px solid var(--ink);padding:1.5rem 1.8rem;margin:2.5rem 0;display:flex;gap:1rem;align-items:flex-start;}
+  .conclusion-label{font-size:0.52rem;letter-spacing:0.12em;color:var(--ink-alpha60);text-transform:uppercase;white-space:nowrap;padding-top:3px;min-width:48px;}
+  .conclusion-text{font-size:0.88rem;font-weight:400;color:var(--ink);line-height:1.7;}
+
+  .next-cta{background:var(--ink);padding:2.5rem;margin-top:3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
+  .next-label{font-size:0.52rem;letter-spacing:0.12em;color:rgba(242,241,236,0.4);text-transform:uppercase;margin-bottom:0.5rem;}
+  .next-title{font-size:1rem;font-weight:400;color:var(--bg);}
+  .btn-light{font-size:0.6rem;letter-spacing:0.12em;color:var(--ink);background:var(--bg);padding:0.8rem 1.8rem;text-decoration:none;text-transform:uppercase;white-space:nowrap;transition:opacity 0.3s;display:inline-block;}
+  .btn-light:hover{opacity:0.8;}
+
+  .session-nav{display:flex;justify-content:space-between;align-items:center;margin-top:4rem;padding-top:2rem;border-top:0.5px solid var(--ink-alpha12);}
+  .session-nav a{font-size:0.65rem;color:var(--ink-alpha60);text-decoration:none;letter-spacing:0.06em;transition:color 0.3s;}
+  .session-nav a:hover{color:var(--ink);}
+  .session-nav-label{font-size:0.52rem;letter-spacing:0.1em;color:var(--ink-alpha30);text-transform:uppercase;display:block;margin-bottom:0.3rem;}
+
+  @media(max-width:900px){
+    .page{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .content{padding:2.5rem 1.5rem 5rem;}
+    nav{padding:1.2rem 1.5rem;}
+    .compare-grid{grid-template-columns:1fr;}
+    .compare-header:first-child{border-right:none;}
+    .compare-cell{border-right:none;}
+    .ability-grid{grid-template-columns:1fr;}
+    .flow-diagram{gap:0.3rem;}
+    .next-cta{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="https://chaeum.cloud" class="nav-logo">CHAEUM</a>
+    <span class="nav-sep">/</span>
+    <a href="/academy" class="nav-crumb">Academy</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-crumb current">F-04</span>
+  </div>
+  <div class="nav-right">Foundation Series</div>
+</nav>
+
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidebar-series">Foundation Series</div>
+    <a href="/academy/foundation/f01.html" class="sidebar-item"><span class="sidebar-num">F-01</span>Claude AI란 무엇인가</a>
+    <a href="/academy/foundation/f02.html" class="sidebar-item"><span class="sidebar-num">F-02</span>Claude 설치 및 세팅</a>
+    <a href="/academy/foundation/f03.html" class="sidebar-item"><span class="sidebar-num">F-03</span>MCP 연결 방법</a>
+    <a href="/academy/foundation/f04.html" class="sidebar-item active"><span class="sidebar-num">F-04</span>Claude 작업 구조 이해</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-series">System Series</div>
+    <a href="/academy/system/s01.html" class="sidebar-item"><span class="sidebar-num">S-01</span>브랜드 말투 이식</a>
+    <a href="/academy/system/s02.html" class="sidebar-item"><span class="sidebar-num">S-02</span>콘텐츠 30분 설계</a>
+    <a href="/academy/system/s03.html" class="sidebar-item"><span class="sidebar-num">S-03</span>AI 상담봇 만들기</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-series">Locked</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-04</span>매출 흐름 자동화</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-05</span>비주얼 시스템</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-06</span>재구매 구조</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-07</span>Brand OS 이식</div>
+  </aside>
+
+  <main class="content">
+
+    <div class="session-tag">Foundation Series — F-04</div>
+    <h1 class="session-title">Claude 작업 구조를<br>이해하는 기본 개념</h1>
+    <div class="session-meta">
+      <span class="meta-item">읽는 시간 약 12분</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">무료 공개</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">다음 → System Series S-01</span>
+    </div>
+
+    <p class="body-text">
+      Claude를 단순히 "질문하면 답하는 도구"로 쓰면 30%도 활용하지 못합니다. Claude가 <strong>어떻게 생각하고, 어떤 구조로 작동하는지</strong>를 이해하면 훨씬 정밀하게 쓸 수 있습니다. 이 세션은 그 구조를 설명합니다.
+    </p>
+
+    <!-- 4.1 -->
+    <div class="doc-section">
+      <div class="doc-section-num">4.1</div>
+      <div class="doc-section-title">Claude는 어떻게 생각하는가</div>
+      <p class="body-text">Claude는 대화창에 입력된 모든 텍스트를 한꺼번에 읽고 답합니다. 이것을 <strong>컨텍스트 창(Context Window)</strong>이라고 합니다. 대화 내용, 업로드한 파일, 시스템 지시사항 — 이 모든 것이 Claude가 읽는 "맥락"입니다.</p>
+      <div class="card-block">
+        <div class="card-block-header">컨텍스트 창이란</div>
+        <div class="card-block-body">
+          Claude가 한 번에 처리할 수 있는 텍스트의 양입니다. Claude의 컨텍스트 창은 약 200,000 토큰으로, 일반 소설책 한 권 분량의 텍스트를 한 번에 읽고 이해할 수 있습니다.<br><br>
+          중요한 점 — 대화가 길어질수록 앞부분의 내용을 덜 중요하게 처리합니다. 핵심 정보는 항상 명확하게 반복해서 전달하는 게 좋습니다.
+        </div>
+      </div>
+      <div class="flow-diagram">
+        <div class="flow-box">
+          <div class="flow-box-label">System</div>
+          <div class="flow-box-name">Project Instructions</div>
+        </div>
+        <div class="flow-sep">+</div>
+        <div class="flow-box">
+          <div class="flow-box-label">Knowledge</div>
+          <div class="flow-box-name">BRAND.md 파일</div>
+        </div>
+        <div class="flow-sep">+</div>
+        <div class="flow-box">
+          <div class="flow-box-label">Request</div>
+          <div class="flow-box-name">내 요청</div>
+        </div>
+        <div class="flow-sep">→</div>
+        <div class="flow-box active">
+          <div class="flow-box-label">Output</div>
+          <div class="flow-box-name">Claude 답변</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.2 -->
+    <div class="doc-section">
+      <div class="doc-section-num">4.2</div>
+      <div class="doc-section-title">Context Engineering — 맥락을 설계하는 법</div>
+      <p class="body-text">좋은 결과물은 좋은 프롬프트가 아니라 <strong>좋은 맥락 설계</strong>에서 나옵니다. 프롬프트 엔지니어링이 "질문을 잘하는 것"이라면, Context Engineering은 "Claude가 작업하는 환경 전체를 설계하는 것"입니다.</p>
+
+      <div class="context-layer">
+        <div class="layer-num">Layer 1</div>
+        <div class="layer-content">
+          <div class="layer-title">시스템 지시 (Project Instructions)</div>
+          <div class="layer-desc">Claude가 이 프로젝트에서 항상 따르는 기본 규칙. 역할, 말투, 금지 표현 등을 정의합니다.</div>
+          <div class="layer-example">예: "당신은 채움의 브랜드 AI입니다. 모든 결과물은 BRAND.md 기준을 따르세요."</div>
+        </div>
+      </div>
+      <div class="context-layer">
+        <div class="layer-num">Layer 2</div>
+        <div class="layer-content">
+          <div class="layer-title">브랜드 지식 (Knowledge Files)</div>
+          <div class="layer-desc">Projects에 올려둔 파일들. BRAND.md, 제품 설명, 타겟 페르소나 등 Claude가 항상 참고하는 문서입니다.</div>
+          <div class="layer-example">예: BRAND.md, 제품 카탈로그, 고객 FAQ</div>
+        </div>
+      </div>
+      <div class="context-layer">
+        <div class="layer-num">Layer 3</div>
+        <div class="layer-content">
+          <div class="layer-title">대화 맥락 (Conversation History)</div>
+          <div class="layer-desc">현재 대화에서 오간 내용. 앞서 말한 조건, 수정 요청, 승인한 내용이 모두 포함됩니다.</div>
+          <div class="layer-example">예: "아까 말한 톤으로", "이전 버전에서 첫 문장만 바꿔서"</div>
+        </div>
+      </div>
+      <div class="context-layer">
+        <div class="layer-num">Layer 4</div>
+        <div class="layer-content">
+          <div class="layer-title">현재 요청 (User Request)</div>
+          <div class="layer-desc">지금 입력하는 메시지. Layer 1~3이 잘 설계돼 있으면 짧고 간단한 요청만으로도 원하는 결과가 나옵니다.</div>
+          <div class="layer-example">예: "이번 주 인스타 캡션 3개 써줘" (한 줄로 충분)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.3 -->
+    <div class="doc-section">
+      <div class="doc-section-num">4.3</div>
+      <div class="doc-section-title">Claude가 작업하는 방식 — Plan → 실행 → 확인</div>
+      <p class="body-text">Claude는 복잡한 작업을 받으면 무작정 실행하지 않습니다. 내부적으로 <strong>계획을 세우고, 단계별로 실행하고, 불확실한 부분은 확인을 요청</strong>합니다.</p>
+      <div class="card-block">
+        <div class="card-block-header">Plan — 먼저 계획을 세웁니다</div>
+        <div class="card-block-body">큰 작업을 받으면 Claude는 어떻게 접근할지 먼저 생각합니다. "한 달치 콘텐츠 캘린더 만들어줘"라고 하면 — 먼저 채널별로 나누고, 주제를 구성하고, 형식을 정하는 계획을 세웁니다. 이 계획을 먼저 보여달라고 요청하면 방향을 조정할 수 있습니다.</div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">실행 — 단계별로 처리합니다</div>
+        <div class="card-block-body">한 번에 모든 걸 내놓기보다 단계별로 작업합니다. 긴 문서를 분석할 때는 섹션별로, 여러 채널 콘텐츠를 만들 때는 채널별로 나눠서 진행합니다. 중간에 방향을 수정하기 쉬운 구조입니다.</div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">확인 — 모호한 부분은 먼저 물어봅니다</div>
+        <div class="card-block-body">요청이 불명확하거나 중요한 결정이 필요한 경우, Claude는 추측하지 않고 확인을 요청합니다. 이게 귀찮게 느껴질 수 있지만 — 엉뚱한 결과물을 받는 것보다 훨씬 낫습니다. Project Instructions에 "불확실하면 추측하지 말고 질문하세요"라고 명시하면 더 정확하게 작동합니다.</div>
+      </div>
+    </div>
+
+    <!-- 4.4 -->
+    <div class="doc-section">
+      <div class="doc-section-num">4.4</div>
+      <div class="doc-section-title">Claude가 할 수 있는 것과 못하는 것</div>
+      <p class="body-text">Claude를 잘 쓰려면 한계도 정확히 알아야 합니다. 과신하면 오히려 브랜드에 해가 됩니다.</p>
+      <div class="ability-grid">
+        <div class="ability-card">
+          <div class="ability-label can">할 수 있는 것</div>
+          <div class="ability-item can-item">긴 문서 읽고 요약 · 분석</div>
+          <div class="ability-item can-item">브랜드 말투로 콘텐츠 작성</div>
+          <div class="ability-item can-item">여러 옵션 비교 · 추천</div>
+          <div class="ability-item can-item">복잡한 구조 설계 · 기획</div>
+          <div class="ability-item can-item">코드 작성 · 수정 · 디버깅</div>
+          <div class="ability-item can-item">MCP로 외부 도구 직접 조작</div>
+          <div class="ability-item can-item">다국어 번역 · 현지화</div>
+        </div>
+        <div class="ability-card">
+          <div class="ability-label cannot">못하는 것</div>
+          <div class="ability-item cannot-item">실시간 인터넷 검색 (기본)</div>
+          <div class="ability-item cannot-item">이미지 · 영상 직접 생성</div>
+          <div class="ability-item cannot-item">학습 데이터 이후 최신 정보</div>
+          <div class="ability-item cannot-item">100% 정확한 사실 보장</div>
+          <div class="ability-item cannot-item">감정적 판단 · 직관</div>
+          <div class="ability-item cannot-item">브랜드의 최종 의사결정</div>
+          <div class="ability-item cannot-item">대표자의 경험과 맥락 대체</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.5 -->
+    <div class="doc-section">
+      <div class="doc-section-num">4.5</div>
+      <div class="doc-section-title">채움이 Claude를 쓰는 구조</div>
+      <p class="body-text">위의 개념을 실제 브랜드 운영에 적용하면 이렇게 됩니다.</p>
+      <div class="card-block">
+        <div class="card-block-header">채움의 Claude 운영 구조</div>
+        <div class="card-block-body">
+          <strong>Layer 1 (시스템)</strong> — 브랜드별 Project Instructions. 역할, 말투, 금지 표현, 결과물 형식 정의<br><br>
+          <strong>Layer 2 (지식)</strong> — BRAND.md + 제품 설명 + 타겟 페르소나. 3개 파일로 브랜드 뇌 구성<br><br>
+          <strong>Layer 3 (자동화)</strong> — MCP로 Notion 연결. Claude가 직접 콘텐츠 캘린더 읽고 초안 저장<br><br>
+          <strong>Layer 4 (요청)</strong> — "이번 주 콘텐츠 뽑아줘" 한 줄로 전체 프로세스 실행
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">이 구조가 만드는 변화</div>
+        <div class="card-block-body">
+          레이어가 잘 쌓여 있으면 — 짧은 요청으로 긴 결과물이 나옵니다.<br>
+          레이어 없이 쓰면 — 매번 긴 설명을 붙여야 하고 결과도 들쭉날쭉합니다.<br><br>
+          Foundation에서 배운 것들 (가입 → Projects 세팅 → BRAND.md → MCP 연결)이 모두 이 레이어를 쌓는 과정이었습니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="conclusion">
+      <span class="conclusion-label">결론</span>
+      <p class="conclusion-text">
+        Claude는 맥락을 먹고 자랍니다. 좋은 맥락을 설계할수록 요청은 짧아지고 결과물은 정확해집니다.<br>
+        Foundation Series는 여기까지입니다. 이제 System Series에서 이 구조를 내 브랜드에 직접 적용합니다.
+      </p>
+    </div>
+
+    <div class="next-cta">
+      <div>
+        <div class="next-label">다음 단계 — System Series 시작</div>
+        <div class="next-title">S-01 — AI에게 내 브랜드 말투 이식하기</div>
+      </div>
+      <a href="/academy/system/s01.html" class="btn-light">시작하기 →</a>
+    </div>
+
+    <div class="session-nav">
+      <div>
+        <a href="/academy/foundation/f03.html">
+          <span class="session-nav-label">이전 세션</span>
+          ← F-03 MCP 연결 방법
+        </a>
+      </div>
+      <div style="text-align:right">
+        <a href="/academy/system/s01.html">
+          <span class="session-nav-label">System Series 시작</span>
+          S-01 브랜드 말투 이식하기 →
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

@@ -35,15 +35,15 @@
     font-size: 0.82rem; letter-spacing: 0.18em;
     color: var(--ink); text-decoration: none;
   }
-  .nav-sep { color: var(--ink-alpha30); font-size: 0.7rem; }
+  .nav-sep { color: var(--ink-alpha60); font-size: 0.7rem; }
   .nav-current {
     font-size: 0.72rem; letter-spacing: 0.1em;
-    color: var(--ink-alpha60); text-transform: uppercase;
+    color: var(--ink); text-transform: uppercase;
   }
   .nav-links { display: flex; gap: 2rem; align-items: center; }
   .nav-links a {
     font-size: 0.62rem; letter-spacing: 0.1em;
-    color: var(--ink-alpha60); text-decoration: none; text-transform: uppercase; transition: color 0.3s;
+    color: var(--ink); text-decoration: none; text-transform: uppercase; transition: color 0.3s;
   }
   .nav-links a:hover { color: var(--ink); }
   .nav-cta {
@@ -58,7 +58,7 @@
   }
   .hero-tag {
     font-size: 0.58rem; letter-spacing: 0.16em;
-    color: var(--ink-alpha60); text-transform: uppercase; margin-bottom: 1.5rem;
+    color: var(--ink); text-transform: uppercase; margin-bottom: 1.5rem;
   }
   .hero-title {
     font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 200;
@@ -76,7 +76,7 @@
     text-transform: uppercase; white-space: nowrap;
   }
   .flow-step.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-  .flow-arrow { font-size: 0.6rem; color: var(--ink-alpha30); padding: 0 0.3rem; }
+  .flow-arrow { font-size: 0.6rem; color: var(--ink-alpha60); padding: 0 0.3rem; }
 
   /* SERIES HEADER */
   .series-header {
@@ -87,12 +87,12 @@
     font-size: 0.58rem; letter-spacing: 0.16em;
     color: var(--ink); text-transform: uppercase;
   }
-  .series-count { font-size: 0.58rem; color: var(--ink-alpha30); letter-spacing: 0.08em; }
+  .series-count { font-size: 0.58rem; color: var(--ink-alpha60); letter-spacing: 0.08em; }
 
   /* FOUNDATION GRID */
   .foundation-section { padding: 1.5rem 2.5rem 5rem; }
-  .foundation-label {
-    font-size: 0.55rem; letter-spacing: 0.14em; color: var(--ink-alpha60);
+  .foundation-label { font-size: 0.85rem !important; color: var(--ink) !important;
+    font-size: 0.55rem; letter-spacing: 0.14em; color: var(--ink);
     text-transform: uppercase; padding: 1.2rem 0; border-bottom: 0.5px solid var(--ink-alpha12);
     margin-bottom: 0;
   }
@@ -110,33 +110,33 @@
   .session-card.locked { cursor: default; }
   .session-card.locked:hover { background: transparent; }
   .session-num {
-    font-size: 0.55rem; letter-spacing: 0.1em; color: var(--ink-alpha30);
+    font-size: 0.55rem; letter-spacing: 0.1em; color: var(--ink-alpha60);
     text-transform: uppercase; margin-bottom: 1.2rem;
   }
   .session-icon {
     width: 32px; height: 32px; margin-bottom: 1.2rem;
     border: 0.5px solid var(--ink-alpha12); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.65rem; color: var(--ink-alpha60);
+    font-size: 0.65rem; color: var(--ink);
   }
   .session-name {
-    font-size: 0.88rem; font-weight: 400; color: var(--ink);
-    line-height: 1.4; margin-bottom: 0.5rem;
+    font-size: 1.05rem; font-weight: 500; color: var(--ink);
+    line-height: 1.5; margin-bottom: 0.6rem;
   }
   .session-desc {
-    font-size: 0.68rem; line-height: 1.8; color: var(--ink-alpha60);
+    font-size: 0.88rem; line-height: 1.9; color: var(--ink);
     margin-bottom: 1.5rem;
   }
   .session-badge {
     font-size: 0.52rem; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 3px 9px; border: 0.5px solid var(--ink-alpha30); color: var(--ink-alpha60);
+    padding: 3px 9px; border: 0.5px solid var(--ink-alpha30); color: var(--ink);
     display: inline-block;
   }
-  .session-badge.free { border-color: var(--ink-alpha30); color: var(--ink-alpha60); }
+  .session-badge.free { border-color: var(--ink-alpha60); color: var(--ink); }
   .session-badge.locked-badge { border-color: var(--ink); color: var(--ink); }
   .session-arrow {
     position: absolute; bottom: 2rem; right: 1.8rem;
-    font-size: 0.7rem; color: var(--ink-alpha30); transition: color 0.3s, transform 0.3s;
+    font-size: 0.7rem; color: var(--ink-alpha60); transition: color 0.3s, transform 0.3s;
   }
   .session-card:hover .session-arrow { color: var(--ink); transform: translateX(3px); }
 
@@ -209,18 +209,18 @@
   .system-row.locked-row { cursor: default; }
   .system-row.locked-row:hover { background: transparent; }
   .row-num {
-    font-size: 0.55rem; letter-spacing: 0.1em; color: var(--ink-alpha30); text-transform: uppercase;
+    font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink); text-transform: uppercase;
   }
   .row-info {}
-  .row-name { font-size: 0.85rem; font-weight: 400; color: var(--ink); margin-bottom: 0.2rem; }
-  .row-desc { font-size: 0.67rem; color: var(--ink-alpha60); line-height: 1.6; }
+  .row-name { font-size: 1rem; font-weight: 500; color: var(--ink); margin-bottom: 0.35rem; }
+  .row-desc { font-size: 0.85rem; color: var(--ink); line-height: 1.8; }
   .row-right { display: flex; align-items: center; gap: 1rem; }
   .row-badge {
     font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 3px 9px; border: 0.5px solid var(--ink-alpha30); color: var(--ink-alpha60);
+    padding: 3px 9px; border: 0.5px solid var(--ink-alpha30); color: var(--ink);
     white-space: nowrap;
   }
-  .row-arrow { font-size: 0.7rem; color: var(--ink-alpha30); transition: all 0.3s; }
+  .row-arrow { font-size: 0.7rem; color: var(--ink-alpha60); transition: all 0.3s; }
   .system-row:hover .row-arrow { color: var(--ink); transform: translateX(3px); }
 
   /* FOOTER */
@@ -234,7 +234,7 @@
     text-decoration: none;
   }
   .footer-right {
-    font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink-alpha30);
+    font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink-alpha60);
   }
 
   @media (max-width: 900px) {
@@ -296,39 +296,35 @@
 <!-- FOUNDATION -->
 <div id="foundation">
   <div class="series-header">
-    <span class="series-title">Foundation Series</span>
+    <div style="display:flex;align-items:center;gap:0.8rem;"><span class="series-title">Foundation Series</span><span style="font-size:0.5rem;letter-spacing:0.1em;color:var(--ink);border:0.5px solid var(--ink);padding:2px 8px;text-transform:uppercase;">Free</span></div>
     <span class="series-count">F-01 — F-04</span>
   </div>
   <div class="foundation-section">
-    <div class="foundation-label">AI가 처음인 분을 위한 기초 — 전체 무료 공개</div>
+
     <div class="session-grid">
-      <a href="./foundation/f01.html" class="session-card">
+      <a href="/academy/foundation/f01.html" class="session-card">
         <div class="session-num">F — 01</div>
         <div class="session-name">Claude AI란 무엇인가</div>
         <div class="session-desc">Claude가 다른 AI와 어떻게 다른지, 브랜드 운영에 왜 가장 적합한지 알아봅니다.</div>
-        <span class="session-badge free">무료</span>
-        <span class="session-arrow">→</span>
+        <span style="font-size:0.6rem;letter-spacing:0.08em;color:var(--ink);border:0.5px solid var(--ink-alpha12);padding:5px 12px;display:inline-block;margin-top:0.8rem;transition:background 0.2s;">More Read →</span>
       </a>
-      <a href="./foundation/f02.html" class="session-card">
+      <a href="/academy/foundation/f02.html" class="session-card">
         <div class="session-num">F — 02</div>
         <div class="session-name">Claude 설치 및 기본 세팅</div>
         <div class="session-desc">Claude.ai 가입부터 Projects 설정까지. 브랜드 운영을 위한 기초 환경을 구성합니다.</div>
-        <span class="session-badge free">무료</span>
-        <span class="session-arrow">→</span>
+        <span style="font-size:0.6rem;letter-spacing:0.08em;color:var(--ink);border:0.5px solid var(--ink-alpha12);padding:5px 12px;display:inline-block;margin-top:0.8rem;transition:background 0.2s;">More Read →</span>
       </a>
-      <a href="./foundation/f03.html" class="session-card">
+      <a href="/academy/foundation/f03.html" class="session-card">
         <div class="session-num">F — 03</div>
         <div class="session-name">MCP 연결 방법</div>
         <div class="session-desc">Claude가 외부 도구와 연결되는 법. Notion, Google Drive 연동으로 브랜드 DB를 구축합니다.</div>
-        <span class="session-badge free">무료</span>
-        <span class="session-arrow">→</span>
+        <span style="font-size:0.6rem;letter-spacing:0.08em;color:var(--ink);border:0.5px solid var(--ink-alpha12);padding:5px 12px;display:inline-block;margin-top:0.8rem;transition:background 0.2s;">More Read →</span>
       </a>
-      <a href="./foundation/f04.html" class="session-card">
+      <a href="/academy/foundation/f04.html" class="session-card">
         <div class="session-num">F — 04</div>
-        <div class="session-name">AI Tools 전체 지도</div>
-        <div class="session-desc">Claude, Gemini, GPT, 이미지 생성 AI까지. 어떤 툴이 무엇을 하는지 한눈에 파악합니다.</div>
-        <span class="session-badge free">무료</span>
-        <span class="session-arrow">→</span>
+        <div class="session-name">Claude 작업 구조 이해</div>
+        <div class="session-desc">Claude가 어떻게 생각하고 작동하는지. 맥락 설계부터 할 수 있는 것과 못하는 것까지 정리합니다.</div>
+        <span style="font-size:0.6rem;letter-spacing:0.08em;color:var(--ink);border:0.5px solid var(--ink-alpha12);padding:5px 12px;display:inline-block;margin-top:0.8rem;transition:background 0.2s;">More Read →</span>
       </a>
     </div>
   </div>
@@ -341,39 +337,36 @@
     <span class="series-count">S-01 — S-07</span>
   </div>
   <div class="system-section system-free">
-    <div class="foundation-label">브랜드를 시스템으로 운영하는 법 — S-01~03 무료</div>
+
     <div class="system-list">
-      <a href="./system/s01.html" class="system-row">
+      <a href="/academy/system/s01.html" class="system-row">
         <div class="row-num">S — 01</div>
         <div class="row-info">
           <div class="row-name">AI에게 내 브랜드 말투 이식하기</div>
           <div class="row-desc">BRAND.md 파일로 Claude에게 브랜드 철학과 언어를 학습시키는 법</div>
         </div>
         <div class="row-right">
-          <span class="row-badge">무료</span>
-          <span class="row-arrow">→</span>
+          <span style="font-size:0.6rem;letter-spacing:0.08em;color:var(--ink);border:0.5px solid var(--ink-alpha12);padding:5px 12px;">More Read →</span>
         </div>
       </a>
-      <a href="./system/s02.html" class="system-row">
+      <a href="/academy/system/s02.html" class="system-row">
         <div class="row-num">S — 02</div>
         <div class="row-info">
           <div class="row-name">한 달치 콘텐츠 30분에 설계하기</div>
           <div class="row-desc">AI로 인스타그램 캡션, 뉴스레터, 블로그 포스트를 한 번에 설계하는 구조</div>
         </div>
         <div class="row-right">
-          <span class="row-badge">무료</span>
-          <span class="row-arrow">→</span>
+          <span style="font-size:0.6rem;letter-spacing:0.08em;color:var(--ink);border:0.5px solid var(--ink-alpha12);padding:5px 12px;">More Read →</span>
         </div>
       </a>
-      <a href="./system/s03.html" class="system-row">
+      <a href="/academy/system/s03.html" class="system-row">
         <div class="row-num">S — 03</div>
         <div class="row-info">
           <div class="row-name">AI 상담봇 오늘 안에 만들기</div>
           <div class="row-desc">브랜드 톤으로 말하고 예약까지 연결하는 자동 응대 시스템 구축</div>
         </div>
         <div class="row-right">
-          <span class="row-badge">무료</span>
-          <span class="row-arrow">→</span>
+          <span style="font-size:0.6rem;letter-spacing:0.08em;color:var(--ink);border:0.5px solid var(--ink-alpha12);padding:5px 12px;">More Read →</span>
         </div>
       </a>
     </div>

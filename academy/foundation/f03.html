@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-03 — MCP 연결 방법 | CHAEUM Academy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root{--bg:#F2F1EC;--ink:#4B4545;--ink-alpha60:rgba(75,69,69,0.6);--ink-alpha30:rgba(75,69,69,0.3);--ink-alpha12:rgba(75,69,69,0.12);--ink-alpha06:rgba(75,69,69,0.06);--font:'Pretendard Variable',Pretendard,sans-serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--font);font-weight:300;background:var(--bg);color:var(--ink);overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2.5rem;background:rgba(242,241,236,0.92);backdrop-filter:blur(14px);border-bottom:0.5px solid var(--ink-alpha12);}
+  .nav-left{display:flex;align-items:center;gap:0.6rem;}
+  .nav-logo{font-size:0.95rem;letter-spacing:0.18em;font-weight:400;color:var(--ink);text-decoration:none;}
+  .nav-sep{color:var(--ink-alpha30);font-size:0.7rem;}
+  .nav-crumb{font-size:0.65rem;color:var(--ink-alpha60);text-decoration:none;letter-spacing:0.06em;transition:color 0.3s;}
+  .nav-crumb:hover{color:var(--ink);}
+  .nav-crumb.current{color:var(--ink);cursor:default;}
+  .nav-right{font-size:0.6rem;letter-spacing:0.1em;color:var(--ink-alpha30);text-transform:uppercase;}
+  .page{display:grid;grid-template-columns:220px 1fr;min-height:100vh;padding-top:5rem;}
+  .sidebar{border-right:0.5px solid var(--ink-alpha12);padding:3rem 1.5rem;position:sticky;top:5rem;height:calc(100vh - 5rem);overflow-y:auto;}
+  .sidebar-series{font-size:0.52rem;letter-spacing:0.14em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:1.2rem;}
+  .sidebar-item{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.7rem;margin-bottom:0.2rem;font-size:0.7rem;color:var(--ink-alpha60);text-decoration:none;border-radius:2px;transition:background 0.2s,color 0.2s;}
+  .sidebar-item:hover{background:var(--ink-alpha06);color:var(--ink);}
+  .sidebar-item.active{background:var(--ink);color:var(--bg);}
+  .sidebar-num{font-size:0.5rem;letter-spacing:0.08em;opacity:0.5;min-width:28px;}
+  .sidebar-divider{height:0.5px;background:var(--ink-alpha12);margin:1.2rem 0;}
+  .sidebar-locked{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.7rem;margin-bottom:0.2rem;font-size:0.7rem;color:var(--ink-alpha30);cursor:default;}
+  .content{padding:3.5rem 4rem 6rem;max-width:780px;}
+  .session-tag{font-size:0.55rem;letter-spacing:0.16em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:1rem;}
+  .session-title{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.01em;}
+  .session-meta{display:flex;gap:1.5rem;align-items:center;padding-bottom:2.5rem;border-bottom:0.5px solid var(--ink-alpha12);margin-bottom:3rem;}
+  .meta-item{font-size:0.62rem;color:var(--ink-alpha60);letter-spacing:0.06em;}
+  .meta-dot{color:var(--ink-alpha30);}
+  .body-text{font-size:0.88rem;line-height:2;color:var(--ink);margin-bottom:1.5rem;}
+  .doc-section{margin-bottom:3.5rem;}
+  .doc-section-num{font-size:0.55rem;letter-spacing:0.14em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:0.6rem;}
+  .doc-section-title{font-size:1.25rem;font-weight:400;color:var(--ink);margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:0.5px solid var(--ink-alpha12);}
+  .card-block{border:0.5px solid var(--ink-alpha12);margin-bottom:0.7rem;overflow:hidden;}
+  .card-block-header{padding:1rem 1.4rem;border-bottom:0.5px solid var(--ink-alpha12);background:var(--ink-alpha06);font-size:0.72rem;font-weight:400;color:var(--ink);}
+  .card-block-body{padding:1.1rem 1.4rem;font-size:0.95rem;line-height:1.9;color:var(--ink);}
+  .step-block{border:0.5px solid var(--ink-alpha12);margin-bottom:0.7rem;display:grid;grid-template-columns:52px 1fr;align-items:start;}
+  .step-num{display:flex;align-items:center;justify-content:center;padding:1.1rem 0;}
+  .step-num-inner{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:400;flex-shrink:0;}
+  .step-body{padding:1.1rem 1.4rem;}
+  .step-title{font-size:0.95rem;font-weight:400;color:var(--ink);margin-bottom:0.4rem;}
+  .step-desc{font-size:0.92rem;line-height:2;color:var(--ink);}
+  .step-tip{font-size:0.7rem;color:var(--ink-alpha60);margin-top:0.5rem;padding-top:0.5rem;border-top:0.5px solid var(--ink-alpha12);}
+  .mcp-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:0.5px solid var(--ink-alpha12);margin-bottom:1.5rem;}
+  .mcp-card{padding:1.5rem;border-right:0.5px solid var(--ink-alpha12);border-bottom:0.5px solid var(--ink-alpha12);}
+  .mcp-card:nth-child(2n){border-right:none;}
+  .mcp-card:nth-last-child(-n+2){border-bottom:none;}
+  .mcp-name{font-size:0.92rem;font-weight:400;color:var(--ink);margin-bottom:0.3rem;}
+  .mcp-tag{font-size:0.5rem;letter-spacing:0.08em;color:var(--ink-alpha60);text-transform:uppercase;margin-bottom:0.6rem;}
+  .mcp-desc{font-size:0.7rem;color:var(--ink-alpha60);line-height:1.75;}
+  .mcp-rec{font-size:0.55rem;letter-spacing:0.06em;color:var(--ink);border:0.5px solid var(--ink-alpha30);display:inline-block;padding:2px 8px;margin-top:0.5rem;}
+  .code-block{background:var(--ink);padding:1.5rem 1.8rem;margin:1rem 0 1.5rem;overflow-x:auto;}
+  .code-label{font-size:0.52rem;letter-spacing:0.12em;color:rgba(242,241,236,0.35);text-transform:uppercase;margin-bottom:0.8rem;}
+  .code-block pre{font-family:'Courier New',monospace;font-size:0.75rem;line-height:1.8;color:rgba(242,241,236,0.85);white-space:pre-wrap;}
+  .warn-block{border:0.5px solid var(--ink-alpha30);padding:1rem 1.4rem;margin-bottom:1rem;display:flex;gap:0.8rem;align-items:flex-start;}
+  .warn-icon{font-size:0.7rem;color:var(--ink-alpha60);white-space:nowrap;padding-top:2px;}
+  .warn-text{font-size:0.92rem;line-height:1.8;color:var(--ink);}
+  .conclusion{border:0.5px solid var(--ink);padding:1.5rem 1.8rem;margin:2.5rem 0;display:flex;gap:1rem;align-items:flex-start;}
+  .conclusion-label{font-size:0.52rem;letter-spacing:0.12em;color:var(--ink-alpha60);text-transform:uppercase;white-space:nowrap;padding-top:3px;min-width:48px;}
+  .conclusion-text{font-size:0.88rem;font-weight:400;color:var(--ink);line-height:1.7;}
+  .session-nav{display:flex;justify-content:space-between;align-items:center;margin-top:4rem;padding-top:2rem;border-top:0.5px solid var(--ink-alpha12);}
+  .session-nav a{font-size:0.65rem;color:var(--ink-alpha60);text-decoration:none;letter-spacing:0.06em;transition:color 0.3s;}
+  .session-nav a:hover{color:var(--ink);}
+  .session-nav-label{font-size:0.52rem;letter-spacing:0.1em;color:var(--ink-alpha30);text-transform:uppercase;display:block;margin-bottom:0.3rem;}
+  @media(max-width:900px){
+    .page{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .content{padding:2.5rem 1.5rem 5rem;}
+    nav{padding:1.2rem 1.5rem;}
+    .mcp-grid{grid-template-columns:1fr;}
+    .mcp-card{border-right:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="https://chaeum.cloud" class="nav-logo">CHAEUM</a>
+    <span class="nav-sep">/</span>
+    <a href="/academy" class="nav-crumb">Academy</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-crumb current">F-03</span>
+  </div>
+  <div class="nav-right">Foundation Series</div>
+</nav>
+
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidebar-series">Foundation Series</div>
+    <a href="/academy/foundation/f01.html" class="sidebar-item"><span class="sidebar-num">F-01</span>Claude AI란 무엇인가</a>
+    <a href="/academy/foundation/f02.html" class="sidebar-item"><span class="sidebar-num">F-02</span>Claude 설치 및 세팅</a>
+    <a href="/academy/foundation/f03.html" class="sidebar-item active"><span class="sidebar-num">F-03</span>MCP 연결 방법</a>
+    <a href="/academy/foundation/f04.html" class="sidebar-item"><span class="sidebar-num">F-04</span>AI Tools 전체 지도</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-series">System Series</div>
+    <a href="/academy/system/s01.html" class="sidebar-item"><span class="sidebar-num">S-01</span>브랜드 말투 이식</a>
+    <a href="/academy/system/s02.html" class="sidebar-item"><span class="sidebar-num">S-02</span>콘텐츠 30분 설계</a>
+    <a href="/academy/system/s03.html" class="sidebar-item"><span class="sidebar-num">S-03</span>AI 상담봇 만들기</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-series">Locked</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-04</span>매출 흐름 자동화</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-05</span>비주얼 시스템</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-06</span>재구매 구조</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-07</span>Brand OS 이식</div>
+  </aside>
+
+  <main class="content">
+
+    <div class="session-tag">Foundation Series — F-03</div>
+    <h1 class="session-title">MCP 연결 방법</h1>
+    <div class="session-meta">
+      <span class="meta-item">읽는 시간 약 15분</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">무료 공개</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">다음 세션 → F-04 AI Tools 전체 지도</span>
+    </div>
+
+    <p class="body-text">
+      Claude는 기본적으로 대화 창 안에서만 작동합니다. 하지만 <strong>MCP(Model Context Protocol)</strong>를 연결하면 Notion, Google Drive, Gmail, 캘린더 같은 외부 도구와 직접 연동됩니다. 브랜드 DB를 Claude가 실시간으로 읽고, 쓰고, 관리할 수 있게 되는 것입니다.
+    </p>
+
+    <!-- 3.1 -->
+    <div class="doc-section">
+      <div class="doc-section-num">3.1</div>
+      <div class="doc-section-title">MCP란 무엇인가</div>
+      <p class="body-text">MCP는 Anthropic이 2024년 말 공개한 오픈 프로토콜입니다. 쉽게 말하면 <strong>"Claude가 외부 도구를 직접 사용할 수 있게 해주는 연결 규격"</strong>입니다.</p>
+      <div class="card-block">
+        <div class="card-block-header">MCP 이전과 이후</div>
+        <div class="card-block-body">
+          MCP 이전 — Claude에게 "우리 노션 브랜드 DB 업데이트해줘"라고 해도 직접 접근이 불가능했습니다. 내용을 복사해서 붙여넣는 수작업이 필요했습니다.<br><br>
+          MCP 이후 — Claude가 직접 Notion에 접속해 페이지를 읽고, 수정하고, 새 내용을 추가할 수 있습니다. 사람 없이 자동으로 작동하는 브랜드 시스템의 핵심입니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.2 -->
+    <div class="doc-section">
+      <div class="doc-section-num">3.2</div>
+      <div class="doc-section-title">브랜드 운영에 유용한 MCP 목록</div>
+      <p class="body-text">수백 가지 MCP 서버가 있지만 브랜드 운영에 실제로 쓰이는 것은 다음과 같습니다.</p>
+      <div class="mcp-grid">
+        <div class="mcp-card">
+          <div class="mcp-tag">문서 관리</div>
+          <div class="mcp-name">Notion MCP</div>
+          <div class="mcp-desc">브랜드 DB, 콘텐츠 캘린더, 아이디어 노트를 Claude가 직접 읽고 씁니다.</div>
+          <span class="mcp-rec">채움 추천</span>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-tag">파일 저장</div>
+          <div class="mcp-name">Google Drive MCP</div>
+          <div class="mcp-desc">Drive에 저장된 브랜드 가이드라인, 사진, 문서를 Claude가 직접 접근합니다.</div>
+          <span class="mcp-rec">채움 추천</span>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-tag">이메일</div>
+          <div class="mcp-name">Gmail MCP</div>
+          <div class="mcp-desc">고객 문의 이메일을 읽고 브랜드 톤으로 초안을 작성합니다.</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-tag">일정</div>
+          <div class="mcp-name">Google Calendar MCP</div>
+          <div class="mcp-desc">콘텐츠 발행 일정을 자동으로 캘린더에 등록합니다.</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-tag">검색</div>
+          <div class="mcp-name">Brave Search MCP</div>
+          <div class="mcp-desc">실시간 시장 트렌드와 경쟁사 정보를 검색해 브랜드 전략에 활용합니다.</div>
+        </div>
+        <div class="mcp-card">
+          <div class="mcp-tag">개발</div>
+          <div class="mcp-name">GitHub MCP</div>
+          <div class="mcp-desc">웹사이트 코드를 직접 수정하고 배포합니다. 기술 브랜드에 유용합니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.3 -->
+    <div class="doc-section">
+      <div class="doc-section-num">3.3</div>
+      <div class="doc-section-title">Claude Desktop에서 MCP 연결하기</div>
+      <p class="body-text">MCP는 현재 <strong>Claude Desktop 앱</strong>에서 설정할 수 있습니다. 웹 브라우저 버전은 일부 MCP만 지원합니다.</p>
+
+      <div class="warn-block">
+        <span class="warn-icon">주의</span>
+        <span class="warn-text">MCP 설정은 약간의 기술적 작업이 필요합니다. JSON 파일을 편집하는 과정이 포함됩니다. 어렵게 느껴지면 이 세션을 북마크해두고 나중에 돌아오세요. Foundation F-01, F-02만으로도 브랜드 운영 자동화의 80%는 가능합니다.</span>
+      </div>
+
+      <div class="step-block">
+        <div class="step-num"><div class="step-num-inner">01</div></div>
+        <div class="step-body">
+          <div class="step-title">Claude Desktop 앱 설치</div>
+          <div class="step-desc">claude.ai/download에서 Mac 또는 Windows 버전을 다운받습니다. 설치 후 기존 계정으로 로그인합니다.</div>
+        </div>
+      </div>
+      <div class="step-block">
+        <div class="step-num"><div class="step-num-inner">02</div></div>
+        <div class="step-body">
+          <div class="step-title">설정 파일 열기</div>
+          <div class="step-desc">
+            Mac: 터미널에서 아래 명령어 입력<br>
+            Windows: %APPDATA%\Claude\claude_desktop_config.json 파일 열기
+          </div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-label">Mac — 설정 파일 열기</div>
+        <pre>open ~/Library/Application\ Support/Claude/claude_desktop_config.json</pre>
+      </div>
+      <div class="step-block">
+        <div class="step-num"><div class="step-num-inner">03</div></div>
+        <div class="step-body">
+          <div class="step-title">MCP 서버 정보 추가</div>
+          <div class="step-desc">파일을 열면 JSON 형식의 설정이 보입니다. mcpServers 항목에 사용할 MCP 정보를 추가합니다.</div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-label">Notion MCP 연결 예시</div>
+        <pre>{
+  "mcpServers": {
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@notionhq/notion-mcp-server"],
+      "env": {
+        "NOTION_API_KEY": "여기에_노션_API_키_입력"
+      }
+    }
+  }
+}</pre>
+      </div>
+      <div class="step-block">
+        <div class="step-num"><div class="step-num-inner">04</div></div>
+        <div class="step-body">
+          <div class="step-title">Claude Desktop 재시작</div>
+          <div class="step-desc">설정 파일 저장 후 Claude Desktop을 완전히 종료하고 다시 실행합니다. 좌측 하단에 연결된 MCP 도구 아이콘이 표시되면 성공입니다.</div>
+          <div class="step-tip">팁 — 연결이 안 될 경우 Node.js가 설치되어 있는지 확인하세요. node.js 공식 사이트에서 LTS 버전을 설치하면 됩니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.4 -->
+    <div class="doc-section">
+      <div class="doc-section-num">3.4</div>
+      <div class="doc-section-title">Notion API 키 발급받기</div>
+      <p class="body-text">MCP 연결에는 각 서비스의 API 키가 필요합니다. 가장 많이 쓰는 Notion 기준으로 설명합니다.</p>
+      <div class="step-block">
+        <div class="step-num"><div class="step-num-inner">01</div></div>
+        <div class="step-body">
+          <div class="step-title">notion.so/my-integrations 접속</div>
+          <div class="step-desc">Notion 계정으로 로그인 후 "New integration" 클릭합니다.</div>
+        </div>
+      </div>
+      <div class="step-block">
+        <div class="step-num"><div class="step-num-inner">02</div></div>
+        <div class="step-body">
+          <div class="step-title">Integration 이름 설정</div>
+          <div class="step-desc">"Claude Brand OS" 등 알아보기 쉬운 이름으로 설정합니다. Submit 클릭 후 Internal Integration Token 복사합니다.</div>
+        </div>
+      </div>
+      <div class="step-block">
+        <div class="step-num"><div class="step-num-inner">03</div></div>
+        <div class="step-body">
+          <div class="step-title">Notion 페이지에 권한 부여</div>
+          <div class="step-desc">Claude가 접근할 Notion 페이지 우측 상단 ••• → Connections → 방금 만든 integration 추가합니다. 이 페이지의 하위 페이지도 자동으로 접근 가능합니다.</div>
+          <div class="step-tip">팁 — 브랜드 DB 전체를 담은 상위 페이지 하나에 권한을 주면 하위 모든 페이지에 Claude가 접근할 수 있습니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.5 -->
+    <div class="doc-section">
+      <div class="doc-section-num">3.5</div>
+      <div class="doc-section-title">연결 후 실제로 쓰는 법</div>
+      <p class="body-text">MCP 연결이 완료되면 Claude에게 자연어로 지시하면 됩니다. 복잡한 명령어가 필요 없습니다.</p>
+      <div class="card-block">
+        <div class="card-block-header">Notion 연결 후 실제 사용 예시</div>
+        <div class="card-block-body">
+          "우리 브랜드 DB에서 이번 달 콘텐츠 캘린더 읽어줘"<br>
+          "방금 작성한 인스타 캡션 3개를 노션 콘텐츠 캘린더에 추가해줘"<br>
+          "브랜드 가이드라인 페이지에서 금지 표현 목록 찾아줘"
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">채움이 MCP를 쓰는 방식</div>
+        <div class="card-block-body">매주 월요일 아침, Claude에게 "이번 주 콘텐츠 캘린더 노션에서 읽고 각 채널별 초안 작성해줘"라고 하면 — 노션을 읽고, 초안을 작성하고, 다시 노션에 저장합니다. 사람은 검토만 합니다.
+        </div>
+      </div>
+    </div>
+
+    <div class="conclusion">
+      <span class="conclusion-label">결론</span>
+      <p class="conclusion-text">
+        MCP는 Claude를 단순 채팅 도구에서 실제 브랜드 운영 시스템으로 바꾸는 핵심입니다. 처음엔 어렵게 느껴져도 한 번 연결해두면 이후 운영이 완전히 달라집니다.<br>
+        다음 세션에서는 Claude 외 브랜드 운영에 필요한 AI 툴 전체를 한눈에 정리합니다.
+      </p>
+    </div>
+
+    <div class="session-nav">
+      <div>
+        <a href="/academy/foundation/f02.html">
+          <span class="session-nav-label">이전 세션</span>
+          ← F-02 Claude 설치 및 기본 세팅
+        </a>
+      </div>
+      <div style="text-align:right">
+        <a href="/academy/foundation/f04.html">
+          <span class="session-nav-label">다음 세션</span>
+          F-04 AI Tools 전체 지도 →
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

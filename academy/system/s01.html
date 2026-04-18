@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S-01 — AI에게 내 브랜드 말투 이식하기 | CHAEUM Academy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root {
+    --bg: #F2F1EC;
+    --ink: #4B4545;
+    --ink-alpha60: rgba(75,69,69,0.6);
+    --ink-alpha30: rgba(75,69,69,0.3);
+    --ink-alpha12: rgba(75,69,69,0.12);
+    --ink-alpha06: rgba(75,69,69,0.06);
+    --font: 'Pretendard Variable', Pretendard, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font); font-weight: 300;
+    background: var(--bg); color: var(--ink); overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 2.5rem;
+    background: rgba(242,241,236,0.92); backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--ink-alpha12);
+  }
+  .nav-left { display: flex; align-items: center; gap: 0.6rem; }
+  .nav-logo { font-size: 0.95rem; letter-spacing: 0.18em; font-weight: 400; color: var(--ink); text-decoration: none; }
+  .nav-sep { color: var(--ink-alpha30); font-size: 0.7rem; }
+  .nav-crumb { font-size: 0.65rem; color: var(--ink); text-decoration: none; letter-spacing: 0.06em; transition: color 0.3s; }
+  .nav-crumb:hover { color: var(--ink); }
+  .nav-crumb.current { color: var(--ink); cursor: default; }
+  .nav-right { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink-alpha30); text-transform: uppercase; }
+
+  /* LAYOUT */
+  .page { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; padding-top: 5rem; }
+
+  /* SIDEBAR */
+  .sidebar {
+    border-right: 0.5px solid var(--ink-alpha12);
+    padding: 3rem 1.5rem;
+    position: sticky; top: 5rem; height: calc(100vh - 5rem); overflow-y: auto;
+  }
+  .sidebar-series { font-size: 0.52rem; letter-spacing: 0.14em; color: var(--ink-alpha30); text-transform: uppercase; margin-bottom: 1.2rem; }
+  .sidebar-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.55rem 0.7rem; margin-bottom: 0.2rem;
+    font-size: 0.7rem; color: var(--ink);
+    text-decoration: none; border-radius: 2px; transition: background 0.2s, color 0.2s;
+  }
+  .sidebar-item:hover { background: var(--ink-alpha06); color: var(--ink); }
+  .sidebar-item.active { background: var(--ink); color: var(--bg); }
+  .sidebar-num { font-size: 0.5rem; letter-spacing: 0.08em; opacity: 0.5; min-width: 28px; }
+  .sidebar-divider { height: 0.5px; background: var(--ink-alpha12); margin: 1.2rem 0; }
+  .sidebar-locked { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.7rem; margin-bottom: 0.2rem; font-size: 0.7rem; color: var(--ink-alpha30); cursor: default; }
+
+  /* CONTENT */
+  .content { padding: 3.5rem 4rem 6rem; max-width: 780px; }
+  .session-tag { font-size: 0.55rem; letter-spacing: 0.16em; color: var(--ink-alpha30); text-transform: uppercase; margin-bottom: 1rem; }
+  .session-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 300; color: var(--ink); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+  .session-meta {
+    display: flex; gap: 1.5rem; align-items: center;
+    padding-bottom: 2.5rem; border-bottom: 0.5px solid var(--ink-alpha12); margin-bottom: 3rem;
+  }
+  .meta-item { font-size: 0.62rem; color: var(--ink); letter-spacing: 0.06em; }
+  .meta-dot { color: var(--ink-alpha30); }
+  .body-text { font-size: 0.88rem; line-height: 2; color: var(--ink); margin-bottom: 1.5rem; }
+  .body-text strong { font-weight: 400; color: var(--ink); }
+
+  /* SECTION */
+  .doc-section { margin-bottom: 3.5rem; }
+  .doc-section-num { font-size: 0.55rem; letter-spacing: 0.14em; color: var(--ink-alpha30); text-transform: uppercase; margin-bottom: 0.6rem; }
+  .doc-section-title { font-size: 1.25rem; font-weight: 400; color: var(--ink); margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 0.5px solid var(--ink-alpha12); }
+
+  /* CARD BLOCK */
+  .card-block { border: 0.5px solid var(--ink-alpha12); margin-bottom: 0.7rem; overflow: hidden; }
+  .card-block-header { padding: 1rem 1.4rem; border-bottom: 0.5px solid var(--ink-alpha12); background: var(--ink-alpha06); font-size: 0.72rem; font-weight: 400; color: var(--ink); letter-spacing: 0.02em; }
+  .card-block-body { padding: 1.1rem 1.4rem; font-size: 0.95rem; line-height: 1.9; color: var(--ink); }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: var(--ink); padding: 1.5rem 1.8rem; margin: 1rem 0 1.5rem;
+    overflow-x: auto;
+  }
+  .code-block pre {
+    font-family: 'Courier New', monospace; font-size: 0.75rem;
+    line-height: 1.8; color: rgba(242,241,236,0.85); white-space: pre-wrap;
+  }
+  .code-label {
+    font-size: 0.52rem; letter-spacing: 0.12em; color: rgba(242,241,236,0.35);
+    text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+
+  /* BEFORE AFTER */
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 1.5rem; border: 0.5px solid var(--ink-alpha12); }
+  .ba-col { padding: 1.4rem; }
+  .ba-col:first-child { border-right: 0.5px solid var(--ink-alpha12); }
+  .ba-label { font-size: 0.52rem; letter-spacing: 0.12em; color: var(--ink-alpha30); text-transform: uppercase; margin-bottom: 0.8rem; }
+  .ba-text { font-size: 0.92rem; line-height: 2; color: var(--ink); }
+  .ba-text.bad { color: var(--ink); }
+
+  /* DOWNLOAD CTA */
+  .download-box {
+    border: 0.5px solid var(--ink);
+    padding: 2rem 2.2rem; margin: 3rem 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .download-info {}
+  .download-label { font-size: 0.52rem; letter-spacing: 0.12em; color: var(--ink); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .download-title { font-size: 0.95rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+  .download-desc { font-size: 0.7rem; color: var(--ink); line-height: 1.6; }
+  .btn-download {
+    font-size: 0.6rem; letter-spacing: 0.12em; color: var(--bg);
+    background: var(--ink); padding: 0.8rem 1.6rem;
+    text-decoration: none; text-transform: uppercase; white-space: nowrap;
+    display: inline-block; transition: opacity 0.3s;
+  }
+  .btn-download:hover { opacity: 0.8; }
+
+  /* CONCLUSION */
+  .conclusion {
+    border: 0.5px solid var(--ink); padding: 1.5rem 1.8rem; margin: 2.5rem 0;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .conclusion-label { font-size: 0.52rem; letter-spacing: 0.12em; color: var(--ink); text-transform: uppercase; white-space: nowrap; padding-top: 3px; min-width: 48px; }
+  .conclusion-text { font-size: 0.88rem; font-weight: 400; color: var(--ink); line-height: 1.7; }
+
+  /* SESSION NAV */
+  .session-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--ink-alpha12);
+  }
+  .session-nav a { font-size: 0.65rem; color: var(--ink); text-decoration: none; letter-spacing: 0.06em; transition: color 0.3s; display: flex; align-items: center; gap: 0.5rem; }
+  .session-nav a:hover { color: var(--ink); }
+  .session-nav-label { font-size: 0.52rem; letter-spacing: 0.1em; color: var(--ink-alpha30); text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+
+  @media (max-width: 900px) {
+    .page { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .content { padding: 2.5rem 1.5rem 5rem; }
+    nav { padding: 1.2rem 1.5rem; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .ba-col:first-child { border-right: none; border-bottom: 0.5px solid var(--ink-alpha12); }
+    .download-box { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="https://chaeum.cloud" class="nav-logo">CHAEUM</a>
+    <span class="nav-sep">/</span>
+    <a href="/academy" class="nav-crumb">Academy</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-crumb current">S-01</span>
+  </div>
+  <div class="nav-right">System Series</div>
+</nav>
+
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidebar-series">Foundation Series</div>
+    <a href="/academy/foundation/f01.html" class="sidebar-item"><span class="sidebar-num">F-01</span> Claude AI란 무엇인가</a>
+    <a href="/academy/foundation/f02.html" class="sidebar-item"><span class="sidebar-num">F-02</span> Claude 설치 및 세팅</a>
+    <a href="/academy/foundation/f03.html" class="sidebar-item"><span class="sidebar-num">F-03</span> MCP 연결 방법</a>
+    <a href="/academy/foundation/f04.html" class="sidebar-item"><span class="sidebar-num">F-04</span> AI Tools 전체 지도</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-series">System Series</div>
+    <a href="/academy/system/s01.html" class="sidebar-item active"><span class="sidebar-num">S-01</span> 브랜드 말투 이식</a>
+    <a href="/academy/system/s02.html" class="sidebar-item"><span class="sidebar-num">S-02</span> 콘텐츠 30분 설계</a>
+    <a href="/academy/system/s03.html" class="sidebar-item"><span class="sidebar-num">S-03</span> AI 상담봇 만들기</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-series">Locked</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-04</span> 매출 흐름 자동화</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-05</span> 비주얼 시스템</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-06</span> 재구매 구조</div>
+    <div class="sidebar-locked"><span class="sidebar-num">S-07</span> Brand OS 이식</div>
+  </aside>
+
+  <main class="content">
+
+    <div class="session-tag">System Series — S-01</div>
+    <h1 class="session-title">AI에게 내 브랜드<br>말투 이식하기</h1>
+    <div class="session-meta">
+      <span class="meta-item">읽는 시간 약 15분</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">무료 공개</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">결과물 — BRAND.md 템플릿</span>
+    </div>
+
+    <p class="body-text">
+      AI에게 "우리 브랜드 톤으로 써줘"라고 말해본 적 있나요? 결과가 뻔하고 어딘가 어색했을 거예요. 이건 AI가 나쁜 게 아닙니다. <strong>당신이 브랜드를 제대로 설명하지 않았기 때문입니다.</strong><br><br>
+      이 세션에서는 Claude가 내 브랜드의 언어를 완전히 이해하도록 만드는 법을 알려드립니다. 한 번 설정하면 이후 모든 결과물에 자동으로 적용됩니다.
+    </p>
+
+    <!-- 1.1 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.1</div>
+      <div class="doc-section-title">왜 AI는 내 브랜드 말투를 모르는가</div>
+      <p class="body-text">AI는 전 세계 텍스트를 학습했습니다. 그래서 "일반적인" 글을 잘 씁니다. 하지만 당신의 브랜드는 일반적이지 않습니다.</p>
+      <div class="ba-grid">
+        <div class="ba-col">
+          <div class="ba-label">설명 없이 요청했을 때</div>
+          <div class="ba-text bad">"안녕하세요! 오늘은 특별한 상품을 소개해드리려고 해요. 많은 관심 부탁드립니다 😊"</div>
+        </div>
+        <div class="ba-col">
+          <div class="ba-label">브랜드를 학습시킨 후</div>
+          <div class="ba-text">"오늘 입고된 단 12병. 제주 서귀포 단일 농장, 콜드프레스 착즙. 매주 화요일만 열립니다."</div>
+        </div>
+      </div>
+      <p class="body-text">차이가 보이나요. 같은 AI가 같은 제품을 소개하는데 결과가 완전히 다릅니다. 차이는 오직 하나 — <strong>브랜드 정보를 어떻게 전달했는가</strong>입니다.</p>
+    </div>
+
+    <!-- 1.2 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.2</div>
+      <div class="doc-section-title">BRAND.md란 무엇인가</div>
+      <p class="body-text">BRAND.md는 브랜드의 언어 설계서입니다. Claude가 읽고 이해할 수 있는 형식으로 작성된 문서로, 한 번 Projects에 올려두면 이후 모든 대화에 자동 적용됩니다.</p>
+      <div class="card-block">
+        <div class="card-block-header">BRAND.md에 담기는 것들</div>
+        <div class="card-block-body">
+          브랜드 철학과 핵심 가치 / 타겟 고객의 특성과 언어 / 사용하는 단어와 사용하지 않는 단어 / 문장 길이와 호흡 / 이모지 사용 여부 / 금지 표현 목록
+        </div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">왜 마크다운(.md) 형식인가</div>
+        <div class="card-block-body">
+          Claude는 구조화된 텍스트를 더 정확하게 이해합니다. 마크다운의 헤딩과 리스트 구조가 "이건 규칙이야"라는 신호를 명확하게 전달합니다. Word나 PDF보다 훨씬 효과적입니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.3 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.3</div>
+      <div class="doc-section-title">BRAND.md 작성하는 법</div>
+      <p class="body-text">아래 템플릿을 복사해서 내 브랜드에 맞게 채우세요. 완벽하게 쓰려 하지 말고, 지금 바로 떠오르는 것부터 작성하세요. 나중에 언제든 수정할 수 있습니다.</p>
+      <div class="code-block">
+        <div class="code-label">BRAND.md 템플릿</div>
+        <pre># 브랜드명
+
+## 브랜드 철학
+- 우리가 존재하는 이유:
+- 핵심 가치 (3가지):
+
+## 타겟 고객
+- 주요 고객:
+- 그들의 고민:
+- 그들이 원하는 것:
+
+## 말투 & 톤
+- 우리 브랜드의 말투: (예: 친근하지만 가볍지 않게)
+- 문장 길이: (예: 짧고 명확하게, 한 문장 20자 이내)
+- 이모지 사용: (예: 사용 안 함)
+
+## 사용하는 단어
+- 자주 쓰는 표현:
+- 브랜드 키워드:
+
+## 사용하지 않는 단어
+- 금지 표현:
+- 피해야 할 느낌:
+
+## 콘텐츠 예시
+아래는 우리 브랜드 결에 맞는 문장 예시입니다.
+- (예시 1)
+- (예시 2)
+- (예시 3)</pre>
+      </div>
+    </div>
+
+    <!-- 1.4 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.4</div>
+      <div class="doc-section-title">Claude Projects에 이식하는 법</div>
+      <p class="body-text">BRAND.md를 작성했다면, 이제 Claude에게 학습시킬 차례입니다.</p>
+      <div class="card-block">
+        <div class="card-block-header">Step 1 — Claude Projects 열기</div>
+        <div class="card-block-body">claude.ai 접속 → 좌측 사이드바 "Projects" 클릭 → "New Project" 생성 → 프로젝트 이름을 브랜드명으로 설정</div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">Step 2 — BRAND.md 업로드</div>
+        <div class="card-block-body">Project Settings → "Add content" → BRAND.md 파일 업로드. 파일이 아니라면 내용을 직접 붙여넣기해도 됩니다.</div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">Step 3 — 시스템 프롬프트 설정</div>
+        <div class="card-block-body">
+          Project Instructions에 아래 문장을 추가하세요.<br><br>
+          <strong>"위 BRAND.md를 완전히 숙지하고, 모든 결과물을 브랜드 가이드라인에 맞게 작성하세요. 브랜드 말투와 금지 표현을 반드시 지키세요."</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.5 -->
+    <div class="doc-section">
+      <div class="doc-section-num">1.5</div>
+      <div class="doc-section-title">잘 됐는지 테스트하는 법</div>
+      <p class="body-text">이식이 완료됐다면 아래 3가지 테스트로 확인해보세요.</p>
+      <div class="card-block">
+        <div class="card-block-header">테스트 1 — 인스타그램 캡션 요청</div>
+        <div class="card-block-body">"신제품 출시 인스타그램 캡션 3개 써줘" — 결과물이 브랜드 말투와 맞는지 확인. 어색하다면 BRAND.md의 예시 문장을 더 추가하세요.</div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">테스트 2 — 금지 표현 확인</div>
+        <div class="card-block-body">결과물에 금지 표현이 포함됐는지 확인. 포함됐다면 BRAND.md의 금지 표현 섹션을 더 구체적으로 작성하세요.</div>
+      </div>
+      <div class="card-block">
+        <div class="card-block-header">테스트 3 — 브랜드 설명 요청</div>
+        <div class="card-block-body">"우리 브랜드를 한 줄로 소개해줘" — Claude가 브랜드 철학을 제대로 이해했는지 확인할 수 있는 가장 빠른 방법입니다.</div>
+      </div>
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div class="download-box">
+      <div class="download-info">
+        <div class="download-label">무료 템플릿</div>
+        <div class="download-title">CHAEUM BRAND.md 템플릿</div>
+        <div class="download-desc">채움이 직접 사용하는 BRAND.md 구조를 그대로 담았습니다.<br>복사해서 바로 사용하세요.</div>
+      </div>
+      <a href="/academy/templates/brand-md-template.md" download class="btn-download">템플릿 다운로드</a>
+    </div>
+
+    <!-- CONCLUSION -->
+    <div class="conclusion">
+      <span class="conclusion-label">결론</span>
+      <p class="conclusion-text">
+        AI는 당신의 브랜드를 모릅니다. 하지만 BRAND.md 하나로 완전히 달라집니다.<br>
+        다음 세션에서는 이식된 브랜드 말투로 한 달치 콘텐츠를 30분 만에 설계하는 법을 배웁니다.
+      </p>
+    </div>
+
+    <!-- SESSION NAV -->
+    <div class="session-nav">
+      <div>
+        <a href="/academy/foundation/f04.html">
+          <span class="session-nav-label">이전 세션</span>
+          ← F-04 AI Tools 전체 지도
+        </a>
+      </div>
+      <div style="text-align:right">
+        <a href="/academy/system/s02.html">
+          <span class="session-nav-label">다음 세션</span>
+          S-02 한 달치 콘텐츠 30분에 설계하기 →
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
