@@ -50,15 +50,17 @@
   }
   .hero-content {
     position: relative; z-index: 2;
-    padding: 0 2.5rem 3.5rem;
+    padding: 0 2.5rem 4rem;
+    width: 100%; text-align: center;
   }
   .hero-tag {
     font-size: 0.58rem; letter-spacing: 0.16em;
     color: rgba(242,241,236,0.5); text-transform: uppercase; margin-bottom: 1rem;
   }
   .hero-title {
-    font-size: clamp(3.2rem, 7vw, 6.5rem); line-height: 1.05;
-    font-weight: 200; color: var(--bg); letter-spacing: -0.01em;
+    font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.2;
+    font-weight: 300; color: var(--bg); letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
   .hero-scroll {
     position: absolute; right: 2.5rem; bottom: 3.5rem; z-index: 2;
@@ -80,25 +82,25 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.4rem 2.5rem;
-    background: rgba(242,241,236,0.88);
-    backdrop-filter: blur(14px);
-    border-bottom: 0.5px solid var(--ink-alpha12);
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom: none;
   }
   .nav-logo {
     font-family: var(--font); font-weight: 300;
     font-size: 0.85rem; letter-spacing: 0.18em;
-    color: var(--ink); text-decoration: none;
+    color: var(--bg); text-decoration: none;
   }
   .nav-links { display: flex; gap: 2.2rem; align-items: center; }
   .nav-links a {
     font-family: var(--font);
     font-size: 0.6rem; letter-spacing: 0.12em;
-    color: var(--ink-alpha60); text-decoration: none; text-transform: uppercase; transition: color 0.3s;
+    color: rgba(242,241,236,0.7); text-decoration: none; text-transform: uppercase; transition: color 0.3s;
   }
-  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover { color: var(--bg); }
   .nav-cta {
-    color: var(--bg) !important;
-    background: var(--ink); padding: 0.48rem 1.1rem;
+    color: var(--ink) !important;
+    background: var(--bg); padding: 0.48rem 1.1rem;
   }
 
 -direction: column; align-items: center; gap: 0.6rem;
@@ -258,7 +260,11 @@
     letter-spacing: 0.08em; color: var(--ink-alpha60);
     text-transform: uppercase; margin-bottom: 1rem;
   }
+  .agent-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; }
+  .agent-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--ink-alpha12); border: 0.5px solid var(--ink-alpha30); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .agent-avatar img { width: 100%; height: 100%; object-fit: cover; }
   .agent-divider { width: 20px; height: 0.5px; background: var(--ink-alpha30); margin-bottom: 1rem; }
+  a.p-item { text-decoration: none; display: block; }
   .agent-desc { font-size: 0.7rem; line-height: 1.85; color: var(--ink-alpha60); }
 
   /* ── ACADEMY ── */
@@ -369,9 +375,8 @@
 <nav>
   <a href="/" class="nav-logo">CHAEUM</a>
   <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#system">System</a>
-    <a href="https://chaeum.cloud/academy">Academy</a>
+    <a href="/work">Work</a>
+    <a href="/academy">Academy</a>
     <a href="#contact" class="nav-cta">Contact</a>
   </div>
 </nav>
@@ -380,15 +385,14 @@
 <div class="hero">
   <div class="hero-img">
     <div class="hero-img-placeholder">
-      <span class="hero-img-label">Hero image / video</span>
+      <img src="./Image/hero-main.png" alt="CHAEUM Hero" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
+      <span class="hero-img-label" style="position:absolute;">Hero image / video</span>
     </div>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-tag">AI Brand Agent System — chaeum.cloud</p>
-    <h1 class="hero-title">
-      브랜드를<br>운영하는 지능
-    </h1>
+    <h1 class="hero-title">Your brand. Running without you.</h1>
   </div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
@@ -399,10 +403,9 @@
 <!-- DECLARATION -->
 <div class="declaration">
   <span class="decl-label">About</span>
-  <p class="decl-text">
-    콘텐츠가 아니라 구조를 설계합니다.<br>
-    사람이 아니라 시스템이 운영합니다.<br>
-    감각이 아니라 매출로 연결됩니다.
+  <p class="decl-text" style="font-size:0.88rem;line-height:1.85;font-weight:300;">
+    유입을 설계하고 流, 시각적 신뢰를 구축하며 視, 매출의 구조를 만들고 販, 고객과 다시 만나는 일 結. 브랜드가 시장에서 살아남기 위해 반복하는 모든 과정은 외부의 기술이 아닌 브랜드 내부의 단단한 지능이 되어야 합니다.<br><br>
+    Every process a brand repeats to survive in the market — designing inflow, building visual trust, structuring revenue, reconnecting with customers — must become a solid intelligence within the brand itself, not an external technology. chaeum does not focus on the outputs of agencies. We pursue a state of complete autonomy in which brands breathe and grow on their own, and we install systems where philosophy and function are in balance.
   </p>
 </div>
 
@@ -410,64 +413,64 @@
 <div id="work">
   <div class="grid-header">
     <span class="grid-header-left">Selected Work</span>
-    <a href="#contact" class="grid-header-right">전체 보기</a>
+    <a href="/work" class="grid-header-right">전체 보기</a>
   </div>
   <div class="portfolio-grid">
-    <div class="p-item large">
+    <a href="/work/deokhwa.html" class="p-item large">
       <div class="p-item-img">
         <div class="p-img-bg bg1"></div>
-        <span class="p-img-placeholder">Image</span>
+        <img src="./Image/deokhwa-01.jpeg" alt="덕화명란" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
       </div>
       <div class="p-item-overlay">
-        <span class="p-item-tag">Brand OS</span>
-        <div class="p-item-title">1인 뷰티 브랜드<br>전체 시스템 구축</div>
-        <div class="p-item-desc">콘텐츠 제작 시간 70% 절감 — 월 매출 2.3배 성장</div>
+        <span class="p-item-tag">식음료 · 프리미엄 포지셔닝</span>
+        <div class="p-item-title">Deokhwa Myeongran<br>브랜드 아키텍처 재설계</div>
+        <div class="p-item-desc">연매출 30억 → 110억. +360% 성장.</div>
       </div>
-    </div>
-    <div class="p-item">
+    </a>
+    <a href="/work/eathlibrary.html" class="p-item">
       <div class="p-item-img">
         <div class="p-img-bg bg2"></div>
-        <span class="p-img-placeholder">Image</span>
+        <img src="./Image/eathlibrary-01.jpeg" alt="Eath Library" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
       </div>
       <div class="p-item-overlay">
-        <span class="p-item-tag">Sales Flow</span>
-        <div class="p-item-title">컨설팅사 퍼널 자동화</div>
-        <div class="p-item-desc">문의 전환율 34% 향상</div>
+        <span class="p-item-tag">뷰티 · 럭셔리 × 대중화</span>
+        <div class="p-item-title">Eath Library</div>
+        <div class="p-item-desc">럭셔리와 대중화 동시 달성.</div>
       </div>
-    </div>
-    <div class="p-item">
+    </a>
+    <a href="/work/butterpantry.html" class="p-item">
       <div class="p-item-img">
         <div class="p-img-bg bg3"></div>
-        <span class="p-img-placeholder">Image</span>
+        <img src="./Image/butterpantry-01.jpeg" alt="The Butter Pantry" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
       </div>
       <div class="p-item-overlay">
-        <span class="p-item-tag">Visual System</span>
-        <div class="p-item-title">라이프스타일 브랜드</div>
-        <div class="p-item-desc">비주얼 일관성 확보</div>
+        <span class="p-item-tag">푸드 · 채널 확장</span>
+        <div class="p-item-title">The Butter Pantry</div>
+        <div class="p-item-desc">홈쇼핑 · 신세계마트 입점.</div>
       </div>
-    </div>
-    <div class="p-item">
+    </a>
+    <a href="/work/therethehouse.html" class="p-item">
       <div class="p-item-img">
         <div class="p-img-bg bg4"></div>
-        <span class="p-img-placeholder">Image</span>
+        <img src="./Image/therethehouse-01.jpeg" alt="Therethehouse" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
       </div>
       <div class="p-item-overlay">
-        <span class="p-item-tag">Retention</span>
-        <div class="p-item-title">이커머스 재구매 시스템</div>
-        <div class="p-item-desc">재구매율 2.1배 상승</div>
+        <span class="p-item-tag">라이프스타일 · 브랜드 경험</span>
+        <div class="p-item-title">Therethehouse</div>
+        <div class="p-item-desc">오픈 3개월 예약 포화.</div>
       </div>
-    </div>
-    <div class="p-item" style="border-right:none">
+    </a>
+    <a href="/work/matchacha.html" class="p-item" style="border-right:none">
       <div class="p-item-img">
         <div class="p-img-bg bg5"></div>
-        <span class="p-img-placeholder">Image</span>
+        <img src="./Image/matchacha-01.png" alt="MATCHACHA" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
       </div>
       <div class="p-item-overlay">
-        <span class="p-item-tag">Brand OS</span>
-        <div class="p-item-title">스타트업 브랜드 런칭</div>
-        <div class="p-item-desc">런칭 3개월 — 팔로워 1만 달성</div>
+        <span class="p-item-tag">웰니스 티 브랜드</span>
+        <div class="p-item-title">MATCHACHA</div>
+        <div class="p-item-desc">팬덤 형성 및 재방문 구조.</div>
       </div>
-    </div>
+    </a>
   </div>
 </div>
 
@@ -479,33 +482,41 @@
   </div>
   <div class="agents-grid">
     <div class="agent-card">
-      <div class="agent-avatar">Photo</div>
       <div class="agent-num">01</div>
-      <div class="agent-name">Noa</div>
+      <div class="agent-name-row">
+        <div class="agent-name">Noa</div>
+        <div class="agent-avatar"><img src="./Image/agent-noa.png" alt="Noa" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
+      </div>
       <div class="agent-role">Brand System Architect</div>
       <div class="agent-divider"></div>
       <div class="agent-desc">브랜드 전체 구조를 설계하고 AI Brand OS를 구축합니다. 모든 결과물의 일관성을 유지하는 중심축입니다.</div>
     </div>
     <div class="agent-card">
-      <div class="agent-avatar">Photo</div>
       <div class="agent-num">02</div>
-      <div class="agent-name">Leo</div>
+      <div class="agent-name-row">
+        <div class="agent-name">Leo</div>
+        <div class="agent-avatar"><img src="./Image/agent-leo.png" alt="Leo" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
+      </div>
       <div class="agent-role">Sales Flow Architect</div>
       <div class="agent-divider"></div>
       <div class="agent-desc">광고에서 랜딩, CTA까지 고객이 구매로 이어지는 흐름을 설계합니다. 매출이 발생하는 구조를 만듭니다.</div>
     </div>
     <div class="agent-card">
-      <div class="agent-avatar">Photo</div>
       <div class="agent-num">03</div>
-      <div class="agent-name">Rhea</div>
+      <div class="agent-name-row">
+        <div class="agent-name">Rhea</div>
+        <div class="agent-avatar"><img src="./Image/agent-rhea.png" alt="Rhea" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
+      </div>
       <div class="agent-role">Visual System Director</div>
       <div class="agent-divider"></div>
       <div class="agent-desc">브랜드가 신뢰되게 보이도록 일관된 비주얼 시스템을 설계합니다. 이미지 생성부터 레이아웃까지 관리합니다.</div>
     </div>
     <div class="agent-card">
-      <div class="agent-avatar">Photo</div>
       <div class="agent-num">04</div>
-      <div class="agent-name">Mina</div>
+      <div class="agent-name-row">
+        <div class="agent-name">Mina</div>
+        <div class="agent-avatar"><img src="./Image/agent-mina.png" alt="Mina" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
+      </div>
       <div class="agent-role">Retention System Designer</div>
       <div class="agent-divider"></div>
       <div class="agent-desc">고객이 다시 사게 만드는 구조를 설계합니다. 행동 기반 메시지와 재접촉 타이밍으로 반복 구매를 만듭니다.</div>
@@ -514,42 +525,18 @@
 </div>
 
 <!-- ACADEMY -->
-<div class="academy-section" id="contact">
-  <div class="academy-left">
+<div class="academy-section" id="contact" style="grid-template-columns:1fr;">
+  <div class="academy-left" style="border-right:none;padding:7rem 2.5rem;">
     <p class="academy-tag">Chaeum Academy</p>
     <h2 class="academy-title">
       당신의 브랜드는<br>지금 당신 없이<br>돌아가고 있나요?
     </h2>
-    <p class="academy-body">
+    <p class="academy-body" style="max-width:520px;">
       Is your brand running without you?<br><br>
       Foundation부터 시작해 Brand OS까지.<br>
       채움이 설계한 커리큘럼으로 AI 브랜드 시스템을 직접 구축해보세요.
     </p>
-    <a href="https://chaeum.cloud/academy" class="btn-light">Academy 입장하기</a>
-  </div>
-  <div class="academy-right">
-    <p class="academy-series-title">Curriculum</p>
-    <div class="series-item">
-      <div>
-        <div class="s-lbl">Foundation Series</div>
-        <div class="s-name">Claude 설치부터 MCP 연결까지 — 4개 세션</div>
-      </div>
-      <span class="s-badge">무료</span>
-    </div>
-    <div class="series-item">
-      <div>
-        <div class="s-lbl">System Series</div>
-        <div class="s-name">브랜드 말투 이식 · 콘텐츠 자동화 · AI 상담봇</div>
-      </div>
-      <span class="s-badge">무료</span>
-    </div>
-    <div class="series-item">
-      <div>
-        <div class="s-lbl">System Series — Locked</div>
-        <div class="s-name">매출 흐름 · 비주얼 시스템 · Brand OS 이식</div>
-      </div>
-      <span class="s-badge locked">클라이언트 전용</span>
-    </div>
+    <a href="/academy" class="btn-light">Academy 바로가기</a>
   </div>
 </div>
 
@@ -566,9 +553,8 @@
   <div>
     <div class="footer-col-title">Navigate</div>
     <div class="footer-links">
-      <a href="#work">Work</a>
-      <a href="#system">System</a>
-      <a href="https://chaeum.cloud/academy">Academy</a>
+      <a href="/work">Work</a>
+      <a href="/academy">Academy</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
