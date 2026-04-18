@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Butter Pantry — Branding | CHAEUM Work</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root { --bg:#F2F1EC; --ink:#4B4545; --ink-alpha60:rgba(75,69,69,0.6); --ink-alpha30:rgba(75,69,69,0.3); --ink-alpha12:rgba(75,69,69,0.12); --ink-alpha06:rgba(75,69,69,0.06); --font:'Pretendard Variable',Pretendard,sans-serif; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--font);font-weight:300;background:var(--bg);color:var(--ink);overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 2.5rem;background:rgba(242,241,236,0.92);backdrop-filter:blur(14px);border-bottom:0.5px solid var(--ink-alpha12);}
+  .nav-left{display:flex;align-items:center;gap:0.6rem;}
+  .nav-logo{font-size:0.82rem;letter-spacing:0.18em;font-weight:400;color:var(--ink);text-decoration:none;}
+  .nav-sep{color:var(--ink-alpha30);font-size:0.7rem;}
+  .nav-crumb{font-size:0.65rem;color:var(--ink-alpha60);text-decoration:none;letter-spacing:0.06em;transition:color 0.3s;}
+  .nav-crumb:hover{color:var(--ink);}
+  .nav-links{display:flex;gap:2rem;align-items:center;}
+  .nav-links a{font-size:0.62rem;letter-spacing:0.1em;color:var(--ink-alpha60);text-decoration:none;text-transform:uppercase;transition:color 0.3s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{color:var(--bg)!important;background:var(--ink);padding:0.45rem 1rem;}
+  .breadcrumb{margin-top:5rem;padding:1rem 2.5rem;border-bottom:0.5px solid var(--ink-alpha12);font-size:0.55rem;letter-spacing:0.12em;color:var(--ink-alpha30);text-transform:uppercase;}
+  .breadcrumb a{color:var(--ink-alpha30);text-decoration:none;transition:color 0.3s;}
+  .breadcrumb a:hover{color:var(--ink);}
+  .breadcrumb span{margin:0 0.6rem;opacity:0.4;}
+  .hero{padding:4rem 2.5rem;border-bottom:0.5px solid var(--ink-alpha12);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;}
+  .hero-tag{font-size:0.55rem;letter-spacing:0.16em;color:var(--ink-alpha60);text-transform:uppercase;margin-bottom:1.5rem;}
+  .hero-title{font-size:clamp(3rem,6vw,5.5rem);font-weight:200;line-height:1.05;color:var(--ink);letter-spacing:-0.02em;margin-bottom:1.2rem;}
+  .hero-subtitle{font-size:0.85rem;color:var(--ink-alpha60);line-height:1.9;max-width:360px;}
+  .hero-overview{border:0.5px solid var(--ink-alpha12);}
+  .overview-row{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:0.5px solid var(--ink-alpha12);}
+  .overview-row:last-child{border-bottom:none;}
+  .overview-key{font-size:0.5rem;letter-spacing:0.12em;color:var(--ink-alpha30);text-transform:uppercase;}
+  .overview-val{font-size:0.78rem;color:var(--ink);}
+  .slideshow-section{border-bottom:0.5px solid var(--ink-alpha12);}
+  .slideshow-wrapper{position:relative;overflow:hidden;background:var(--ink);height:640px;}
+  .slides{display:flex;transition:transform 0.5s ease;height:100%;}
+  .slide{min-width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;}
+  .slide img{width:100%;height:100%;object-fit:cover;}
+  .slide-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:rgba(242,241,236,0.15);}
+  .slide-placeholder-num{font-size:5rem;font-weight:200;line-height:1;}
+  .slide-placeholder-label{font-size:0.55rem;letter-spacing:0.16em;text-transform:uppercase;}
+  .slide-caption{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 2.5rem;background:linear-gradient(transparent,rgba(75,69,69,0.65));font-size:0.68rem;color:rgba(242,241,236,0.55);}
+  .slideshow-controls{padding:1.2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:0.5px solid var(--ink-alpha12);}
+  .slide-dots{display:flex;gap:8px;}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--ink-alpha30);cursor:pointer;transition:background 0.3s;}
+  .dot.active{background:var(--ink);}
+  .slide-counter{font-size:0.55rem;letter-spacing:0.12em;color:var(--ink-alpha30);}
+  .slide-arrows{display:flex;gap:0.5rem;}
+  .arrow-btn{background:none;border:0.5px solid var(--ink-alpha12);color:var(--ink);width:36px;height:36px;cursor:pointer;font-size:0.8rem;transition:all 0.3s;display:flex;align-items:center;justify-content:center;}
+  .arrow-btn:hover{border-color:var(--ink);}
+  .summary{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:0.5px solid var(--ink-alpha12);}
+  .summary-item{padding:2rem;border-right:0.5px solid var(--ink-alpha12);}
+  .summary-item:last-child{border-right:none;}
+  .summary-label{font-size:0.5rem;letter-spacing:0.14em;color:var(--ink-alpha30);text-transform:uppercase;margin-bottom:0.7rem;}
+  .summary-title{font-size:0.88rem;font-weight:400;color:var(--ink);margin-bottom:0.5rem;}
+  .summary-desc{font-size:0.72rem;color:var(--ink-alpha60);line-height:1.8;}
+  .insight-row{padding:2.2rem 2.5rem;border-bottom:0.5px solid var(--ink-alpha12);display:flex;align-items:center;gap:1.5rem;}
+  .insight-label{font-size:0.5rem;letter-spacing:0.14em;color:var(--ink-alpha30);text-transform:uppercase;white-space:nowrap;}
+  .insight-text{font-size:0.88rem;font-weight:300;color:var(--ink);line-height:1.75;border-left:0.5px solid var(--ink-alpha12);padding-left:1.5rem;}
+  .cta-section{padding:5rem 2.5rem;text-align:center;border-bottom:0.5px solid var(--ink-alpha12);}
+  .cta-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:200;color:var(--ink);line-height:1.3;margin-bottom:1rem;}
+  .cta-desc{font-size:0.8rem;color:var(--ink-alpha60);line-height:2;margin-bottom:2.5rem;}
+  .btn-primary{font-size:0.6rem;letter-spacing:0.12em;color:var(--bg);background:var(--ink);padding:0.9rem 2rem;text-decoration:none;text-transform:uppercase;display:inline-block;transition:opacity 0.3s;}
+  .btn-primary:hover{opacity:0.8;}
+  .btn-secondary{display:inline-block;margin-top:1rem;font-size:0.6rem;letter-spacing:0.1em;color:var(--ink-alpha60);text-decoration:none;text-transform:uppercase;border-bottom:0.5px solid var(--ink-alpha30);padding-bottom:1px;}
+  .more-work{border-bottom:0.5px solid var(--ink-alpha12);}
+  .more-header{padding:1.8rem 2.5rem;border-bottom:0.5px solid var(--ink-alpha12);display:flex;align-items:center;justify-content:space-between;}
+  .more-title{font-size:0.58rem;letter-spacing:0.14em;color:var(--ink);text-transform:uppercase;}
+  .more-link{font-size:0.58rem;letter-spacing:0.1em;color:var(--ink-alpha60);text-decoration:none;text-transform:uppercase;border-bottom:0.5px solid var(--ink-alpha30);padding-bottom:1px;}
+  .more-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+  .more-card{border-right:0.5px solid var(--ink-alpha12);text-decoration:none;color:var(--ink);display:block;transition:background 0.3s;}
+  .more-card:last-child{border-right:none;}
+  .more-card:hover{background:var(--ink-alpha06);}
+  .more-img{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;}
+  .mc-bg-a{background:linear-gradient(135deg,#3a3535 0%,#5a5050 100%);}
+  .mc-bg-b{background:linear-gradient(135deg,#524e4e 0%,#3d3939 100%);}
+  .mc-bg-c{background:linear-gradient(135deg,#2e2a2a 0%,#4B4545 100%);}
+  .more-info{padding:1.2rem 1.5rem;border-top:0.5px solid var(--ink-alpha12);}
+  .more-tag{font-size:0.5rem;letter-spacing:0.1em;color:var(--ink-alpha60);text-transform:uppercase;margin-bottom:0.4rem;}
+  .more-name{font-size:0.82rem;font-weight:400;color:var(--ink);}
+  footer{padding:3rem 2.5rem;display:flex;align-items:center;justify-content:space-between;}
+  .footer-logo{font-size:0.82rem;letter-spacing:0.18em;font-weight:400;color:var(--ink);text-decoration:none;}
+  .footer-right{font-size:0.6rem;color:var(--ink-alpha30);}
+  @media(max-width:900px){
+    nav{padding:1.2rem 1.5rem;}
+    .hero{grid-template-columns:1fr;gap:2.5rem;padding:3rem 1.5rem;}
+    .summary{grid-template-columns:1fr;}
+    .summary-item{border-right:none;border-bottom:0.5px solid var(--ink-alpha12);}
+    .insight-row{flex-direction:column;align-items:flex-start;padding:2rem 1.5rem;}
+    .insight-text{border-left:none;padding-left:0;border-top:0.5px solid var(--ink-alpha12);padding-top:1rem;}
+    .slideshow-wrapper{height:320px;}
+    .more-grid{grid-template-columns:1fr;}
+    .more-card{border-right:none;border-bottom:0.5px solid var(--ink-alpha12);}
+    footer{padding:2.5rem 1.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="https://chaeum.cloud" class="nav-logo">CHAEUM</a>
+    <span class="nav-sep">/</span>
+    <a href="/work" class="nav-crumb">Work</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-crumb">The Butter Pantry</span>
+  </div>
+  <div class="nav-links">
+    <a href="/academy">Academy</a>
+    <a href="/work">Work</a>
+    <a href="https://chaeum.cloud#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/work">Work</a><span>→</span>The Butter Pantry
+</div>
+
+<div class="hero">
+  <div>
+    <div class="hero-tag">푸드 · 채널 확장 · Branding</div>
+    <h1 class="hero-title">The Butter<br>Pantry</h1>
+    <p class="hero-subtitle">성수동의 신뢰를<br>전국으로 확장했습니다.</p>
+  </div>
+  <div class="hero-overview">
+    <div class="overview-row"><span class="overview-key">Client</span><span class="overview-val">The Butter Pantry</span></div>
+    <div class="overview-row"><span class="overview-key">Category</span><span class="overview-val">푸드 · 채널 확장</span></div>
+    <div class="overview-row"><span class="overview-key">Scope</span><span class="overview-val">브랜드 포지셔닝 · 채널 전략 · 홈페이지</span></div>
+    <div class="overview-row"><span class="overview-key">Year</span><span class="overview-val">2018</span></div>
+  </div>
+</div>
+
+<div class="slideshow-section">
+  <div class="slideshow-wrapper">
+    <div class="slides" id="slides">
+      <div class="slide">
+        <img src="./Image/butterpantry-01.jpeg" alt="The Butter Pantry" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">01</div><div class="slide-placeholder-label">이미지를 업로드해주세요</div></div>
+        <div class="slide-caption">브랜드 — 성수동에서 시작한 프리미엄 버터 브랜드</div>
+      </div>
+      <div class="slide">
+        <img src="./Image/butterpantry-02.jpeg" alt="제품" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">02</div><div class="slide-placeholder-label">이미지를 업로드해주세요</div></div>
+        <div class="slide-caption">제품 — 신선함과 건강한 재료를 담은 버터 라인</div>
+      </div>
+      <div class="slide">
+        <img src="./Image/butterpantry-03.jpeg" alt="패키징" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">03</div><div class="slide-placeholder-label">이미지를 업로드해주세요</div></div>
+        <div class="slide-caption">패키징 — 성수동의 따뜻함을 담은 프리미엄 패키징</div>
+      </div>
+      <div class="slide">
+        <img src="./Image/butterpantry-04.jpeg" alt="채널" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">04</div><div class="slide-placeholder-label">이미지를 업로드해주세요</div></div>
+        <div class="slide-caption">채널 — 홈쇼핑 · 신세계마트 입점</div>
+      </div>
+      <div class="slide">
+        <img src="./Image/butterpantry-05.jpeg" alt="결과" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="slide-placeholder" style="display:none;"><div class="slide-placeholder-num">05</div><div class="slide-placeholder-label">이미지를 업로드해주세요</div></div>
+        <div class="slide-caption">결과 — 로컬에서 전국 브랜드로</div>
+      </div>
+    </div>
+  </div>
+  <div class="slideshow-controls">
+    <div class="slide-dots" id="dots"></div>
+    <div class="slide-counter" id="counter">1 / 5</div>
+    <div class="slide-arrows">
+      <button class="arrow-btn" id="prevBtn">←</button>
+      <button class="arrow-btn" id="nextBtn">→</button>
+    </div>
+  </div>
+</div>
+
+<div class="summary">
+  <div class="summary-item">
+    <div class="summary-label">Problem</div>
+    <div class="summary-title">성수동 밖으로 나갈 수 없었습니다</div>
+    <div class="summary-desc">충성 고객은 있었지만 수작업 소량 생산 구조로는 대형 유통 진출이 불가능했습니다. 카피 제품까지 등장하면서 확장이 시급했습니다.</div>
+  </div>
+  <div class="summary-item">
+    <div class="summary-label">Strategy</div>
+    <div class="summary-title">개인 사업에서 신뢰 기반 식품 기업으로</div>
+    <div class="summary-desc">프리미엄 품질은 유지하되 시스템화를 통해 멀티채널 진출 기반을 만들었습니다. 홈쇼핑 · 신세계마트 · 온라인을 동시 공략했습니다.</div>
+  </div>
+  <div class="summary-item">
+    <div class="summary-label">Outcome</div>
+    <div class="summary-title">로컬 브랜드가 전국 채널로 확장됐습니다</div>
+    <div class="summary-desc">홈쇼핑 입점, 신세계마트 입점, 마켓컬리 · 쿠팡 프레쉬 온라인 채널 확보. 성수동의 신뢰가 전국으로 전달됐습니다.</div>
+  </div>
+</div>
+
+<div class="insight-row">
+  <div class="insight-label">정성적 변화</div>
+  <div class="insight-text">"성수동에서 찾던 그 맛을 이제 집에서"라는 인식이 형성되며 프리미엄 버터 시장 자체를 성장시켰습니다.</div>
+</div>
+
+<div class="cta-section">
+  <h2 class="cta-title">로컬의 신뢰를<br>전국 채널로 확장하고 싶다면.</h2>
+  <p class="cta-desc">좋은 제품이 있다면, 구조를 바꾸면 됩니다.</p>
+  <a href="https://chaeum.cloud#contact" class="btn-primary">프로젝트 문의하기</a><br>
+  <a href="/work" class="btn-secondary">다른 사례 보기 →</a>
+</div>
+
+<div class="more-work">
+  <div class="more-header">
+    <span class="more-title">More Work</span>
+    <a href="/work" class="more-link">전체 보기</a>
+  </div>
+  <div class="more-grid">
+    <a href="/work/eathlibrary.html" class="more-card">
+      <div class="more-img mc-bg-a"><span style="font-size:0.5rem;letter-spacing:0.1em;color:rgba(242,241,236,0.2);text-transform:uppercase;">Image</span></div>
+      <div class="more-info"><div class="more-tag">뷰티 · 럭셔리 × 대중화</div><div class="more-name">Eath Library</div></div>
+    </a>
+    <a href="/work/banchan.html" class="more-card">
+      <div class="more-img mc-bg-b"><span style="font-size:0.5rem;letter-spacing:0.1em;color:rgba(242,241,236,0.2);text-transform:uppercase;">Image</span></div>
+      <div class="more-info"><div class="more-tag">Brand OS · AI System</div><div class="more-name">반찬 정기구독 Brand OS</div></div>
+    </a>
+    <a href="/work/hongshinae.html" class="more-card">
+      <div class="more-img mc-bg-c"><span style="font-size:0.5rem;letter-spacing:0.1em;color:rgba(242,241,236,0.2);text-transform:uppercase;">Image</span></div>
+      <div class="more-info"><div class="more-tag">F&B · Branding</div><div class="more-name">홍신애의 부엌</div></div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <a href="https://chaeum.cloud" class="footer-logo">CHAEUM</a>
+  <span class="footer-right">© 2025 CHAEUM. chaeum.cloud</span>
+</footer>
+
+<script>
+  const slidesEl=document.getElementById('slides');
+  const totalSlides=slidesEl.children.length;
+  const dotsContainer=document.getElementById('dots');
+  const counter=document.getElementById('counter');
+  let current=0;
+  for(let i=0;i<totalSlides;i++){const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.addEventListener('click',()=>goTo(i));dotsContainer.appendChild(dot);}
+  function goTo(index){current=(index+totalSlides)%totalSlides;slidesEl.style.transform=`translateX(-${current*100}%)`;document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));counter.textContent=`${current+1} / ${totalSlides}`;}
+  document.getElementById('prevBtn').addEventListener('click',()=>goTo(current-1));
+  document.getElementById('nextBtn').addEventListener('click',()=>goTo(current+1));
+  setInterval(()=>goTo(current+1),5000);
+</script>
+
+</body>
+</html>
