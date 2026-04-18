@@ -39,6 +39,10 @@
     width: 100%; height: 100%;
     background: linear-gradient(160deg, #3a3535 0%, #4B4545 40%, #2e2a2a 100%);
     display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-img-placeholder img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   }
   .hero-img-label {
     font-size: 0.65rem; letter-spacing: 0.14em;
@@ -261,8 +265,8 @@
     text-transform: uppercase; margin-bottom: 1rem;
   }
   .agent-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; }
-  .agent-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--ink-alpha12); border: 0.5px solid var(--ink-alpha30); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .agent-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .agent-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--ink-alpha12); border: 0.5px solid var(--ink-alpha30); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+  .agent-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
   .agent-divider { width: 20px; height: 0.5px; background: var(--ink-alpha30); margin-bottom: 1rem; }
   a.p-item { text-decoration: none; display: block; }
   .agent-desc { font-size: 0.7rem; line-height: 1.85; color: var(--ink-alpha60); }
@@ -392,7 +396,7 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-tag">AI Brand Agent System — chaeum.cloud</p>
-    <h1 class="hero-title">Your brand. Running without you.</h1>
+    <h1 class="hero-title">Nothing to run. Everything runs.</h1>
   </div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
