@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Noa — CHAEUM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{--bg:#FBFBF9;--card:#FFFFFF;--dark:#4B4545;--mid:#63635E;--muted:#ABABAA;--border:rgba(0,0,0,0.04);--max:430px;--ease:cubic-bezier(0.16,1,0.3,1);--radius:24px;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);font-family:'Pretendard',-apple-system,sans-serif;color:var(--dark);min-height:100vh;display:flex;justify-content:center;padding:72px 24px 80px;letter-spacing:-0.025em;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{width:100%;max-width:var(--max);display:flex;flex-direction:column;gap:12px;}
+  .profile{display:flex;flex-direction:column;align-items:center;gap:14px;padding-bottom:28px;text-align:center;}
+  .avatar{width:84px;height:84px;border-radius:50%;background:var(--dark);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,0.12);overflow:hidden;}
+  .avatar img{width:100%;height:100%;object-fit:cover;}
+  .avatar-inner{font-size:11px;font-weight:800;color:#fff;letter-spacing:0.12em;line-height:1.3;text-align:center;}
+  .profile-name{font-size:22px;font-weight:700;letter-spacing:-0.04em;color:var(--dark);}
+  .profile-role{font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-top:-6px;}
+  .profile-desc{font-size:14px;color:var(--mid);font-weight:400;line-height:1.65;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;box-shadow:0 2px 8px rgba(0,0,0,0.02);}
+  .lead-label{font-size:11px;font-weight:700;letter-spacing:0.1em;color:var(--dark);background:rgba(75,69,69,0.08);display:inline-block;padding:5px 12px;border-radius:100px;margin-bottom:20px;text-transform:uppercase;}
+  .lead-title{font-size:18px;font-weight:700;letter-spacing:-0.035em;color:var(--dark);margin-bottom:8px;line-height:1.3;}
+  .lead-sub{font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:22px;}
+  .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+  .form-input{width:100%;background:var(--bg);border:1px solid transparent;border-radius:14px;padding:15px 16px;font-size:14px;font-family:inherit;color:var(--dark);letter-spacing:-0.01em;transition:all .25s var(--ease);outline:none;-webkit-appearance:none;}
+  .form-input::placeholder{color:var(--muted);}
+  .form-input:focus{background:var(--card);border-color:var(--dark);box-shadow:0 4px 14px rgba(0,0,0,0.06);}
+  .btn-primary{width:100%;background:var(--dark);color:#fff;border:none;border-radius:14px;padding:16px;font-size:14px;font-weight:700;font-family:inherit;letter-spacing:-0.01em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;transition:transform .3s var(--ease),opacity .2s;}
+  .btn-primary:hover{opacity:0.88;}
+  .btn-primary:active{transform:scale(0.98);}
+  .btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
+  .btn-kakao{width:100%;background:#FEE500;color:#191919;border:none;border-radius:14px;padding:15px;font-size:14px;font-weight:600;font-family:inherit;letter-spacing:-0.01em;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:opacity .2s,transform .3s var(--ease);}
+  .btn-kakao:hover{opacity:0.88;}
+  .btn-kakao:active{transform:scale(0.98);}
+  .success-msg{display:none;text-align:center;padding:8px 0;}
+  .success-msg.visible{display:block;animation:fadeUp .5s var(--ease) both;}
+  .success-icon{font-size:36px;margin-bottom:16px;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+  .link-card{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:18px 20px;text-decoration:none;transition:transform .35s var(--ease),box-shadow .35s var(--ease);box-shadow:0 2px 8px rgba(0,0,0,0.02);}
+  .link-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,0.06);}
+  .lk-left{display:flex;align-items:center;gap:14px;flex:1;}
+  .lk-icon{width:44px;height:44px;border-radius:12px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .lk-kicker{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;}
+  .lk-heading{font-size:14px;font-weight:600;color:var(--dark);letter-spacing:-0.02em;line-height:1.3;}
+  .lk-arrow{font-size:16px;color:var(--muted);flex-shrink:0;transition:transform .3s var(--ease),color .2s;}
+  .link-card:hover .lk-arrow{transform:translate(3px,-3px);color:var(--dark);}
+  .foot{margin-top:40px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.08em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="profile">
+    <div class="avatar">
+      <img src="./Image/agent-noa.png" alt="Noa" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=&quot;avatar-inner&quot;>NOA</div>'">
+    </div>
+    <div class="profile-name">Noa</div>
+    <div class="profile-role">Brand System Architect</div>
+    <div class="profile-desc">브랜드 전체 구조를 설계하고<br>AI Brand OS를 구축합니다.</div>
+  </div>
+
+  <div class="card">
+    <div id="form-area">
+      <div class="lead-label">Brand Consulting</div>
+      <div class="lead-title">브랜드 시스템 상담 신청하기</div>
+      <div class="lead-sub">브랜드 구조 설계와 AI 이식이 필요하다면<br>간단한 정보를 남겨주세요.</div>
+      <div class="form-group">
+        <input class="form-input" id="inp-name" type="text" placeholder="성함" autocomplete="name" />
+        <input class="form-input" id="inp-email" type="email" placeholder="이메일 주소" autocomplete="email" />
+        <input class="form-input" id="inp-brand" type="text" placeholder="브랜드명 또는 업종" />
+      </div>
+      <button class="btn-primary" id="btn-submit">상담 신청하기</button>
+      <a href="https://pf.kakao.com/_xoUxjxb" target="_blank" class="btn-kakao">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.618 5.08 4.082 6.538l-1.04 3.865a.25.25 0 0 0 .384.277L9.74 18.93A11.26 11.26 0 0 0 12 19.2c5.523 0 10-3.477 10-7.8S17.523 3 12 3z"/></svg>
+        카톡으로 바로 문의하기
+      </a>
+    </div>
+    <div class="success-msg" id="success-area">
+      <div class="success-icon">✉️</div>
+      <div class="lead-title">신청 완료</div>
+      <div class="lead-sub">채움 팀이 확인 후 연락드리겠습니다.</div>
+    </div>
+  </div>
+
+  <a href="https://chaeum.cloud" target="_blank" class="link-card">
+    <div class="lk-left"><div class="lk-icon">🏢</div><div><div class="lk-kicker">About</div><div class="lk-heading">CHAEUM 홈페이지</div></div></div>
+    <div class="lk-arrow">↗</div>
+  </a>
+  <a href="https://chaeum.cloud/academy" target="_blank" class="link-card">
+    <div class="lk-left"><div class="lk-icon">📚</div><div><div class="lk-kicker">Academy</div><div class="lk-heading">CHAEUM Academy 바로가기</div></div></div>
+    <div class="lk-arrow">↗</div>
+  </a>
+
+  <div class="foot">CHAEUM &copy; 2026</div>
+</div>
+<script>
+  const nameEl=document.getElementById('inp-name');
+  const emailEl=document.getElementById('inp-email');
+  const brandEl=document.getElementById('inp-brand');
+  const formArea=document.getElementById('form-area');
+  const success=document.getElementById('success-area');
+  const btn=document.getElementById('btn-submit');
+  btn.addEventListener('click',async()=>{
+    if(!nameEl.value.trim()||!emailEl.value.trim()){
+      nameEl.style.borderColor=!nameEl.value.trim()?'rgba(201,42,42,0.4)':'transparent';
+      emailEl.style.borderColor=!emailEl.value.trim()?'rgba(201,42,42,0.4)':'transparent';
+      return;
+    }
+    btn.textContent='보내는 중...';btn.disabled=true;
+    await new Promise(r=>setTimeout(r,900));
+    formArea.style.display='none';success.classList.add('visible');
+  });
+  [nameEl,emailEl,brandEl].forEach(el=>{el.addEventListener('input',()=>{el.style.borderColor='transparent';});});
+</script>
+</body>
+</html>
