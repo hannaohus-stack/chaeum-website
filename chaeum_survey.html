@@ -70,7 +70,7 @@ nav {
   /* ─ 이미지 교체: background-image 주석 해제 후 URL 입력
      예) background-image: url('https://cdn.chaeum.cloud/hero.jpg');
   */
-  /* background-image: url('YOUR_IMAGE_URL'); */
+  background-image: url('survey_hero.png');
   background: linear-gradient(160deg, #1e1e16 0%, #242418 40%, #1a1a10 100%);
   background-size: cover;
   background-position: center center;
@@ -771,9 +771,14 @@ document.querySelectorAll('.r-scale[data-key]').forEach(s => {
 });
 
 /* checkbox pills */
-document.querySelectorAll('#tools .pill').forEach(p =>
-  p.addEventListener('click', () => p.classList.toggle('on'))
-);
+document.querySelectorAll('#tools .pill').forEach(p => {
+  p.addEventListener('click', (e) => {
+    e.preventDefault();
+    const inp = p.querySelector('input');
+    inp.checked = !inp.checked;
+    p.classList.toggle('on', inp.checked);
+  });
+});
 
 /* radio pills */
 document.querySelectorAll('.radio-pill').forEach(p =>
