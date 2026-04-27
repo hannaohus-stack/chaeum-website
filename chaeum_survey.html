@@ -508,8 +508,8 @@ select {
           </select>
         </div>
         <div class="pfull">
-          <label class="lbl" for="f_email">이메일 <span style="font-weight:300;text-transform:none;letter-spacing:0;color:#bbb">— 결과 공유 원하시면 남겨 주세요 (선택)</span></label>
-          <input type="email" id="f_email" placeholder="example@company.com">
+          <label class="lbl" for="f_email">이메일 <span style="font-weight:300;text-transform:none;letter-spacing:0;color:#c00">*필수</span> <span style="font-weight:300;text-transform:none;letter-spacing:0;color:#bbb">— 추첨 및 중복 참여 확인에 사용됩니다</span></label>
+          <input type="email" id="f_email" placeholder="example@company.com" required>
         </div>
       </div>
     </div>
@@ -846,9 +846,37 @@ document.getElementById('frm').addEventListener('submit', async e => {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');
   const lbl = document.getElementById('submitLabel');
-  btn.disabled = true; lbl.textContent = '제출 중...';
+
+  // 이메일 필수 확인
+  const email = document.getElementById('f_email').value.trim();
+  if (!email) {
+    toast('이메일을 입력해 주세요. 추첨 및 중복 확인에 사용됩니다.', 'err');
+    document.getElementById('f_email').focus();
+    return;
+  }
+
+  btn.disabled = true; lbl.textContent = '확인 중...';
 
   try {
+    // 중복 이메일 체크
+    const checkRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?email=eq.${encodeURIComponent(email)}&select=id&limit=1`,
+      {
+        headers: {
+          'apikey':        SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        }
+      }
+    );
+    const existing = await checkRes.json();
+    if (existing && existing.length > 0) {
+      toast('이미 참여하신 이메일입니다. 감사합니다!', 'err');
+      btn.disabled = false; lbl.textContent = '답변 제출하기';
+      return;
+    }
+
+    lbl.textContent = '제출 중...';
+
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
       method: 'POST',
       headers: {
