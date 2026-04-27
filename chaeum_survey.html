@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAEUM — 브랜드 운영 경험 설문</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #f2f0ed;
+  color: #111;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── PROGRESS ── */
+#prog-wrap {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 2px; background: transparent;
+}
+#prog-fill {
+  height: 100%; background: #fff;
+  width: 0%; transition: width 0.5s ease;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 60px;
+  background: transparent;
+  mix-blend-mode: normal;
+}
+.nav-logo {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.nav-label {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  background: #1a1a14;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 64px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  /* ─ 이미지 교체: background-image 주석 해제 후 URL 입력
+     예) background-image: url('https://cdn.chaeum.cloud/hero.jpg');
+  */
+  /* background-image: url('YOUR_IMAGE_URL'); */
+  background: linear-gradient(160deg, #1e1e16 0%, #242418 40%, #1a1a10 100%);
+  background-size: cover;
+  background-position: center center;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,8,0.78) 0%, rgba(10,10,8,0.35) 55%, rgba(10,10,8,0.15) 100%);
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.hero-title {
+  font-size: clamp(32px, 5.5vw, 64px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  color: #fff;
+  text-transform: uppercase;
+  position: relative; z-index: 1;
+  margin-bottom: 32px;
+}
+.hero-title span {
+  display: block;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  font-size: clamp(14px, 2vw, 20px);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  margin-top: 16px;
+  line-height: 1.6;
+  max-width: 480px;
+}
+.hero-meta {
+  display: flex; gap: 28px; align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+}
+.hero-tag {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.scroll-hint {
+  position: absolute;
+  right: 48px; bottom: 64px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  writing-mode: vertical-rl;
+  z-index: 1;
+}
+
+/* ── BODY ── */
+.body-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+}
+
+/* ── SECTION ── */
+.section {
+  padding-top: 80px;
+}
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #111;
+  margin-bottom: 32px;
+}
+.sec-num {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: #999;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.sec-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+
+/* ── CARD ── */
+.card {
+  background: #fff;
+  border-radius: 2px;
+  padding: 28px 28px 24px;
+  margin-bottom: 12px;
+  border: 1px solid #e8e5e0;
+  transition: border-color 0.2s;
+}
+.card:focus-within { border-color: #111; }
+
+/* ── Q ── */
+.q-num-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  margin-bottom: 16px;
+}
+.q-n {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #999;
+  text-transform: uppercase;
+  padding-top: 3px;
+  width: 20px;
+}
+.q-t {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1.45;
+}
+.q-h {
+  font-size: 12px;
+  font-weight: 400;
+  color: #aaa;
+  margin-top: 5px;
+  line-height: 1.55;
+}
+
+/* ── INPUTS ── */
+textarea,
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  background: #fafaf8;
+  color: #111;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 13px 15px;
+  outline: none;
+  resize: vertical;
+  line-height: 1.65;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-appearance: none;
+}
+textarea::placeholder, input::placeholder { color: #ccc; }
+textarea:focus, input:focus, select:focus {
+  border-color: #111;
+  background: #fff;
+}
+
+label.lbl {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23111' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+
+/* ── PROFILE GRID ── */
+.pgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.pfull { grid-column: 1 / -1; }
+
+/* ── PILLS ── */
+.pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 0;
+}
+.pill {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 9px 18px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  background: #fafaf8;
+  cursor: pointer;
+  transition: all 0.13s;
+  user-select: none;
+  display: inline-flex; align-items: center;
+}
+.pill input { display: none; }
+.pill:hover { border-color: #111; color: #111; }
+.pill.on { background: #111; border-color: #111; color: #fff; }
+
+/* ── RATING ── */
+.r-group { display: flex; flex-direction: column; gap: 28px; }
+.r-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.r-scale { display: flex; gap: 6px; flex-wrap: wrap; }
+.r-btn {
+  width: 44px; height: 44px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  background: #fafaf8;
+  color: #888;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.13s;
+  flex-shrink: 0;
+}
+.r-btn:hover { border-color: #111; color: #111; }
+.r-btn.on { background: #111; border-color: #111; color: #fff; }
+.r-ends {
+  display: flex; justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  color: #bbb;
+  letter-spacing: 0.02em;
+}
+
+/* ── CONCEPT BOX ── */
+.concept {
+  background: #111;
+  border-radius: 2px;
+  padding: 32px 36px;
+  margin-bottom: 12px;
+}
+.concept-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 16px;
+}
+.concept-text {
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.75;
+}
+
+/* ── SUBMIT ── */
+.submit-wrap {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid #ddd;
+}
+.submit-note {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 24px;
+  line-height: 1.7;
+  text-align: center;
+}
+.submit-btn {
+  width: 100%;
+  padding: 20px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.submit-btn:hover { background: #333; transform: translateY(-1px); }
+.submit-btn:active { transform: none; }
+.submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+.submit-cap {
+  text-align: center;
+  font-size: 11px;
+  color: #bbb;
+  margin-top: 12px;
+  letter-spacing: 0.04em;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: #111; color: #fff;
+  padding: 12px 24px; border-radius: 2px;
+  font-size: 13px; font-weight: 500;
+  opacity: 0; transition: all 0.28s; z-index: 999;
+  pointer-events: none; white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.err { background: #c53030; }
+
+/* ── SUCCESS ── */
+#success {
+  display: none;
+  text-align: center;
+  padding: 100px 32px;
+}
+#success.on { display: block; }
+.success-line {
+  width: 1px; height: 64px;
+  background: #111;
+  margin: 0 auto 36px;
+}
+#success h2 {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #111;
+  margin-bottom: 16px;
+}
+#success p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #888;
+  line-height: 1.8;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 560px) {
+  nav { padding: 0 24px; }
+  .hero { padding: 0 24px 56px; }
+  .scroll-hint { display: none; }
+  .body-wrap { padding: 0 20px 100px; }
+  .card { padding: 22px 18px 20px; }
+  .pgrid { grid-template-columns: 1fr; }
+  .pfull { grid-column: 1; }
+  .r-btn { width: 36px; height: 36px; }
+  .concept { padding: 24px 22px; }
+  .sec-title { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS -->
+<div id="prog-wrap"><div id="prog-fill"></div></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Chaeum</span>
+  <span class="nav-label">Brand Survey</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <p class="hero-eyebrow">Brand OS AI — 고객 리서치</p>
+  <h1 class="hero-title">
+    브랜드를 운영하는<br>당신의 이야기
+    <span>답변해 주신 내용은 더 나은 브랜드 운영 도구를 만드는 데 사용됩니다. 솔직한 경험을 공유해 주세요.</span>
+  </h1>
+  <div class="hero-meta">
+    <span class="hero-tag">약 5분 소요</span>
+    <div class="hero-dot"></div>
+    <span class="hero-tag">익명 처리</span>
+    <div class="hero-dot"></div>
+    <span class="hero-tag">추첨 3명 · Claude AI 1개월 증정</span>
+  </div>
+  <span class="scroll-hint">Scroll</span>
+</div>
+
+<!-- FORM -->
+<div class="body-wrap">
+<form id="frm" novalidate>
+
+  <!-- 01 기본 정보 -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">기본 정보</span>
+    </div>
+    <div class="card">
+      <div class="pgrid">
+        <div>
+          <label class="lbl" for="f_role">직책 / 역할</label>
+          <input type="text" id="f_role" placeholder="예) 브랜드 마케팅 팀장">
+        </div>
+        <div>
+          <label class="lbl" for="f_industry">업종</label>
+          <input type="text" id="f_industry" placeholder="예) 식음료, 뷰티, 패션">
+        </div>
+        <div>
+          <label class="lbl" for="f_size">회사 규모</label>
+          <select id="f_size">
+            <option value="">선택</option>
+            <option>10명 미만</option>
+            <option>10~50명</option>
+            <option>50~200명</option>
+            <option>200~500명</option>
+            <option>500명 이상</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl" for="f_exp">브랜드 관리 경력</label>
+          <select id="f_exp">
+            <option value="">선택</option>
+            <option>1년 미만</option>
+            <option>1~3년</option>
+            <option>3~7년</option>
+            <option>7년 이상</option>
+          </select>
+        </div>
+        <div class="pfull">
+          <label class="lbl" for="f_email">이메일 <span style="font-weight:300;text-transform:none;letter-spacing:0;color:#bbb">— 결과 공유 원하시면 남겨 주세요 (선택)</span></label>
+          <input type="email" id="f_email" placeholder="example@company.com">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 브랜드 관리 현황 -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">브랜드 관리 현황</span>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">01</span>
+        <div>
+          <div class="q-t">브랜드 가이드라인을 팀·파트너에게 공유할 때 가장 어려운 점은 무엇인가요?</div>
+          <div class="q-h">에이전시, 타 부서, 신규 입사자 등 어떤 상황이든 괜찮습니다</div>
+        </div>
+      </div>
+      <textarea id="q1" rows="4" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">02</span>
+        <div>
+          <div class="q-t">최근 브랜드 일관성이 무너졌던 경험이 있으신가요? 어떤 상황이었나요?</div>
+          <div class="q-h">없으시면 "없음"으로 답변해 주셔도 됩니다</div>
+        </div>
+      </div>
+      <textarea id="q2" rows="4" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">03</span>
+        <div>
+          <div class="q-t">현재 브랜드 가이드라인 관리에 어떤 방법을 쓰고 계신가요?</div>
+          <div class="q-h">해당하는 것을 모두 선택해 주세요</div>
+        </div>
+      </div>
+      <div class="pills" id="tools" style="margin-bottom:16px">
+        <label class="pill"><input type="checkbox" value="PDF 문서">PDF 문서</label>
+        <label class="pill"><input type="checkbox" value="Notion">Notion</label>
+        <label class="pill"><input type="checkbox" value="Figma">Figma</label>
+        <label class="pill"><input type="checkbox" value="Google Drive">Google Drive</label>
+        <label class="pill"><input type="checkbox" value="사내 시스템">사내 시스템</label>
+        <label class="pill"><input type="checkbox" value="별도 관리 없음">별도 관리 없음</label>
+      </div>
+      <textarea id="q3_other" rows="2" placeholder="기타 방법이 있다면 적어주세요 (선택)"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">04</span>
+        <div>
+          <div class="q-t">현재 방법에서 가장 불편하거나 한계를 느끼는 부분은 무엇인가요?</div>
+        </div>
+      </div>
+      <textarea id="q4" rows="4" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+  </div>
+
+  <!-- 03 AI 활용 경험 -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">AI 활용 경험</span>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">05</span>
+        <div>
+          <div class="q-t">브랜드·마케팅 업무에 AI 툴을 사용해 보신 적 있으신가요?</div>
+        </div>
+      </div>
+      <div class="pills" id="ai_use" style="margin-bottom:16px">
+        <label class="pill radio-pill"><input type="radio" name="ai_use" value="자주 사용">자주 사용해요</label>
+        <label class="pill radio-pill"><input type="radio" name="ai_use" value="가끔 사용">가끔 써봤어요</label>
+        <label class="pill radio-pill"><input type="radio" name="ai_use" value="거의 안 씀">거의 안 써요</label>
+        <label class="pill radio-pill"><input type="radio" name="ai_use" value="전혀 안 씀">전혀 안 써요</label>
+      </div>
+      <textarea id="q5_detail" rows="3" placeholder="어떤 툴을, 어떻게 사용하셨는지 간략히 말씀해 주세요 (선택)"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">06</span>
+        <div>
+          <div class="q-t">AI가 브랜드 작업을 도울 때 가장 아쉬웠던 점은 무엇인가요?</div>
+          <div class="q-h">결과가 너무 일반적이다, 우리 브랜드 톤이 안 나온다 등</div>
+        </div>
+      </div>
+      <textarea id="q6" rows="4" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+  </div>
+
+  <!-- 04 중요도 평가 -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <span class="sec-title">중요도 평가</span>
+    </div>
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">07</span>
+        <div>
+          <div class="q-t">각 항목이 브랜드 운영에서 얼마나 중요한가요?</div>
+          <div class="q-h">1 = 전혀 중요하지 않음 · 10 = 매우 중요함</div>
+        </div>
+      </div>
+      <div class="r-group">
+        <div>
+          <div class="r-label">브랜드 일관성 유지</div>
+          <div class="r-scale" data-key="consistency"></div>
+          <div class="r-ends"><span>전혀 중요하지 않음</span><span>매우 중요함</span></div>
+        </div>
+        <div>
+          <div class="r-label">콘텐츠·캠페인 제작 속도</div>
+          <div class="r-scale" data-key="speed"></div>
+          <div class="r-ends"><span>전혀 중요하지 않음</span><span>매우 중요함</span></div>
+        </div>
+        <div>
+          <div class="r-label">가이드라인 접근 및 공유 편의성</div>
+          <div class="r-scale" data-key="guideline"></div>
+          <div class="r-ends"><span>전혀 중요하지 않음</span><span>매우 중요함</span></div>
+        </div>
+        <div>
+          <div class="r-label">AI 생성 결과물의 브랜드 적합성</div>
+          <div class="r-scale" data-key="ai_fit"></div>
+          <div class="r-ends"><span>전혀 중요하지 않음</span><span>매우 중요함</span></div>
+        </div>
+        <div>
+          <div class="r-label">경쟁사·시장 트렌드 모니터링</div>
+          <div class="r-scale" data-key="market_signal"></div>
+          <div class="r-ends"><span>전혀 중요하지 않음</span><span>매우 중요함</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 솔루션 반응 -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <span class="sec-title">솔루션 반응</span>
+    </div>
+
+    <div class="concept">
+      <div class="concept-tag">Chaeum이 만들고 있는 것</div>
+      <p class="concept-text">브랜드 가이드라인과 전략을 AI가 이해하는 지식으로 변환해, 모든 팀과 툴이 자동으로 브랜드 일관성을 지키게 만드는 플랫폼입니다. 브랜드의 두뇌를 만드는 일입니다.</p>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">08</span>
+        <div><div class="q-t">위 설명에서 가장 끌리는 부분은 무엇인가요?</div></div>
+      </div>
+      <textarea id="q8" rows="3" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">09</span>
+        <div><div class="q-t">이런 툴이 있다면 가장 먼저 어디에 활용하고 싶으신가요?</div></div>
+      </div>
+      <textarea id="q9" rows="3" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">10</span>
+        <div>
+          <div class="q-t">도입을 망설이게 할 요소가 있다면 무엇인가요?</div>
+          <div class="q-h">비용, 보안, 내부 설득, 기술 장벽 등 솔직하게 말씀해 주세요</div>
+        </div>
+      </div>
+      <textarea id="q10" rows="3" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">11</span>
+        <div>
+          <div class="q-t">이 문제가 해결된다면 월 얼마 정도를 지불할 의향이 있으신가요?</div>
+          <div class="q-h">현재 비슷한 툴·서비스에 쓰는 비용을 기준으로 생각해 주세요</div>
+        </div>
+      </div>
+      <div class="pills" id="price_range">
+        <label class="pill radio-pill"><input type="radio" name="price" value="무료만">무료만</label>
+        <label class="pill radio-pill"><input type="radio" name="price" value="1~5만원">1~5만원</label>
+        <label class="pill radio-pill"><input type="radio" name="price" value="5~15만원">5~15만원</label>
+        <label class="pill radio-pill"><input type="radio" name="price" value="15~30만원">15~30만원</label>
+        <label class="pill radio-pill"><input type="radio" name="price" value="30만원 이상">30만원 이상</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 마지막 한 마디 -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <span class="sec-title">마지막 한 마디</span>
+    </div>
+    <div class="card">
+      <div class="q-num-row">
+        <span class="q-n">12</span>
+        <div>
+          <div class="q-t">브랜드를 운영하면서 "이런 게 있었으면" 가장 자주 생각했던 것이 있으신가요?</div>
+          <div class="q-h">어떤 이야기도 좋습니다. 솔직한 한 마디가 큰 도움이 됩니다.</div>
+        </div>
+      </div>
+      <textarea id="q12" rows="5" placeholder="자유롭게 답변해 주세요..."></textarea>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <p class="submit-note">소중한 시간 내어 주셔서 감사합니다.<br>답변은 제품 개선에만 활용되며 외부에 공개되지 않습니다.</p>
+    <button type="submit" class="submit-btn" id="submitBtn">
+      <span id="submitLabel">답변 제출하기</span>
+    </button>
+    <p class="submit-cap">제출 후 수정이 어렵습니다. 내용을 한 번 확인해 주세요.</p>
+  </div>
+
+</form>
+
+<!-- SUCCESS -->
+<div id="success">
+  <div class="success-line"></div>
+  <h2>감사합니다</h2>
+  <p>귀한 경험을 공유해 주셨습니다.<br>chaeum이 더 좋은 도구를 만드는 데 반드시 반영하겠습니다.</p>
+</div>
+
+</div><!-- /body-wrap -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL      = 'https://cwikptnyxrmmhaxkpxpp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3aWtwdG55eHJtbWhheGtweHBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyOTA3MjYsImV4cCI6MjA5Mjg2NjcyNn0.kjrwepTGezwlznPHFpPIab3_CFvyc2MxjtYEpR_lKf0';
+const TABLE_NAME        = 'chaeum_survey';
+
+/* ratings */
+const ratings = {};
+document.querySelectorAll('.r-scale[data-key]').forEach(s => {
+  const k = s.dataset.key; ratings[k] = null;
+  for (let i = 1; i <= 10; i++) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'r-btn'; b.textContent = i;
+    b.addEventListener('click', () => {
+      ratings[k] = i;
+      s.querySelectorAll('.r-btn').forEach((x, idx) => x.classList.toggle('on', idx < i));
+    });
+    s.appendChild(b);
+  }
+});
+
+/* checkbox pills */
+document.querySelectorAll('#tools .pill').forEach(p =>
+  p.addEventListener('click', () => p.classList.toggle('on'))
+);
+
+/* radio pills */
+document.querySelectorAll('.radio-pill').forEach(p =>
+  p.addEventListener('click', () => {
+    const name = p.querySelector('input').name;
+    document.querySelectorAll(`.radio-pill input[name="${name}"]`)
+      .forEach(i => i.closest('.pill').classList.remove('on'));
+    p.classList.add('on');
+    p.querySelector('input').checked = true;
+  })
+);
+
+/* progress */
+function progress() {
+  const fields = document.querySelectorAll('textarea, input[type="text"], input[type="email"], select');
+  let n = 0; fields.forEach(f => { if (f.value.trim()) n++; });
+  document.getElementById('prog-fill').style.width = Math.min(100, Math.round(n / fields.length * 100)) + '%';
+}
+document.addEventListener('input', progress);
+document.addEventListener('change', progress);
+
+/* toast */
+function toast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast ' + (type || '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+/* collect */
+function collect() {
+  const tools = [...document.querySelectorAll('#tools .pill.on input')].map(i => i.value).join(', ');
+  const ai    = document.querySelector('#ai_use .pill.on input');
+  const price = document.querySelector('#price_range .pill.on input');
+  return {
+    submitted_at:           new Date().toISOString(),
+    role:                   document.getElementById('f_role').value.trim(),
+    industry:               document.getElementById('f_industry').value.trim(),
+    company_size:           document.getElementById('f_size').value,
+    brand_exp:              document.getElementById('f_exp').value,
+    email:                  document.getElementById('f_email').value.trim(),
+    q1_sharing_difficulty:  document.getElementById('q1').value.trim(),
+    q2_consistency_failure: document.getElementById('q2').value.trim(),
+    q3_tools:               tools,
+    q3_tools_other:         document.getElementById('q3_other').value.trim(),
+    q4_pain:                document.getElementById('q4').value.trim(),
+    q5_ai_usage:            ai ? ai.value : '',
+    q5_ai_detail:           document.getElementById('q5_detail').value.trim(),
+    q6_ai_limit:            document.getElementById('q6').value.trim(),
+    r_consistency:          ratings['consistency'],
+    r_speed:                ratings['speed'],
+    r_guideline:            ratings['guideline'],
+    r_ai_fit:               ratings['ai_fit'],
+    r_market_signal:        ratings['market_signal'],
+    q8_appeal:              document.getElementById('q8').value.trim(),
+    q9_use_case:            document.getElementById('q9').value.trim(),
+    q10_barrier:            document.getElementById('q10').value.trim(),
+    q11_price:              price ? price.value : '',
+    q12_wishlist:           document.getElementById('q12').value.trim(),
+  };
+}
+
+/* submit */
+document.getElementById('frm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const lbl = document.getElementById('submitLabel');
+  btn.disabled = true; lbl.textContent = '제출 중...';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'apikey':        SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer':        'return=minimal'
+      },
+      body: JSON.stringify(collect())
+    });
+
+    if (res.ok || res.status === 201) {
+      document.getElementById('frm').style.display = 'none';
+      document.getElementById('success').classList.add('on');
+      document.getElementById('prog-fill').style.width = '100%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const err = await res.text();
+      console.error(err);
+      toast('오류가 발생했습니다. 다시 시도해 주세요.', 'err');
+      btn.disabled = false; lbl.textContent = '답변 제출하기';
+    }
+  } catch (err) {
+    console.error(err);
+    toast('네트워크 오류입니다. 인터넷 연결을 확인해 주세요.', 'err');
+    btn.disabled = false; lbl.textContent = '답변 제출하기';
+  }
+});
+</script>
+</body>
+</html>
