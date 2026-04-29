@@ -4,6 +4,8 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/academy", "destination": "/academy/index.html" },
-    { "source": "/work", "destination": "/work/index.html" }
+    { "source": "/work", "destination": "/work/index.html" },
+
+    { "source": "/promptbuilder", "destination": "/PromptBuilder/Promptbuilder.html" }
   ]
 }
