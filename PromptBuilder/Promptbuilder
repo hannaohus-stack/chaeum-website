@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>chaeum. 브랜드 콘텐츠 프롬프트 빌더</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #f8f7f4;
+  --surface: #ffffff;
+  --surface2: #f2f0ec;
+  --border: rgba(26,26,26,.1);
+  --border2: rgba(26,26,26,.06);
+  --ink: #1a1a1a;
+  --muted: #787776;
+  --soft: #a6a39d;
+  --accent: #1f4d3c;
+  --accent-bg: #dff2eb;
+  --accent-mid: #c6e4d8;
+  --accent-light: #f0f9f5;
+  --warn: #c94a2a;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Playfair Display', serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font-family: inherit; }
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  position: relative; overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(31,77,60,.4) 0%, transparent 60%);
+  pointer-events: none;
+}
+.header-inner {
+  position: relative;
+  padding: 36px 28px;
+  max-width: 1440px; margin: 0 auto;
+}
+.header-badges { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 99px; font-size: 11px; font-weight: 500;
+  font-family: var(--mono); letter-spacing: .06em;
+  border: 1px solid rgba(255,255,255,.1); color: #888;
+}
+.badge-green { border-color: rgba(31,77,60,.5); background: rgba(31,77,60,.2); color: #a8c5b0; }
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+.header-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.logo-mark {
+  font-family: var(--serif); font-size: 22px; font-style: italic;
+  color: #fff; letter-spacing: .02em;
+}
+.logo-mark span { color: #a8c5b0; }
+.logo-divider { width: 1px; height: 20px; background: rgba(255,255,255,.15); }
+.logo-product { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #666; }
+
+.header-title { font-family: var(--serif); font-size: 28px; color: #fff; line-height: 1.25; margin-bottom: 8px; }
+.header-title em { color: #a8c5b0; font-style: italic; }
+.header-desc { font-size: 13px; color: #666; line-height: 1.7; max-width: 560px; }
+
+@media(min-width:768px) {
+  .header-inner { padding: 48px 40px; }
+  .header-title { font-size: 36px; }
+}
+
+/* ── LAYOUT ── */
+.main { padding: 28px 20px; max-width: 1440px; margin: 0 auto; }
+.layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media(min-width:1024px) { .layout { grid-template-columns: 1fr minmax(0, 520px); } }
+@media(min-width:1280px) { .layout { grid-template-columns: 1fr minmax(0, 600px); } }
+
+/* ── FORM ── */
+.left-col { display: flex; flex-direction: column; gap: 16px; }
+.form-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px;
+}
+@media(min-width:640px) { .form-card { padding: 24px; } }
+
+.section-header { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border2); }
+.section-num { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); margin-bottom: 3px; }
+.section-title { font-size: 15px; font-weight: 600; color: var(--ink); }
+.section-sub { margin-top: 2px; font-size: 12px; color: var(--muted); }
+
+.fields { display: flex; flex-direction: column; gap: 14px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media(max-width:480px) { .field-row { grid-template-columns: 1fr; } }
+
+.field-label {
+  display: block; font-size: 11px; font-weight: 500;
+  color: var(--muted); margin-bottom: 5px; letter-spacing: .04em;
+}
+.field-req { color: var(--accent); margin-left: 3px; }
+
+.field-input, .field-select, .field-textarea {
+  width: 100%; border: 1.5px solid var(--border);
+  background: var(--bg); border-radius: 8px;
+  padding: 9px 12px; font-size: 13px; color: var(--ink);
+  outline: none; transition: border-color .2s;
+}
+.field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--accent); background: #fff; }
+.field-textarea { resize: vertical; min-height: 72px; line-height: 1.6; }
+.field-select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a6a39d' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+/* TONE TAGS */
+.tone-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.tone-tag {
+  padding: 5px 12px; border-radius: 20px; font-size: 12px;
+  border: 1.5px solid var(--border); background: var(--bg);
+  cursor: pointer; transition: all .15s; color: var(--muted);
+}
+.tone-tag:hover { border-color: var(--accent); color: var(--accent); }
+.tone-tag.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* COUNT BTNS */
+.count-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.count-btn {
+  padding: 7px 14px; border-radius: 8px; font-size: 12px;
+  border: 1.5px solid var(--border); background: var(--bg);
+  cursor: pointer; transition: all .15s; color: var(--muted); font-weight: 500;
+}
+.count-btn:hover { border-color: var(--ink); color: var(--ink); }
+.count-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* CHANNEL BTNS */
+.channel-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.channel-btn {
+  display: flex; align-items: center; gap-5px;
+  padding: 7px 14px; border-radius: 8px; font-size: 12px;
+  border: 1.5px solid var(--border); background: var(--bg);
+  cursor: pointer; transition: all .15s; color: var(--muted);
+}
+.channel-btn:hover { border-color: var(--accent); color: var(--accent); }
+.channel-btn.active { background: var(--accent-bg); color: var(--accent); border-color: var(--accent-mid); font-weight: 500; }
+
+/* TOGGLE */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border2); }
+.toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+.toggle-info .tl { font-size: 13px; font-weight: 500; }
+.toggle-info .ts { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.toggle {
+  width: 38px; height: 22px; border-radius: 11px;
+  background: var(--border); cursor: pointer;
+  position: relative; transition: background .2s; flex-shrink: 0;
+}
+.toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 16px; height: 16px; border-radius: 50%; background: #fff;
+  transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.toggle.on { background: var(--accent); }
+.toggle.on::after { transform: translateX(16px); }
+
+/* ── PREVIEW ── */
+.right-col { display: flex; flex-direction: column; gap: 14px; }
+.preview-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  position: sticky; top: 20px;
+}
+.preview-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.preview-title-row { display: flex; align-items: center; gap: 8px; }
+.preview-title { font-size: 13px; font-weight: 600; }
+.preview-count {
+  font-family: var(--mono); font-size: 10px;
+  padding: 2px 8px; border-radius: 4px;
+  background: var(--surface2); color: var(--muted);
+}
+.expand-btn {
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  background: none; border: none; cursor: pointer; letter-spacing: .04em;
+}
+.expand-btn:hover { color: var(--ink); }
+
+.preview-warn {
+  display: none; align-items: center; gap-8px;
+  margin: 12px 20px; padding: 10px 12px;
+  background: #fff8f6; border: 1px solid #f0c4b8;
+  border-radius: 8px; font-size: 12px; color: var(--warn);
+}
+.preview-body {
+  padding: 20px;
+  max-height: 360px; overflow-y: auto;
+  font-family: var(--mono); font-size: 12px; line-height: 1.75;
+  color: var(--ink); white-space: pre-wrap; word-break: break-all;
+}
+.preview-body.expanded { max-height: none; }
+.preview-body::-webkit-scrollbar { width: 4px; }
+.preview-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.preview-actions { padding: 14px 20px; border-top: 1px solid var(--border2); display: flex; flex-direction: column; gap: 8px; }
+.btn-row { display: flex; gap: 8px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 10px 16px; border-radius: 9px; font-size: 13px; font-weight: 500;
+  border: none; cursor: pointer; transition: all .15s; flex: 1;
+}
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #2d2d2d; transform: translateY(-1px); }
+.btn-claude { background: #d97757; color: #fff; }
+.btn-claude:hover:not(:disabled) { background: #c5684a; }
+.btn-gpt { background: #10a37f; color: #fff; }
+.btn-gpt:hover:not(:disabled) { background: #0d8f6f; }
+.btn-secondary {
+  background: var(--surface2); color: var(--muted);
+  border: 1px solid var(--border); flex: 0 0 auto;
+  font-size: 12px; padding: 10px 14px;
+}
+.btn-secondary:hover { color: var(--ink); border-color: var(--ink); }
+
+/* CHAEUM CTA */
+.cta-card {
+  background: var(--accent); border-radius: 14px;
+  padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+}
+.cta-text .ct { font-family: var(--serif); font-size: 16px; color: #fff; margin-bottom: 3px; }
+.cta-text .cs { font-size: 12px; color: rgba(255,255,255,.65); line-height: 1.5; }
+.cta-btn {
+  background: #fff; color: var(--accent); border: none;
+  padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; white-space: nowrap; transition: all .15s;
+}
+.cta-btn:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+@media(max-width:640px) { .main { padding: 16px; } .form-card { padding: 16px; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-badges">
+      <div class="badge badge-green"><div class="badge-dot"></div> FREE TOOL</div>
+      <div class="badge">BRAND TONE BUILDER</div>
+      <div class="badge">by chaeum.</div>
+    </div>
+    <div class="header-logo">
+      <div class="logo-mark">chaeum<span>.</span></div>
+      <div class="logo-divider"></div>
+      <div class="logo-product">Content Prompt Builder</div>
+    </div>
+    <div class="header-title">브랜드 톤을 기억한 AI가<br><em>카피 + 이미지 프롬프트</em>를 만들어줍니다</div>
+    <div class="header-desc">브랜드 정보를 입력하면 — 카피 3개 + 채널별 이미지 생성 프롬프트가 한 번에 나옵니다.<br>Claude나 ChatGPT에 바로 붙여넣으세요.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="layout">
+
+    <!-- LEFT: FORM -->
+    <div class="left-col">
+
+      <!-- 1. 브랜드 기본 -->
+      <div class="form-card">
+        <div class="section-header">
+          <div class="section-num">01 · BRAND INFO</div>
+          <div class="section-title">브랜드 기본 정보</div>
+          <div class="section-sub">AI가 브랜드를 기억하는 데 필요한 핵심 정보</div>
+        </div>
+        <div class="fields">
+          <div>
+            <label class="field-label">브랜드명 <span class="field-req">*</span></label>
+            <input class="field-input" id="brandName" placeholder="예) 더 맛있는 반찬">
+          </div>
+          <div class="field-row">
+            <div>
+              <label class="field-label">업종/카테고리 <span class="field-req">*</span></label>
+              <input class="field-input" id="industry" placeholder="예) 반찬 정기구독">
+            </div>
+            <div>
+              <label class="field-label">타깃 고객 <span class="field-req">*</span></label>
+              <input class="field-input" id="target" placeholder="예) 30-40대 맞벌이 부부">
+            </div>
+          </div>
+          <div>
+            <label class="field-label">브랜드 미션 / 핵심 가치</label>
+            <input class="field-input" id="mission" placeholder="예) 바쁜 현대인의 식탁에 정갈한 쉼표를 더합니다">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 브랜드 톤 -->
+      <div class="form-card">
+        <div class="section-header">
+          <div class="section-num">02 · BRAND TONE</div>
+          <div class="section-title">브랜드 톤 & 언어</div>
+          <div class="section-sub">모든 카피는 이 기준으로 만들어집니다</div>
+        </div>
+        <div class="fields">
+          <div>
+            <label class="field-label">톤 키워드 (여러 개 선택 가능)</label>
+            <div class="tone-tags" id="toneTags">
+              <div class="tone-tag" data-val="담백하고 정직한">담백하고 정직한</div>
+              <div class="tone-tag" data-val="따뜻하고 친근한">따뜻하고 친근한</div>
+              <div class="tone-tag" data-val="전문적이고 신뢰감 있는">전문적이고 신뢰감 있는</div>
+              <div class="tone-tag" data-val="감성적이고 여유로운">감성적이고 여유로운</div>
+              <div class="tone-tag" data-val="에너지 넘치고 활기찬">에너지 넘치고 활기찬</div>
+              <div class="tone-tag" data-val="고급스럽고 세련된">고급스럽고 세련된</div>
+              <div class="tone-tag" data-val="유머러스하고 친밀한">유머러스하고 친밀한</div>
+              <div class="tone-tag" data-val="간결하고 직설적인">간결하고 직설적인</div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div>
+              <label class="field-label">써야 할 표현 (Do)</label>
+              <input class="field-input" id="doExpr" placeholder="예) 정갈하게, 본연의 맛, 일상의 여유">
+            </div>
+            <div>
+              <label class="field-label">쓰지 말아야 할 표현 (Don't)</label>
+              <input class="field-input" id="dontExpr" placeholder="예) 역대급, 마감임박, 존맛탱, !!">
+            </div>
+          </div>
+          <div>
+            <label class="field-label">무드 & 비주얼 키워드</label>
+            <input class="field-input" id="moodKeywords" placeholder="예) 린넨, 도자기, 나무결, 자연광, 여백, 손길">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 이번 콘텐츠 -->
+      <div class="form-card">
+        <div class="section-header">
+          <div class="section-num">03 · THIS CONTENT</div>
+          <div class="section-title">이번 콘텐츠 설정</div>
+          <div class="section-sub">이번 주 또는 이번 게시물에 대한 정보</div>
+        </div>
+        <div class="fields">
+          <div>
+            <label class="field-label">이번 주 키워드 / 이벤트 <span class="field-req">*</span></label>
+            <input class="field-input" id="topic" placeholder="예) 봄 신메뉴 출시, 어버이날 선물 세트">
+          </div>
+          <div>
+            <label class="field-label">강조할 포인트</label>
+            <input class="field-input" id="emphasis" placeholder="예) 할인 아님, 맛과 정성 강조, 한정 수량">
+          </div>
+          <div>
+            <label class="field-label">채널 선택 (복수 가능)</label>
+            <div class="channel-group" id="channelGroup">
+              <button type="button" class="channel-btn active" data-ch="instagram">인스타그램</button>
+              <button type="button" class="channel-btn" data-ch="blog">블로그</button>
+              <button type="button" class="channel-btn" data-ch="thread">스레드</button>
+              <button type="button" class="channel-btn" data-ch="newsletter">뉴스레터</button>
+            </div>
+          </div>
+          <div>
+            <label class="field-label">카피 개수</label>
+            <div class="count-group" id="countGroup"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 옵션 -->
+      <div class="form-card">
+        <div class="section-header">
+          <div class="section-num">04 · OPTIONS</div>
+          <div class="section-title">출력 옵션</div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="tl">이미지 생성 프롬프트 포함</div>
+            <div class="ts">Midjourney / DALL-E / Stable Diffusion 바로 사용 가능</div>
+          </div>
+          <div class="toggle on" id="toggleImage"></div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="tl">해시태그 포함</div>
+            <div class="ts">채널에 맞는 해시태그 자동 추천</div>
+          </div>
+          <div class="toggle on" id="toggleHashtag"></div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="tl">톤 체크 기준 포함</div>
+            <div class="ts">AI가 스스로 브랜드 톤 준수 여부를 검증하게 함</div>
+          </div>
+          <div class="toggle on" id="toggleToneCheck"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: PREVIEW -->
+    <div class="right-col">
+      <div class="preview-card">
+        <div class="preview-header">
+          <div class="preview-title-row">
+            <div class="preview-title">프롬프트 미리보기</div>
+            <div class="preview-count" id="previewCount">0자</div>
+          </div>
+          <button class="expand-btn" id="expandBtn">전체 보기</button>
+        </div>
+
+        <div class="preview-warn" id="missingWarn">
+          <span>⚠</span>&nbsp;필수 항목을 입력해주세요: <strong id="missingList"></strong>
+        </div>
+
+        <div class="preview-body" id="previewBody">브랜드 정보를 입력하면 프롬프트가 자동으로 생성됩니다.</div>
+
+        <div class="preview-actions">
+          <div class="btn-row">
+            <button class="btn btn-primary" id="copyBtn" disabled>
+              <span id="copyBtnLabel">프롬프트 복사하기</span>
+            </button>
+            <button class="btn btn-secondary" id="resetBtn">초기화</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-claude" id="claudeBtn" disabled>Claude에서 열기</button>
+            <button class="btn btn-gpt" id="gptBtn" disabled>ChatGPT에서 열기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAEUM CTA -->
+      <div class="cta-card">
+        <div class="cta-text">
+          <div class="ct">매주 이걸 반복하기 귀찮다면?</div>
+          <div class="cs">chaeum은 브랜드를 기억하고 매주 콘텐츠를 대신 만들어드립니다.<br>프롬프트 없이, 키워드만 던지면 됩니다.</div>
+        </div>
+        <button class="cta-btn" onclick="window.open('https://chaeum.co','_blank')">chaeum 알아보기 →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const state = {
+  brandName: '', industry: '', target: '', mission: '',
+  toneKeywords: [],
+  doExpr: '', dontExpr: '', moodKeywords: '',
+  topic: '', emphasis: '',
+  channels: ['instagram'],
+  count: 3,
+  includeImage: true,
+  includeHashtag: true,
+  includeToneCheck: true,
+};
+
+// ── 프롬프트 빌더
+function buildPrompt(s) {
+  const chMap = { instagram: '인스타그램 (150자, 이모지 1~2개, 감성적)', blog: '블로그 (500자, 소제목 포함, 정보 중심)', thread: '스레드 (3~5줄, 대화체, 단문 연속)', newsletter: '뉴스레터 (이메일, 친근하고 따뜻한 톤)' };
+  const chLabels = s.channels.map(c => chMap[c] || c).join('\n- ');
+
+  const toneSection = s.toneKeywords.length
+    ? `톤 키워드: ${s.toneKeywords.join(', ')}` : '톤 키워드: (미입력)';
+
+  const imageSection = s.includeImage ? `
+
+---
+
+## 이미지 생성 프롬프트 (Midjourney / DALL-E / Stable Diffusion)
+
+각 카피에 어울리는 이미지 프롬프트를 **영문으로** 작성해주세요.
+
+**브랜드 비주얼 기준:**
+- 무드 키워드: ${s.moodKeywords || '자연스럽고 따뜻한'}
+- 색감: 과하지 않고 절제된 톤
+- 스타일: 감성적이고 브랜드다운 분위기
+
+**각 프롬프트 형식:**
+\`\`\`
+[카피 번호] 이미지 프롬프트:
+(영문 프롬프트, 브랜드 무드 반영, 상업용 촬영 스타일)
+Style: --ar 4:5 --v 6 --style raw
+\`\`\`
+
+주의: 텍스트, 글자, 로고가 이미지에 포함되지 않도록 "no text, no watermark" 추가` : '';
+
+  const hashtagSection = s.includeHashtag ? `
+
+---
+
+## 해시태그 추천
+
+채널별로 어울리는 해시태그 5~10개를 추천해주세요.
+- 브랜드 카테고리 태그
+- 타깃 관심사 태그
+- 콘텐츠 주제 태그` : '';
+
+  const toneCheckSection = s.includeToneCheck ? `
+
+---
+
+## 출력 전 자가 검증 (반드시 수행)
+
+카피 생성 후 아래 항목을 검증하고, 미달 시 수정 후 출력:
+
+1. Don't 표현이 하나도 포함되지 않았는가?
+2. 톤 키워드가 자연스럽게 반영되었는가?
+3. 타깃 고객이 공감할 언어로 쓰였는가?
+4. 과장되거나 자극적인 표현이 없는가?
+5. 브랜드 미션과 결이 맞는가?
+
+미달 항목이 있으면 수정 후 출력해주세요.` : '';
+
+  return `당신은 ${s.brandName || '[브랜드명]'}의 브랜드 콘텐츠 전문가입니다.
+아래 브랜드 정보를 완전히 이해하고, 이에 맞는 콘텐츠를 생성해주세요.
+
+---
+
+## 브랜드 메모리
+
+| 항목 | 내용 |
+|------|------|
+| **브랜드명** | ${s.brandName || '(미입력)'} |
+| **업종/카테고리** | ${s.industry || '(미입력)'} |
+| **타깃 고객** | ${s.target || '(미입력)'} |
+| **브랜드 미션** | ${s.mission || '(미입력)'} |
+
+### 톤 & 언어 가이드
+
+${toneSection}
+
+써야 할 표현 (Do): ${s.doExpr || '(미입력)'}
+쓰지 말아야 할 표현 (Don't): ${s.dontExpr || '(미입력)'}
+무드 & 비주얼 키워드: ${s.moodKeywords || '(미입력)'}
+
+---
+
+## 이번 콘텐츠 요청
+
+| 항목 | 내용 |
+|------|------|
+| **키워드/이벤트** | ${s.topic || '(미입력)'} |
+| **강조 포인트** | ${s.emphasis || '없음'} |
+| **카피 개수** | ${s.count}개 |
+
+**채널별 문법:**
+- ${chLabels}
+
+---
+
+## 출력 구조 (반드시 준수)
+
+${s.count}개의 카피를 아래 형식으로 작성해주세요.
+
+### [카피 N] 채널명
+
+**카피:**
+> (카피 내용 — 브랜드 톤 완전 반영)
+
+**핵심 포인트:** (이 카피에서 브랜드 톤이 어떻게 반영됐는지 1줄)
+${imageSection}${hashtagSection}${toneCheckSection}
+
+---
+
+빈 항목이 있으면 브랜드 맥락에 맞게 추정해서 채워주세요.
+**모든 결과물은 위 브랜드 톤 가이드를 엄격히 준수해야 합니다.**`;
+}
+
+// ── 필수 필드
+const required = ['brandName', 'industry', 'target', 'topic'];
+const reqLabels = { brandName: '브랜드명', industry: '업종', target: '타깃', topic: '키워드' };
+
+function render() {
+  const prompt = buildPrompt(state);
+  document.getElementById('previewBody').textContent = prompt;
+  document.getElementById('previewCount').textContent = prompt.length.toLocaleString() + '자';
+
+  const missing = required.filter(f => !String(state[f]).trim());
+  const warn = document.getElementById('missingWarn');
+  if (missing.length) {
+    warn.style.display = 'flex';
+    document.getElementById('missingList').textContent = missing.map(f => reqLabels[f]).join(', ');
+  } else {
+    warn.style.display = 'none';
+  }
+  const ready = !missing.length;
+  ['copyBtn','claudeBtn','gptBtn'].forEach(id => document.getElementById(id).disabled = !ready);
+}
+
+// ── 입력 바인딩
+['brandName','industry','target','mission','doExpr','dontExpr','moodKeywords','topic','emphasis'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => { state[id] = e.target.value; render(); });
+});
+
+// ── 톤 태그
+document.querySelectorAll('.tone-tag').forEach(tag => {
+  tag.addEventListener('click', () => {
+    const val = tag.dataset.val;
+    tag.classList.toggle('selected');
+    if (tag.classList.contains('selected')) state.toneKeywords.push(val);
+    else state.toneKeywords = state.toneKeywords.filter(v => v !== val);
+    render();
+  });
+});
+
+// ── 채널
+document.querySelectorAll('.channel-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const ch = btn.dataset.ch;
+    btn.classList.toggle('active');
+    if (btn.classList.contains('active')) { if(!state.channels.includes(ch)) state.channels.push(ch); }
+    else state.channels = state.channels.filter(c => c !== ch);
+    render();
+  });
+});
+
+// ── 카피 개수
+function renderCount() {
+  const g = document.getElementById('countGroup');
+  g.innerHTML = '';
+  [1,2,3,4,5].forEach(n => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'count-btn' + (state.count === n ? ' active' : '');
+    btn.textContent = n + '개';
+    btn.addEventListener('click', () => { state.count = n; renderCount(); render(); });
+    g.appendChild(btn);
+  });
+}
+renderCount();
+
+// ── 토글
+function bindToggle(id, key) {
+  const el = document.getElementById(id);
+  el.addEventListener('click', () => { state[key] = !state[key]; el.classList.toggle('on', state[key]); render(); });
+}
+bindToggle('toggleImage', 'includeImage');
+bindToggle('toggleHashtag', 'includeHashtag');
+bindToggle('toggleToneCheck', 'includeToneCheck');
+
+// ── 복사
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const prompt = buildPrompt(state);
+  const label = document.getElementById('copyBtnLabel');
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(prompt);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = prompt;
+      ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+    label.textContent = '복사 완료!';
+    setTimeout(() => label.textContent = '프롬프트 복사하기', 2000);
+  } catch { label.textContent = '복사 실패 — 직접 선택해주세요'; }
+});
+
+// ── Claude / GPT
+document.getElementById('claudeBtn').addEventListener('click', () => {
+  window.open('https://claude.ai/new?q=' + encodeURIComponent(buildPrompt(state)), '_blank');
+});
+document.getElementById('gptBtn').addEventListener('click', () => {
+  window.open('https://chatgpt.com/?q=' + encodeURIComponent(buildPrompt(state)), '_blank');
+});
+
+// ── 전체보기
+let expanded = false;
+document.getElementById('expandBtn').addEventListener('click', () => {
+  expanded = !expanded;
+  document.getElementById('previewBody').classList.toggle('expanded', expanded);
+  document.getElementById('expandBtn').textContent = expanded ? '접기' : '전체 보기';
+});
+
+// ── 초기화
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('초기화하시겠습니까?')) return;
+  ['brandName','industry','target','mission','doExpr','dontExpr','moodKeywords','topic','emphasis'].forEach(id => {
+    document.getElementById(id).value = ''; state[id] = '';
+  });
+  state.toneKeywords = [];
+  document.querySelectorAll('.tone-tag').forEach(t => t.classList.remove('selected'));
+  state.channels = ['instagram'];
+  document.querySelectorAll('.channel-btn').forEach(b => b.classList.toggle('active', b.dataset.ch === 'instagram'));
+  state.count = 3; renderCount();
+  state.includeImage = state.includeHashtag = state.includeToneCheck = true;
+  ['toggleImage','toggleHashtag','toggleToneCheck'].forEach(id => document.getElementById(id).classList.add('on'));
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
