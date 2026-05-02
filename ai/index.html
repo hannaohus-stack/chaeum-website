@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chaeum Brand OS AI preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        overflow-x: hidden;
+        background: #fff;
+        color: #0b0b0b;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      button,
+      a {
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .wordmark {
+        font-family: Georgia, "Times New Roman", serif;
+        letter-spacing: -0.085em;
+      }
+      .desktop-header {
+        position: fixed;
+        z-index: 40;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 48px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        background: #fff;
+        padding: 0 24px;
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+      }
+      .desktop-header nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+      .desktop-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        line-height: 1;
+      }
+      .active-nav {
+        border-bottom: 2px solid #000;
+        padding-bottom: 4px;
+      }
+      .mobile-header {
+        display: none;
+      }
+      .desktop-main {
+        display: block;
+        min-height: 100vh;
+        padding-top: 48px;
+      }
+      .desktop-stage {
+        --slide-width: clamp(290px, 31vw, 430px);
+        --slide-gap: clamp(-170px, -12vw, -96px);
+        position: relative;
+        height: calc(100vh - 48px);
+        overflow: hidden;
+      }
+      .desktop-pager {
+        position: absolute;
+        z-index: 20;
+        top: 28px;
+        left: 50%;
+        display: flex;
+        width: 300px;
+        transform: translateX(-50%);
+        align-items: center;
+        gap: 24px;
+        color: rgba(0, 0, 0, 0.32);
+        font-size: 11px;
+        font-weight: 300;
+        letter-spacing: 0.08em;
+      }
+      .desktop-pager::before {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: rgba(0, 0, 0, 0.32);
+      }
+      .desktop-rail {
+        position: relative;
+        height: 100%;
+        touch-action: pan-y;
+        user-select: none;
+      }
+      .rail.dragging {
+        transition: none;
+      }
+      .logo-slide,
+      .desktop-card {
+        position: absolute;
+        top: 15vh;
+        left: 50%;
+        width: var(--slide-width);
+      }
+      .logo-slide {
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        background: #fff;
+        padding-top: 72px;
+      }
+      .logo-slide .big-logo {
+        margin: 0;
+        font-size: 16vw;
+        line-height: 0.68;
+      }
+      .intro-slide {
+        position: absolute;
+        top: 15vh;
+        left: 50%;
+        width: var(--slide-width);
+        text-align: center;
+      }
+      .intro-card {
+        position: relative;
+        display: flex;
+        aspect-ratio: 4 / 5.25;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 20% 0%, rgba(255,255,255,.34), transparent 34%),
+          linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05) 28%, rgba(255,255,255,.12) 56%, rgba(255,255,255,.04)),
+          #101010;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(255,255,255,.08), 0 26px 80px rgba(0,0,0,.18);
+        padding: 32px;
+        color: #fff;
+      }
+      .intro-card::before {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background: linear-gradient(110deg, transparent 18%, rgba(255,255,255,.28) 42%, transparent 62%);
+        transform: translateX(-26%) rotate(8deg);
+        filter: blur(14px);
+        opacity: .72;
+      }
+      .intro-card > * {
+        position: relative;
+        z-index: 1;
+      }
+      .intro-slide h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 56px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+      .intro-slide p {
+        margin: 28px 0 0;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 1.55;
+      }
+      .start-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 36px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        padding: 15px 32px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 650;
+        transition: background 180ms ease, color 180ms ease;
+      }
+      .start-button:hover {
+        background: #fff;
+        color: #000;
+      }
+      .desktop-card {
+        cursor: grab;
+      }
+      .desktop-over-label {
+        position: absolute;
+        z-index: 10;
+        top: 24px;
+        left: 50%;
+        margin: 0;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        margin: 0;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+      }
+      .desktop-image {
+        position: relative;
+        aspect-ratio: 4 / 5.25;
+        overflow: hidden;
+        border-radius: 18px;
+        background: #f3f3f3;
+      }
+      .desktop-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        user-select: none;
+        pointer-events: none;
+      }
+      .mobile-main,
+      .mobile-footer {
+        display: none;
+      }
+      .menu-overlay {
+        position: fixed;
+        z-index: 60;
+        inset: 0;
+        display: none;
+      }
+      .menu-overlay.open {
+        display: flex;
+      }
+      .menu-overlay {
+        align-items: center;
+        background: #fff;
+        padding: 28px;
+      }
+      .close-button {
+        position: absolute;
+        top: 28px;
+        right: 28px;
+        padding: 4px;
+        line-height: 0;
+      }
+      .menu-list {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .menu-list button {
+        text-align: left;
+        font-size: clamp(54px, 8vw, 96px);
+        font-weight: 300;
+        letter-spacing: -0.05em;
+      }
+      @media (max-width: 760px) {
+        .desktop-header,
+        .desktop-main {
+          display: none;
+        }
+        .mobile-header {
+          position: fixed;
+          z-index: 40;
+          top: 0;
+          left: 0;
+          right: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: #fff;
+          padding: 28px 24px;
+        }
+        .mobile-brand {
+          font-size: 42px;
+          line-height: 0.86;
+        }
+        .mobile-actions {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .mobile-menu {
+          font-size: 19px;
+          font-weight: 300;
+        }
+        .mobile-main {
+          display: block;
+          position: relative;
+          min-height: 100vh;
+          padding-top: 128px;
+        }
+        .mobile-pager {
+          display: flex;
+          width: min(230px, calc(100vw - 56px));
+          margin: 0 auto;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+        }
+        .mobile-pager .current-line {
+          height: 1px;
+          flex: 1;
+          background: rgba(0, 0, 0, 0.32);
+        }
+        .mobile-pager span {
+          min-width: 30px;
+          color: rgba(0, 0, 0, 0.28);
+          font-size: 9px;
+          font-weight: 300;
+          letter-spacing: 0.08em;
+        }
+        .mobile-pager span em {
+          color: rgba(0, 0, 0, 0.28);
+          font-style: normal;
+          font-weight: 300;
+        }
+        .mobile-stage {
+          --case-card-width: min(69vw, 340px);
+          --case-gap: -18px;
+          position: relative;
+          z-index: 10;
+          margin-top: 48px;
+        }
+        .mobile-rail {
+          display: flex;
+          align-items: flex-start;
+          gap: var(--case-gap);
+          transform: translate3d(
+            calc(50vw - (var(--case-card-width) / 2) - (var(--active-index) * (var(--case-card-width) + var(--case-gap))) + var(--drag-x)),
+            0,
+            0
+          );
+          transition: transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+          touch-action: pan-y;
+          user-select: none;
+          will-change: transform;
+        }
+        .mobile-slide {
+          width: var(--case-card-width);
+          flex: 0 0 var(--case-card-width);
+          cursor: grab;
+          transition: opacity 420ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-label {
+          margin-bottom: 28px;
+          text-align: center;
+        }
+        .mobile-label p {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.26em;
+          text-transform: uppercase;
+        }
+        .mobile-image,
+        .mobile-intro {
+          aspect-ratio: 4 / 5.25;
+          overflow: hidden;
+          border-radius: 18px;
+          background: #f3f3f3;
+        }
+        .mobile-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          pointer-events: none;
+          user-select: none;
+        }
+        .mobile-intro {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: #111;
+          padding: 28px;
+          text-align: center;
+          color: #fff;
+        }
+        .mobile-intro h1 {
+          margin: 0;
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: 48px;
+          font-weight: 300;
+          line-height: 1;
+        }
+        .mobile-intro p {
+          margin: 24px 0 0;
+          color: rgba(255, 255, 255, 0.62);
+          font-size: 14px;
+          font-weight: 300;
+          line-height: 1.7;
+        }
+        .mobile-intro .start-button {
+          margin-top: 30px;
+          padding: 12px 24px;
+          font-size: 14px;
+        }
+        .mobile-logo-section {
+          position: relative;
+          z-index: 0;
+          margin-top: 6px;
+          overflow: hidden;
+          text-align: center;
+        }
+        .mobile-logo-section p {
+          margin: 0;
+          font-size: 45vw;
+          line-height: 0.72;
+        }
+        .mobile-footer {
+          display: block;
+          position: relative;
+          z-index: 20;
+          padding: 48px 20px 38px;
+          text-align: center;
+          font-size: 15px;
+          font-weight: 600;
+          line-height: 1.85;
+        }
+        .mobile-footer p {
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="desktop-header">
+      <nav>
+        <a href="/ai/service/index.html">Services</a>
+        <a href="/ai/work/index.html">Work</a>
+        <a href="/ai/academy/index.html">Academy</a>
+      </nav>
+      <button class="desktop-logo wordmark" id="desktopHomeButton">chaeum</button>
+      <nav>
+        <a href="/ai/contact/">Contact</a>
+      </nav>
+    </header>
+
+    <header class="mobile-header">
+      <button class="mobile-brand wordmark" id="mobileHomeButton">chaeum</button>
+      <div class="mobile-actions">
+        <button aria-label="그리드 보기">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,.48)" stroke-width="1.8">
+            <rect x="3" y="3" width="6" height="6" rx="1"></rect>
+            <rect x="15" y="3" width="6" height="6" rx="1"></rect>
+            <rect x="3" y="15" width="6" height="6" rx="1"></rect>
+            <rect x="15" y="15" width="6" height="6" rx="1"></rect>
+          </svg>
+        </button>
+        <button class="mobile-menu" id="menuButton">MENU</button>
+      </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay">
+      <button class="close-button" id="closeMenuButton" aria-label="메뉴 닫기">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="menu-list">
+        <a href="/ai/service/index.html">Services</a>
+        <a href="/ai/work/index.html">Work</a>
+        <a href="/ai/academy/index.html">Academy</a>
+        <a href="/ai/contact/">Contact</a>
+      </div>
+    </div>
+
+    <main class="desktop-main" id="desktopMain">
+      <section class="desktop-stage">
+        <div class="desktop-pager" id="desktopPager"></div>
+        <div class="desktop-rail rail" id="desktopRail">
+          <div class="logo-slide desktop-layer" data-slide-index="-1">
+            <p class="big-logo wordmark">chaeum</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <main class="mobile-main">
+      <div class="mobile-pager">
+        <div class="current-line"></div>
+        <span id="mobilePager"></span>
+      </div>
+      <section class="mobile-stage">
+        <div class="mobile-rail rail" id="mobileRail">
+        </div>
+      </section>
+      <section class="mobile-logo-section">
+        <p class="wordmark">chaeum</p>
+      </section>
+    </main>
+
+    <footer class="mobile-footer">
+      <p>©chaeum. All rights reserved.</p>
+      <p>contact@chaeum.kr</p>
+    </footer>
+
+    <script>
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const cases = [
+        {
+          name: 'The Coffee Lab',
+          thumbnail: 'assets/abscent_b_01.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Brand OS AI · Content Operation',
+          period: '2026.01 - 2026.03',
+          description: '월간 12개 콘텐츠 자동 생성 + Hanna 검수',
+          results: 'SNS 조회수 3배 증가',
+          details: '미니멀한 커피 브랜드의 콘텐츠 전략을 재구성하여 월간 일관된 포스트 생성 시스템 구축.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '브랜드 톤을 유지하면서도 매주 콘텐츠를 꾸준히 발행할 수 있는 시스템이 필요했어요. 단순 자동화보다 우리 브랜드를 이해하고 제안하는 운영 파트너에 가까웠습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '콘텐츠를 만들 때마다 방향을 새로 잡아야 했고, 담당자마다 문장과 이미지 기준이 달라졌습니다. 결과적으로 브랜드가 매번 조금씩 다른 얼굴로 보였어요.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '회의 시간이 줄고, 승인해야 할 것들이 명확해졌습니다. 이제는 무엇을 만들지보다 어떤 메시지를 강화할지에 더 집중하게 됐어요.' }
+          ]
+        },
+        {
+          name: 'Urban Goods',
+          thumbnail: 'assets/abscent_b_02.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Brand Strategy · Visual System',
+          period: '2026.02 - 2026.04',
+          description: '브랜드 정체성 재구성',
+          results: '전환율 2.5배',
+          details: '라이프스타일 브랜드의 비주얼 언어를 정의하고 모든 터치포인트에 적용.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '상품은 계속 늘어나는데 브랜드 기준은 문서 몇 장에 머물러 있었어요. 실행까지 연결되는 운영형 브랜드 시스템이 필요했습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '상세페이지, 광고, SNS가 각각 다른 팀에서 움직이다 보니 같은 브랜드라고 느껴지지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '캠페인마다 새로 설득하지 않아도 되는 기준이 생겼고, 제작 속도와 완성도가 같이 올라갔습니다.' }
+          ]
+        },
+        {
+          name: 'Minimal Studio',
+          thumbnail: 'assets/abscent_b_04_mini.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Portfolio System · Messaging',
+          period: '2026.03 - 2026.04',
+          description: '디자인 스튜디오 브랜딩',
+          results: '포트폴리오 문의 4배',
+          details: '크리에이티브 에이전시의 브랜드 아이덴티티 및 포트폴리오 시스템 개발.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '우리가 잘하는 일을 더 명확한 언어로 보여주고 싶었습니다. 포트폴리오를 쌓는 방식 자체를 바꾸고 싶었어요.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '좋은 프로젝트가 많았지만 설명 방식이 제각각이라 강점이 선명하게 전달되지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '프로젝트를 소개하는 구조가 생기면서 제안서와 웹사이트가 같은 이야기를 하게 됐습니다.' }
+          ]
+        },
+        {
+          name: 'Wellness Co',
+          thumbnail: 'assets/abscent_b_05_big.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Content Guideline · Community',
+          period: '2026.01 - 2026.02',
+          description: '웰니스 브랜드 콘텐츠 시스템',
+          results: '구독자 2배',
+          details: '건강 관련 브랜드의 일관된 톤앤매너로 신뢰도 있는 콘텐츠 생성.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '웰니스 콘텐츠는 신뢰가 가장 중요한데, 빠르게 만들면서도 조심스럽게 말하는 균형이 필요했습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '소재는 많았지만 문장이 너무 광고처럼 보이거나, 반대로 브랜드의 전문성이 약하게 느껴졌습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '콘텐츠의 톤이 안정됐고, 고객들이 저장하고 다시 보는 정보형 포스트가 늘었습니다.' }
+          ]
+        },
+        {
+          name: 'Tech Startup',
+          thumbnail: 'assets/abscent_b_01.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'B2B Narrative · Lead Content',
+          period: '2026.02 - 2026.05',
+          description: '스타트업 B2B 마케팅',
+          results: '리드 3배',
+          details: '기술 회사의 복잡한 가치 제안을 간단하고 설득력 있게 시각화.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '기술 설명을 고객의 언어로 바꾸는 일이 가장 어려웠습니다. 제품을 이해하면서도 시장 관점으로 정리해 줄 시스템이 필요했어요.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '기능 설명은 많았지만 왜 필요한지, 어떤 변화가 생기는지가 잘 드러나지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '세일즈 자료와 콘텐츠가 같은 메시지를 공유하게 됐고, 문의의 질이 좋아졌습니다.' }
+          ]
+        }
+      ];
+
+      const introSlide = { type: 'intro', id: 'brand-os-ai', name: 'Brand OS AI' };
+      const slides = [...cases.slice(0, 3), introSlide, ...cases.slice(3)];
+      const totalSlides = slides.length;
+      const desktopMain = document.getElementById('desktopMain');
+      const desktopRail = document.getElementById('desktopRail');
+      const mobileRail = document.getElementById('mobileRail');
+      const desktopPager = document.getElementById('desktopPager');
+      const mobilePager = document.getElementById('mobilePager');
+      const menuOverlay = document.getElementById('menuOverlay');
+      let currentIndex = 0;
+      let dragX = 0;
+      let isDragging = false;
+      let wheelLocked = false;
+      let pointerState = { startX: 0, startedAt: 0, moved: false, pointerId: null, card: null };
+
+      slides.forEach((item) => {
+        if (item.type === 'intro') {
+          desktopRail.insertAdjacentHTML('beforeend', `
+            <section class="intro-slide desktop-layer" data-slide-index="${slides.indexOf(item)}">
+              <div class="intro-card">
+                <p class="desktop-over-label" style="color: rgba(255,255,255,.72)">Brand OS AI</p>
+                <h1>Brand OS AI</h1>
+                <p>브랜드 운영을 위한 AI 에이전트</p>
+                <button class="start-button">Get Started <span>→</span></button>
+              </div>
+            </section>
+          `);
+          mobileRail.insertAdjacentHTML('beforeend', `
+            <section class="mobile-slide">
+              <div class="mobile-label"><p>Brand OS AI</p></div>
+              <div class="mobile-intro">
+                <h1>Brand OS AI</h1>
+                <p>브랜드 운영을 위한 AI 에이전트</p>
+                <button class="start-button">Get Started <span>→</span></button>
+              </div>
+            </section>
+          `);
+          return;
+        }
+
+        const caseNumber = cases.findIndex((caseItem) => caseItem.name === item.name) + 1;
+        desktopRail.insertAdjacentHTML('beforeend', `
+          <article class="desktop-card desktop-layer" data-index="${caseNumber - 1}" data-slide-index="${slides.indexOf(item)}">
+            <div class="desktop-image">
+              <p class="desktop-over-label" style="color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.38)">Case Study ${String(caseNumber).padStart(2, '0')}</p>
+              <img src="${item.thumbnail}" alt="${item.name}" draggable="false" />
+            </div>
+          </article>
+        `);
+        mobileRail.insertAdjacentHTML('beforeend', `
+          <article class="mobile-slide" data-index="${caseNumber - 1}">
+            <div class="mobile-label"><p>Case Study ${String(caseNumber).padStart(2, '0')}</p></div>
+            <div class="mobile-image">
+              <img src="${item.thumbnail}" alt="${item.name}" draggable="false" />
+            </div>
+          </article>
+        `);
+      });
+
+      function moveSlide(direction) {
+        dragX = 0;
+        isDragging = false;
+        currentIndex = direction === 'next'
+          ? Math.min(currentIndex + 1, totalSlides - 1)
+          : Math.max(currentIndex - 1, 0);
+        render();
+      }
+
+      function render() {
+        desktopRail.style.setProperty('--active-index', currentIndex);
+        desktopRail.style.setProperty('--drag-x', `${dragX}px`);
+        mobileRail.style.setProperty('--active-index', currentIndex);
+        mobileRail.style.setProperty('--drag-x', `${dragX}px`);
+        desktopRail.classList.toggle('dragging', isDragging);
+        mobileRail.classList.toggle('dragging', isDragging);
+        desktopPager.textContent = `${currentIndex + 1} / ${totalSlides}`;
+        mobilePager.innerHTML = `${currentIndex + 1}<em> / ${totalSlides}</em>`;
+
+        desktopRail.querySelectorAll('.desktop-layer').forEach((card) => {
+          const slideIndex = Number(card.dataset.slideIndex);
+          const offset = slideIndex - currentIndex;
+          const distance = clamp(Math.abs(offset), 0, 2);
+          const isActive = offset === 0;
+          const visible = Math.abs(offset) <= 2;
+          const isLogo = card.classList.contains('logo-slide');
+          card.style.opacity = visible ? (isLogo ? 1 : (isActive ? 1 : 0.42 - distance * 0.08)) : 0;
+          card.style.filter = isLogo ? 'none' : (isActive ? 'blur(0px) saturate(1)' : `blur(${1.6 + distance * 0.9}px) saturate(.75)`);
+          card.style.transform = isLogo
+            ? `translateX(calc(-50% + ${offset * 64}%)) translateY(${36 + distance * 8}px) scale(.9)`
+            : `translateX(calc(-50% + ${offset * 64}%)) translateY(${isActive ? 0 : 30 + distance * 10}px) scale(${isActive ? 1 : 0.93 - distance * 0.025})`;
+          card.style.zIndex = isLogo ? 2 : (isActive ? 30 : 10 - distance);
+          card.style.pointerEvents = visible ? 'auto' : 'none';
+          card.style.transition = isDragging
+            ? 'none'
+            : `opacity 560ms ease, ${isLogo ? '' : 'filter 720ms ease, '}transform 920ms cubic-bezier(.19,1,.22,1)`;
+        });
+
+        mobileRail.querySelectorAll('.mobile-slide').forEach((card, index) => {
+          const distance = clamp(Math.abs(index - currentIndex), 0, 2);
+          card.style.opacity = index === currentIndex ? 1 : 0.78 - distance * 0.12;
+          card.style.transform = `translateY(${index === currentIndex ? 0 : 34}px)`;
+          card.style.transition = isDragging
+            ? 'none'
+            : 'opacity 420ms ease, transform 560ms cubic-bezier(.16,1,.3,1)';
+        });
+      }
+
+      desktopMain.addEventListener('wheel', (event) => {
+        if (window.innerWidth < 900 || wheelLocked || Math.abs(event.deltaY) < 24) return;
+        wheelLocked = true;
+        moveSlide(event.deltaY > 0 ? 'next' : 'prev');
+        window.setTimeout(() => {
+          wheelLocked = false;
+        }, 980);
+      }, { passive: true });
+
+      function bindDrag(rail) {
+        rail.addEventListener('pointerdown', (event) => {
+          if (event.button > 0) return;
+          pointerState = {
+            startX: event.clientX,
+            startedAt: performance.now(),
+            moved: false,
+            pointerId: event.pointerId,
+            card: event.target.closest('[data-index]')
+          };
+          rail.setPointerCapture(event.pointerId);
+          isDragging = true;
+        });
+        rail.addEventListener('pointermove', (event) => {
+          if (!isDragging || pointerState.pointerId !== event.pointerId) return;
+          const rawDistance = event.clientX - pointerState.startX;
+          pointerState.moved = Math.abs(rawDistance) > 8;
+          dragX = Math.sign(rawDistance) * Math.min(Math.abs(rawDistance), 260);
+          render();
+        });
+        rail.addEventListener('pointerup', (event) => {
+          if (!isDragging || pointerState.pointerId !== event.pointerId) return;
+          const distance = event.clientX - pointerState.startX;
+          const elapsed = Math.max(performance.now() - pointerState.startedAt, 1);
+          const velocity = distance / elapsed;
+          const shouldSwipe = Math.abs(distance) > 82 || Math.abs(velocity) > 0.42;
+          rail.releasePointerCapture(event.pointerId);
+
+          if (!pointerState.moved) {
+            isDragging = false;
+            dragX = 0;
+            const card = pointerState.card || event.target.closest('[data-index]');
+            if (card) openDetail(Number(card.dataset.index));
+            render();
+            return;
+          }
+
+          if (shouldSwipe) moveSlide(distance < 0 ? 'next' : 'prev');
+          else {
+            isDragging = false;
+            dragX = 0;
+            render();
+          }
+        });
+        rail.addEventListener('pointercancel', () => {
+          isDragging = false;
+          dragX = 0;
+          render();
+        });
+      }
+
+      bindDrag(desktopRail);
+      bindDrag(mobileRail);
+
+      function openDetail(index) {
+        window.location.href = `/ai/work/detail/index.html?case=${index + 1}`;
+      }
+
+      function closeDetail() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.getElementById('desktopHomeButton').addEventListener('click', () => {
+        closeDetail();
+        currentIndex = 0;
+        render();
+      });
+      document.getElementById('mobileHomeButton').addEventListener('click', () => {
+        closeDetail();
+        currentIndex = 0;
+        render();
+      });
+      document.getElementById('menuButton').addEventListener('click', () => menuOverlay.classList.add('open'));
+      document.getElementById('closeMenuButton').addEventListener('click', () => menuOverlay.classList.remove('open'));
+      document.querySelectorAll('.menu-list button').forEach((button) => {
+        button.addEventListener('click', () => menuOverlay.classList.remove('open'));
+      });
+
+      render();
+    </script>
+  </body>
+</html>
