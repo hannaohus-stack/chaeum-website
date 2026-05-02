@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service | chaeum Brand Brain</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        color: #fff;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #15120f;
+      }
+      body { overflow-x: hidden; }
+      a, button {
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .wordmark {
+        font-family: Georgia, "Times New Roman", serif;
+        letter-spacing: -0.085em;
+      }
+      .ambient {
+        position: fixed;
+        inset: -8vh -8vw;
+        z-index: -2;
+        background-image: url("../assets/abscent_b_05_big.png");
+        background-position: center;
+        background-size: cover;
+        filter: blur(42px) saturate(.82) brightness(.62);
+        transform: scale(1.12);
+      }
+      .ambient::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 50% 12%, rgba(255,255,255,.28), transparent 28%),
+          linear-gradient(90deg, rgba(22,17,12,.82), rgba(96,87,76,.72), rgba(24,24,22,.82));
+      }
+      .service-shell {
+        position: relative;
+        min-height: 100vh;
+        background:
+          linear-gradient(115deg, rgba(255,255,255,.12), rgba(255,255,255,.035) 36%, rgba(0,0,0,.13) 72%),
+          rgba(31, 29, 26, .28);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+      .service-shell::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+        opacity: .62;
+        transform: translateX(-120%);
+        animation: sheen 8s ease-in-out infinite;
+        pointer-events: none;
+      }
+      .site-header {
+        position: fixed;
+        z-index: 50;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 58px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+        background: rgba(42, 39, 35, .38);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        font-size: 13px;
+        font-weight: 300;
+      }
+      .site-header nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+      .site-logo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 25px;
+      }
+      .glass-section {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .glass-section::before {
+        display: none;
+      }
+      .hero {
+        display: flex;
+        min-height: 100svh;
+        align-items: center;
+        justify-content: center;
+        padding: 86px 24px 44px;
+        text-align: center;
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        width: min(1180px, 94vw);
+      }
+      .hero h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(68px, 13vw, 210px);
+        font-weight: 400;
+        line-height: .88;
+        letter-spacing: -0.07em;
+      }
+      .hero p {
+        width: min(730px, 84vw);
+        margin: 32px auto 0;
+        color: rgba(255,255,255,.66);
+        font-size: clamp(16px, 1.5vw, 23px);
+        font-weight: 300;
+        line-height: 1.58;
+      }
+      .brain-stage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100svh;
+        padding: 80px 0 76px;
+        text-align: center;
+      }
+      .section-title {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 1.15;
+        letter-spacing: -0.04em;
+      }
+      .brain-note {
+        position: relative;
+        z-index: 1;
+        width: min(620px, 86vw);
+        margin: 18px auto 0;
+        color: rgba(255,255,255,.58);
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.7;
+      }
+      .capability-stack {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 26px;
+        width: min(940px, 92vw);
+        margin: 58px auto 0;
+      }
+      .capability-main {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        min-height: 96px;
+        color: rgba(255,255,255,.96);
+        font-size: clamp(34px, 6vw, 86px);
+        font-weight: 300;
+        letter-spacing: -0.07em;
+        line-height: 1;
+        text-align: center;
+      }
+      .rotator-frame {
+        position: relative;
+        display: inline-flex;
+        min-width: min(76vw, 440px);
+        height: 1.18em;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 0 .12em;
+      }
+      .rotator-word {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(105%) rotateX(-34deg);
+        transform-origin: 50% 100%;
+        animation: wordFlip 15s cubic-bezier(.19,1,.22,1) infinite;
+      }
+      .rotator-word:nth-child(2) { animation-delay: 3s; }
+      .rotator-word:nth-child(3) { animation-delay: 6s; }
+      .rotator-word:nth-child(4) { animation-delay: 9s; }
+      .rotator-word:nth-child(5) { animation-delay: 12s; }
+      .capability-list {
+        display: grid;
+        width: min(620px, 100%);
+        margin: 22px auto 0;
+        border-top: 1px solid rgba(255,255,255,.18);
+        border-bottom: 1px solid rgba(255,255,255,.18);
+      }
+      .capability-row {
+        display: grid;
+        grid-template-columns: 26px 1fr;
+        gap: 18px;
+        align-items: center;
+        padding: 22px 0;
+        border-bottom: 1px solid rgba(255,255,255,.12);
+        color: rgba(255,255,255,.76);
+        font-size: 18px;
+        font-weight: 300;
+        letter-spacing: -0.035em;
+      }
+      .capability-row:last-child {
+        border-bottom: 0;
+      }
+      .capability-row span:first-child {
+        color: rgba(255,255,255,.34);
+        font-size: 13px;
+        letter-spacing: .08em;
+      }
+      .portfolio {
+        padding: 96px 0 104px;
+      }
+      .portfolio h2 {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 42px;
+        text-align: center;
+        font-size: clamp(30px, 4vw, 54px);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.045em;
+      }
+      .portfolio-window {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        padding: 0;
+      }
+      .portfolio-track {
+        display: flex;
+        width: max-content;
+        gap: 18px;
+        animation: slidePortfolio 28s linear infinite;
+      }
+      .portfolio-item {
+        width: clamp(220px, 24vw, 380px);
+        aspect-ratio: 4 / 5;
+        overflow: hidden;
+        border-radius: 0;
+        background: rgba(255,255,255,.12);
+      }
+      .portfolio-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .how {
+        padding: 110px clamp(24px, 7vw, 120px) 124px;
+      }
+      .how-header {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .how-header h2 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 54px);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.045em;
+      }
+      .how-header p {
+        margin: 22px auto 0;
+        width: min(680px, 88vw);
+        color: rgba(255,255,255,.58);
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 1.65;
+      }
+      .steps {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(28px, 5vw, 72px);
+        margin-top: 98px;
+      }
+      .step {
+        text-align: center;
+      }
+      .step-number {
+        display: block;
+        color: rgba(255,255,255,.18);
+        font-size: clamp(52px, 6vw, 92px);
+        font-weight: 300;
+        line-height: 1;
+      }
+      .step-line {
+        display: block;
+        width: 72px;
+        height: 1px;
+        margin: 26px auto 34px;
+        background: rgba(255,255,255,.18);
+      }
+      .step h3 {
+        margin: 0 0 24px;
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: -0.045em;
+      }
+      .step p {
+        margin: 0;
+        color: rgba(255,255,255,.54);
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.75;
+      }
+      .pricing {
+        padding: 104px clamp(24px, 7vw, 120px) 128px;
+        text-align: center;
+      }
+      .pricing h2 {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        font-size: clamp(30px, 4vw, 54px);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.045em;
+      }
+      .price-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        width: min(1120px, 100%);
+        margin: 64px auto 0;
+      }
+      .price-card {
+        min-height: 300px;
+        padding: 38px 28px;
+        border: 1px solid rgba(255,255,255,.2);
+        background: transparent;
+      }
+      .price-card h3 {
+        margin: 0 0 24px;
+        font-size: 20px;
+        font-weight: 400;
+      }
+      .price {
+        margin: 0 0 28px;
+        font-size: clamp(34px, 4vw, 58px);
+        font-weight: 500;
+        letter-spacing: -0.06em;
+      }
+      .price small {
+        color: rgba(255,255,255,.48);
+        font-size: 16px;
+        font-weight: 300;
+        letter-spacing: 0;
+      }
+      .price-card p {
+        margin: 0;
+        color: rgba(255,255,255,.58);
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 1.7;
+      }
+      .bottom-logo {
+        overflow: hidden;
+        padding: 88px 18px 42px;
+        color: #fff;
+      }
+      .bottom-logo .wordmark {
+        margin: 0;
+        text-align: center;
+        font-size: 28vw;
+        line-height: .72;
+      }
+      .bottom-info {
+        display: flex;
+        justify-content: space-between;
+        color: rgba(255,255,255,.82);
+        font-size: 14px;
+        font-weight: 400;
+      }
+      @keyframes sheen {
+        0%, 48% { transform: translateX(-120%); opacity: 0; }
+        58% { opacity: 1; }
+        82%, 100% { transform: translateX(120%); opacity: 0; }
+      }
+      @keyframes slidePortfolio {
+        from { transform: translateX(0); }
+        to { transform: translateX(calc(-50% - 9px)); }
+      }
+      @keyframes wordFlip {
+        0% {
+          opacity: 0;
+          transform: translateY(105%) rotateX(-34deg);
+        }
+        5%, 17% {
+          opacity: 1;
+          transform: translateY(0) rotateX(0deg);
+        }
+        22%, 100% {
+          opacity: 0;
+          transform: translateY(-105%) rotateX(34deg);
+        }
+      }
+      @media (max-width: 760px) {
+        .site-header {
+          height: 86px;
+          padding: 0 24px;
+          background: rgba(34,31,27,.34);
+        }
+        .site-header nav { display: none; }
+        .site-logo {
+          position: static;
+          transform: none;
+          font-size: 38px;
+        }
+        .mobile-menu { display: block; }
+        .hero {
+          min-height: 88svh;
+          padding: 104px 22px 44px;
+        }
+        .hero h1 {
+          font-size: clamp(58px, 20vw, 104px);
+        }
+        .brain-stage {
+          min-height: auto;
+          padding: 70px 0 58px;
+        }
+        .brain-note {
+          padding: 0 24px;
+          font-size: 15px;
+        }
+        .capability-stack {
+          margin-top: 42px;
+        }
+        .capability-main {
+          gap: 8px;
+          font-size: clamp(32px, 11vw, 54px);
+        }
+        .rotator-frame {
+          min-width: min(86vw, 330px);
+        }
+        .capability-row {
+          padding: 18px 0;
+          font-size: 16px;
+        }
+        .portfolio {
+          padding: 72px 0;
+        }
+        .portfolio-item {
+          width: 230px;
+        }
+        .how,
+        .pricing {
+          padding: 76px 24px 86px;
+        }
+        .steps,
+        .price-grid {
+          grid-template-columns: 1fr;
+          gap: 42px;
+          margin-top: 58px;
+        }
+        .price-card {
+          min-height: 240px;
+        }
+        .bottom-logo .wordmark {
+          font-size: 44vw;
+        }
+        .bottom-info {
+          display: grid;
+          gap: 10px;
+          justify-items: center;
+        }
+      }
+      @media (min-width: 761px) {
+        .mobile-menu { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true"></div>
+    <div class="service-shell">
+      <header class="site-header">
+        <nav>
+          <a href="./index.html">Services</a>
+          <a href="../work/index.html">Work</a>
+          <a href="../academy/index.html">Academy</a>
+        </nav>
+        <a class="site-logo wordmark" href="../index.html">chaeum</a>
+        <nav>
+          <a href="../index.html">Contact</a>
+        </nav>
+        <a class="mobile-menu" href="../index.html">MENU</a>
+      </header>
+
+      <main>
+        <section class="hero glass-section">
+          <div class="hero-inner">
+            <h1>your brand<br />runs sharper</h1>
+            <p>Brand Brain은 브랜드의 말투, 콘텐츠 리듬, 운영 기준을 학습하고 매주 실행 가능한 업무 흐름으로 바꾸는 AI 운영 에이전트입니다.</p>
+          </div>
+        </section>
+
+        <section class="brain-stage glass-section">
+          <h2 class="section-title">Brand Brain</h2>
+          <p class="brain-note">브랜드의 기억, 콘텐츠, 고객 반응을 하나의 운영 구조로 연결합니다.</p>
+          <div class="capability-stack">
+            <div class="capability-main" aria-label="Brand OS AI capability rotator">
+              <span>Brand OS AI (</span>
+              <span class="rotator-frame">
+                <span class="rotator-word">Brand Memory</span>
+                <span class="rotator-word">Contents Creator</span>
+                <span class="rotator-word">Campaign Planner</span>
+                <span class="rotator-word">Visual Guide</span>
+                <span class="rotator-word">Feedback Loop</span>
+              </span>
+              <span>)</span>
+            </div>
+            <div class="capability-list">
+              <div class="capability-row"><span>01</span><div>Contents Creator</div></div>
+              <div class="capability-row"><span>02</span><div>콘텐츠 캘린더와 캠페인 메시지를 브랜드 톤에 맞춰 제안합니다.</div></div>
+              <div class="capability-row"><span>03</span><div>성과 데이터를 다시 읽고 다음 운영 방향을 업데이트합니다.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="portfolio glass-section">
+          <h2>Portfolio Flow</h2>
+          <div class="portfolio-window">
+            <div class="portfolio-track">
+              <div class="portfolio-item"><img src="../assets/abscent_b_01.png" alt="Portfolio image 1" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_02.png" alt="Portfolio image 2" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_04_mini.png" alt="Portfolio image 3" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_05_big.png" alt="Portfolio image 4" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_01.png" alt="Portfolio image 5" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_02.png" alt="Portfolio image 6" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_01.png" alt="Portfolio image 1 duplicate" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_02.png" alt="Portfolio image 2 duplicate" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_04_mini.png" alt="Portfolio image 3 duplicate" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_05_big.png" alt="Portfolio image 4 duplicate" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_01.png" alt="Portfolio image 5 duplicate" /></div>
+              <div class="portfolio-item"><img src="../assets/abscent_b_02.png" alt="Portfolio image 6 duplicate" /></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="how glass-section">
+          <div class="how-header">
+            <h2>How to it</h2>
+            <p>브랜드를 이해하는 구조를 먼저 만들고, 그 구조 위에서 콘텐츠와 운영 루틴을 반복합니다.</p>
+          </div>
+          <div class="steps">
+            <article class="step">
+              <span class="step-number">01</span>
+              <span class="step-line"></span>
+              <h3>Upload & Learn</h3>
+              <p>브랜드 자료, 기존 콘텐츠, 고객 반응을 업로드하면 Brand Brain이 톤과 운영 기준을 학습합니다.</p>
+            </article>
+            <article class="step">
+              <span class="step-number">02</span>
+              <span class="step-line"></span>
+              <h3>Plan & Create</h3>
+              <p>월간 콘텐츠 캘린더, 캠페인 메시지, 상세페이지 흐름을 브랜드 기준에 맞춰 제안합니다.</p>
+            </article>
+            <article class="step">
+              <span class="step-number">03</span>
+              <span class="step-line"></span>
+              <h3>Operate & Improve</h3>
+              <p>발행 이후 성과를 다시 학습하고 다음 운영 방향을 업데이트합니다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="pricing glass-section">
+          <h2>Service & Price</h2>
+          <div class="price-grid">
+            <article class="price-card">
+              <h3>Brand Brain Starter</h3>
+              <p class="price">₩1.5M<small> / month</small></p>
+              <p>브랜드 톤 정리, 월간 콘텐츠 기획, 기본 운영 가이드 구축</p>
+            </article>
+            <article class="price-card">
+              <h3>Brand Brain OS</h3>
+              <p class="price">₩3M<small> / month</small></p>
+              <p>콘텐츠 자동화 플로우, 캠페인 메시지, 주간 검수와 운영 개선 리포트</p>
+            </article>
+            <article class="price-card">
+              <h3>Brand Brain Partner</h3>
+              <p class="price">Custom</p>
+              <p>브랜드 운영 전반, 세일즈 콘텐츠, 팀 워크플로우까지 맞춤 설계</p>
+            </article>
+          </div>
+        </section>
+
+        <footer class="bottom-logo glass-section">
+          <p class="wordmark">chaeum</p>
+          <div class="bottom-info">
+            <span>©chaeum. All rights reserved.</span>
+            <span>contact@chaeum.ai</span>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
