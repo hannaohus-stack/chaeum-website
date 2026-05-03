@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F-02 Claude 설치 및 기본 세팅 | chaeum Academy</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: #fff;
+        color: #0b0b0b;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      body { overflow-x: hidden; }
+      a, button {
+        color: inherit;
+        font: inherit;
+        text-decoration: none;
+      }
+      .wordmark {
+        font-family: Georgia, "Times New Roman", serif;
+        letter-spacing: -0.085em;
+      }
+      .site-header {
+        position: fixed;
+        z-index: 50;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 52px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        background: rgba(255,255,255,.92);
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+      .site-header nav {
+        display: flex;
+        align-items: center;
+        gap: 34px;
+      }
+      .site-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 25px;
+        line-height: 1;
+      }
+      .active {
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 3px;
+      }
+      .mobile-menu { display: none; }
+      main { padding-top: 52px; }
+      .lesson-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: clamp(36px, 7vw, 108px);
+        align-items: end;
+        min-height: 78vh;
+        padding: 96px clamp(24px, 5vw, 72px) 58px;
+      }
+      .breadcrumb {
+        margin: 0 0 28px;
+        color: rgba(0,0,0,.38);
+        font-size: 12px;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+      .lesson-title {
+        margin: 0;
+        max-width: 980px;
+        font-size: clamp(46px, 7.4vw, 112px);
+        font-weight: 400;
+        line-height: .94;
+        letter-spacing: -0.075em;
+      }
+      .lesson-summary {
+        align-self: center;
+        border-top: 1px solid rgba(0,0,0,.16);
+        padding-top: 22px;
+      }
+      .lesson-summary p {
+        margin: 0;
+        color: rgba(0,0,0,.56);
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.72;
+      }
+      .summary-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 32px;
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 22px;
+        border-top: 1px solid rgba(0,0,0,.1);
+        padding-top: 12px;
+        font-size: 13px;
+      }
+      .summary-row span:first-child {
+        color: rgba(0,0,0,.38);
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .content-shell {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: clamp(34px, 6vw, 96px);
+        padding: 72px clamp(24px, 5vw, 72px) 40px;
+        border-top: 1px solid rgba(0,0,0,.1);
+      }
+      .lesson-nav {
+        position: sticky;
+        top: 84px;
+        align-self: start;
+        display: grid;
+        gap: 12px;
+        color: rgba(0,0,0,.42);
+        font-size: 13px;
+      }
+      .lesson-nav a {
+        border-bottom: 1px solid rgba(0,0,0,.08);
+        padding: 0 0 12px;
+      }
+      .lesson-nav a:hover {
+        color: #0b0b0b;
+      }
+      .lesson-body {
+        max-width: 900px;
+      }
+      .lesson-block {
+        padding: 0 0 64px;
+      }
+      .block-label {
+        margin: 0 0 18px;
+        color: rgba(0,0,0,.38);
+        font-size: 12px;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+      }
+      .lesson-block h2 {
+        margin: 0 0 24px;
+        font-size: clamp(18px, 2vw, 28px);
+        font-weight: 400;
+        line-height: 1.18;
+        letter-spacing: -0.045em;
+      }
+      .lesson-block p {
+        margin: 0 0 18px;
+        color: rgba(0,0,0,.62);
+        font-size: 17px;
+        font-weight: 300;
+        line-height: 1.82;
+        letter-spacing: -0.025em;
+      }
+      .step-list {
+        display: grid;
+        gap: 1px;
+        margin-top: 34px;
+        background: rgba(0,0,0,.12);
+      }
+      .step-card {
+        display: grid;
+        grid-template-columns: 82px 1fr;
+        gap: 24px;
+        background: #fff;
+        padding: 26px 0;
+      }
+      .step-card span {
+        color: rgba(0,0,0,.36);
+        font-size: 13px;
+        letter-spacing: .14em;
+      }
+      .step-card h3 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        font-weight: 400;
+        letter-spacing: -0.05em;
+      }
+      .step-card p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.72;
+      }
+      .note-box {
+        margin-top: 30px;
+        border: 1px solid rgba(0,0,0,.14);
+        padding: 24px;
+      }
+      .note-box p {
+        margin: 0;
+        font-size: 15px;
+      }
+      .prompt-box {
+        margin-top: 30px;
+        background: #0b0b0b;
+        color: #fff;
+        padding: 28px;
+      }
+      .prompt-box p {
+        margin: 0;
+        color: rgba(255,255,255,.72);
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      .checklist {
+        display: grid;
+        gap: 0;
+        margin-top: 30px;
+        border-top: 1px solid rgba(0,0,0,.14);
+      }
+      .check-item {
+        display: grid;
+        grid-template-columns: 24px 1fr;
+        gap: 14px;
+        border-bottom: 1px solid rgba(0,0,0,.1);
+        padding: 18px 0;
+        color: rgba(0,0,0,.64);
+        font-size: 16px;
+        font-weight: 300;
+      }
+      .next-lesson {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px;
+        align-items: center;
+        margin-top: 42px;
+        border-top: 1px solid rgba(0,0,0,.16);
+        border-bottom: 1px solid rgba(0,0,0,.16);
+        padding: 28px 0;
+      }
+      .next-lesson p {
+        margin: 0 0 8px;
+        color: rgba(0,0,0,.38);
+        font-size: 12px;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+      .next-lesson h3 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 400;
+        letter-spacing: -0.055em;
+      }
+      .next-lesson a {
+        border: 1px solid #0b0b0b;
+        border-radius: 999px;
+        padding: 11px 18px;
+        font-size: 14px;
+      }
+      .bottom-logo {
+        overflow: hidden;
+        padding: 70px clamp(18px, 3vw, 42px) 42px;
+      }
+      .bottom-logo p {
+        margin: 0;
+        text-align: center;
+        font-size: 23vw;
+        line-height: .74;
+      }
+      .bottom-info {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 26px;
+        font-size: 13px;
+        font-weight: 400;
+      }
+      @media (max-width: 860px) {
+        .lesson-hero,
+        .content-shell,
+        .next-lesson {
+          grid-template-columns: 1fr;
+        }
+        .lesson-nav {
+          position: static;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 760px) {
+        .site-header {
+          height: 86px;
+          padding: 0 24px;
+        }
+        .site-header nav { display: none; }
+        .site-logo {
+          position: static;
+          transform: none;
+          font-size: 38px;
+        }
+        .mobile-menu {
+          display: block;
+          font-size: 19px;
+          font-weight: 300;
+        }
+        main { padding-top: 86px; }
+        .lesson-hero {
+          min-height: auto;
+          padding: 56px 24px;
+        }
+        .content-shell {
+          padding: 42px 24px 30px;
+        }
+        .lesson-nav {
+          display: none;
+        }
+        .step-card {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          padding: 24px 0;
+        }
+        .next-lesson a {
+          justify-self: start;
+        }
+        .bottom-logo p {
+          font-size: 44vw;
+        }
+        .bottom-info {
+          display: grid;
+          gap: 10px;
+          justify-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a href="/ai/service/index.html">Services</a>
+        <a href="/ai/work/index.html">Work</a>
+        <a class="active" href="/ai/academy/index.html">Academy</a>
+      </nav>
+      <a class="site-logo wordmark" href="/ai/index.html">chaeum</a>
+      <nav>
+        <a href="/ai/contact/">Contact</a>
+      </nav>
+      <a class="mobile-menu" href="/ai/academy/index.html">MENU</a>
+    </header>
+
+    <main>
+      <section class="lesson-hero">
+        <div>
+          <p class="breadcrumb">Academy / Foundation / F-02</p>
+          <h1 class="lesson-title">Claude 설치 및 기본 세팅</h1>
+        </div>
+        <aside class="lesson-summary">
+          <p>Claude.ai 가입부터 Projects 설정까지, 브랜드 운영을 위한 기본 환경을 준비합니다.</p>
+          <div class="summary-list">
+            <div class="summary-row"><span>Level</span><span>Foundation</span></div>
+            <div class="summary-row"><span>Time</span><span>20 min</span></div>
+            <div class="summary-row"><span>Output</span><span>Brand Project setup</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="content-shell">
+        <nav class="lesson-nav" aria-label="Lesson sections">
+          <a href="#overview">Overview</a>
+          <a href="#setup">Setup Flow</a>
+          <a href="#project">Project Settings</a>
+          <a href="#practice">Practice</a>
+        </nav>
+
+        <article class="lesson-body">
+          <section class="lesson-block" id="overview">
+            <p class="block-label">Overview</p>
+            <h2>브랜드 운영을 시작하기 전, 먼저 작업 환경을 정리합니다.</h2>
+            <p>Claude는 단순히 질문을 던지는 도구가 아니라, 브랜드의 기준을 저장하고 반복 업무를 함께 처리하는 작업 공간으로 사용할 수 있습니다. 이 수업에서는 가입, 기본 설정, Projects 구조까지 한 번에 정리합니다.</p>
+            <div class="note-box">
+              <p>이 수업의 목표는 “AI를 써보기”가 아니라, 매주 반복되는 브랜드 운영 업무를 담을 수 있는 기본 작업실을 만드는 것입니다.</p>
+            </div>
+          </section>
+
+          <section class="lesson-block" id="setup">
+            <p class="block-label">Setup Flow</p>
+            <h2>기본 세팅 순서</h2>
+            <div class="step-list">
+              <div class="step-card">
+                <span>01</span>
+                <div>
+                  <h3>Claude.ai 가입</h3>
+                  <p>브랜드 운영에 사용할 계정으로 가입하고, 업무용 이메일과 연결합니다.</p>
+                </div>
+              </div>
+              <div class="step-card">
+                <span>02</span>
+                <div>
+                  <h3>작업 언어 정하기</h3>
+                  <p>브랜드가 사용하는 기본 언어, 말투, 고객 응대 톤을 한국어 기준으로 정리합니다.</p>
+                </div>
+              </div>
+              <div class="step-card">
+                <span>03</span>
+                <div>
+                  <h3>Projects 만들기</h3>
+                  <p>브랜드별로 Project를 만들고, 콘텐츠 운영 자료를 한 공간에 모읍니다.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="lesson-block" id="project">
+            <p class="block-label">Project Settings</p>
+            <h2>Project에는 브랜드 기준을 넣습니다.</h2>
+            <p>Project 이름은 브랜드명 또는 운영 목적이 바로 보이게 작성합니다. 예를 들어 `chaeum / Brand OS`, `ABsent / Content Operation`처럼 사용하면 이후 업무를 찾고 이어가기 쉽습니다.</p>
+            <p>Project 설명에는 브랜드가 지켜야 할 말투, 핵심 고객, 금지 표현, 콘텐츠 목적을 짧게 넣습니다.</p>
+            <div class="prompt-box">
+              <p>이 Project는 [브랜드명]의 콘텐츠 운영을 위한 작업 공간입니다. 브랜드 톤은 담백하고 전문적이며, 과장된 표현보다 실제 사용 장면과 고객 문제 해결을 우선합니다. 모든 답변은 브랜드의 일관성을 유지하는 방향으로 제안해주세요.</p>
+            </div>
+          </section>
+
+          <section class="lesson-block" id="practice">
+            <p class="block-label">Practice</p>
+            <h2>수업이 끝나기 전 확인할 것</h2>
+            <div class="checklist">
+              <div class="check-item"><span>□</span><div>업무용 계정으로 Claude.ai에 로그인했다.</div></div>
+              <div class="check-item"><span>□</span><div>내 브랜드명으로 Project를 만들었다.</div></div>
+              <div class="check-item"><span>□</span><div>브랜드 톤, 고객, 금지 표현을 Project 설명에 넣었다.</div></div>
+              <div class="check-item"><span>□</span><div>다음 수업에서 사용할 브랜드 자료 3개를 준비했다.</div></div>
+            </div>
+            <div class="next-lesson">
+              <div>
+                <p>Next Lesson</p>
+                <h3>브랜드 톤을 AI에게 학습시키는 법</h3>
+              </div>
+              <a href="/ai/academy/index.html">목록으로</a>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <footer class="bottom-logo">
+        <p class="wordmark">chaeum</p>
+        <div class="bottom-info">
+          <span>©chaeum. All rights reserved.</span>
+          <span>contact@chaeum.ai</span>
+        </div>
+      </footer>
+    </main>
+    <script src="/ai/assets/mobile-menu.js"></script>
+    <script src="/ai/assets/inquiry-widget.js" data-source="chaeum.cloud/ai/academy/foundation/f02" data-page="Academy Lesson"></script>
+  </body>
+</html>

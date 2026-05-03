@@ -255,11 +255,13 @@
         flex-direction: column;
         gap: 22px;
       }
+      .menu-list a,
       .menu-list button {
         text-align: left;
-        font-size: clamp(54px, 8vw, 96px);
+        font-size: 30px;
         font-weight: 300;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
       }
       @media (max-width: 760px) {
         .desktop-header,
@@ -453,7 +455,7 @@
         z-index: 90;
         display: none;
         width: min(430px, calc(100vw - 48px));
-        max-height: min(720px, calc(100vh - 110px));
+        max-height: min(620px, calc(100vh - 96px));
         overflow: hidden;
         border: 1px solid rgba(0,0,0,.12);
         background: rgba(255,255,255,.96);
@@ -469,13 +471,13 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 18px;
+        gap: 14px;
         border-bottom: 1px solid rgba(0,0,0,.08);
-        padding: 20px 20px 18px;
+        padding: 13px 16px;
       }
       .inquiry-head.compact {
-        justify-content: flex-end;
-        padding: 14px 16px;
+        justify-content: space-between;
+        padding: 13px 16px;
       }
       .inquiry-kicker {
         margin: 0 0 8px;
@@ -486,10 +488,11 @@
       }
       .inquiry-title {
         margin: 0;
-        font-size: 22px;
+        max-width: 320px;
+        font-size: 15px;
         font-weight: 400;
-        line-height: 1.22;
-        letter-spacing: -0.06em;
+        line-height: 1.35;
+        letter-spacing: -0.04em;
       }
       .inquiry-close {
         color: rgba(0,0,0,.46);
@@ -497,9 +500,9 @@
         line-height: 1;
       }
       .inquiry-body {
-        max-height: calc(min(720px, calc(100vh - 110px)) - 92px);
+        max-height: calc(min(620px, calc(100vh - 96px)) - 50px);
         overflow-y: auto;
-        padding: 20px;
+        padding: 14px 16px 16px;
       }
       .inquiry-step {
         display: none;
@@ -508,8 +511,8 @@
         display: block;
       }
       .inquiry-question {
-        margin: 0 0 16px;
-        font-size: 18px;
+        margin: 0 0 12px;
+        font-size: 15px;
         font-weight: 400;
         line-height: 1.45;
         letter-spacing: -0.045em;
@@ -517,15 +520,15 @@
       .inquiry-options,
       .inquiry-fields {
         display: grid;
-        gap: 8px;
+        gap: 6px;
       }
       .inquiry-option {
         width: 100%;
         border: 1px solid rgba(0,0,0,.12);
-        padding: 12px 13px;
+        padding: 9px 11px;
         text-align: left;
         color: rgba(0,0,0,.76);
-        font-size: 14px;
+        font-size: 12px;
         line-height: 1.45;
       }
       .inquiry-option:hover,
@@ -544,36 +547,28 @@
         padding: 12px 0;
         color: #0b0b0b;
         font: inherit;
-        font-size: 15px;
+        font-size: 13px;
       }
       .inquiry-textarea {
-        min-height: 96px;
+        min-height: 64px;
         resize: vertical;
       }
       .inquiry-input::placeholder,
       .inquiry-textarea::placeholder {
         color: rgba(0,0,0,.38);
       }
-      .inquiry-summary {
-        margin-top: 14px;
-        background: rgba(0,0,0,.04);
-        padding: 14px;
-        color: rgba(0,0,0,.56);
-        font-size: 13px;
-        line-height: 1.7;
-      }
       .inquiry-actions {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        margin-top: 20px;
+        margin-top: 14px;
       }
       .inquiry-back,
       .inquiry-next {
         border: 1px solid rgba(0,0,0,.18);
         border-radius: 999px;
-        padding: 10px 15px;
+        padding: 8px 13px;
         font-size: 12px;
         font-weight: 400;
       }
@@ -635,10 +630,10 @@
         </svg>
       </button>
       <div class="menu-list">
-        <a href="/ai/service/index.html">Services</a>
-        <a href="/ai/work/index.html">Work</a>
-        <a href="/ai/academy/index.html">Academy</a>
-        <a href="/ai/contact/">Contact</a>
+        <a href="/ai/service/index.html">SERVICES</a>
+        <a href="/ai/work/index.html">WORK</a>
+        <a href="/ai/academy/index.html">ACADEMY</a>
+        <a href="/ai/contact/">CONTACT</a>
       </div>
     </div>
 
@@ -675,7 +670,7 @@
     <button class="inquiry-open" id="inquiryOpen" type="button">문의하기</button>
     <section class="inquiry-panel" id="inquiryPanel" aria-label="Brand OS AI 문의" aria-hidden="true">
       <div class="inquiry-head compact">
-        <div></div>
+        <p class="inquiry-title">우리 브랜드에 필요한 AI 운영 구조를 확인해보세요.</p>
         <button class="inquiry-close" id="inquiryClose" type="button" aria-label="문의 창 닫기">×</button>
       </div>
       <div class="inquiry-body">
@@ -726,7 +721,6 @@
             <input class="inquiry-input" id="inquiryWebsite" type="url" placeholder="Website / Portfolio" />
             <textarea class="inquiry-textarea" id="inquiryMessage" placeholder="다른 문의 내용이 있다면 자유롭게 남겨주세요."></textarea>
           </div>
-          <div class="inquiry-summary" id="inquirySummary"></div>
         </div>
         <div class="inquiry-actions">
           <button class="inquiry-back" id="inquiryBack" type="button">Back</button>
@@ -1026,8 +1020,8 @@
       });
       document.getElementById('menuButton').addEventListener('click', () => menuOverlay.classList.add('open'));
       document.getElementById('closeMenuButton').addEventListener('click', () => menuOverlay.classList.remove('open'));
-      document.querySelectorAll('.menu-list button').forEach((button) => {
-        button.addEventListener('click', () => menuOverlay.classList.remove('open'));
+      document.querySelectorAll('.menu-list a').forEach((link) => {
+        link.addEventListener('click', () => menuOverlay.classList.remove('open'));
       });
 
       const INQUIRY_ENDPOINT = 'https://hook.us2.make.com/9fe9k54irka79lhmex66m7m4teh3qdcj';
@@ -1037,7 +1031,6 @@
       const inquiryBack = document.getElementById('inquiryBack');
       const inquiryNext = document.getElementById('inquiryNext');
       const inquiryProgress = document.getElementById('inquiryProgress');
-      const inquirySummary = document.getElementById('inquirySummary');
       const inquiryState = {
         industry: '',
         stage: '',
@@ -1077,16 +1070,7 @@
         inquiryNext.textContent = inquiryStep === 4 ? 'Submit →' : 'Next';
         inquiryProgress.textContent = `${inquiryStep + 1} / 5`;
 
-        if (inquiryStep === 4) {
-          collectInquiryFields();
-          inquirySummary.innerHTML = `
-            <strong>문의 요약</strong><br>
-            업종: ${inquiryState.industry || '-'}<br>
-            운영 단계: ${inquiryState.stage || '-'}<br>
-            고민/개선 포인트: ${inquiryState.need || '-'}<br>
-            선호 도구: ${inquiryState.tool || '-'}
-          `;
-        }
+        if (inquiryStep === 4) collectInquiryFields();
       }
 
       function canMoveInquiryNext() {

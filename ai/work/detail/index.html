@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chaeum Work Detail</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: #fff;
+        color: #0b0b0b;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      body {
+        padding-bottom: 70px;
+      }
+      a, button {
+        color: inherit;
+        font: inherit;
+      }
+      a { text-decoration: none; }
+      button {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+      .wordmark {
+        font-family: Georgia, "Times New Roman", serif;
+        letter-spacing: -0.085em;
+      }
+      .site-header {
+        position: fixed;
+        z-index: 50;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 52px;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 0 28px;
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        backdrop-filter: blur(14px);
+      }
+      .site-header nav {
+        display: flex;
+        gap: 34px;
+      }
+      .site-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 25px;
+        line-height: 1;
+      }
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        background: #111;
+      }
+      .hero-image {
+        position: absolute;
+        inset: 0;
+      }
+      .hero-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(.95);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.12) 42%, rgba(0,0,0,.48)),
+          linear-gradient(90deg, rgba(0,0,0,.48), transparent 52%);
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 42px 86px;
+        color: #fff;
+      }
+      .hero-kicker {
+        margin: 0 0 18px;
+        color: rgba(255,255,255,.72);
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: .32em;
+        text-transform: uppercase;
+      }
+      .hero-title {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 70px;
+        font-weight: 300;
+        letter-spacing: -0.07em;
+        line-height: .84;
+      }
+      .hero-tags {
+        display: flex;
+        max-width: 760px;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 28px;
+      }
+      .hero-tags span {
+        border-radius: 999px;
+        background: rgba(255,255,255,.2);
+        padding: 7px 14px;
+        color: rgba(255,255,255,.9);
+        font-size: 13px;
+        font-weight: 400;
+        backdrop-filter: blur(12px);
+      }
+      .content {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(360px, .72fr);
+        gap: 42px;
+        padding: 56px 38px 112px;
+      }
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        align-content: start;
+      }
+      .portfolio-grid figure {
+        margin: 0;
+        overflow: hidden;
+        background: #efefef;
+      }
+      .portfolio-grid figure,
+      .portfolio-grid figure:nth-child(3n + 1),
+      .portfolio-grid figure:nth-child(3n + 2),
+      .portfolio-grid figure:nth-child(3n) {
+        grid-column: auto;
+        aspect-ratio: 4 / 5.35;
+      }
+      .portfolio-grid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .case-panel {
+        position: static;
+        align-self: start;
+        max-height: none;
+        overflow: visible;
+        padding-right: 10px;
+      }
+      .case-panel h1 {
+        margin: 0 0 42px;
+        font-size: 42px;
+        font-weight: 400;
+        letter-spacing: -0.06em;
+        line-height: .96;
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 38px;
+      }
+      .summary-item strong {
+        display: block;
+        margin-bottom: 9px;
+        color: rgba(0,0,0,.4);
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+      .summary-item p {
+        margin: 0;
+        color: rgba(0,0,0,.84);
+        font-size: 16px;
+        letter-spacing: -0.04em;
+        line-height: 1.42;
+      }
+      .descriptor-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin: 52px 0 18px;
+        color: rgba(0,0,0,.45);
+        font-size: 16px;
+        letter-spacing: -0.04em;
+      }
+      .case-description {
+        margin: 0;
+        color: rgba(0,0,0,.48);
+        font-size: 16px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        line-height: 1.72;
+      }
+      .interview-section {
+        margin-top: 54px;
+        border-top: 1px solid rgba(0,0,0,.12);
+        padding-top: 36px;
+      }
+      .interview-section h2 {
+        margin: 0 0 34px;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: -0.06em;
+      }
+      .interview-item + .interview-item {
+        margin-top: 36px;
+      }
+      .interview-item h3 {
+        margin: 0 0 10px;
+        color: rgba(0,0,0,.38);
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: -0.05em;
+        line-height: 1.58;
+      }
+      .interview-item p {
+        margin: 0;
+        color: rgba(0,0,0,.72);
+        font-size: 16px;
+        font-weight: 300;
+        letter-spacing: -0.05em;
+        line-height: 1.58;
+      }
+      .related {
+        padding: 0 38px 120px;
+      }
+      .related h2 {
+        margin: 0 0 28px;
+        font-size: clamp(38px, 4vw, 64px);
+        font-weight: 400;
+        letter-spacing: -0.07em;
+      }
+      .related-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+      }
+      .related-card figure {
+        margin: 0 0 12px;
+        aspect-ratio: 4 / 5.2;
+        overflow: hidden;
+        background: #eee;
+      }
+      .related-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .related-card p {
+        margin: 0;
+        font-size: 16px;
+        letter-spacing: -0.04em;
+      }
+      .brand-footer {
+        position: relative;
+        min-height: 62vh;
+        overflow: hidden;
+        padding: 58px 28px 112px;
+      }
+      .brand-footer .contact-link {
+        position: absolute;
+        top: 42px;
+        right: 28px;
+        font-size: 28px;
+        font-weight: 400;
+        letter-spacing: -0.04em;
+      }
+      .footer-wordmark {
+        margin: 0;
+        font-size: clamp(160px, 31vw, 590px);
+        line-height: .78;
+        white-space: nowrap;
+      }
+      .fixed-footer {
+        position: fixed;
+        z-index: 70;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 20px;
+        padding: 9px 28px 12px;
+        pointer-events: none;
+      }
+      .fixed-footer > * {
+        pointer-events: auto;
+      }
+      .fixed-footer .copyright {
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: -0.04em;
+      }
+      .floating-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        border: 1px solid rgba(0,0,0,.08);
+        border-radius: 999px;
+        background: rgba(255,255,255,.92);
+        box-shadow: 0 18px 70px rgba(0,0,0,.16);
+        padding: 8px 9px 8px 18px;
+        backdrop-filter: blur(18px);
+      }
+      .action-label {
+        color: rgba(0,0,0,.72);
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        white-space: nowrap;
+      }
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        background: #0b0b0b;
+        padding: 10px 21px;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.04em;
+      }
+      .fixed-links {
+        display: flex;
+        justify-content: flex-end;
+        gap: 28px;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: -0.04em;
+      }
+      @media (max-width: 760px) {
+        body {
+          padding-bottom: 88px;
+        }
+        .site-header {
+          height: 88px;
+          padding: 28px 24px;
+        }
+        .site-header nav {
+          display: none;
+        }
+        .site-logo {
+          position: static;
+          transform: none;
+          font-size: 42px;
+        }
+        .mobile-menu {
+          display: block;
+          font-size: 19px;
+          font-weight: 300;
+        }
+        .hero {
+          min-height: 76vh;
+        }
+        .hero-content {
+          min-height: 76vh;
+          padding: 0 20px 54px;
+        }
+        .hero-title {
+          font-size: 70px;
+        }
+        .content {
+          display: flex;
+          flex-direction: column;
+          gap: 34px;
+          padding: 28px 0 80px;
+        }
+        .portfolio-grid {
+          display: flex;
+          grid-template-columns: none;
+          gap: 12px;
+          order: 2;
+          overflow-x: auto;
+          padding: 0 16px 4px;
+          scroll-padding-left: 16px;
+          scroll-snap-type: x mandatory;
+          touch-action: pan-x;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .portfolio-grid::-webkit-scrollbar {
+          display: none;
+        }
+        .portfolio-grid figure,
+        .portfolio-grid figure:nth-child(3n) {
+          flex: 0 0 min(78vw, 320px);
+          grid-column: auto;
+          aspect-ratio: 4 / 5.35;
+          scroll-snap-align: start;
+        }
+        .case-panel {
+          position: static;
+          max-height: none;
+          overflow: visible;
+          order: 1;
+          padding: 18px 0 0;
+        }
+        .case-panel h1,
+        .descriptor-list,
+        .case-description,
+        .interview-section {
+          margin-left: 16px;
+          margin-right: 16px;
+        }
+        .summary-grid {
+          display: flex;
+          grid-template-columns: none;
+          gap: 12px;
+          overflow-x: auto;
+          padding: 0 16px 6px;
+          scroll-padding-left: 16px;
+          scroll-snap-type: x mandatory;
+          touch-action: pan-x;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .summary-grid::-webkit-scrollbar {
+          display: none;
+        }
+        .summary-item {
+          flex: 0 0 min(72vw, 280px);
+          min-height: 128px;
+          border: 1px solid rgba(0,0,0,.08);
+          background: #fff;
+          padding: 22px 20px;
+          scroll-snap-align: start;
+        }
+        .interview-section {
+          margin-top: 48px;
+          border-top: 0;
+          padding-top: 0;
+        }
+        .interview-section h2 {
+          margin-bottom: 38px;
+        }
+        .interview-item + .interview-item {
+          margin-top: 34px;
+        }
+        .related {
+          padding: 0 16px 80px;
+        }
+        .related-row {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px;
+        }
+        .brand-footer {
+          min-height: 42vh;
+          padding: 40px 16px 100px;
+        }
+        .brand-footer .contact-link {
+          top: 28px;
+          right: 16px;
+          font-size: 20px;
+        }
+        .footer-wordmark {
+          font-size: 42vw;
+          transform: translateX(-8%);
+        }
+        .fixed-footer {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          padding: 8px 12px 12px;
+        }
+        .fixed-footer .copyright,
+        .fixed-links {
+          display: none;
+        }
+        .floating-actions {
+          width: min(100%, 300px);
+          justify-content: space-between;
+          gap: 10px;
+          padding: 7px 8px 7px 16px;
+        }
+        .cta-button {
+          padding: 10px 18px;
+        }
+      }
+      @media (min-width: 761px) {
+        .mobile-menu { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a href="/ai/service/index.html">Services</a>
+        <a href="/ai/work/index.html">Work</a>
+        <a href="/ai/academy/index.html">Academy</a>
+      </nav>
+      <a class="site-logo wordmark" href="/ai/index.html">chaeum</a>
+      <nav>
+        <a href="/ai/contact/">Contact</a>
+      </nav>
+      <a class="mobile-menu" href="/ai/index.html">MENU</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-image" id="heroImage"></div>
+        <div class="hero-content">
+          <p class="hero-kicker" id="heroKicker"></p>
+          <h1 class="hero-title" id="heroTitle"></h1>
+          <div class="hero-tags" id="heroTags"></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="portfolio-grid" id="portfolioGrid"></div>
+        <aside class="case-panel">
+          <h1 id="panelTitle"></h1>
+          <div class="summary-grid" id="summaryGrid"></div>
+          <div class="descriptor-list" id="descriptorList"></div>
+          <p class="case-description" id="caseDescription"></p>
+          <section class="interview-section">
+            <h2>Client Interview</h2>
+            <div id="interviewList"></div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="related">
+        <h2>Related Work</h2>
+        <div class="related-row" id="relatedRow"></div>
+      </section>
+
+      <section class="brand-footer">
+        <a class="contact-link" href="/ai/contact/">[ CONTACT US → ]</a>
+        <p class="wordmark footer-wordmark">chaeum</p>
+      </section>
+    </main>
+
+    <footer class="fixed-footer">
+      <p class="copyright">©chaeum. All rights reserved.</p>
+      <div class="floating-actions">
+        <span class="action-label">Brand OS AI</span>
+        <a class="cta-button" href="/ai/index.html">Get Started →</a>
+      </div>
+      <div class="fixed-links">
+        <a href="mailto:contact@chaeum.kr">contact@chaeum.kr</a>
+        <a href="/ai/index.html">Privacy</a>
+      </div>
+    </footer>
+
+    <script src="/ai/assets/mobile-menu.js"></script>
+    <script src="/ai/assets/inquiry-widget.js" data-source="chaeum.cloud/ai/work/detail" data-page="Work Detail"></script>
+    <script>
+      const cases = [
+        {
+          name: 'The Coffee Lab',
+          thumbnail: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=1600&h=1000&fit=crop',
+          portfolio: [
+            'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&h=1500&fit=crop'
+          ],
+          tags: ['Content Operation', 'Brand Voice', 'AI Workflow', 'Coffee'],
+          serviceType: 'Brand OS AI · Content Operation',
+          period: '2026.01 - 2026.03',
+          description: '월간 12개 콘텐츠 자동 생성 + Hanna 검수',
+          results: 'SNS 조회수 3배 증가',
+          details: '미니멀한 커피 브랜드의 콘텐츠 전략을 재구성하여 월간 일관된 포스트 생성 시스템을 구축했습니다.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '브랜드 톤을 유지하면서도 매주 콘텐츠를 꾸준히 발행할 수 있는 시스템이 필요했어요. 단순 자동화보다 우리 브랜드를 이해하고 제안하는 운영 파트너에 가까웠습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '콘텐츠를 만들 때마다 방향을 새로 잡아야 했고, 담당자마다 문장과 이미지 기준이 달라졌습니다. 결과적으로 브랜드가 매번 조금씩 다른 얼굴로 보였어요.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '회의 시간이 줄고, 승인해야 할 것들이 명확해졌습니다. 이제는 무엇을 만들지보다 어떤 메시지를 강화할지에 더 집중하게 됐어요.' }
+          ]
+        },
+        {
+          name: 'Urban Goods',
+          thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&h=1000&fit=crop',
+          portfolio: [
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1600&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=1200&h=1500&fit=crop'
+          ],
+          tags: ['Visual System', 'Commerce', 'Brand Standard', 'Lifestyle'],
+          serviceType: 'Brand Strategy · Visual System',
+          period: '2026.02 - 2026.04',
+          description: '브랜드 정체성 재구성',
+          results: '전환율 2.5배',
+          details: '라이프스타일 브랜드의 비주얼 언어를 정의하고 모든 터치포인트에 적용했습니다.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '상품은 계속 늘어나는데 브랜드 기준은 문서 몇 장에 머물러 있었어요. 실행까지 연결되는 운영형 브랜드 시스템이 필요했습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '상세페이지, 광고, SNS가 각각 다른 팀에서 움직이다 보니 같은 브랜드라고 느껴지지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '캠페인마다 새로 설득하지 않아도 되는 기준이 생겼고, 제작 속도와 완성도가 같이 올라갔습니다.' }
+          ]
+        },
+        {
+          name: 'Minimal Studio',
+          thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1600&h=1000&fit=crop',
+          portfolio: [
+            'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1600&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&h=1500&fit=crop'
+          ],
+          tags: ['Portfolio', 'Messaging', 'Creative Direction', 'Studio'],
+          serviceType: 'Portfolio System · Messaging',
+          period: '2026.03 - 2026.04',
+          description: '디자인 스튜디오 브랜딩',
+          results: '포트폴리오 문의 4배',
+          details: '크리에이티브 에이전시의 브랜드 아이덴티티 및 포트폴리오 시스템을 개발했습니다.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '우리가 잘하는 일을 더 명확한 언어로 보여주고 싶었습니다. 포트폴리오를 쌓는 방식 자체를 바꾸고 싶었어요.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '좋은 프로젝트가 많았지만 설명 방식이 제각각이라 강점이 선명하게 전달되지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '프로젝트를 소개하는 구조가 생기면서 제안서와 웹사이트가 같은 이야기를 하게 됐습니다.' }
+          ]
+        },
+        {
+          name: 'Wellness Co',
+          thumbnail: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1600&h=1000&fit=crop',
+          portfolio: [
+            'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1543362906-acfc16c67564?w=1200&h=1500&fit=crop'
+          ],
+          tags: ['Community', 'Wellness', 'Guideline', 'Trust'],
+          serviceType: 'Content Guideline · Community',
+          period: '2026.01 - 2026.02',
+          description: '웰니스 브랜드 콘텐츠 시스템',
+          results: '구독자 2배',
+          details: '건강 관련 브랜드의 일관된 톤앤매너로 신뢰도 있는 콘텐츠를 생성했습니다.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '웰니스 콘텐츠는 신뢰가 가장 중요한데, 빠르게 만들면서도 조심스럽게 말하는 균형이 필요했습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '소재는 많았지만 문장이 너무 광고처럼 보이거나, 반대로 브랜드의 전문성이 약하게 느껴졌습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '콘텐츠의 톤이 안정됐고, 고객들이 저장하고 다시 보는 정보형 포스트가 늘었습니다.' }
+          ]
+        },
+        {
+          name: 'Tech Startup',
+          thumbnail: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&h=1000&fit=crop',
+          portfolio: [
+            'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=1500&fit=crop'
+          ],
+          tags: ['B2B Narrative', 'Lead Content', 'SaaS', 'AI Operation'],
+          serviceType: 'B2B Narrative · Lead Content',
+          period: '2026.02 - 2026.05',
+          description: '스타트업 B2B 마케팅',
+          results: '리드 3배',
+          details: '기술 회사의 복잡한 가치 제안을 간단하고 설득력 있게 시각화했습니다.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '기술 설명을 고객의 언어로 바꾸는 일이 가장 어려웠습니다. 제품을 이해하면서도 시장 관점으로 정리해 줄 시스템이 필요했어요.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '기능 설명은 많았지만 왜 필요한지, 어떤 변화가 생기는지가 잘 드러나지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '세일즈 자료와 콘텐츠가 같은 메시지를 공유하게 됐고, 문의의 질이 좋아졌습니다.' }
+          ]
+        }
+      ];
+
+      const params = new URLSearchParams(window.location.search);
+      const index = Math.max(0, Math.min(cases.length - 1, Number(params.get('case') || 1) - 1));
+      const item = cases[index];
+      const relatedCases = cases.filter((_, caseIndex) => caseIndex !== index).slice(0, 4);
+
+      document.title = `${item.name} | chaeum Work Detail`;
+      document.getElementById('heroImage').innerHTML = `<img src="${item.thumbnail}" alt="${item.name}" draggable="false" />`;
+      document.getElementById('heroKicker').textContent = `Case Study ${String(index + 1).padStart(2, '0')}`;
+      document.getElementById('heroTitle').textContent = item.name;
+      document.getElementById('heroTags').innerHTML = item.tags.map((tag) => `<span>${tag}</span>`).join('');
+      document.getElementById('panelTitle').textContent = item.name;
+      document.getElementById('summaryGrid').innerHTML = [
+        ['Project name', item.name],
+        ['Description', item.description],
+        ['Service Type', item.serviceType],
+        ['Period', item.period],
+        ['Result', item.results],
+        ['Role', 'Strategy · AI Operation']
+      ].map(([label, value]) => `
+        <div class="summary-item">
+          <strong>${label}</strong>
+          <p>${value}</p>
+        </div>
+      `).join('');
+      document.getElementById('descriptorList').innerHTML = item.tags.map((tag) => `<span>${tag}</span>`).join('');
+      document.getElementById('caseDescription').textContent = item.details;
+      document.getElementById('portfolioGrid').innerHTML = item.portfolio.map((image, imageIndex) => `
+        <figure>
+          <img src="${image}" alt="${item.name} portfolio ${imageIndex + 1}" draggable="false" />
+        </figure>
+      `).join('');
+      document.getElementById('interviewList').innerHTML = item.interviews.map((interview) => `
+        <article class="interview-item">
+          <h3>${interview.question}</h3>
+          <p>${interview.answer}</p>
+        </article>
+      `).join('');
+      document.getElementById('relatedRow').innerHTML = relatedCases.map((caseItem, relatedIndex) => `
+        <a class="related-card" href="/ai/work/detail/index.html?case=${cases.indexOf(caseItem) + 1}">
+          <figure><img src="${caseItem.thumbnail}" alt="${caseItem.name}" draggable="false" /></figure>
+          <p>${caseItem.name}</p>
+        </a>
+      `).join('');
+    </script>
+  </body>
+</html>

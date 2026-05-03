@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | chaeum</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: #fff;
+        color: #0b0b0b;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      body { overflow-x: hidden; }
+      a, button, input, textarea {
+        color: inherit;
+        font: inherit;
+      }
+      a { text-decoration: none; }
+      button {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+      .wordmark {
+        font-family: Georgia, "Times New Roman", serif;
+        letter-spacing: -0.085em;
+      }
+      .site-header {
+        position: fixed;
+        z-index: 50;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 52px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        background: rgba(255,255,255,.92);
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+      .site-header nav {
+        display: flex;
+        align-items: center;
+        gap: 34px;
+      }
+      .site-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 25px;
+        line-height: 1;
+      }
+      .active {
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 3px;
+      }
+      .mobile-menu { display: none; }
+      main {
+        min-height: 100svh;
+        padding: 132px clamp(22px, 5vw, 72px) 86px;
+      }
+      .contact-shell {
+        display: grid;
+        grid-template-columns: minmax(0, .72fr) minmax(420px, 1fr);
+        gap: clamp(52px, 8vw, 140px);
+        align-items: start;
+      }
+      .intro {
+        position: sticky;
+        top: 112px;
+      }
+      .step {
+        margin: 0 0 22px;
+        font-size: clamp(42px, 5.4vw, 82px);
+        font-weight: 600;
+        line-height: .92;
+        letter-spacing: -0.07em;
+      }
+      h1 {
+        margin: 0;
+        max-width: 620px;
+        font-size: clamp(54px, 7vw, 108px);
+        font-weight: 500;
+        line-height: .94;
+        letter-spacing: -0.075em;
+      }
+      .intro p {
+        max-width: 430px;
+        margin: 34px 0 0;
+        color: rgba(0,0,0,.48);
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.72;
+        letter-spacing: -0.035em;
+      }
+      .contact-form {
+        padding-top: 38px;
+      }
+      .field {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 58px;
+        align-items: end;
+        min-height: 118px;
+        border-bottom: 1px solid rgba(0,0,0,.24);
+      }
+      label {
+        padding: 0 0 28px;
+        font-size: clamp(24px, 2.5vw, 42px);
+        font-weight: 500;
+        line-height: 1.08;
+        letter-spacing: -0.06em;
+      }
+      input,
+      textarea {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        padding: 0 0 28px;
+        color: #0b0b0b;
+        font-size: clamp(22px, 2.15vw, 36px);
+        font-weight: 300;
+        line-height: 1.25;
+        letter-spacing: -0.055em;
+      }
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: rgba(0,0,0,.38);
+      }
+      .submit-row {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 34px;
+      }
+      .submit-button {
+        border: 1px solid #0b0b0b;
+        border-radius: 999px;
+        padding: 13px 24px;
+        background: #0b0b0b;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: -0.035em;
+      }
+      .status {
+        min-height: 24px;
+        margin: 0;
+        color: rgba(0,0,0,.48);
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 1.55;
+        text-align: right;
+      }
+      .footer-logo {
+        overflow: hidden;
+        padding: 56px 0 22px;
+      }
+      .footer-logo p {
+        margin: 0;
+        text-align: center;
+        font-size: 22vw;
+        line-height: .72;
+      }
+      @media (max-width: 900px) {
+        .site-header nav { display: none; }
+        .site-logo {
+          position: static;
+          transform: none;
+          font-size: 38px;
+        }
+        .mobile-menu {
+          display: block;
+          font-size: 22px;
+          letter-spacing: -0.04em;
+        }
+        main {
+          padding: 96px 22px 70px;
+        }
+        .contact-shell {
+          grid-template-columns: 1fr;
+          gap: 22px;
+        }
+        .intro {
+          position: static;
+        }
+        .intro p {
+          margin-top: 22px;
+        }
+        .contact-form {
+          padding-top: 0;
+        }
+        .field {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          min-height: 118px;
+          padding-top: 28px;
+        }
+        label {
+          padding: 0;
+          font-size: 28px;
+        }
+        input,
+        textarea {
+          padding-bottom: 22px;
+          font-size: 25px;
+        }
+        .submit-row {
+          align-items: flex-end;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a href="/ai/service/index.html">Services</a>
+        <a href="/ai/work/index.html">Work</a>
+        <a href="/ai/academy/index.html">Academy</a>
+      </nav>
+      <a class="site-logo wordmark" href="/ai/index.html">chaeum</a>
+      <nav>
+        <a class="active" href="/ai/contact/">Contact</a>
+      </nav>
+      <a class="mobile-menu" href="/ai/index.html">MENU</a>
+    </header>
+
+    <main>
+      <section class="contact-shell" aria-labelledby="contact-title">
+        <div class="intro">
+          <h1 id="contact-title">Your contact information.</h1>
+          <p>Brand OS AI 도입, Academy, 프로젝트 협업에 필요한 정보를 남겨주세요. 확인 후 운영 방향에 맞춰 회신드릴게요.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <div class="field">
+            <label for="name">Name *</label>
+            <input id="name" name="name" autocomplete="name" placeholder="Enter your name" required />
+          </div>
+          <div class="field">
+            <label for="company">Company *</label>
+            <input id="company" name="company" autocomplete="organization" placeholder="Enter company name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="Enter email address" required />
+          </div>
+          <div class="field">
+            <label for="website">Website / Portfolio</label>
+            <input id="website" name="website" type="url" inputmode="url" placeholder="https://" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us what you want to build"></textarea>
+          </div>
+          <div class="submit-row">
+            <p class="status" id="formStatus" role="status" aria-live="polite"></p>
+            <button class="submit-button" type="submit">Submit →</button>
+          </div>
+        </form>
+      </section>
+
+      <footer class="footer-logo">
+        <p class="wordmark">chaeum</p>
+      </footer>
+    </main>
+
+    <script src="/ai/assets/mobile-menu.js"></script>
+    <script>
+      const CONTACT_WEBHOOK_URL = '';
+
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('formStatus');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const payload = {
+          source: 'chaeum.cloud/ai/contact',
+          submittedAt: new Date().toISOString(),
+          name: formData.get('name')?.trim(),
+          company: formData.get('company')?.trim(),
+          email: formData.get('email')?.trim(),
+          website: formData.get('website')?.trim(),
+          message: formData.get('message')?.trim()
+        };
+
+        if (!CONTACT_WEBHOOK_URL) {
+          status.textContent = 'Slack 연동 URL 설정 후 알림이 발송됩니다.';
+          console.info('Contact payload ready for webhook:', payload);
+          return;
+        }
+
+        status.textContent = '전송 중입니다.';
+        try {
+          const response = await fetch(CONTACT_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) throw new Error(`Webhook failed: ${response.status}`);
+          form.reset();
+          status.textContent = '문의가 접수되었습니다.';
+        } catch (error) {
+          status.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해주세요.';
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>

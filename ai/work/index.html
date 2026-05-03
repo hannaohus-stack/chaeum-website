@@ -65,30 +65,19 @@
       }
       .mobile-menu { display: none; }
       main {
-        padding: 92px 28px 72px;
+        padding: 56px 28px 72px;
       }
-      .work-top {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 32px;
-        align-items: end;
-        margin-bottom: 54px;
-      }
-      .work-title {
-        margin: 0;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(58px, 11vw, 180px);
-        font-weight: 400;
-        line-height: .82;
-        letter-spacing: -0.08em;
-      }
-      .work-copy {
-        width: min(420px, 100%);
-        margin: 0 0 8px;
-        color: rgba(0,0,0,.52);
-        font-size: 15px;
+      .work-meta-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 0 0 72px;
+        color: rgba(0,0,0,.48);
+        font-size: 11px;
         font-weight: 300;
-        line-height: 1.7;
+        line-height: 1.45;
+        letter-spacing: -0.02em;
       }
       .category-bar {
         position: sticky;
@@ -97,7 +86,7 @@
         display: flex;
         gap: 6px;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         margin: 0 -28px 28px;
         padding: 10px 28px;
         background: rgba(255,255,255,.88);
@@ -167,10 +156,11 @@
         left: 16px;
         max-width: calc(100% - 32px);
         color: #0b0b0b;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(24px, 2.8vw, 42px);
-        line-height: .95;
-        letter-spacing: -0.08em;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        text-align: left;
         opacity: 0;
         transform: translateY(-10px);
         transition: opacity 300ms ease, transform 520ms cubic-bezier(.19,1,.22,1);
@@ -257,6 +247,149 @@
           justify-items: center;
         }
       }
+      .inquiry-open {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 80;
+        border: 1px solid rgba(0,0,0,.18);
+        border-radius: 999px;
+        background: rgba(255,255,255,.88);
+        padding: 11px 18px;
+        color: #0b0b0b;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 18px 50px rgba(0,0,0,.08);
+      }
+      .inquiry-panel {
+        position: fixed;
+        right: 24px;
+        bottom: 74px;
+        z-index: 90;
+        display: none;
+        width: min(430px, calc(100vw - 48px));
+        max-height: min(620px, calc(100vh - 96px));
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: rgba(255,255,255,.96);
+        color: #0b0b0b;
+        box-shadow: 0 28px 90px rgba(0,0,0,.14);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+      }
+      .inquiry-panel.open { display: block; }
+      .inquiry-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        border-bottom: 1px solid rgba(0,0,0,.08);
+        padding: 13px 16px;
+      }
+      .inquiry-title {
+        margin: 0;
+        max-width: 320px;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.35;
+        letter-spacing: -0.04em;
+      }
+      .inquiry-close {
+        color: rgba(0,0,0,.46);
+        font-size: 24px;
+        line-height: 1;
+      }
+      .inquiry-body {
+        max-height: calc(min(620px, calc(100vh - 96px)) - 50px);
+        overflow-y: auto;
+        padding: 14px 16px 16px;
+      }
+      .inquiry-step { display: none; }
+      .inquiry-step.active { display: block; }
+      .inquiry-question {
+        margin: 0 0 12px;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: -0.045em;
+      }
+      .inquiry-options,
+      .inquiry-fields {
+        display: grid;
+        gap: 6px;
+      }
+      .inquiry-option {
+        width: 100%;
+        border: 1px solid rgba(0,0,0,.12);
+        padding: 9px 11px;
+        text-align: left;
+        color: rgba(0,0,0,.76);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .inquiry-option:hover,
+      .inquiry-option.selected {
+        border-color: rgba(0,0,0,.42);
+        background: rgba(0,0,0,.04);
+        color: #0b0b0b;
+      }
+      .inquiry-input,
+      .inquiry-textarea {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid rgba(0,0,0,.22);
+        outline: 0;
+        background: transparent;
+        padding: 12px 0;
+        color: #0b0b0b;
+        font: inherit;
+        font-size: 13px;
+      }
+      .inquiry-textarea {
+        min-height: 64px;
+        resize: vertical;
+      }
+      .inquiry-input::placeholder,
+      .inquiry-textarea::placeholder { color: rgba(0,0,0,.38); }
+      .inquiry-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 14px;
+      }
+      .inquiry-back,
+      .inquiry-next {
+        border: 1px solid rgba(0,0,0,.18);
+        border-radius: 999px;
+        padding: 8px 13px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+      .inquiry-next {
+        border-color: #0b0b0b;
+        background: #0b0b0b;
+        color: #fff;
+      }
+      .inquiry-progress {
+        color: rgba(0,0,0,.42);
+        font-size: 11px;
+        letter-spacing: .1em;
+      }
+      @media (max-width: 760px) {
+        .inquiry-open {
+          right: 16px;
+          bottom: 16px;
+        }
+        .inquiry-panel {
+          right: 16px;
+          bottom: 64px;
+          width: calc(100vw - 32px);
+        }
+      }
     </style>
   </head>
   <body>
@@ -268,16 +401,17 @@
       </nav>
       <a class="site-logo wordmark" href="/ai/index.html">chaeum</a>
       <nav>
-        <a href="/ai/index.html">Contact</a>
+        <a href="/ai/contact/">Contact</a>
       </nav>
       <a class="mobile-menu" href="/ai/index.html">MENU</a>
     </header>
 
     <main>
-      <section class="work-top">
-        <h1 class="work-title">Work</h1>
-        <p class="work-copy">Brand OS AI로 설계한 운영 사례를 카테고리별로 확인하세요. 각 프로젝트는 전략, 콘텐츠, 운영 루틴이 하나의 시스템으로 연결됩니다.</p>
-      </section>
+      <div class="work-meta-line">
+        <span>6 Projects</span>
+        <span>|</span>
+        <span>Brand OS AI로 설계한 운영 사례를 카테고리별로 확인하세요.</span>
+      </div>
 
       <nav class="category-bar" aria-label="Work categories">
         <button class="category-button is-active" type="button" data-category="All">All</button>
@@ -289,27 +423,27 @@
 
       <section class="work-grid" id="workGrid">
         <a class="work-card" href="/ai/work/detail/index.html?case=1" data-category="Food">
-          <div class="work-image"><span class="hover-title">The Coffee Lab</span><img src="../assets/abscent_b_01.png" alt="The Coffee Lab" /></div>
+          <div class="work-image"><span class="hover-title">The Coffee Lab</span><img src="/ai/assets/abscent_b_01.png" alt="The Coffee Lab" /></div>
           <div class="work-meta"><span>The Coffee Lab</span><span>Food</span></div>
         </a>
         <a class="work-card" href="/ai/work/detail/index.html?case=2" data-category="Lifestyle">
-          <div class="work-image"><span class="hover-title">Urban Goods</span><img src="../assets/abscent_b_02.png" alt="Urban Goods" /></div>
+          <div class="work-image"><span class="hover-title">Urban Goods</span><img src="/ai/assets/abscent_b_02.png" alt="Urban Goods" /></div>
           <div class="work-meta"><span>Urban Goods</span><span>Lifestyle</span></div>
         </a>
         <a class="work-card" href="/ai/work/detail/index.html?case=3" data-category="Other">
-          <div class="work-image"><span class="hover-title">Minimal Studio</span><img src="../assets/abscent_b_04_mini.png" alt="Minimal Studio" /></div>
+          <div class="work-image"><span class="hover-title">Minimal Studio</span><img src="/ai/assets/abscent_b_04_mini.png" alt="Minimal Studio" /></div>
           <div class="work-meta"><span>Minimal Studio</span><span>Other</span></div>
         </a>
         <a class="work-card" href="/ai/work/detail/index.html?case=4" data-category="Beauty">
-          <div class="work-image"><span class="hover-title">Wellness Co</span><img src="../assets/abscent_b_05_big.png" alt="Wellness Co" /></div>
+          <div class="work-image"><span class="hover-title">Wellness Co</span><img src="/ai/assets/abscent_b_05_big.png" alt="Wellness Co" /></div>
           <div class="work-meta"><span>Wellness Co</span><span>Beauty</span></div>
         </a>
         <a class="work-card" href="/ai/work/detail/index.html?case=5" data-category="Other">
-          <div class="work-image"><span class="hover-title">Tech Startup</span><img src="../assets/abscent_b_01.png" alt="Tech Startup" /></div>
+          <div class="work-image"><span class="hover-title">Tech Startup</span><img src="/ai/assets/abscent_b_01.png" alt="Tech Startup" /></div>
           <div class="work-meta"><span>Tech Startup</span><span>Other</span></div>
         </a>
         <a class="work-card" href="/ai/work/detail/index.html?case=1" data-category="Lifestyle">
-          <div class="work-image"><span class="hover-title">ABsent Archive</span><img src="../assets/abscent_b_02.png" alt="ABsent Archive" /></div>
+          <div class="work-image"><span class="hover-title">ABsent Archive</span><img src="/ai/assets/abscent_b_02.png" alt="ABsent Archive" /></div>
           <div class="work-meta"><span>ABsent Archive</span><span>Lifestyle</span></div>
         </a>
       </section>
@@ -323,6 +457,70 @@
       </footer>
     </main>
 
+    <button class="inquiry-open" id="inquiryOpen" type="button">문의하기</button>
+    <section class="inquiry-panel" id="inquiryPanel" aria-label="Brand OS AI 문의" aria-hidden="true">
+      <div class="inquiry-head">
+        <p class="inquiry-title">우리 브랜드에 필요한 AI 운영 구조를 확인해보세요.</p>
+        <button class="inquiry-close" id="inquiryClose" type="button" aria-label="문의 창 닫기">×</button>
+      </div>
+      <div class="inquiry-body">
+        <div class="inquiry-step active" data-step="0">
+          <p class="inquiry-question">브랜드 업종을 선택해주세요.</p>
+          <div class="inquiry-options" data-key="industry">
+            <button class="inquiry-option" type="button" data-value="Food / F&B">Food / F&amp;B</button>
+            <button class="inquiry-option" type="button" data-value="Beauty">Beauty</button>
+            <button class="inquiry-option" type="button" data-value="Lifestyle">Lifestyle</button>
+            <button class="inquiry-option" type="button" data-value="B2B / Tech">B2B / Tech</button>
+            <button class="inquiry-option" type="button" data-value="Other">Other</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="1">
+          <p class="inquiry-question">현재 브랜드 운영 단계는 어디에 가까운가요?</p>
+          <div class="inquiry-options" data-key="stage">
+            <button class="inquiry-option" type="button" data-value="런칭 전 / 준비 단계">런칭 전 / 준비 단계</button>
+            <button class="inquiry-option" type="button" data-value="운영 중이지만 기준 정리가 필요함">운영 중이지만 기준 정리가 필요함</button>
+            <button class="inquiry-option" type="button" data-value="콘텐츠 발행을 꾸준히 확장하고 싶음">콘텐츠 발행을 꾸준히 확장하고 싶음</button>
+            <button class="inquiry-option" type="button" data-value="팀 단위 AI 운영 시스템이 필요함">팀 단위 AI 운영 시스템이 필요함</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="2">
+          <p class="inquiry-question">브랜드 운영에서 지금 가장 불편한 지점은 무엇인가요?</p>
+          <div class="inquiry-options" data-key="need">
+            <button class="inquiry-option" type="button" data-value="브랜드 말투가 매번 달라져요">브랜드 말투가 매번 달라져요</button>
+            <button class="inquiry-option" type="button" data-value="고객에게 설명이 잘 안 돼요">고객에게 설명이 잘 안 돼요</button>
+            <button class="inquiry-option" type="button" data-value="반응은 있는데 다음 액션이 어려워요">반응은 있는데 다음 액션이 어려워요</button>
+            <button class="inquiry-option" type="button" data-value="팀과 기준을 맞추기 어려워요">팀과 기준을 맞추기 어려워요</button>
+            <button class="inquiry-option" type="button" data-value="전체 구조를 먼저 보고 싶어요">전체 구조를 먼저 보고 싶어요</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="3">
+          <p class="inquiry-question">현재 사용 중이거나 선호하는 업무 도구가 있나요?</p>
+          <div class="inquiry-options" data-key="tool">
+            <button class="inquiry-option" type="button" data-value="Notion">Notion</button>
+            <button class="inquiry-option" type="button" data-value="Claude / ChatGPT">Claude / ChatGPT</button>
+            <button class="inquiry-option" type="button" data-value="Slack / Google Drive">Slack / Google Drive</button>
+            <button class="inquiry-option" type="button" data-value="아직 없음">아직 없음</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="4">
+          <p class="inquiry-question">상담을 위한 정보를 남겨주세요.</p>
+          <div class="inquiry-fields">
+            <input class="inquiry-input" id="inquiryName" placeholder="Name *" autocomplete="name" />
+            <input class="inquiry-input" id="inquiryCompany" placeholder="Company *" autocomplete="organization" />
+            <input class="inquiry-input" id="inquiryEmail" type="email" placeholder="Email *" autocomplete="email" />
+            <input class="inquiry-input" id="inquiryWebsite" type="url" placeholder="Website / Portfolio" />
+            <textarea class="inquiry-textarea" id="inquiryMessage" placeholder="다른 문의 내용이 있다면 자유롭게 남겨주세요."></textarea>
+          </div>
+        </div>
+        <div class="inquiry-actions">
+          <button class="inquiry-back" id="inquiryBack" type="button">Back</button>
+          <span class="inquiry-progress" id="inquiryProgress">1 / 5</span>
+          <button class="inquiry-next" id="inquiryNext" type="button">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <script src="/ai/assets/mobile-menu.js"></script>
     <script>
       const buttons = Array.from(document.querySelectorAll('.category-button'));
       const cards = Array.from(document.querySelectorAll('.work-card'));
@@ -337,6 +535,131 @@
           });
         });
       });
+
+      const INQUIRY_ENDPOINT = 'https://hook.us2.make.com/9fe9k54irka79lhmex66m7m4teh3qdcj';
+      const inquiryPanel = document.getElementById('inquiryPanel');
+      const inquiryOpen = document.getElementById('inquiryOpen');
+      const inquiryClose = document.getElementById('inquiryClose');
+      const inquiryBack = document.getElementById('inquiryBack');
+      const inquiryNext = document.getElementById('inquiryNext');
+      const inquiryProgress = document.getElementById('inquiryProgress');
+      const inquiryState = {
+        industry: '',
+        stage: '',
+        need: '',
+        tool: '',
+        name: '',
+        company: '',
+        email: '',
+        website: '',
+        message: ''
+      };
+      let inquiryStep = 0;
+
+      function openInquiry() {
+        inquiryPanel.classList.add('open');
+        inquiryPanel.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeInquiry() {
+        inquiryPanel.classList.remove('open');
+        inquiryPanel.setAttribute('aria-hidden', 'true');
+      }
+
+      function collectInquiryFields() {
+        inquiryState.name = document.getElementById('inquiryName')?.value.trim() || '';
+        inquiryState.company = document.getElementById('inquiryCompany')?.value.trim() || '';
+        inquiryState.email = document.getElementById('inquiryEmail')?.value.trim() || '';
+        inquiryState.website = document.getElementById('inquiryWebsite')?.value.trim() || '';
+        inquiryState.message = document.getElementById('inquiryMessage')?.value.trim() || '';
+      }
+
+      function renderInquiry() {
+        document.querySelectorAll('.inquiry-step').forEach((step) => {
+          step.classList.toggle('active', Number(step.dataset.step) === inquiryStep);
+        });
+        inquiryBack.style.visibility = inquiryStep === 0 ? 'hidden' : 'visible';
+        inquiryNext.textContent = inquiryStep === 4 ? 'Submit →' : 'Next';
+        inquiryProgress.textContent = `${inquiryStep + 1} / 5`;
+
+        if (inquiryStep === 4) collectInquiryFields();
+      }
+
+      function canMoveInquiryNext() {
+        collectInquiryFields();
+        if (inquiryStep === 0) return Boolean(inquiryState.industry);
+        if (inquiryStep === 1) return Boolean(inquiryState.stage);
+        if (inquiryStep === 2) return Boolean(inquiryState.need);
+        if (inquiryStep === 3) return Boolean(inquiryState.tool);
+        if (inquiryStep === 4) return Boolean(inquiryState.name && inquiryState.company && inquiryState.email);
+        return true;
+      }
+
+      function formatInquirySlackMessage(payload) {
+        return [
+          '*Brand OS AI 문의가 접수되었습니다.*',
+          `• 페이지: Work`,
+          `• 업종: ${payload.industry || '-'}`,
+          `• 운영 단계: ${payload.stage || '-'}`,
+          `• 고민/개선 포인트: ${payload.need || '-'}`,
+          `• 선호 도구: ${payload.tool || '-'}`,
+          `• 이름: ${payload.name || '-'}`,
+          `• 회사: ${payload.company || '-'}`,
+          `• 이메일: ${payload.email || '-'}`,
+          `• 웹사이트: ${payload.website || '-'}`,
+          `• 추가 문의: ${payload.message || '-'}`,
+          `• 접수 시간: ${payload.submittedAt}`
+        ].join('\n');
+      }
+
+      async function submitInquiry() {
+        collectInquiryFields();
+        const payload = {
+          source: 'chaeum.cloud/ai/work',
+          submittedAt: new Date().toISOString(),
+          ...inquiryState
+        };
+        payload.text = formatInquirySlackMessage(payload);
+
+        await fetch(INQUIRY_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        alert('문의가 접수되었습니다.');
+        closeInquiry();
+      }
+
+      inquiryOpen.addEventListener('click', openInquiry);
+      inquiryClose.addEventListener('click', closeInquiry);
+      document.querySelectorAll('[data-key] .inquiry-option').forEach((button) => {
+        button.addEventListener('click', () => {
+          const key = button.closest('[data-key]').dataset.key;
+          inquiryState[key] = button.dataset.value;
+          button.parentElement.querySelectorAll('.inquiry-option').forEach((item) => item.classList.remove('selected'));
+          button.classList.add('selected');
+          window.setTimeout(() => {
+            inquiryStep = Math.min(inquiryStep + 1, 4);
+            renderInquiry();
+          }, 140);
+        });
+      });
+      inquiryBack.addEventListener('click', () => {
+        inquiryStep = Math.max(inquiryStep - 1, 0);
+        renderInquiry();
+      });
+      inquiryNext.addEventListener('click', () => {
+        if (!canMoveInquiryNext()) {
+          alert('필수 정보를 입력해주세요.');
+          return;
+        }
+        if (inquiryStep === 4) submitInquiry();
+        else {
+          inquiryStep += 1;
+          renderInquiry();
+        }
+      });
+      renderInquiry();
     </script>
   </body>
 </html>
