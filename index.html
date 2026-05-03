@@ -1,580 +1,1180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHAEUM — AI Brand Agent System</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chaeum Brand OS AI preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        overflow-x: hidden;
+        background: #fff;
+        color: #0b0b0b;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      button,
+      a {
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .wordmark {
+        font-family: Georgia, "Times New Roman", serif;
+        letter-spacing: -0.085em;
+      }
+      .desktop-header {
+        position: fixed;
+        z-index: 40;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 48px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        background: #fff;
+        padding: 0 24px;
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+      }
+      .desktop-header nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+      .desktop-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        line-height: 1;
+      }
+      .active-nav {
+        border-bottom: 2px solid #000;
+        padding-bottom: 4px;
+      }
+      .mobile-header {
+        display: none;
+      }
+      .desktop-main {
+        display: block;
+        min-height: 100vh;
+        padding-top: 48px;
+      }
+      .desktop-stage {
+        --slide-width: clamp(290px, 31vw, 430px);
+        --slide-gap: clamp(-170px, -12vw, -96px);
+        position: relative;
+        height: calc(100vh - 48px);
+        overflow: hidden;
+      }
+      .desktop-pager {
+        position: absolute;
+        z-index: 20;
+        top: 28px;
+        left: 50%;
+        display: flex;
+        width: 300px;
+        transform: translateX(-50%);
+        align-items: center;
+        gap: 24px;
+        color: rgba(0, 0, 0, 0.32);
+        font-size: 11px;
+        font-weight: 300;
+        letter-spacing: 0.08em;
+      }
+      .desktop-pager::before {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: rgba(0, 0, 0, 0.32);
+      }
+      .desktop-rail {
+        position: relative;
+        height: 100%;
+        touch-action: pan-y;
+        user-select: none;
+      }
+      .rail.dragging {
+        transition: none;
+      }
+      .logo-slide,
+      .desktop-card {
+        position: absolute;
+        top: 15vh;
+        left: 50%;
+        width: var(--slide-width);
+      }
+      .logo-slide {
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        background: #fff;
+        padding-top: 72px;
+      }
+      .logo-slide .big-logo {
+        margin: 0;
+        font-size: 16vw;
+        line-height: 0.68;
+      }
+      .intro-slide {
+        position: absolute;
+        top: 15vh;
+        left: 50%;
+        width: var(--slide-width);
+        text-align: center;
+      }
+      .intro-card {
+        position: relative;
+        display: flex;
+        aspect-ratio: 4 / 5.25;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 20% 0%, rgba(255,255,255,.34), transparent 34%),
+          linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05) 28%, rgba(255,255,255,.12) 56%, rgba(255,255,255,.04)),
+          #101010;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(255,255,255,.08), 0 26px 80px rgba(0,0,0,.18);
+        padding: 32px;
+        color: #fff;
+      }
+      .intro-card::before {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background: linear-gradient(110deg, transparent 18%, rgba(255,255,255,.28) 42%, transparent 62%);
+        transform: translateX(-26%) rotate(8deg);
+        filter: blur(14px);
+        opacity: .72;
+      }
+      .intro-card > * {
+        position: relative;
+        z-index: 1;
+      }
+      .intro-slide h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 56px;
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+      .intro-slide p {
+        margin: 28px 0 0;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 1.55;
+      }
+      .start-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 36px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        padding: 15px 32px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 650;
+        transition: background 180ms ease, color 180ms ease;
+      }
+      .start-button:hover {
+        background: #fff;
+        color: #000;
+      }
+      .desktop-card {
+        cursor: grab;
+      }
+      .desktop-over-label {
+        position: absolute;
+        z-index: 10;
+        top: 24px;
+        left: 50%;
+        margin: 0;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        margin: 0;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+      }
+      .desktop-image {
+        position: relative;
+        aspect-ratio: 4 / 5.25;
+        overflow: hidden;
+        border-radius: 18px;
+        background: #f3f3f3;
+      }
+      .desktop-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        user-select: none;
+        pointer-events: none;
+      }
+      .mobile-main,
+      .mobile-footer {
+        display: none;
+      }
+      .menu-overlay {
+        position: fixed;
+        z-index: 60;
+        inset: 0;
+        display: none;
+      }
+      .menu-overlay.open {
+        display: flex;
+      }
+      .menu-overlay {
+        align-items: center;
+        background: #fff;
+        padding: 28px;
+      }
+      .close-button {
+        position: absolute;
+        top: 28px;
+        right: 28px;
+        padding: 4px;
+        line-height: 0;
+      }
+      .menu-list {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .menu-list button {
+        text-align: left;
+        font-size: clamp(54px, 8vw, 96px);
+        font-weight: 300;
+        letter-spacing: -0.05em;
+      }
+      @media (max-width: 760px) {
+        .desktop-header,
+        .desktop-main {
+          display: none;
+        }
+        .mobile-header {
+          position: fixed;
+          z-index: 40;
+          top: 0;
+          left: 0;
+          right: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: #fff;
+          padding: 28px 24px;
+        }
+        .mobile-brand {
+          font-size: 42px;
+          line-height: 0.86;
+        }
+        .mobile-actions {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .mobile-menu {
+          font-size: 19px;
+          font-weight: 300;
+        }
+        .mobile-main {
+          display: block;
+          position: relative;
+          min-height: 100vh;
+          padding-top: 128px;
+        }
+        .mobile-pager {
+          display: flex;
+          width: min(230px, calc(100vw - 56px));
+          margin: 0 auto;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+        }
+        .mobile-pager .current-line {
+          height: 1px;
+          flex: 1;
+          background: rgba(0, 0, 0, 0.32);
+        }
+        .mobile-pager span {
+          min-width: 30px;
+          color: rgba(0, 0, 0, 0.28);
+          font-size: 9px;
+          font-weight: 300;
+          letter-spacing: 0.08em;
+        }
+        .mobile-pager span em {
+          color: rgba(0, 0, 0, 0.28);
+          font-style: normal;
+          font-weight: 300;
+        }
+        .mobile-stage {
+          --case-card-width: min(69vw, 340px);
+          --case-gap: -18px;
+          position: relative;
+          z-index: 10;
+          margin-top: 48px;
+        }
+        .mobile-rail {
+          display: flex;
+          align-items: flex-start;
+          gap: var(--case-gap);
+          transform: translate3d(
+            calc(50vw - (var(--case-card-width) / 2) - (var(--active-index) * (var(--case-card-width) + var(--case-gap))) + var(--drag-x)),
+            0,
+            0
+          );
+          transition: transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+          touch-action: pan-y;
+          user-select: none;
+          will-change: transform;
+        }
+        .mobile-slide {
+          width: var(--case-card-width);
+          flex: 0 0 var(--case-card-width);
+          cursor: grab;
+          transition: opacity 420ms ease, transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-label {
+          margin-bottom: 28px;
+          text-align: center;
+        }
+        .mobile-label p {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.26em;
+          text-transform: uppercase;
+        }
+        .mobile-image,
+        .mobile-intro {
+          aspect-ratio: 4 / 5.25;
+          overflow: hidden;
+          border-radius: 18px;
+          background: #f3f3f3;
+        }
+        .mobile-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          pointer-events: none;
+          user-select: none;
+        }
+        .mobile-intro {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: #111;
+          padding: 28px;
+          text-align: center;
+          color: #fff;
+        }
+        .mobile-intro h1 {
+          margin: 0;
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: 48px;
+          font-weight: 300;
+          line-height: 1;
+        }
+        .mobile-intro p {
+          margin: 24px 0 0;
+          color: rgba(255, 255, 255, 0.62);
+          font-size: 14px;
+          font-weight: 300;
+          line-height: 1.7;
+        }
+        .mobile-intro .start-button {
+          margin-top: 30px;
+          padding: 12px 24px;
+          font-size: 14px;
+        }
+        .mobile-logo-section {
+          position: relative;
+          z-index: 0;
+          margin-top: 6px;
+          overflow: hidden;
+          text-align: center;
+        }
+        .mobile-logo-section p {
+          margin: 0;
+          font-size: 45vw;
+          line-height: 0.72;
+        }
+        .mobile-footer {
+          display: block;
+          position: relative;
+          z-index: 20;
+          padding: 48px 20px 38px;
+          text-align: center;
+          font-size: 15px;
+          font-weight: 600;
+          line-height: 1.85;
+        }
+        .mobile-footer p {
+          margin: 0;
+        }
+      }
+      .inquiry-open {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 80;
+        border: 1px solid rgba(0,0,0,.18);
+        border-radius: 999px;
+        background: rgba(255,255,255,.88);
+        padding: 11px 18px;
+        color: #0b0b0b;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 18px 50px rgba(0,0,0,.08);
+      }
+      .inquiry-panel {
+        position: fixed;
+        right: 24px;
+        bottom: 74px;
+        z-index: 90;
+        display: none;
+        width: min(430px, calc(100vw - 48px));
+        max-height: min(720px, calc(100vh - 110px));
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,.12);
+        background: rgba(255,255,255,.96);
+        color: #0b0b0b;
+        box-shadow: 0 28px 90px rgba(0,0,0,.14);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+      }
+      .inquiry-panel.open {
+        display: block;
+      }
+      .inquiry-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid rgba(0,0,0,.08);
+        padding: 20px 20px 18px;
+      }
+      .inquiry-head.compact {
+        justify-content: flex-end;
+        padding: 14px 16px;
+      }
+      .inquiry-kicker {
+        margin: 0 0 8px;
+        color: rgba(0,0,0,.42);
+        font-size: 10px;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+      }
+      .inquiry-title {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.22;
+        letter-spacing: -0.06em;
+      }
+      .inquiry-close {
+        color: rgba(0,0,0,.46);
+        font-size: 24px;
+        line-height: 1;
+      }
+      .inquiry-body {
+        max-height: calc(min(720px, calc(100vh - 110px)) - 92px);
+        overflow-y: auto;
+        padding: 20px;
+      }
+      .inquiry-step {
+        display: none;
+      }
+      .inquiry-step.active {
+        display: block;
+      }
+      .inquiry-question {
+        margin: 0 0 16px;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: -0.045em;
+      }
+      .inquiry-options,
+      .inquiry-fields {
+        display: grid;
+        gap: 8px;
+      }
+      .inquiry-option {
+        width: 100%;
+        border: 1px solid rgba(0,0,0,.12);
+        padding: 12px 13px;
+        text-align: left;
+        color: rgba(0,0,0,.76);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+      .inquiry-option:hover,
+      .inquiry-option.selected {
+        border-color: rgba(0,0,0,.42);
+        background: rgba(0,0,0,.04);
+        color: #0b0b0b;
+      }
+      .inquiry-input,
+      .inquiry-textarea {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid rgba(0,0,0,.22);
+        outline: 0;
+        background: transparent;
+        padding: 12px 0;
+        color: #0b0b0b;
+        font: inherit;
+        font-size: 15px;
+      }
+      .inquiry-textarea {
+        min-height: 96px;
+        resize: vertical;
+      }
+      .inquiry-input::placeholder,
+      .inquiry-textarea::placeholder {
+        color: rgba(0,0,0,.38);
+      }
+      .inquiry-summary {
+        margin-top: 14px;
+        background: rgba(0,0,0,.04);
+        padding: 14px;
+        color: rgba(0,0,0,.56);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .inquiry-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .inquiry-back,
+      .inquiry-next {
+        border: 1px solid rgba(0,0,0,.18);
+        border-radius: 999px;
+        padding: 10px 15px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+      .inquiry-next {
+        border-color: #0b0b0b;
+        background: #0b0b0b;
+        color: #fff;
+      }
+      .inquiry-progress {
+        color: rgba(0,0,0,.42);
+        font-size: 11px;
+        letter-spacing: .1em;
+      }
+      @media (max-width: 760px) {
+        .inquiry-open {
+          right: 16px;
+          bottom: 16px;
+        }
+        .inquiry-panel {
+          right: 16px;
+          bottom: 64px;
+          width: calc(100vw - 32px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="desktop-header">
+      <nav>
+        <a href="/ai/service/index.html">Services</a>
+        <a href="/ai/work/index.html">Work</a>
+        <a href="/ai/academy/index.html">Academy</a>
+      </nav>
+      <button class="desktop-logo wordmark" id="desktopHomeButton">chaeum</button>
+      <nav>
+        <a href="/ai/contact/">Contact</a>
+      </nav>
+    </header>
 
+    <header class="mobile-header">
+      <button class="mobile-brand wordmark" id="mobileHomeButton">chaeum</button>
+      <div class="mobile-actions">
+        <button aria-label="그리드 보기">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,.48)" stroke-width="1.8">
+            <rect x="3" y="3" width="6" height="6" rx="1"></rect>
+            <rect x="15" y="3" width="6" height="6" rx="1"></rect>
+            <rect x="3" y="15" width="6" height="6" rx="1"></rect>
+            <rect x="15" y="15" width="6" height="6" rx="1"></rect>
+          </svg>
+        </button>
+        <button class="mobile-menu" id="menuButton">MENU</button>
+      </div>
+    </header>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
-<style>
-  :root {
-    --bg: #F2F1EC;
-    --ink: #4B4545;
-    --ink-alpha60: rgba(75,69,69,0.6);
-    --ink-alpha30: rgba(75,69,69,0.3);
-    --ink-alpha12: rgba(75,69,69,0.12);
-    --font: 'Pretendard Variable', Pretendard, sans-serif;
-    --white: #ffffff;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: var(--font);
-    font-weight: 300;
-    background: var(--bg);
-    color: var(--ink);
-    overflow-x: hidden;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    height: 100vh; position: relative; overflow: hidden;
-    display: flex; flex-direction: column; justify-content: flex-end;
-  }
-  .hero-img {
-    position: absolute; inset: 0;
-  }
-  .hero-img-placeholder {
-    width: 100%; height: 100%;
-    background: linear-gradient(160deg, #3a3535 0%, #4B4545 40%, #2e2a2a 100%);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .hero-img-placeholder img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  }
-  .hero-img-label {
-    font-size: 0.65rem; letter-spacing: 0.14em;
-    color: rgba(255,255,255,0.2); text-transform: uppercase;
-  }
-  .hero-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(75,69,69,0.75) 0%, rgba(75,69,69,0.1) 55%, transparent 100%);
-  }
-  .hero-content {
-    position: relative; z-index: 2;
-    padding: 0 2.5rem 4rem;
-    width: 100%; text-align: center;
-  }
-  .hero-tag {
-    font-size: 0.58rem; letter-spacing: 0.16em;
-    color: rgba(242,241,236,0.5); text-transform: uppercase; margin-bottom: 1rem;
-  }
-  .hero-title {
-    font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.2;
-    font-weight: 300; color: var(--bg); letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .hero-scroll {
-    position: absolute; right: 2.5rem; bottom: 3.5rem; z-index: 2;
-    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
-    font-size: 0.52rem; letter-spacing: 0.14em;
-    color: rgba(242,241,236,0.4); text-transform: uppercase;
-  }
-  .scroll-line {
-    width: 0.5px; height: 40px; background: rgba(242,241,236,0.25);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%,100% { transform: scaleY(1); opacity: 0.4; }
-    50% { transform: scaleY(0.5); opacity: 0.8; }
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.4rem 2.5rem;
-    background: transparent;
-    backdrop-filter: none;
-    border-bottom: none;
-  }
-  .nav-logo {
-    font-family: var(--font); font-weight: 300;
-    font-size: 0.85rem; letter-spacing: 0.18em;
-    color: var(--bg); text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 2.2rem; align-items: center; }
-  .nav-links a {
-    font-family: var(--font);
-    font-size: 0.6rem; letter-spacing: 0.12em;
-    color: rgba(242,241,236,0.7); text-decoration: none; text-transform: uppercase; transition: color 0.3s;
-  }
-  .nav-links a:hover { color: var(--bg); }
-  .nav-cta {
-    color: var(--ink) !important;
-    background: var(--bg); padding: 0.48rem 1.1rem;
-  }
-
--direction: column; align-items: center; gap: 0.6rem;
-    font-family: var(--font); font-size: 0.52rem;
-    letter-spacing: 0.14em; color: rgba(242,241,236,0.4); text-transform: uppercase;
-  }
-  .scroll-line {
-    width: 0.5px; height: 40px; background: rgba(242,241,236,0.25);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%,100% { transform: scaleY(1); opacity: 0.4; }
-    50% { transform: scaleY(0.5); opacity: 0.8; }
-  }
-
-  /* ── DECLARATION ── */
-  .declaration {
-    padding: 5rem 2.5rem;
-    border-bottom: 0.5px solid var(--ink-alpha12);
-    display: block; max-width: 760px;
-  }
-  .decl-label {
-    font-family: var(--font); font-size: 0.58rem;
-    letter-spacing: 0.14em; color: var(--ink-alpha60); text-transform: uppercase;
-    padding-top: 0.4rem;
-  }
-  .decl-text {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.45;
-    color: var(--ink);
-  }
-
-  /* ── GRID HEADER ── */
-  .grid-header {
-    padding: 3rem 2.5rem 1.5rem;
-    display: flex; align-items: baseline; justify-content: space-between;
-    border-bottom: 0.5px solid var(--ink-alpha12);
-  }
-  .grid-header-left {
-    font-family: var(--font); font-size: 0.6rem;
-    letter-spacing: 0.14em; color: var(--ink); text-transform: uppercase;
-  }
-  .grid-header-right {
-    font-family: var(--font); font-size: 0.56rem;
-    letter-spacing: 0.1em; color: var(--ink-alpha60); text-transform: uppercase;
-    text-decoration: none; border-bottom: 0.5px solid var(--ink-alpha30);
-    padding-bottom: 1px; transition: color 0.3s;
-  }
-  .grid-header-right:hover { color: var(--ink); }
-
-  /* ── PORTFOLIO GRID ── */
-  .portfolio-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 0;
-    border-bottom: 0.5px solid var(--ink-alpha12);
-  }
-  .p-item {
-    position: relative; overflow: hidden; cursor: pointer;
-    border-right: 0.5px solid var(--ink-alpha12);
-    border-bottom: 0.5px solid var(--ink-alpha12);
-  }
-  .p-item:last-child { border-right: none; }
-  .p-item.large { grid-row: span 2; border-bottom: none; }
-  .p-item-img {
-    width: 100%; height: 100%; min-height: 280px;
-    background: var(--ink);
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.6s ease;
-  }
-  .p-item:hover .p-item-img { transform: scale(1.03); }
-  .p-item.large .p-item-img { min-height: 560px; }
-  .p-img-bg {
-    position: absolute; inset: 0;
-    transition: transform 0.6s ease;
-  }
-  .bg1 { background: linear-gradient(135deg, #3a3535 0%, #5a5252 100%); }
-  .bg2 { background: linear-gradient(135deg, #4a4444 0%, #2e2a2a 100%); }
-  .bg3 { background: linear-gradient(135deg, #524e4e 0%, #3d3939 100%); }
-  .bg4 { background: linear-gradient(135deg, #2e2a2a 0%, #4B4545 100%); }
-  .bg5 { background: linear-gradient(135deg, #3d3939 0%, #524e4e 100%); }
-  .p-img-placeholder {
-    position: relative; z-index: 1;
-    font-family: var(--font); font-size: 0.55rem;
-    letter-spacing: 0.12em; color: rgba(242,241,236,0.2); text-transform: uppercase;
-  }
-  .p-item-overlay {
-    position: absolute; inset: 0; z-index: 2;
-    background: linear-gradient(to top, rgba(75,69,69,0.82) 0%, transparent 50%);
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 1.5rem;
-    opacity: 1;
-  }
-  .p-item-tag {
-    font-family: var(--font); font-size: 0.52rem;
-    letter-spacing: 0.1em; color: rgba(242,241,236,0.55);
-    text-transform: uppercase; margin-bottom: 0.4rem;
-  }
-  .p-item-title {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: 1.1rem; line-height: 1.3; color: var(--bg);
-  }
-  .p-item.large .p-item-title { font-size: 1.6rem; }
-  .p-item-desc {
-    font-size: 0.68rem; color: rgba(242,241,236,0.6);
-    line-height: 1.65; margin-top: 0.4rem;
-  }
-
-  /* ── AGENTS ── */
-  .agents-section {
-    padding: 5rem 2.5rem;
-    border-bottom: 0.5px solid var(--ink-alpha12);
-  }
-  .agents-top {
-    display: flex; align-items: baseline; justify-content: space-between;
-    margin-bottom: 3rem;
-  }
-  .agents-title {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--ink);
-  }
-  .agents-sub {
-    font-family: var(--font); font-size: 0.58rem;
-    letter-spacing: 0.1em; color: var(--ink-alpha60); text-transform: uppercase;
-  }
-  .agents-grid {
-    display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
-    border: 0.5px solid var(--ink-alpha12);
-  }
-  .agent-card {
-    padding: 2.2rem 1.8rem;
-    border-right: 0.5px solid var(--ink-alpha12);
-    transition: background 0.35s;
-  }
-  .agent-card:last-child { border-right: none; }
-  .agent-card:hover { background: rgba(75,69,69,0.04); }
-  .agent-avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--ink-alpha12);
-    border: 0.5px solid var(--ink-alpha30);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.4rem; overflow: hidden;
-    font-family: var(--font); font-size: 0.52rem;
-    letter-spacing: 0.06em; color: var(--ink-alpha60);
-  }
-  .agent-num {
-    font-family: var(--font); font-size: 0.56rem;
-    letter-spacing: 0.1em; color: var(--ink-alpha30); margin-bottom: 0.5rem;
-  }
-  .agent-name {
-    font-family: 'Syne', sans-serif; font-size: 1.4rem;
-    font-weight: 400; color: var(--ink); margin-bottom: 0.25rem;
-  }
-  .agent-role {
-    font-family: var(--font); font-size: 0.55rem;
-    letter-spacing: 0.08em; color: var(--ink-alpha60);
-    text-transform: uppercase; margin-bottom: 1rem;
-  }
-  .agent-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; }
-  .agent-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--ink-alpha12); border: 0.5px solid var(--ink-alpha30); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
-  .agent-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .agent-divider { width: 20px; height: 0.5px; background: var(--ink-alpha30); margin-bottom: 1rem; }
-  a.p-item { text-decoration: none; display: block; }
-  .agent-desc { font-size: 0.7rem; line-height: 1.85; color: var(--ink-alpha60); }
-
-  /* ── ACADEMY ── */
-  .academy-section {
-    display: grid; grid-template-columns: 1fr 1fr;
-    border-bottom: 0.5px solid var(--ink-alpha12);
-  }
-  .academy-left {
-    padding: 6rem 2.5rem;
-    border-right: 0.5px solid var(--ink-alpha12);
-    background: var(--ink);
-  }
-  .academy-tag {
-    font-family: var(--font); font-size: 0.58rem;
-    letter-spacing: 0.16em; color: rgba(242,241,236,0.4);
-    text-transform: uppercase; margin-bottom: 2rem;
-  }
-  .academy-title {
-    font-family: 'Syne', sans-serif; font-weight: 300;
-    font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.2;
-    color: var(--bg); margin-bottom: 1.8rem;
-  }
-  .academy-body {
-    font-size: 0.75rem; line-height: 2; color: rgba(242,241,236,0.45);
-    max-width: 360px; margin-bottom: 3rem;
-  }
-  .btn-light {
-    font-family: var(--font); font-size: 0.6rem; letter-spacing: 0.12em;
-    color: var(--ink); background: var(--bg); padding: 0.85rem 1.8rem;
-    text-decoration: none; text-transform: uppercase; display: inline-block; transition: opacity 0.3s;
-  }
-  .btn-light:hover { opacity: 0.8; }
-  .academy-right { padding: 6rem 2.5rem; }
-  .academy-series-title {
-    font-family: var(--font); font-size: 0.58rem;
-    letter-spacing: 0.14em; color: var(--ink-alpha60);
-    text-transform: uppercase; margin-bottom: 2rem;
-  }
-  .series-item {
-    padding: 1.3rem 0; border-bottom: 0.5px solid var(--ink-alpha12);
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  }
-  .series-item:first-of-type { border-top: 0.5px solid var(--ink-alpha12); }
-  .s-lbl {
-    font-family: var(--font); font-size: 0.52rem;
-    letter-spacing: 0.1em; color: var(--ink-alpha60); text-transform: uppercase; margin-bottom: 0.3rem;
-  }
-  .s-name { font-size: 0.76rem; color: var(--ink); line-height: 1.5; }
-  .s-badge {
-    font-family: var(--font); font-size: 0.5rem;
-    letter-spacing: 0.08em; padding: 3px 9px; text-transform: uppercase;
-    white-space: nowrap; flex-shrink: 0;
-    border: 0.5px solid var(--ink-alpha30); color: var(--ink-alpha60);
-  }
-  .s-badge.locked { border-color: var(--ink); color: var(--ink); }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 3.5rem 2.5rem;
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem;
-    border-top: 0.5px solid var(--ink-alpha12);
-  }
-  .footer-logo {
-    font-family: var(--font); font-weight: 300;
-    font-size: 0.85rem; letter-spacing: 0.18em; color: var(--ink); margin-bottom: 0.8rem;
-  }
-  .footer-tagline { font-size: 0.68rem; color: var(--ink-alpha60); line-height: 1.8; }
-  .footer-col-title {
-    font-family: var(--font); font-size: 0.55rem;
-    letter-spacing: 0.12em; color: var(--ink-alpha60); text-transform: uppercase; margin-bottom: 1rem;
-  }
-  .footer-links { display: flex; flex-direction: column; gap: 0.55rem; }
-  .footer-links a {
-    font-size: 0.7rem; color: var(--ink-alpha60); text-decoration: none; transition: color 0.3s;
-  }
-  .footer-links a:hover { color: var(--ink); }
-  .footer-bottom {
-    grid-column: 1/-1; border-top: 0.5px solid var(--ink-alpha12); padding-top: 1.8rem;
-    font-family: var(--font); font-size: 0.55rem; color: var(--ink-alpha30);
-    display: flex; justify-content: space-between;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 1.5rem; }
-    .nav-links { gap: 1rem; }
-    .declaration { grid-template-columns: 1fr; gap: 1rem; padding: 3.5rem 1.5rem; }
-    .grid-header { padding: 2rem 1.5rem 1.2rem; }
-    .portfolio-grid { grid-template-columns: 1fr; }
-    .p-item.large { grid-row: auto; }
-    .p-item { border-right: none; }
-    .p-item-img { min-height: 260px; }
-    .p-item.large .p-item-img { min-height: 360px; }
-    .agents-section { padding: 3.5rem 1.5rem; }
-    .agents-grid { grid-template-columns: 1fr 1fr; }
-    .agent-card { border-bottom: 0.5px solid var(--ink-alpha12); }
-    .academy-section { grid-template-columns: 1fr; }
-    .academy-left { padding: 4rem 1.5rem 3rem; border-right: none; border-bottom: 0.5px solid var(--ink-alpha12); }
-    .academy-right { padding: 3rem 1.5rem; }
-    footer { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
-    .hero-title { font-size: clamp(2.8rem, 10vw, 4rem); }
-  }
-</style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav>
-  <a href="/" class="nav-logo">CHAEUM</a>
-  <div class="nav-links">
-    <a href="/work">Work</a>
-    <a href="/ai/" class="nav-cta">Brand OS AI 알아보기</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-img">
-    <div class="hero-img-placeholder">
-      <img src="./Image/hero-main.png" alt="CHAEUM Hero" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
-
+    <div class="menu-overlay" id="menuOverlay">
+      <button class="close-button" id="closeMenuButton" aria-label="메뉴 닫기">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="menu-list">
+        <a href="/ai/service/index.html">Services</a>
+        <a href="/ai/work/index.html">Work</a>
+        <a href="/ai/academy/index.html">Academy</a>
+        <a href="/ai/contact/">Contact</a>
+      </div>
     </div>
-  </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-tag">AI Brand Agent System — chaeum.cloud</p>
-    <h1 class="hero-title">Nothing to run. Everything runs.</h1>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
-</div>
 
-<!-- DECLARATION -->
-<div class="declaration">
-  <span class="decl-label">About</span>
-  <p class="decl-text" style="font-size:1.15rem;line-height:2;font-weight:400;">
-    유입을 설계하고 流, 시각적 신뢰를 구축하며 視, 매출의 구조를 만들고 販, 고객과 다시 만나는 일 結. 브랜드가 시장에서 살아남기 위해 반복하는 모든 과정은 외부의 기술이 아닌 브랜드 내부의 단단한 지능이 되어야 합니다. chaeum은 AI Brand Agent System 도입으로 <strong>Your brand. Running without you.</strong> 가능하게 합니다.
-  </p>
-  <p class="decl-text" style="font-size:0.95rem;line-height:2;font-weight:300;margin-top:2rem;color:var(--ink);">
-    Every process a brand repeats to survive in the market — designing inflow, building visual trust, structuring revenue, reconnecting with customers — must become a solid intelligence within the brand itself, not an external technology. chaeum does not focus on the outputs of agencies. We pursue a state of complete autonomy in which brands breathe and grow on their own, and we install systems where philosophy and function are in balance. Through the AI Brand Agent System, chaeum makes <em>your brand. running without you.</em> possible.
-  </p>
-</div>
+    <main class="desktop-main" id="desktopMain">
+      <section class="desktop-stage">
+        <div class="desktop-pager" id="desktopPager"></div>
+        <div class="desktop-rail rail" id="desktopRail">
+          <div class="logo-slide desktop-layer" data-slide-index="-1">
+            <p class="big-logo wordmark">chaeum</p>
+          </div>
+        </div>
+      </section>
+    </main>
 
-<!-- PORTFOLIO -->
-<div id="work">
-  <div class="grid-header">
-    <span class="grid-header-left">Selected Work</span>
-    <a href="/work" class="grid-header-right">전체 보기</a>
-  </div>
-  <div class="portfolio-grid">
-    <a href="/work/deokhwa.html" class="p-item large">
-      <div class="p-item-img">
-        <div class="p-img-bg bg1"></div>
-        <img src="./Image/deokhwa-01.jpeg" alt="덕화명란" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
+    <main class="mobile-main">
+      <div class="mobile-pager">
+        <div class="current-line"></div>
+        <span id="mobilePager"></span>
       </div>
-      <div class="p-item-overlay">
-        <span class="p-item-tag">식음료 · 프리미엄 포지셔닝</span>
-        <div class="p-item-title">Deokhwa Myeongran<br>브랜드 아키텍처 재설계</div>
-        <div class="p-item-desc">연매출 30억 → 110억. +360% 성장.</div>
-      </div>
-    </a>
-    <a href="/work/eathlibrary.html" class="p-item">
-      <div class="p-item-img">
-        <div class="p-img-bg bg2"></div>
-        <img src="./Image/eathlibrary-01.jpeg" alt="Eath Library" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
-      </div>
-      <div class="p-item-overlay">
-        <span class="p-item-tag">뷰티 · 럭셔리 × 대중화</span>
-        <div class="p-item-title">Eath Library</div>
-        <div class="p-item-desc">럭셔리와 대중화 동시 달성.</div>
-      </div>
-    </a>
-    <a href="/work/butterpantry.html" class="p-item">
-      <div class="p-item-img">
-        <div class="p-img-bg bg3"></div>
-        <img src="./Image/butterpantry-01.jpeg" alt="The Butter Pantry" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
-      </div>
-      <div class="p-item-overlay">
-        <span class="p-item-tag">푸드 · 채널 확장</span>
-        <div class="p-item-title">The Butter Pantry</div>
-        <div class="p-item-desc">홈쇼핑 · 신세계마트 입점.</div>
-      </div>
-    </a>
-    <a href="/work/therethehouse.html" class="p-item">
-      <div class="p-item-img">
-        <div class="p-img-bg bg4"></div>
-        <img src="./Image/therethehouse-01.jpeg" alt="Therethehouse" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
-      </div>
-      <div class="p-item-overlay">
-        <span class="p-item-tag">라이프스타일 · 브랜드 경험</span>
-        <div class="p-item-title">Therethehouse</div>
-        <div class="p-item-desc">오픈 3개월 예약 포화.</div>
-      </div>
-    </a>
-    <a href="/work/matchacha.html" class="p-item" style="border-right:none">
-      <div class="p-item-img">
-        <div class="p-img-bg bg5"></div>
-        <img src="./Image/matchacha-01.png" alt="MATCHACHA" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';">
-      </div>
-      <div class="p-item-overlay">
-        <span class="p-item-tag">웰니스 티 브랜드</span>
-        <div class="p-item-title">MATCHACHA</div>
-        <div class="p-item-desc">팬덤 형성 및 재방문 구조.</div>
-      </div>
-    </a>
-  </div>
-</div>
+      <section class="mobile-stage">
+        <div class="mobile-rail rail" id="mobileRail">
+        </div>
+      </section>
+      <section class="mobile-logo-section">
+        <p class="wordmark">chaeum</p>
+      </section>
+    </main>
 
-<!-- AGENTS -->
-<div class="agents-section" id="system">
-  <div class="agents-top">
-    <h2 class="agents-title">4 Agent System</h2>
-    <span class="agents-sub">유입 — 구매 — 신뢰 — 재구매</span>
-  </div>
-  <div class="agents-grid">
-    <div class="agent-card">
-      <div class="agent-num">01</div>
-      <div class="agent-name-row">
-        <div class="agent-name">Noa</div>
-        <div class="agent-avatar"><img src="./Image/agent-noa.png" alt="Noa" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
-      </div>
-      <div class="agent-role">Brand System Architect</div>
-      <div class="agent-divider"></div>
-      <div class="agent-desc">브랜드 전체 구조를 설계하고 AI Brand OS를 구축합니다. 모든 결과물의 일관성을 유지하는 중심축입니다.</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-num">02</div>
-      <div class="agent-name-row">
-        <div class="agent-name">Leo</div>
-        <div class="agent-avatar"><img src="./Image/agent-leo.png" alt="Leo" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
-      </div>
-      <div class="agent-role">Sales Flow Architect</div>
-      <div class="agent-divider"></div>
-      <div class="agent-desc">광고에서 랜딩, CTA까지 고객이 구매로 이어지는 흐름을 설계합니다. 매출이 발생하는 구조를 만듭니다.</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-num">03</div>
-      <div class="agent-name-row">
-        <div class="agent-name">Rhea</div>
-        <div class="agent-avatar"><img src="./Image/agent-rhea.png" alt="Rhea" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
-      </div>
-      <div class="agent-role">Visual System Director</div>
-      <div class="agent-divider"></div>
-      <div class="agent-desc">브랜드가 신뢰되게 보이도록 일관된 비주얼 시스템을 설계합니다. 이미지 생성부터 레이아웃까지 관리합니다.</div>
-    </div>
-    <div class="agent-card">
-      <div class="agent-num">04</div>
-      <div class="agent-name-row">
-        <div class="agent-name">Mina</div>
-        <div class="agent-avatar"><img src="./Image/agent-mina.png" alt="Mina" onerror="this.style.display='none';this.parentElement.innerHTML='<span style='font-size:0.55rem;color:var(--ink-alpha30)'>Photo</span>';"></div>
-      </div>
-      <div class="agent-role">Retention System Designer</div>
-      <div class="agent-divider"></div>
-      <div class="agent-desc">고객이 다시 사게 만드는 구조를 설계합니다. 행동 기반 메시지와 재접촉 타이밍으로 반복 구매를 만듭니다.</div>
-    </div>
-  </div>
-</div>
+    <footer class="mobile-footer">
+      <p>©chaeum. All rights reserved.</p>
+      <p>contact@chaeum.kr</p>
+    </footer>
 
-<!-- ACADEMY -->
-<div class="academy-section" id="contact" style="grid-template-columns:1fr;">
-  <div class="academy-left" style="border-right:none;padding:7rem 2.5rem;">
-    <p class="academy-tag">Chaeum Academy</p>
-    <h2 class="academy-title">
-      당신의 브랜드는<br>지금 당신 없이<br>돌아가고 있나요?
-    </h2>
-    <p class="academy-body" style="max-width:520px;">
-      Is your brand running without you?<br><br>
-      Foundation부터 시작해 Brand OS까지.<br>
-      채움이 설계한 커리큘럼으로 AI 브랜드 시스템을 직접 구축해보세요.
-    </p>
-    <a href="/ai/" class="btn-light">Brand OS AI 알아보기</a>
-  </div>
-</div>
+    <button class="inquiry-open" id="inquiryOpen" type="button">문의하기</button>
+    <section class="inquiry-panel" id="inquiryPanel" aria-label="Brand OS AI 문의" aria-hidden="true">
+      <div class="inquiry-head compact">
+        <div></div>
+        <button class="inquiry-close" id="inquiryClose" type="button" aria-label="문의 창 닫기">×</button>
+      </div>
+      <div class="inquiry-body">
+        <div class="inquiry-step active" data-step="0">
+          <p class="inquiry-question">브랜드 업종을 선택해주세요.</p>
+          <div class="inquiry-options" data-key="industry">
+            <button class="inquiry-option" type="button" data-value="Food / F&B">Food / F&amp;B</button>
+            <button class="inquiry-option" type="button" data-value="Beauty">Beauty</button>
+            <button class="inquiry-option" type="button" data-value="Lifestyle">Lifestyle</button>
+            <button class="inquiry-option" type="button" data-value="B2B / Tech">B2B / Tech</button>
+            <button class="inquiry-option" type="button" data-value="Other">Other</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="1">
+          <p class="inquiry-question">현재 브랜드 운영 단계는 어디에 가까운가요?</p>
+          <div class="inquiry-options" data-key="stage">
+            <button class="inquiry-option" type="button" data-value="런칭 전 / 준비 단계">런칭 전 / 준비 단계</button>
+            <button class="inquiry-option" type="button" data-value="운영 중이지만 기준 정리가 필요함">운영 중이지만 기준 정리가 필요함</button>
+            <button class="inquiry-option" type="button" data-value="콘텐츠 발행을 꾸준히 확장하고 싶음">콘텐츠 발행을 꾸준히 확장하고 싶음</button>
+            <button class="inquiry-option" type="button" data-value="팀 단위 AI 운영 시스템이 필요함">팀 단위 AI 운영 시스템이 필요함</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="2">
+          <p class="inquiry-question">브랜드 운영에서 지금 가장 불편한 지점은 무엇인가요?</p>
+          <div class="inquiry-options" data-key="need">
+            <button class="inquiry-option" type="button" data-value="브랜드 말투가 매번 달라져요">브랜드 말투가 매번 달라져요</button>
+            <button class="inquiry-option" type="button" data-value="고객에게 설명이 잘 안 돼요">고객에게 설명이 잘 안 돼요</button>
+            <button class="inquiry-option" type="button" data-value="반응은 있는데 다음 액션이 어려워요">반응은 있는데 다음 액션이 어려워요</button>
+            <button class="inquiry-option" type="button" data-value="팀과 기준을 맞추기 어려워요">팀과 기준을 맞추기 어려워요</button>
+            <button class="inquiry-option" type="button" data-value="전체 구조를 먼저 보고 싶어요">전체 구조를 먼저 보고 싶어요</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="3">
+          <p class="inquiry-question">현재 사용 중이거나 선호하는 업무 도구가 있나요?</p>
+          <div class="inquiry-options" data-key="tool">
+            <button class="inquiry-option" type="button" data-value="Notion">Notion</button>
+            <button class="inquiry-option" type="button" data-value="Claude / ChatGPT">Claude / ChatGPT</button>
+            <button class="inquiry-option" type="button" data-value="Slack / Google Drive">Slack / Google Drive</button>
+            <button class="inquiry-option" type="button" data-value="아직 없음">아직 없음</button>
+          </div>
+        </div>
+        <div class="inquiry-step" data-step="4">
+          <p class="inquiry-question">상담을 위한 정보를 남겨주세요.</p>
+          <div class="inquiry-fields">
+            <input class="inquiry-input" id="inquiryName" placeholder="Name *" autocomplete="name" />
+            <input class="inquiry-input" id="inquiryCompany" placeholder="Company *" autocomplete="organization" />
+            <input class="inquiry-input" id="inquiryEmail" type="email" placeholder="Email *" autocomplete="email" />
+            <input class="inquiry-input" id="inquiryWebsite" type="url" placeholder="Website / Portfolio" />
+            <textarea class="inquiry-textarea" id="inquiryMessage" placeholder="다른 문의 내용이 있다면 자유롭게 남겨주세요."></textarea>
+          </div>
+          <div class="inquiry-summary" id="inquirySummary"></div>
+        </div>
+        <div class="inquiry-actions">
+          <button class="inquiry-back" id="inquiryBack" type="button">Back</button>
+          <span class="inquiry-progress" id="inquiryProgress">1 / 5</span>
+          <button class="inquiry-next" id="inquiryNext" type="button">Next</button>
+        </div>
+      </div>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-  <div>
-    <div class="footer-logo">CHAEUM</div>
-    <div class="footer-tagline">
-      브랜드를 운영하는 지능.<br>
-      The intelligence that runs your brand.<br><br>
-      chaeum.cloud
-    </div>
-  </div>
-  <div>
-    <div class="footer-col-title">Navigate</div>
-    <div class="footer-links">
-      <a href="/work">Work</a>
-      <a href="/ai/">Brand OS AI 알아보기</a>
-    </div>
-  </div>
-  <div>
-    <div class="footer-col-title">Connect</div>
-    <div class="footer-links">
-      <a href="https://www.instagram.com/chaeum.kr">Instagram</a>
-      <a href="https://www.instagram.com/chaeum.kr">Newsletter</a>
-      <a href="https://chaeum.cloud">chaeum.cloud</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2025 CHAEUM. All rights reserved.</span>
-    <span>chaeum.cloud</span>
-  </div>
-</footer>
+    <script>
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const cases = [
+        {
+          name: 'The Coffee Lab',
+          thumbnail: 'assets/abscent_b_01.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Brand OS AI · Content Operation',
+          period: '2026.01 - 2026.03',
+          description: '월간 12개 콘텐츠 자동 생성 + Hanna 검수',
+          results: 'SNS 조회수 3배 증가',
+          details: '미니멀한 커피 브랜드의 콘텐츠 전략을 재구성하여 월간 일관된 포스트 생성 시스템 구축.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '브랜드 톤을 유지하면서도 매주 콘텐츠를 꾸준히 발행할 수 있는 시스템이 필요했어요. 단순 자동화보다 우리 브랜드를 이해하고 제안하는 운영 파트너에 가까웠습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '콘텐츠를 만들 때마다 방향을 새로 잡아야 했고, 담당자마다 문장과 이미지 기준이 달라졌습니다. 결과적으로 브랜드가 매번 조금씩 다른 얼굴로 보였어요.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '회의 시간이 줄고, 승인해야 할 것들이 명확해졌습니다. 이제는 무엇을 만들지보다 어떤 메시지를 강화할지에 더 집중하게 됐어요.' }
+          ]
+        },
+        {
+          name: 'Urban Goods',
+          thumbnail: 'assets/abscent_b_02.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Brand Strategy · Visual System',
+          period: '2026.02 - 2026.04',
+          description: '브랜드 정체성 재구성',
+          results: '전환율 2.5배',
+          details: '라이프스타일 브랜드의 비주얼 언어를 정의하고 모든 터치포인트에 적용.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '상품은 계속 늘어나는데 브랜드 기준은 문서 몇 장에 머물러 있었어요. 실행까지 연결되는 운영형 브랜드 시스템이 필요했습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '상세페이지, 광고, SNS가 각각 다른 팀에서 움직이다 보니 같은 브랜드라고 느껴지지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '캠페인마다 새로 설득하지 않아도 되는 기준이 생겼고, 제작 속도와 완성도가 같이 올라갔습니다.' }
+          ]
+        },
+        {
+          name: 'Minimal Studio',
+          thumbnail: 'assets/abscent_b_04_mini.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Portfolio System · Messaging',
+          period: '2026.03 - 2026.04',
+          description: '디자인 스튜디오 브랜딩',
+          results: '포트폴리오 문의 4배',
+          details: '크리에이티브 에이전시의 브랜드 아이덴티티 및 포트폴리오 시스템 개발.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '우리가 잘하는 일을 더 명확한 언어로 보여주고 싶었습니다. 포트폴리오를 쌓는 방식 자체를 바꾸고 싶었어요.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '좋은 프로젝트가 많았지만 설명 방식이 제각각이라 강점이 선명하게 전달되지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '프로젝트를 소개하는 구조가 생기면서 제안서와 웹사이트가 같은 이야기를 하게 됐습니다.' }
+          ]
+        },
+        {
+          name: 'Wellness Co',
+          thumbnail: 'assets/abscent_b_05_big.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'Content Guideline · Community',
+          period: '2026.01 - 2026.02',
+          description: '웰니스 브랜드 콘텐츠 시스템',
+          results: '구독자 2배',
+          details: '건강 관련 브랜드의 일관된 톤앤매너로 신뢰도 있는 콘텐츠 생성.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '웰니스 콘텐츠는 신뢰가 가장 중요한데, 빠르게 만들면서도 조심스럽게 말하는 균형이 필요했습니다.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '소재는 많았지만 문장이 너무 광고처럼 보이거나, 반대로 브랜드의 전문성이 약하게 느껴졌습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '콘텐츠의 톤이 안정됐고, 고객들이 저장하고 다시 보는 정보형 포스트가 늘었습니다.' }
+          ]
+        },
+        {
+          name: 'Tech Startup',
+          thumbnail: 'assets/abscent_b_01.png',
+          portfolio: [
+            'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=1500&fit=crop',
+            'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=900&fit=crop',
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=1200&fit=crop'
+          ],
+          serviceType: 'B2B Narrative · Lead Content',
+          period: '2026.02 - 2026.05',
+          description: '스타트업 B2B 마케팅',
+          results: '리드 3배',
+          details: '기술 회사의 복잡한 가치 제안을 간단하고 설득력 있게 시각화.',
+          interviews: [
+            { question: '왜 Brand OS AI를 선택하게 되셨나요?', answer: '기술 설명을 고객의 언어로 바꾸는 일이 가장 어려웠습니다. 제품을 이해하면서도 시장 관점으로 정리해 줄 시스템이 필요했어요.' },
+            { question: '그 전에는 어떤 문제가 있었나요?', answer: '기능 설명은 많았지만 왜 필요한지, 어떤 변화가 생기는지가 잘 드러나지 않았습니다.' },
+            { question: '도입 후 가장 크게 달라진 점은 무엇인가요?', answer: '세일즈 자료와 콘텐츠가 같은 메시지를 공유하게 됐고, 문의의 질이 좋아졌습니다.' }
+          ]
+        }
+      ];
 
-</body>
+      const introSlide = { type: 'intro', id: 'brand-os-ai', name: 'Brand OS AI' };
+      const slides = [...cases.slice(0, 3), introSlide, ...cases.slice(3)];
+      const totalSlides = slides.length;
+      const desktopMain = document.getElementById('desktopMain');
+      const desktopRail = document.getElementById('desktopRail');
+      const mobileRail = document.getElementById('mobileRail');
+      const desktopPager = document.getElementById('desktopPager');
+      const mobilePager = document.getElementById('mobilePager');
+      const menuOverlay = document.getElementById('menuOverlay');
+      let currentIndex = 0;
+      let dragX = 0;
+      let isDragging = false;
+      let wheelLocked = false;
+      let pointerState = { startX: 0, startedAt: 0, moved: false, pointerId: null, card: null };
+
+      slides.forEach((item) => {
+        if (item.type === 'intro') {
+          desktopRail.insertAdjacentHTML('beforeend', `
+            <section class="intro-slide desktop-layer" data-slide-index="${slides.indexOf(item)}">
+              <div class="intro-card">
+                <p class="desktop-over-label" style="color: rgba(255,255,255,.72)">Brand OS AI</p>
+                <h1>Brand OS AI</h1>
+                <p>브랜드 운영을 위한 AI 에이전트</p>
+                <button class="start-button">Get Started <span>→</span></button>
+              </div>
+            </section>
+          `);
+          mobileRail.insertAdjacentHTML('beforeend', `
+            <section class="mobile-slide">
+              <div class="mobile-label"><p>Brand OS AI</p></div>
+              <div class="mobile-intro">
+                <h1>Brand OS AI</h1>
+                <p>브랜드 운영을 위한 AI 에이전트</p>
+                <button class="start-button">Get Started <span>→</span></button>
+              </div>
+            </section>
+          `);
+          return;
+        }
+
+        const caseNumber = cases.findIndex((caseItem) => caseItem.name === item.name) + 1;
+        desktopRail.insertAdjacentHTML('beforeend', `
+          <article class="desktop-card desktop-layer" data-index="${caseNumber - 1}" data-slide-index="${slides.indexOf(item)}">
+            <div class="desktop-image">
+              <p class="desktop-over-label" style="color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.38)">Case Study ${String(caseNumber).padStart(2, '0')}</p>
+              <img src="${item.thumbnail}" alt="${item.name}" draggable="false" />
+            </div>
+          </article>
+        `);
+        mobileRail.insertAdjacentHTML('beforeend', `
+          <article class="mobile-slide" data-index="${caseNumber - 1}">
+            <div class="mobile-label"><p>Case Study ${String(caseNumber).padStart(2, '0')}</p></div>
+            <div class="mobile-image">
+              <img src="${item.thumbnail}" alt="${item.name}" draggable="false" />
+            </div>
+          </article>
+        `);
+      });
+
+      function moveSlide(direction) {
+        dragX = 0;
+        isDragging = false;
+        currentIndex = direction === 'next'
+          ? Math.min(currentIndex + 1, totalSlides - 1)
+          : Math.max(currentIndex - 1, 0);
+        render();
+      }
+
+      function render() {
+        desktopRail.style.setProperty('--active-index', currentIndex);
+        desktopRail.style.setProperty('--drag-x', `${dragX}px`);
+        mobileRail.style.setProperty('--active-index', currentIndex);
+        mobileRail.style.setProperty('--drag-x', `${dragX}px`);
+        desktopRail.classList.toggle('dragging', isDragging);
+        mobileRail.classList.toggle('dragging', isDragging);
+        desktopPager.textContent = `${currentIndex + 1} / ${totalSlides}`;
+        mobilePager.innerHTML = `${currentIndex + 1}<em> / ${totalSlides}</em>`;
+
+        desktopRail.querySelectorAll('.desktop-layer').forEach((card) => {
+          const slideIndex = Number(card.dataset.slideIndex);
+          const offset = slideIndex - currentIndex;
+          const distance = clamp(Math.abs(offset), 0, 2);
+          const isActive = offset === 0;
+          const visible = Math.abs(offset) <= 2;
+          const isLogo = card.classList.contains('logo-slide');
+          card.style.opacity = visible ? (isLogo ? 1 : (isActive ? 1 : 0.42 - distance * 0.08)) : 0;
+          card.style.filter = isLogo ? 'none' : (isActive ? 'blur(0px) saturate(1)' : `blur(${1.6 + distance * 0.9}px) saturate(.75)`);
+          card.style.transform = isLogo
+            ? `translateX(calc(-50% + ${offset * 64}%)) translateY(${36 + distance * 8}px) scale(.9)`
+            : `translateX(calc(-50% + ${offset * 64}%)) translateY(${isActive ? 0 : 30 + distance * 10}px) scale(${isActive ? 1 : 0.93 - distance * 0.025})`;
+          card.style.zIndex = isLogo ? 2 : (isActive ? 30 : 10 - distance);
+          card.style.pointerEvents = visible ? 'auto' : 'none';
+          card.style.transition = isDragging
+            ? 'none'
+            : `opacity 560ms ease, ${isLogo ? '' : 'filter 720ms ease, '}transform 920ms cubic-bezier(.19,1,.22,1)`;
+        });
+
+        mobileRail.querySelectorAll('.mobile-slide').forEach((card, index) => {
+          const distance = clamp(Math.abs(index - currentIndex), 0, 2);
+          card.style.opacity = index === currentIndex ? 1 : 0.78 - distance * 0.12;
+          card.style.transform = `translateY(${index === currentIndex ? 0 : 34}px)`;
+          card.style.transition = isDragging
+            ? 'none'
+            : 'opacity 420ms ease, transform 560ms cubic-bezier(.16,1,.3,1)';
+        });
+      }
+
+      desktopMain.addEventListener('wheel', (event) => {
+        if (window.innerWidth < 900 || wheelLocked || Math.abs(event.deltaY) < 24) return;
+        wheelLocked = true;
+        moveSlide(event.deltaY > 0 ? 'next' : 'prev');
+        window.setTimeout(() => {
+          wheelLocked = false;
+        }, 980);
+      }, { passive: true });
+
+      function bindDrag(rail) {
+        rail.addEventListener('pointerdown', (event) => {
+          if (event.button > 0) return;
+          pointerState = {
+            startX: event.clientX,
+            startedAt: performance.now(),
+            moved: false,
+            pointerId: event.pointerId,
+            card: event.target.closest('[data-index]')
+          };
+          rail.setPointerCapture(event.pointerId);
+          isDragging = true;
+        });
+        rail.addEventListener('pointermove', (event) => {
+          if (!isDragging || pointerState.pointerId !== event.pointerId) return;
+          const rawDistance = event.clientX - pointerState.startX;
+          pointerState.moved = Math.abs(rawDistance) > 8;
+          dragX = Math.sign(rawDistance) * Math.min(Math.abs(rawDistance), 260);
+          render();
+        });
+        rail.addEventListener('pointerup', (event) => {
+          if (!isDragging || pointerState.pointerId !== event.pointerId) return;
+          const distance = event.clientX - pointerState.startX;
+          const elapsed = Math.max(performance.now() - pointerState.startedAt, 1);
+          const velocity = distance / elapsed;
+          const shouldSwipe = Math.abs(distance) > 82 || Math.abs(velocity) > 0.42;
+          rail.releasePointerCapture(event.pointerId);
+
+          if (!pointerState.moved) {
+            isDragging = false;
+            dragX = 0;
+            const card = pointerState.card || event.target.closest('[data-index]');
+            if (card) openDetail(Number(card.dataset.index));
+            render();
+            return;
+          }
+
+          if (shouldSwipe) moveSlide(distance < 0 ? 'next' : 'prev');
+          else {
+            isDragging = false;
+            dragX = 0;
+            render();
+          }
+        });
+        rail.addEventListener('pointercancel', () => {
+          isDragging = false;
+          dragX = 0;
+          render();
+        });
+      }
+
+      bindDrag(desktopRail);
+      bindDrag(mobileRail);
+
+      function openDetail(index) {
+        window.location.href = `/ai/work/detail/index.html?case=${index + 1}`;
+      }
+
+      function closeDetail() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.getElementById('desktopHomeButton').addEventListener('click', () => {
+        closeDetail();
+        currentIndex = 0;
+        render();
+      });
+      document.getElementById('mobileHomeButton').addEventListener('click', () => {
+        closeDetail();
+        currentIndex = 0;
+        render();
+      });
+      document.getElementById('menuButton').addEventListener('click', () => menuOverlay.classList.add('open'));
+      document.getElementById('closeMenuButton').addEventListener('click', () => menuOverlay.classList.remove('open'));
+      document.querySelectorAll('.menu-list button').forEach((button) => {
+        button.addEventListener('click', () => menuOverlay.classList.remove('open'));
+      });
+
+      const INQUIRY_ENDPOINT = 'https://hook.us2.make.com/9fe9k54irka79lhmex66m7m4teh3qdcj';
+      const inquiryPanel = document.getElementById('inquiryPanel');
+      const inquiryOpen = document.getElementById('inquiryOpen');
+      const inquiryClose = document.getElementById('inquiryClose');
+      const inquiryBack = document.getElementById('inquiryBack');
+      const inquiryNext = document.getElementById('inquiryNext');
+      const inquiryProgress = document.getElementById('inquiryProgress');
+      const inquirySummary = document.getElementById('inquirySummary');
+      const inquiryState = {
+        industry: '',
+        stage: '',
+        need: '',
+        tool: '',
+        name: '',
+        company: '',
+        email: '',
+        website: '',
+        message: ''
+      };
+      let inquiryStep = 0;
+
+      function openInquiry() {
+        inquiryPanel.classList.add('open');
+        inquiryPanel.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeInquiry() {
+        inquiryPanel.classList.remove('open');
+        inquiryPanel.setAttribute('aria-hidden', 'true');
+      }
+
+      function collectInquiryFields() {
+        inquiryState.name = document.getElementById('inquiryName')?.value.trim() || '';
+        inquiryState.company = document.getElementById('inquiryCompany')?.value.trim() || '';
+        inquiryState.email = document.getElementById('inquiryEmail')?.value.trim() || '';
+        inquiryState.website = document.getElementById('inquiryWebsite')?.value.trim() || '';
+        inquiryState.message = document.getElementById('inquiryMessage')?.value.trim() || '';
+      }
+
+      function renderInquiry() {
+        document.querySelectorAll('.inquiry-step').forEach((step) => {
+          step.classList.toggle('active', Number(step.dataset.step) === inquiryStep);
+        });
+        inquiryBack.style.visibility = inquiryStep === 0 ? 'hidden' : 'visible';
+        inquiryNext.textContent = inquiryStep === 4 ? 'Submit →' : 'Next';
+        inquiryProgress.textContent = `${inquiryStep + 1} / 5`;
+
+        if (inquiryStep === 4) {
+          collectInquiryFields();
+          inquirySummary.innerHTML = `
+            <strong>문의 요약</strong><br>
+            업종: ${inquiryState.industry || '-'}<br>
+            운영 단계: ${inquiryState.stage || '-'}<br>
+            고민/개선 포인트: ${inquiryState.need || '-'}<br>
+            선호 도구: ${inquiryState.tool || '-'}
+          `;
+        }
+      }
+
+      function canMoveInquiryNext() {
+        collectInquiryFields();
+        if (inquiryStep === 0) return Boolean(inquiryState.industry);
+        if (inquiryStep === 1) return Boolean(inquiryState.stage);
+        if (inquiryStep === 2) return Boolean(inquiryState.need);
+        if (inquiryStep === 3) return Boolean(inquiryState.tool);
+        if (inquiryStep === 4) return Boolean(inquiryState.name && inquiryState.company && inquiryState.email);
+        return true;
+      }
+
+      function formatInquirySlackMessage(payload) {
+        return [
+          '*Brand OS AI 문의가 접수되었습니다.*',
+          `• 업종: ${payload.industry || '-'}`,
+          `• 운영 단계: ${payload.stage || '-'}`,
+          `• 고민/개선 포인트: ${payload.need || '-'}`,
+          `• 선호 도구: ${payload.tool || '-'}`,
+          `• 이름: ${payload.name || '-'}`,
+          `• 회사: ${payload.company || '-'}`,
+          `• 이메일: ${payload.email || '-'}`,
+          `• 웹사이트: ${payload.website || '-'}`,
+          `• 추가 문의: ${payload.message || '-'}`,
+          `• 접수 시간: ${payload.submittedAt}`
+        ].join('\n');
+      }
+
+      async function submitInquiry() {
+        collectInquiryFields();
+        const payload = {
+          source: 'chaeum.cloud/ai',
+          submittedAt: new Date().toISOString(),
+          ...inquiryState
+        };
+        payload.text = formatInquirySlackMessage(payload);
+
+        if (!INQUIRY_ENDPOINT) {
+          console.info('Brand OS AI inquiry payload ready:', payload);
+          alert('문의 초안이 생성되었습니다. 실제 접수는 연동 URL 설정 후 활성화됩니다.');
+          closeInquiry();
+          return;
+        }
+
+        await fetch(INQUIRY_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        alert('문의가 접수되었습니다.');
+        closeInquiry();
+      }
+
+      inquiryOpen.addEventListener('click', openInquiry);
+      inquiryClose.addEventListener('click', closeInquiry);
+      document.querySelectorAll('.start-button').forEach((button) => {
+        button.addEventListener('click', openInquiry);
+      });
+      document.querySelectorAll('[data-key] .inquiry-option').forEach((button) => {
+        button.addEventListener('click', () => {
+          const key = button.closest('[data-key]').dataset.key;
+          inquiryState[key] = button.dataset.value;
+          button.parentElement.querySelectorAll('.inquiry-option').forEach((item) => item.classList.remove('selected'));
+          button.classList.add('selected');
+          window.setTimeout(() => {
+            inquiryStep = Math.min(inquiryStep + 1, 4);
+            renderInquiry();
+          }, 140);
+        });
+      });
+      inquiryBack.addEventListener('click', () => {
+        inquiryStep = Math.max(inquiryStep - 1, 0);
+        renderInquiry();
+      });
+      inquiryNext.addEventListener('click', () => {
+        if (!canMoveInquiryNext()) {
+          alert('필수 정보를 입력해주세요.');
+          return;
+        }
+        if (inquiryStep === 4) submitInquiry();
+        else {
+          inquiryStep += 1;
+          renderInquiry();
+        }
+      });
+      renderInquiry();
+
+      render();
+    </script>
+  </body>
 </html>
