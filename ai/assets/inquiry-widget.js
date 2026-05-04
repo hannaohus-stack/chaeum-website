@@ -2,7 +2,7 @@
   const existing = document.getElementById('inquiryPanel') || document.getElementById('inquiryWidgetPanel');
   if (existing) return;
 
-  const endpoint = 'https://hook.us2.make.com/9fe9k54irka79lhmex66m7m4teh3qdcj';
+  const endpoint = 'https://hook.us2.make.com/8omwxlfwuwdrenvqu3jdr7i8kyfror2l';
   const source = document.currentScript?.dataset.source || 'chaeum.cloud/ai';
   const pageLabel = document.currentScript?.dataset.page || document.title || 'CHAEUM';
 
